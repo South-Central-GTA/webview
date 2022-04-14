@@ -1,0 +1,93 @@
+<template>
+    <div class="team-menu-helpme">
+        <h2>Offene Help Me's</h2>
+        <input @input="search()" v-model="playerNameSearch" type="text" class="form-control-dark mb-2"
+               placeholder="Suche nach Spieler Namen"/>
+        <div class="table-holder">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Betreff</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="ticket in tickets" v-bind:key="ticket.creatorDiscordId" class="entry">
+                    <td>{{ ticket.creatorName }}</td>
+                    <td>{{ ticket.context }}</td>
+                    <td>
+                        <div class="input-group">
+                            <button class="btn btn-primary" @click="takeTicket(ticket.creatorDiscordId)">Ticket
+                                übernehmen
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import alt from '@/scripts/services/alt.service';
+import {HelpMeTicketInterface} from "@/scripts/interfaces/help-me-ticket.interface";
+import {Vue} from "vue-class-component";
+
+export default class TeamMenuHelpMe extends Vue {
+    private tickets: HelpMeTicketInterface[] = []
+    private chacheTickets: HelpMeTicketInterface[] = []
+    private playerNameSearch = "";
+
+    public mounted(): void {
+        alt.on("helpme:setup", (args: any) => this.setup(args[0]));
+        alt.on("helpme:update", (args: any[]) => this.update(args[0]));
+    }
+    
+    public unmounted(): void {
+        alt.off("helpme:setup");
+        alt.off("helpme:update");
+    }
+
+    private setup(tickets: HelpMeTicketInterface[]): void {
+        this.tickets = tickets;
+        this.chacheTickets = this.tickets;
+    }
+
+    private update(tickets: HelpMeTicketInterface[]): void {
+        this.chacheTickets = tickets;
+
+        if (this.playerNameSearch === "") {
+            this.tickets = this.chacheTickets;
+        }
+    }
+
+    private search(): void {
+        if (this.playerNameSearch === "") {
+            this.tickets = this.chacheTickets;
+            return;
+        }
+
+        this.tickets = this.chacheTickets;
+        this.tickets = this.tickets.filter(t => t.creatorName.toLowerCase().includes(this.playerNameSearch));
+    }
+
+    private takeTicket(playerDiscordId: string): void {
+        alt.emitServer("helpme:taketicket", playerDiscordId);
+    }
+}
+</script>
+
+<style scoped>
+.table-holder {
+    height: 26.5vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.table,
+.entry {
+    color: white !important;
+}
+</style>

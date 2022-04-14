@@ -1,0 +1,91 @@
+<template>
+    <div class="team-menu-phone-messages-log">
+        <h2>SMS Nachrichten</h2>
+        <input @input="search()" v-model="phoneNumberSearch"
+               type="text" class="form-control-dark mb-2" placeholder="Suche nach der Sender Nummer."/>
+        <div class="table-holder">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Sender Nummer</th>
+                    <th>Empfänger Nummer</th>
+                    <th>Nachricht</th>
+                    <th>Datum</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="message in messages" v-bind:key="message.id" class="entry">
+                    <td>{{ message.id }}</td>
+                    <td>{{ message.senderPhoneNumber }}</td>
+                    <td>{{ message.targetPhoneNumber }}</td>
+                    <td>{{ message.context }}</td>
+                    <td>{{ getDate(message.sendetAt) }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import alt from '@/scripts/services/alt.service';
+import {CatalogVehicleInterface} from "@/scripts/interfaces/catalog-vehicle.interface";
+import {Vue} from "vue-class-component";
+import {Ref} from "vue-property-decorator";
+import {PhoneMessageInterface} from "@/scripts/interfaces/phone/phone-message.interface";
+import {MailInterface} from "@/scripts/interfaces/mail/mail.interface";
+
+export default class TeamMenuPhoneMessagesLog extends Vue {
+    private messages: PhoneMessageInterface[] = []
+    private cachedMessages: PhoneMessageInterface[] = []
+    private phoneNumberSearch = "";
+
+    public mounted(): void {
+        alt.on("phonemessageslog:setup", (args: any[]) => this.setup(args[0]));
+    }
+    
+    public unmounted(): void {
+        alt.off("phonemessageslog:setup");
+    }
+
+    private setup(messages: PhoneMessageInterface[]): void {
+        this.messages = messages;
+        this.cachedMessages = this.messages;
+    }
+
+    private search(): void {
+        if (this.phoneNumberSearch === "") {
+            this.messages = this.cachedMessages;
+            return;
+        }
+
+        this.messages = this.cachedMessages;
+        this.messages = this.messages.filter(m => m.senderPhoneNumber?.includes(this.phoneNumberSearch.toLowerCase()));
+    }
+
+    private getDate(dateJson: string): string {
+        const date = new Date(JSON.parse(dateJson));
+        return date.toLocaleDateString("de-DE", {
+            hour: 'numeric',
+            minute: 'numeric',
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+        });
+    }
+}
+</script>
+
+<style scoped>
+.table-holder {
+    height: 26.5vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.table,
+.entry {
+    color: white !important;
+}
+</style>
