@@ -88,7 +88,7 @@
                                 <tr v-for="file in files" v-bind:key="file.id" class="entry">
                                     <td><font-awesome-icon :icon="getIcon(file.isDirectory)"/></td>
                                     <td v-if="editFileNameId !== file.id" @click="clickEntry(file)">{{ file.title }}</td>
-                                    <td v-if="editFileNameId === file.id"><input v-model="file.title" v-on:keyup.enter="requestFileNameChange(file)"></td>
+                                    <td v-if="editFileNameId === file.id"><input v-model="file.title" v-on:keyup.enter="requestFileNameChange(file)" maxlength="50"></td>
                                     <td>{{ file.creatorCharacterName }}</td>
                                     <td class="date">{{ getDate(file.lastEditAtJson) }} - <i>{{ file.lastEditCharacterName }}</i></td>
                                     <td class="pointer-event">

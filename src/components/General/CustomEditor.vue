@@ -1,74 +1,172 @@
 ﻿<template>
-    <QuillEditor 
-        ref="editorRef"
-        content-type="html"
-        :options="options"
-        :content="content"
-        @update:content="onContentUpdated" />
+    <div>
+        <div v-if="editor && isToolbarVisible">
+            <button @click="editor.chain().focus().toggleBold().run()" class="icon-button">
+                <font-awesome-icon :class="{ 'is-active': editor.isActive('bold') }" icon="bold"/>
+            </button>
+            <button @click="editor.chain().focus().toggleItalic().run()" class="icon-button">
+                <font-awesome-icon :class="{ 'is-active': editor.isActive('italic') }" icon="italic"/>
+            </button>
+            <button @click="editor.chain().focus().toggleStrike().run()" class="icon-button">
+                <font-awesome-icon :class="{ 'is-active': editor.isActive('strike') }" icon="strikethrough"/>
+            </button>
+            <button @click="editor.chain().focus().toggleCode().run()" class="icon-button">
+                <font-awesome-icon :class="{ 'is-active': editor.isActive('code') }" icon="code"/>
+            </button>
+            <button @click="() => {
+                    editor.chain().focus().unsetAllMarks().run();
+                    editor.chain().focus().clearNodes().run();
+                }" class="icon-button">
+                <font-awesome-icon icon="eraser"/>
+            </button>
+
+            <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" class="icon-button">
+                <font-awesome-icon :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }" icon="heading"/> 1
+            </button>
+            <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" class="icon-button">
+                <font-awesome-icon :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }" icon="heading"/> 2
+            </button>
+            <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" class="icon-button">
+                <font-awesome-icon :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }" icon="heading"/> 3
+            </button>
+            <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" class="icon-button">
+                <font-awesome-icon :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }" icon="heading"/> 4
+            </button>
+
+            <button @click="editor.chain().focus().toggleBulletList().run()" class="icon-button">
+                <font-awesome-icon :class="{ 'is-active': editor.isActive('bulletList') }" icon="list-ul"/>
+            </button>
+
+            <button @click="editor.chain().focus().toggleOrderedList().run()" class="icon-button">
+                <font-awesome-icon :class="{ 'is-active': editor.isActive('orderedList') }" icon="list-ol"/>
+            </button>
+
+            <button @click="editor.chain().focus().toggleCodeBlock().run()" class="icon-button">
+                <font-awesome-icon :class="{ 'is-active': editor.isActive('codeBlock') }" icon="file-code"/>
+            </button>
+            
+            <button @click="editor.chain().focus().toggleBlockquote().run()" class="icon-button">
+                <font-awesome-icon :class="{ 'is-active': editor.isActive('blockquote') }" icon="quote-left"/>
+            </button>
+            <button @click="editor.chain().focus().setHorizontalRule().run()" class="icon-button">
+                <font-awesome-icon icon="grip-lines"/>
+            </button>
+
+            <button @click="editor.chain().focus().undo().run()" class="icon-button">
+                <font-awesome-icon icon="undo"/>
+            </button>
+            <button @click="editor.chain().focus().redo().run()" class="icon-button">
+                <font-awesome-icon icon="redo"/>
+            </button>
+        </div>
+        
+        <editor-content :editor="editor" />
+    </div>
 </template>
 
 <script lang="ts">
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
-
 import {Options, Vue} from "vue-class-component";
-import {Delta, QuillEditor} from "@vueup/vue-quill";
-import {Ref} from "vue-property-decorator";
+import { Editor, EditorContent } from '@tiptap/vue-3'
+import StarterKit from "@tiptap/starter-kit";
+import {CharacterCount} from "@tiptap/extension-character-count";
 
 @Options({
     components: {
-        QuillEditor
+        EditorContent
     }
 })
 export default class CustomEditor extends Vue {
-    @Ref() private readonly editorRef!: typeof QuillEditor;
-
-    private options = {
-        formats: [
-            'background',
-            'bold',
-            'color',
-            'font',
-            'italic',
-            'underline',
-            'header',
-            'list',
-            'align',
+    private editor: Editor = new Editor({
+        extensions: [
+            StarterKit,
+            CharacterCount.configure({
+                limit: 2000000,
+            })
         ],
-        modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-
-                [{'header': 1}, {'header': 2}],               // custom button values
-                [{'list': 'ordered'}, {'list': 'bullet'}],
-
-                [{'header': [1, 2, 3, 4, 5, 6, false]}],
-
-                [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-                [{'font': []}],
-                [{'align': []}],
-            ]
-        },
-        theme: ''
-    }
+        editable: false
+    });
     
-    private content: string = "";
+    private isToolbarVisible: boolean = false;
+
     get getContent(): string {
-        return this.content;
+        return this.editor.getHTML();
     }
     
-    public setHTML(content: string): void {
-        this.editorRef.pasteHTML(content);
-
+    public showToolbar(state :boolean): void {
+        this.isToolbarVisible = state;
+        this.editor.setOptions({editable: state});
     }
     
-    private onContentUpdated(content: Delta): void {
-        this.content = content.toString();
+    public setContent(content: string): void {
+        this.editor.commands.setContent(content);
     }
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 
+::-webkit-scrollbar-thumb {
+    background: rgb(122, 123, 124);
+}
+.ProseMirror {
+    padding: 0.5vw;
+    
+    &:focus {
+        outline: none;
+    }
+
+    height: 46vh;
+    overflow: auto;
+    
+
+    ul,
+    ol {
+        padding: 0 1rem;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        line-height: 1.1;
+    }
+
+    code {
+        background-color: rgba(#616161, 0.1);
+        color: #616161;
+    }
+
+    pre {
+        background: #0D0D0D;
+        color: #FFF;
+        font-family: 'JetBrainsMono', monospace;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+
+        code {
+            color: inherit;
+            padding: 0;
+            background: none;
+            font-size: 0.8rem;
+        }
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    blockquote {
+        padding-left: 1rem;
+        border-left: 2px solid rgba(#0D0D0D, 0.1);
+    }
+
+    hr {
+        border: none;
+        border-top: 2px solid rgba(#0D0D0D, 0.1);
+        margin: 2rem 0;
+    }
+}
 </style>

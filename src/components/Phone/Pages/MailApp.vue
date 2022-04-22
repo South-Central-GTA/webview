@@ -140,51 +140,38 @@
                     </div>
                 </div>
 
-                <div class="popup-mail" :hidden="!textPopupOpen">
+                <div class="popup-mail" :hidden="!mailPopupOpen">
                     <div class="modal-header bg-light">
-                        <h5 class="modal-title">Mail schreiben</h5>
-                        <button type="button" class="btn-close icon-button float-end" @click="closeTextDialog()">
+                        <h5 class="modal-title">{{ mailPopupHeader }}</h5>
+                        <button type="button" class="btn-close icon-button float-end" @click="closeMailPopup()">
                             <font-awesome-icon class="center" icon="times"/>
                         </button>
                     </div>
 
-                    <div class="input-group">
-                        <span class="input-group-text">An:</span>
-                        <input type="email" v-model="targetMailAddress"
-                               maxlength="20"
-                               @input="validSendButton()"
-                               class="form-control" placeholder="max.mustermann">
-                        <span class="input-group-text">@mail.sa</span>
-                    </div>
-                    <div class="input-group">
-                        <span class="input-group-text">Betreff:</span>
-                        <input type="email" v-model="newTitle"
-                               maxlength="50"
-                               @input="validSendButton()"
-                               class="form-control" placeholder="Betreff">
+                    <div v-if="isWriting">
+                        <div class="input-group">
+                            <span class="input-group-text">An:</span>
+                            <input type="email" v-model="targetMailAddress"
+                                   maxlength="20"
+                                   @input="validSendButton()"
+                                   class="form-control" placeholder="max.mustermann">
+                            <span class="input-group-text">@mail.sa</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-text">Betreff:</span>
+                            <input type="email" v-model="newTitle"
+                                   maxlength="50"
+                                   @input="validSendButton()"
+                                   class="form-control" placeholder="Betreff">
+                        </div>
                     </div>
 
-                    <div class="editor">
-                        <QuillEditor ref="quillEditor"
-                                     :options="options"
-                                     @input="validSendButton()"/>
-
-                        <button type="button" class="btn btn-success w-25 fa-pull-right"
+                    <custom-editor ref="customEditor"/>
+                    
+                    <div v-if="isWriting">
+                         <button type="button" class="btn btn-success w-25 fa-pull-right"
                                 :disabled="!isSendButtonValid" @click="sendMail()">Mail senden
                         </button>
-                    </div>
-                </div>
-
-                <div class="popup-mail" :hidden="!readPopupOpen">
-                    <div class="modal-header bg-light">
-                        <h5 class="modal-title">Mail lesen</h5>
-                        <button type="button" class="btn-close-white icon-button float-end" @click="closeReadDialog()">
-                            <font-awesome-icon class="center" icon="times"/>
-                        </button>
-                    </div>
-
-                    <div class="mail-context" ref="mailContextElement">
-
                     </div>
                 </div>
 
@@ -293,8 +280,6 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import {QuillEditor} from "@vueup/vue-quill";
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import {Ref} from "vue-property-decorator";
 import alt from "@/scripts/services/alt.service";
 import mailing from '@/scripts/services/mailing.service';
@@ -306,43 +291,13 @@ import {MailingPermission} from "@/scripts/enums/mailing.permission";
 import {MailAccountCharacterAccessInterface} from "@/scripts/interfaces/mail/mail-account-character-access.interface";
 import SpawnSelector from "@/components/CharCreator/SpawnSelector.vue";
 import {GroupPermission} from "@/scripts/enums/group.permission";
+import CustomEditor from "@/components/General/CustomEditor.vue";
 
 @Options({
-    components: {SpawnSelector, QuillEditor},
+    components: {CustomEditor, SpawnSelector},
 })
 export default class MailApp extends Vue {
-    @Ref() private readonly quillEditor!: typeof QuillEditor;
-    @Ref() private readonly mailContextElement!: HTMLDivElement;
-
-    private options = {
-        formats: [
-            'background',
-            'bold',
-            'color',
-            'font',
-            'italic',
-            'underline',
-            'header',
-            'list',
-            'align',
-        ],
-        modules: {
-            toolbar: [
-                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-
-                [{'header': 1}, {'header': 2}],               // custom button values
-                [{'list': 'ordered'}, {'list': 'bullet'}],
-
-                [{'header': [1, 2, 3, 4, 5, 6, false]}],
-
-                [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-                [{'font': []}],
-                [{'align': []}],
-            ]
-        },
-        placeholder: 'Verfasse eine E-Mail...',
-        theme: 'snow'
-    }
+    @Ref() private readonly customEditor!: CustomEditor;
 
     private hasAccount = false;
     private newMailAddress = "";
@@ -361,8 +316,9 @@ export default class MailApp extends Vue {
     private newTitle = "";
     private backupTitle = "";
     private backupContent = "";
-    private textPopupOpen = false;
-    private readPopupOpen = false;
+    private mailPopupOpen = false;
+    private isWriting = false;
+    private mailPopupHeader = "";
     private deletePopupOpen = false;
     private currentMailIdToDelete: undefined | number = undefined;
     private characterAccesses: MailAccountCharacterAccessInterface[] = [];
@@ -507,9 +463,6 @@ export default class MailApp extends Vue {
     }
 
     private openTextDialog(): void {
-        if (this.textPopupOpen)
-            return;
-
         this.targetMailAddress = "";
         
         if (this.backupTitle === "") {
@@ -519,12 +472,15 @@ export default class MailApp extends Vue {
         }
 
         if (this.backupContent === "") {
-            this.quillEditor.setText("\n");
+            this.customEditor.setContent("\n");
         } else {
-            this.quillEditor.innerHTML = this.backupContent;
+            this.customEditor.setContent(this.backupContent);
         }
         
-        this.textPopupOpen = true;
+        this.mailPopupOpen = true;
+        this.isWriting = true;
+        this.customEditor.showToolbar(true);
+        this.mailPopupHeader = "Mail schreiben";
         this.validSendButton();
     }
 
@@ -535,12 +491,8 @@ export default class MailApp extends Vue {
         this.currentMailIdToDelete = mail.id;
     }
 
-    private closeTextDialog(): void {
-        this.textPopupOpen = false;
-    }
-
-    private closeReadDialog(): void {
-        this.readPopupOpen = false;
+    private closeMailPopup(): void {
+        this.mailPopupOpen = false;
     }
 
     private closeDeletePopup(): void {
@@ -566,8 +518,11 @@ export default class MailApp extends Vue {
     }
 
     private readMail(mail: MailInterface): void {
-        this.mailContextElement.innerHTML = mail.context;
-        this.readPopupOpen = true;
+        this.customEditor.showToolbar(false);
+        this.customEditor.setContent(mail.context);
+        this.mailPopupOpen = true;
+        this.isWriting = false;
+        this.mailPopupHeader = "Mail lesen";
     }
 
     private deleteMail(): void {
@@ -580,18 +535,14 @@ export default class MailApp extends Vue {
     }
 
     private sendMail(): void {
-        if (!/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/.test(this.targetMailAddress)) {
-            this.showErrorMessage("Bitte geben Sie eine gültige Mail Adresse an.")
+        this.validSendButton();
+        if (!this.isSendButtonValid) {
             return;
         }
-
-        let context = this.quillEditor.getHTML();
-
-        context = context.replaceAll("ql-align-right", "text-end");
-        context = context.replaceAll("ql-align-center", "text-center");
-
-        alt.emitServer("mailing:sendmail", this.currentMailAddress, this.targetMailAddress, this.newTitle, context);
-        this.closeTextDialog();
+        
+        alt.emitServer("mailing:sendmail", this.currentMailAddress, this.targetMailAddress, this.newTitle, this.customEditor.getContent);
+        
+        this.closeMailPopup();
         this.setBackup("", "");
     }
 
@@ -627,7 +578,7 @@ export default class MailApp extends Vue {
     }
 
     private validSendButton(): void {
-        this.isSendButtonValid = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9À-ž._äöüÄÖÜ]+(?<![_.])$/.test(this.targetMailAddress) || this.newTitle != "" || this.quillEditor.getHTML() != "";
+        this.isSendButtonValid = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9À-ž._äöüÄÖÜ]+(?<![_.])$/.test(this.targetMailAddress) || this.newTitle != "";
     }
 
     private getDate(jsonDate: string): string {
@@ -723,10 +674,6 @@ export default class MailApp extends Vue {
     overflow: hidden;
 }
 
-.editor {
-    height: 20vw;
-}
-
 .accounts-block {
     overflow-y: auto;
     height: 30vh;
@@ -780,12 +727,6 @@ export default class MailApp extends Vue {
     background: #eceeef
 }
 
-.mail-context {
-    padding: 2em;
-    overflow-y: auto;
-    height: 50vh;
-}
-
 .character-access-block {
     overflow: auto;
     margin: auto;
@@ -801,7 +742,7 @@ export default class MailApp extends Vue {
     background-color: rgba(217, 46, 66, 0.87);
     color: white;
     padding: 0.5vw;
-    z-index: 1000;
+    z-index: 9000; 
 }
 
 .info-message {
@@ -812,6 +753,6 @@ export default class MailApp extends Vue {
     background-color: #2C9AD5DD;
     color: white;
     padding: 0.5vw;
-    z-index: 1000;
+    z-index: 9000;
 }
 </style>

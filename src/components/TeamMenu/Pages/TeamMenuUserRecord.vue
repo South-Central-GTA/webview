@@ -39,7 +39,6 @@
 
 <script lang="ts">
 import {Vue} from "vue-class-component";
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import {UserRecordInterface} from "@/scripts/interfaces/user-record.interface";
 import alt from "@/scripts/services/alt.service";
 import {onFocus} from "@/scripts/helpers/helpers";

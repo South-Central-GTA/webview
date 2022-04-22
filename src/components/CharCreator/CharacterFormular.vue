@@ -132,32 +132,26 @@
             </div>
             <div class="col-6">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" @click="toggleHasPhone()">
+                    <input class="form-check-input" type="checkbox" v-model="this.form.hasPhone" @change="send()">
                     <label class="form-check-label">
                         Hat dein Charakter ein Handy?
                     </label>
                 </div>
-                <!--                <div class="form-check">-->
-                <!--                    <input class="form-check-input" type="checkbox" disabled>-->
-                <!--                    <label class="form-check-label">-->
-                <!--                        Hat dein Charakter ein Personalausweis?-->
-                <!--                    </label>-->
-                <!--                </div>-->
-                <!--                <div class="form-check">-->
-                <!--                    <input class="form-check-input" type="checkbox" disabled>-->
-                <!--                    <label class="form-check-label" >-->
-                <!--                        Hat dein Charakter ein Führerschein?-->
-                <!--                    </label>-->
-                <!--                </div>-->
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox"  v-model="this.form.isRegistered" @change="send()">
+                    <label class="form-check-label">
+                        Ist dein Charakter im Registration Office gemeldet?
+                    </label>
+                </div>
             </div>
-            <!--            <div class="col-6">-->
-            <!--                <div class="form-check">-->
-            <!--                    <input class="form-check-input" type="checkbox" disabled>-->
-            <!--                    <label class="form-check-label">-->
-            <!--                        Hat dein Charakter ein Bankonto?-->
-            <!--                    </label>-->
-            <!--                </div>-->
-            <!--            </div>-->
+            <div class="col-6">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" :disabled="!this.form.isRegistered" v-model="this.form.hasDrivingLicense" @change="send()">
+                    <label class="form-check-label">
+                        Hat dein Charakter ein Füherschein?
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -188,7 +182,9 @@ export default class CharacterFormular extends Vue {
             physique: ""
         },
         startMoney: 0,
-        hasPhone: false
+        hasPhone: false,
+        hasDrivingLicense: false,
+        isRegistered: false
     }
 
     private age = "";
@@ -222,11 +218,6 @@ export default class CharacterFormular extends Vue {
         this.send();
     }
 
-    private toggleHasPhone(): void {
-        this.form.hasPhone = !this.form.hasPhone;
-        this.send();
-    }
-
     private send(): void {
         if (this.age !== "") {
             this.form.profile.age = Number.parseInt(this.age);
@@ -240,6 +231,10 @@ export default class CharacterFormular extends Vue {
         } else {
             this.bodySize = "";
             this.form.profile.bodySize = 0;
+        }
+        
+        if (!this.form.isRegistered) {
+            this.form.hasDrivingLicense = false;
         }
 
         this.storyWordCount = countWords(this.form.profile.story);

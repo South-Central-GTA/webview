@@ -59,8 +59,6 @@ import {Ref} from "vue-property-decorator";
 import {MaxDrawablesInterface} from "@/scripts/interfaces/character/max-drawables.interface";
 import {ClothingInterface} from "@/scripts/interfaces/character/clothing.interface";
 import alt from "@/scripts/services/alt.service";
-import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
-import {CharacterCreatorPurchaseInterface} from "@/scripts/interfaces/character/character-creator-purchase.interface";
 import {MaxDrawablesTexturesInterface} from "@/scripts/interfaces/character/max-drawable-textures.interface";
 import {GenderType} from "@/scripts/enums/gender.type";
 

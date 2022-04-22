@@ -72,19 +72,29 @@ import {
     faFile,
     faFolder,
     faPen,
-    faUniversalAccess
+    faUniversalAccess,
+    faBold,
+    faItalic,
+    faStrikethrough,
+    faCode,
+    faHeading,
+    faListUl,
+    faListOl,
+    faFileCode,
+    faQuoteLeft,
+    faGripLines
 } from '@fortawesome/free-solid-svg-icons'
 
 import MailingService from "@/scripts/services/mailing.service";
 import MdcService from "@/scripts/services/mdc.service";
-import {QuillEditor} from "@vueup/vue-quill";
 
 library.add(faSignInAlt, faSignOutAlt, faPlay, faArrowLeft, faArrowRight, faArrowDown, faArrowUp, faRedo, faUndo, faSave,
     faVenus, faMars, faCog, faCircle, faEraser, faTrash, faPlus, faPhone, faCaretLeft, faCaretRight,
     faComments, faAddressBook, faHeart, faMap, faGlobe, faSignal, faTimes, faPaperPlane,
     faMoneyBill, faCheck, faChevronLeft, faImages, faHandPointer, faTimesCircle, faEnvelope, faBuilding, faQuestionCircle,
     faShip, faShippingFast, faCaretSquareDown, faCaretSquareUp, faArchive, faStar, faPhoneSlash, faWindowClose, faCar, faChevronUp, faChevronDown,
-    faSquare, faBox, faUser, faUsers, faShoppingBag, faMapMarker, faInbox, faFile, faFolder, faPen, faUniversalAccess);
+    faSquare, faBox, faUser, faUsers, faShoppingBag, faMapMarker, faInbox, faFile, faFolder, faPen, faUniversalAccess, faBold, faItalic,
+    faStrikethrough, faCode, faHeading, faListUl, faListOl, faFileCode, faQuoteLeft, faGripLines);
 
 
 BankingService.getInstance().listenToEvents();
@@ -98,6 +108,5 @@ MdcService.getInstance().listenToEvents();
 createApp(App)
     .use(router)
     .use(ContextMenu)
-    .component('QuillEditor', QuillEditor)
     .component('font-awesome-icon', FontAwesomeIcon)
     .mount('#app')
