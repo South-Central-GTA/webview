@@ -148,7 +148,7 @@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" :disabled="!this.form.isRegistered" v-model="this.form.hasDrivingLicense" @change="send()">
                     <label class="form-check-label">
-                        Hat dein Charakter ein Füherschein?
+                        Hat dein Charakter ein Führerschein?
                     </label>
                 </div>
             </div>
