@@ -317,7 +317,7 @@ export default class GroupPermissionSettingsPage extends Vue {
 
         const company = groupService.getInstance().Company;
         
-        if (company !== null) {
+        if (company !== null && company !== undefined) {
             this.isCompany = true;
             this.isVehicleDealer = (company.licenses & LicensesType.VEHICLE_DEALERSHIP) === LicensesType.VEHICLE_DEALERSHIP;
 
@@ -334,7 +334,7 @@ export default class GroupPermissionSettingsPage extends Vue {
         
         const faction = groupService.getInstance().Faction;
         
-        if (faction !== null) {
+        if (faction !== null && faction !== undefined) {
             this.isFaction = true;
             
             this.hasMdcOperator = (rank.groupPermission & GroupPermission.MDC_OPERATOR) === GroupPermission.MDC_OPERATOR;
