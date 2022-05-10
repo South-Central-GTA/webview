@@ -222,6 +222,14 @@ export default class CharCreator extends Vue {
         
         alt.on("charcreator:updatepurchaseorders", (purchaseOrders: CharacterCreatorPurchaseInterface[]) => this.onUpdatePurchaseOrders(purchaseOrders));
     }
+    
+    public unmounted(): void {
+        alt.off("charcreator:setcharacter");
+        alt.off("charcreator:setgender");
+        alt.off("charcreator:resetissaving");
+        alt.off("charcreator:resetcamerabuttons");
+        alt.off("charcreator:updatepurchaseorders");
+    }
 
     private onSetCharacter(character: CharacterInterface, maxDrawables: MaxDrawablesInterface, isNewCharacter: boolean): void {
         this.isNewCharacter = isNewCharacter;
@@ -339,7 +347,7 @@ export default class CharCreator extends Vue {
             && this.tabIndex !== 4
             && this.tabIndex !== 5
             && index !== 6 && index !== 7 && index !== 6) {
-            alt.emit("charcreator:resetcamera");
+            alt.emitServer("charcreator:resetcamera");
         }
 
         this.tabIndex = index;

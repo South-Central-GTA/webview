@@ -89,6 +89,7 @@ export default class TattooMenu extends Vue {
         };
 
         this.index = -1;
+        this.name = "";
 
         this.$emit("update-tattoo", this.tattoo);
     }

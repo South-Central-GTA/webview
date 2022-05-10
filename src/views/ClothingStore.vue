@@ -65,6 +65,10 @@ export default class ClothingStore extends Vue {
         alt.on("clothingstore:setcharacter", (maxDrawables: MaxDrawablesInterface, gender: GenderType) => this.onSetCharacter(maxDrawables, gender));
     }
 
+    public unmounted(): void {
+        alt.off("clothingstore:setcharacter");
+    }
+
     private onSetCharacter(maxDrawables: MaxDrawablesInterface, gender: GenderType): void {
         this.isSaving = false;
 

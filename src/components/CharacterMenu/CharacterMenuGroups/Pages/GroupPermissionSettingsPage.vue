@@ -243,7 +243,6 @@ import alt from '@/scripts/services/alt.service';
 import groupService from '@/scripts/services/group.service';
 import {GroupPermission} from '@/scripts/enums/group.permission';
 import {GroupRankInterface} from '@/scripts/interfaces/group/group-rank.interface';
-import {CompanyInterface} from "@/scripts/interfaces/company/company.interface";
 import {LicensesType} from "@/scripts/enums/license.type";
 import {Vue} from "vue-class-component";
 import {GroupInterface} from "@/scripts/interfaces/group/group.interface";
@@ -318,7 +317,7 @@ export default class GroupPermissionSettingsPage extends Vue {
 
         const company = groupService.getInstance().Company;
         
-        if (company !== undefined) {
+        if (company !== null) {
             this.isCompany = true;
             this.isVehicleDealer = (company.licenses & LicensesType.VEHICLE_DEALERSHIP) === LicensesType.VEHICLE_DEALERSHIP;
 
@@ -335,7 +334,7 @@ export default class GroupPermissionSettingsPage extends Vue {
         
         const faction = groupService.getInstance().Faction;
         
-        if (faction !== undefined) {
+        if (faction !== null) {
             this.isFaction = true;
             
             this.hasMdcOperator = (rank.groupPermission & GroupPermission.MDC_OPERATOR) === GroupPermission.MDC_OPERATOR;

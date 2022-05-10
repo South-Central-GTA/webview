@@ -1,7 +1,7 @@
 <template>
     <div class="mdc-character-record">
         <div class="content h-100 row m-4">
-            <div class="col-4">
+            <div class="col-3">
                 <h3>{{ characterName }}</h3>
                 <h4>Informationen:</h4>
                 <p v-if="phoneNumbers.length === 0"><b>Handynummern:</b> Keine Suchergebnisse!</p>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <h4>Records:</h4>
 
                 <div v-if="records.length !== 0" class="big-list-holder">
@@ -91,7 +91,7 @@
                     </button>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <h4>Notizen:</h4>
 
                 <div v-if="notes.length !== 0" class="big-list-holder">
@@ -106,9 +106,18 @@
 
                     <button type="button" class="float-end mt-1" @click="createNote()">
                         Notiz hinzufügen
-                    </button> 
+                    </button>
                 </div>
-               
+
+            </div>
+            <div class="col-3">
+                <h4>Tickets:</h4>
+
+                <div v-if="tickets.length !== 0" class="big-list-holder">
+                    <p v-for="ticket in tickets" v-bind:key="ticket.referenceId">
+                        [{{ ticket.referenceId }}] {{ ticket.reason }}<br>Bezahlt: {{ ticket.payed ? "Ja" : "Nein" }}<br> <span class="date-text">{{ ticket.creatorCharacterName }} - {{ getDate(ticket.createdAtJson) }}</span>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -126,6 +135,7 @@ import {PersonalLicenseType} from "@/scripts/enums/personal-license.type";
 import alt from "@/scripts/services/alt.service";
 import MdcService from "@/scripts/services/mdc.service";
 import {MdcSearchType} from "@/scripts/enums/mdc-search.type";
+import {PoliceTicketInterface} from "@/scripts/interfaces/mdc/police-ticket.interface";
 
 @Options({
     components: {
@@ -139,6 +149,7 @@ export default class MdcCharacterRecord extends Vue {
     private phoneNumbers: string[] = [];
     private records: CriminalRecordInterface[] = [];
     private notes: MdcNoteInterface[] = [];
+    private tickets: PoliceTicketInterface[] = [];
     private houses: HouseInterface[] = [];
     private vehicles: VehicleInterface[] = [];
     private hasDrivingLicense: boolean = false;
@@ -162,7 +173,9 @@ export default class MdcCharacterRecord extends Vue {
         MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
     
-    public setup(character: CharacterInterface, records: CriminalRecordInterface[], notes: MdcNoteInterface[], vehicles: VehicleInterface[], houses: HouseInterface[], bankAccounts: BankAccountInterface[], phoneNumbers: string[]): void {
+    public setup(character: CharacterInterface, records: CriminalRecordInterface[], tickets: PoliceTicketInterface[], notes: MdcNoteInterface[], 
+                 vehicles: VehicleInterface[], houses: HouseInterface[], bankAccounts: BankAccountInterface[], phoneNumbers: string[]): void {
+        
         this.characterId = character.id;
         this.characterName = character.name;
 
@@ -172,6 +185,7 @@ export default class MdcCharacterRecord extends Vue {
         });
         
         this.records = records;
+        this.tickets = tickets;
         this.notes = notes;
         this.vehicles = vehicles;
         this.houses = houses;

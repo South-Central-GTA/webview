@@ -49,6 +49,10 @@ export default class SignIn extends Vue {
     public mounted(): void {
         alt.on("signin:showerror", (args: any[]) => this.setErrorMessage(args[0]));
     }
+    
+    public unmounted(): void {
+        alt.off("signin:showerror");
+    }
 
     private reset(): void {
         this.tryLogin = false;

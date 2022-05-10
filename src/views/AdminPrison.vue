@@ -3,7 +3,7 @@
         <div class="card w-25 m-5">
             <div class="card-body">
                 <h5 class="card-title">Admin Prison</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Du hast offenbar Mist gebaut</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Du hast offenbar Mist gebaut.</h6>
                 <p class="card-text">Laufe die roten Checkpoints ab. Wenn du mit deiner Strafe durch bist, kommst du in
                     die Charakterauswahl zurück.</p>
 
@@ -30,6 +30,11 @@ export default class AdminPrison extends Vue {
 
         alt.on("adminprison:start", (totalCheckpoints: number) => this.start(totalCheckpoints));
         alt.on("adminprison:update", (leftCheckpoints: number) => this.update(leftCheckpoints));
+    }
+    
+    public unmounted() {
+        alt.off("adminprison:start");
+        alt.off("adminprison:update");
     }
 
     private start(totalCheckpoints: number): void {

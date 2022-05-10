@@ -6,15 +6,14 @@
                 <button type="button" class="w-100 m-2" @click="openPageId(0)">Home</button>
                 <button type="button" class="w-100 m-2" @click="openPageId(1)">Suche</button>
                 <button type="button" class="w-100 m-2" @click="openPageId(2)">APB</button>
-                <button type="button" class="w-100 m-2" @click="openPageId(3)">Firearm Cases</button>
-                <button type="button" class="w-100 m-2" @click="openPageId(4)">Dateien</button>
+                <button type="button" class="w-100 m-2" @click="openPageId(3)">Dateien</button>
             </div>
         </div>
         
         <mdc-pd-home ref="home" :hidden="pageId !== 0"></mdc-pd-home>
         <mdc-search ref="search" :hidden="pageId !== 1"></mdc-search>
-        
-        <mdc-files ref="files" v-on:show-notification="onShowNotification" :hidden="pageId !== 4"></mdc-files>
+        <mdc-apb ref="apb" :hidden="pageId !== 2"></mdc-apb>
+        <mdc-files ref="files" v-on:show-notification="onShowNotification" :hidden="pageId !== 3"></mdc-files>
 
         <mdc-character-record ref="characterRecord" :hidden="pageId !== 1000"></mdc-character-record>
         <mdc-phone-record ref="phoneRecord" :hidden="pageId !== 1001"></mdc-phone-record>
@@ -50,11 +49,14 @@ import MdcWeaponRecord from "@/components/MDC/Factions/PD/MdcWeaponRecord.vue";
 import {CallSignInterface} from "@/scripts/interfaces/mdc/call-sign.interface";
 import {MdcSearchEntityInterface} from "@/scripts/interfaces/mdc-search-entity.interface";
 import MdcFiles from "@/components/MDC/General/MdcFiles.vue";
-import {FileInterface} from "@/scripts/interfaces/file.interface";
 import MdcFile from "@/components/MDC/General/MdcFile.vue";
+import {PoliceTicketInterface} from "@/scripts/interfaces/mdc/police-ticket.interface";
+import MdcApb from "@/components/MDC/Factions/PD/MdcApb.vue";
+import {ApbEntryInterface} from "@/scripts/interfaces/mdc/apb-entry.interface";
 
 @Options({
     components: {
+        MdcApb,
         MdcFile,
         MdcFiles,
         MdcMailAccountRecord,
@@ -71,6 +73,7 @@ import MdcFile from "@/components/MDC/General/MdcFile.vue";
 export default class MdcPdBase extends Vue {
     @Ref() private readonly home!: MdcPdHome;
     @Ref() private readonly search!: MdcSearch;
+    @Ref() private readonly apb!: MdcApb;
     @Ref() private readonly characterRecord!: MdcCharacterRecord;
     @Ref() private readonly phoneRecord!: MdcPhoneRecord;
     @Ref() private readonly vehicleRecord!: MdcVehicleRecord;
@@ -87,7 +90,8 @@ export default class MdcPdBase extends Vue {
         
         MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
 
-        alt.on("policemdc:opencharacterrecord", (character: CharacterInterface, records: CriminalRecordInterface[], nodes: MdcNoteInterface[], vehicles: VehicleInterface[], houses: HouseInterface[], bankAccounts: BankAccountInterface[], phoneNumbers: string[]) => this.onOpenCharacterRecord(character, records, nodes, vehicles, houses, bankAccounts, phoneNumbers));
+        alt.on("policemdc:openapbscreen", (args: any[]) => this.onOpenApbScreen(args[0]));
+        alt.on("policemdc:opencharacterrecord", (character: CharacterInterface, records: CriminalRecordInterface[], tickets: PoliceTicketInterface[], nodes: MdcNoteInterface[], vehicles: VehicleInterface[], houses: HouseInterface[], bankAccounts: BankAccountInterface[], phoneNumbers: string[]) => this.onOpenCharacterRecord(character, records, tickets, nodes, vehicles, houses, bankAccounts, phoneNumbers));
         alt.on("policemdc:openphonerecord", (args: any[]) => this.onOpenPhoneRecord(args[0], args[1], args[2], args[3]));
         alt.on("policemdc:openvehiclerecord", (args: any[]) => this.onOpenVehicleRecord(args[0], args[1], args[2], args[3], args[4], args[5]));
         alt.on("policemdc:openbankaccountrecord", (args: any[]) => this.onOpenBankAccountRecord(args[0], args[1]));
@@ -101,6 +105,7 @@ export default class MdcPdBase extends Vue {
     public close(): void {
         MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
         
+        alt.off("policemdc:openapbscreen");
         alt.off("policemdc:opencharacterrecord");
         alt.off("policemdc:openphonerecord");
         alt.off("policemdc:openvehiclerecord");
@@ -119,9 +124,14 @@ export default class MdcPdBase extends Vue {
         this.isOperator = value;
     }
     
-    private onOpenCharacterRecord(character: CharacterInterface, records: CriminalRecordInterface[], notes: MdcNoteInterface[], vehicles: VehicleInterface[], houses: HouseInterface[], bankAccounts: BankAccountInterface[], phoneNumbers: string[]): void {
+    private onOpenApbScreen(bulletIns: ApbEntryInterface[]): void {
+        this.apb.setup(FactionType.POLICE_DEPARTMENT, bulletIns);
+    }
+    
+    private onOpenCharacterRecord(character: CharacterInterface, records: CriminalRecordInterface[], tickets: PoliceTicketInterface[],
+                                  notes: MdcNoteInterface[], vehicles: VehicleInterface[], houses: HouseInterface[], bankAccounts: BankAccountInterface[], phoneNumbers: string[]): void {
         this.pageId = 1000;
-        this.characterRecord.setup(character, records, notes, vehicles, houses, bankAccounts, phoneNumbers);
+        this.characterRecord.setup(character, records, tickets, notes, vehicles, houses, bankAccounts, phoneNumbers);
     }
     
     private onOpenPhoneRecord(phoneId: number, phoneNumber: string, ownerCharacterName: string, notes: MdcNoteInterface[]): void {
@@ -161,7 +171,7 @@ export default class MdcPdBase extends Vue {
         this.pageId = id;
         
         switch (id) {
-            case 4:
+            case 3:
                 this.files.onCloseFile();
                 break;
         }

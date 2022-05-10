@@ -5,12 +5,14 @@
             <div class="btn-group-vertical m-4">
                 <button type="button" class="w-100 m-2" @click="openPageId(0)">Home</button>
                 <button type="button" class="w-100 m-2" @click="openPageId(1)">Suche</button>
-                <button type="button" class="w-100 m-2" @click="openPageId(2)">Akten</button>
+                <button type="button" class="w-100 m-2" @click="openPageId(2)">News</button>
+                <button type="button" class="w-100 m-2" @click="openPageId(3)">Dateien</button>
             </div>
         </div>
         
         <mdc-fd-home ref="home" :hidden="pageId !== 0"></mdc-fd-home>
         <mdc-search ref="search" :hidden="pageId !== 1"></mdc-search>
+        <mdc-apb ref="apb" :hidden="pageId !== 2"></mdc-apb>
         <mdc-files ref="files" v-on:show-notification="onShowNotification" :hidden="pageId !== 2"></mdc-files>
         
         <mdc-patient-record ref="patientRecord" :hidden="pageId !== 1000"></mdc-patient-record>
@@ -36,9 +38,12 @@ import MdcPatientRecord from "@/components/MDC/Factions/FD/MdcPatientRecord.vue"
 import MdcFiles from "@/components/MDC/General/MdcFiles.vue";
 import {FileInterface} from "@/scripts/interfaces/file.interface";
 import MdcFile from "@/components/MDC/General/MdcFile.vue";
+import {ApbEntryInterface} from "@/scripts/interfaces/mdc/apb-entry.interface";
+import MdcApb from "@/components/MDC/Factions/PD/MdcApb.vue";
 
 @Options({
     components: {
+        MdcApb,
         MdcFile,
         MdcFiles,
         MdcPatientRecord,
@@ -50,6 +55,7 @@ import MdcFile from "@/components/MDC/General/MdcFile.vue";
 export default class MdcFdBase extends Vue {
     @Ref() private readonly home!: MdcFdHome;
     @Ref() private readonly search!: MdcSearch;
+    @Ref() private readonly apb!: MdcApb;
     @Ref() private readonly patientRecord!: MdcPatientRecord;
 
     private pageId: number = 0;
@@ -60,6 +66,7 @@ export default class MdcFdBase extends Vue {
         
         MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
 
+        alt.on("firemdc:openapbscreen", (bulletIns: ApbEntryInterface[]) => this.onOpenApbScreen(bulletIns));
         alt.on("firemdc:openpatientrecord", (character: CharacterInterface, houses: HouseInterface[], phoneNumbers: string[], medicalHistory: MdcMedicalEntryInterface[], allergies: MdcAllergyInterface[]) => this.onOpenPatientRecord(character, houses, phoneNumbers, medicalHistory, allergies));
 
         this.search.setup(FactionType.FIRE_DEPARTMENT);
@@ -68,6 +75,7 @@ export default class MdcFdBase extends Vue {
     public close(): void {
         MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
         
+        alt.off("firemdc:openapbscreen");
         alt.off("firemdc:openpatientrecord");
     }
 
@@ -79,6 +87,10 @@ export default class MdcFdBase extends Vue {
         this.isOperator = value;
     }
 
+    private onOpenApbScreen(bulletIns: ApbEntryInterface[]): void {
+        this.apb.setup(FactionType.FIRE_DEPARTMENT, bulletIns);
+    }
+    
     private onOpenPatientRecord(character: CharacterInterface, houses: HouseInterface[], phoneNumbers: string[], medicalHistory: MdcMedicalEntryInterface[], allergies: MdcAllergyInterface[]): void {
         this.pageId = 1000;
         this.patientRecord.setup(character, houses, phoneNumbers, medicalHistory, allergies);

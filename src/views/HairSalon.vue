@@ -58,6 +58,10 @@ export default class HairSalon extends Vue {
         alt.on("hairsalon:setcharacter", (character: CharacterInterface) => this.setCharacter(character));
     }
 
+    public unmounted(): void {
+        alt.off("hairsalon:setcharacter");
+    }
+
     private setCharacter(character: CharacterInterface): void {
         this.isSaving = false;
 

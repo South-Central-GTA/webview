@@ -81,6 +81,10 @@ export default class SignUp extends Vue {
         alt.on("authmenu:showerror", (error: string) => this.setErrorMessage(error));
     }
 
+    public unmounted(): void {
+        alt.off("authmenu:showerror");
+    }
+
     private reset(): void {
         this.tryLogin = false;
         this.password = "";
