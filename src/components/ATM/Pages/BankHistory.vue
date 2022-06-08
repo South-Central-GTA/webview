@@ -1,100 +1,62 @@
 <template>
-    <div class="bank-history">
-        <div class="phone-header" v-if="mobileVersion">
-            <button class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='bank-history'>
+        <div class='phone-header' v-if='mobileVersion'>
+            <button class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Umsätze</span>
             </button>
         </div>
 
-        <div class="m-4" v-if="mobileVersion">
-            <input
-                type="text"
-                @input="search()"
-                v-model="entrySearch"
-                class="form-control w-100"
-                placeholder="Umsätze durchsuchen..."
-            />
+        <div class='m-4' v-if='mobileVersion'>
+            <input type='text' @input='search()' v-model='entrySearch' class='form-control w-100' placeholder='Umsätze durchsuchen...' />
         </div>
-        <div class="row" v-else>
-            <div class="col-10">
-                <input
-                    type="text"
-                    @input="search()"
-                    v-model="entrySearch"
-                    class="form-control m-4"
-                    placeholder="Umsätze durchsuchen..."
-                />
+        <div class='row' v-else>
+            <div class='col-10'>
+                <input type='text' @input='search()' v-model='entrySearch' class='form-control m-4' placeholder='Umsätze durchsuchen...' />
             </div>
 
-            <div class="col-2">
-                <button
-                    type="button"
-                    class="atm-close-button float-end"
-                    @click="back()"
-                >
-                    <font-awesome-icon class="center" icon="caret-left"/>
+            <div class='col-2'>
+                <button type='button' class='atm-close-button float-end' @click='back()'>
+                    <font-awesome-icon class='center' icon='caret-left' />
                 </button>
             </div>
         </div>
 
-        <div class="history-block pb-5">
-            <button
-                type="button"
-                class="btn btn-secondary p-2"
-                v-if="currentSelectionIndex !== 0"
-                @click="getNewerEntries()"
-            >
+        <div class='history-block pb-5'>
+            <button type='button' class='btn btn-secondary p-2' v-if='currentSelectionIndex !== 0' @click='getNewerEntries()'>
                 Neuer ...
             </button>
-            <div
-                class="row entry"
-                v-bind:class="{ 'entry-atm': !mobileVersion }"
-                v-for="entry in history"
-                v-bind:key="entry.id"
-            >
-                <div class="col-12">
-                    <p class="text-start float-start">
-                        {{ entry.purposeOfUse }}
-                    </p>
-                    <span
-                        class="money float-end"
-                        v-bind:class="{ positive: entry.income, negative: !entry.income }"
-                    >
-            <span v-if="!entry.income">-</span>{{ entry.amount }}$
+            <div class='row entry' v-bind:class="{ 'entry-atm': !mobileVersion }" v-for='entry in history' v-bind:key='entry.id'>
+                <div class='col-12'>
+                    <p class='text-start float-start'>
+                        {{ entry.purposeOfUse }} </p>
+                    <span class='money float-end' v-bind:class='{ positive: entry.income, negative: !entry.income }'>
+            <span v-if='!entry.income'>-</span>{{ entry.amount }}$
           </span>
                 </div>
-                <div class="col-12" v-if="mobileVersion">
-                    <p class="text-start text-muted">
-                        {{ getDate(entry.sendetAtJson) }} | {{ getType(entry.type) }}
-                    </p>
+                <div class='col-12' v-if='mobileVersion'>
+                    <p class='text-start text-muted'>
+                        {{ getDate(entry.sendetAtJson) }} | {{ getType(entry.type) }} </p>
                 </div>
-                <div class="col-8" v-if="!mobileVersion">
-                    <p class="text-start text-muted">
-                        {{ getDate(entry.sendetAtJson) }}
-                    </p>
+                <div class='col-8' v-if='!mobileVersion'>
+                    <p class='text-start text-muted'>
+                        {{ getDate(entry.sendetAtJson) }} </p>
                 </div>
-                <div class="col-4" v-if="!mobileVersion">
-                    <p class="text-end text-muted">
-                        {{ getType(entry.type) }}
-                    </p>
+                <div class='col-4' v-if='!mobileVersion'>
+                    <p class='text-end text-muted'>
+                        {{ getType(entry.type) }} </p>
                 </div>
             </div>
-            <button
-                type="button"
-                class="btn btn-secondary p-2"
-                v-if="
+            <button type='button' class='btn btn-secondary p-2' v-if='
           this.STEPS * currentSelectionIndex + this.STEPS < allHistory.length
-        "
-                @click="getOlderEntries()"
-            >
+        ' @click='getOlderEntries()'>
                 Ältere ...
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {BankHistoryEntryInterface} from "@/scripts/interfaces/bank/bank-history-entry.interface";
 import {BankHistoryType} from "@/scripts/enums/bank-history.type";
@@ -208,7 +170,7 @@ export default class BankHistory extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .bank-history {
     position: absolute;
     top: 0;

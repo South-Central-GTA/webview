@@ -1,156 +1,72 @@
 <template>
-    <div class="face-features">
+    <div class='face-features'>
         <h4>Gesichtszüge</h4>
-        <div class="row">
-            <div class="col-6">
+        <div class='row'>
+            <div class='col-6'>
                 <h5>Stirn</h5>
-                <two-d-slider
-                    ref="browSlider"
-                    topText="Hoch"
-                    bottomText="Runter"
-                    leftText="Nach Innen"
-                    rightText="Nach Außen"
-                    v-on:change-position="updateBrow($event)"
-                />
+                <two-d-slider ref='browSlider' topText='Hoch' bottomText='Runter' leftText='Nach Innen' rightText='Nach Außen' v-on:change-position='updateBrow($event)' />
             </div>
-            <div class="col-6">
+            <div class='col-6'>
                 <h5>Nase</h5>
-                <two-d-slider
-                    ref="noseSlider"
-                    topText="Hoch"
-                    bottomText="Runter"
-                    leftText="Dünn"
-                    rightText="Breit"
-                    v-on:change-position="updateNose($event)"
-                />
+                <two-d-slider ref='noseSlider' topText='Hoch' bottomText='Runter' leftText='Dünn' rightText='Breit' v-on:change-position='updateNose($event)' />
             </div>
-            <div class="col-6">
+            <div class='col-6'>
                 <h5>Nasenprofil</h5>
-                <two-d-slider
-                    ref="noseProfilSlider"
-                    topText="Kurvig"
-                    bottomText="Gekrümmt"
-                    leftText="Kurz"
-                    rightText="Lang"
-                    v-on:change-position="updateNoseProfil($event)"
-                />
+                <two-d-slider ref='noseProfilSlider' topText='Kurvig' bottomText='Gekrümmt' leftText='Kurz' rightText='Lang' v-on:change-position='updateNoseProfil($event)' />
             </div>
-            <div class="col-6">
+            <div class='col-6'>
                 <h5>Nasenspitze</h5>
-                <two-d-slider
-                    ref="noseTipSlider"
-                    topText="Hoch"
-                    bottomText="Runter"
-                    leftText="Links"
-                    rightText="Rechts"
-                    v-on:change-position="updateNoseTip($event)"
-                />
+                <two-d-slider ref='noseTipSlider' topText='Hoch' bottomText='Runter' leftText='Links' rightText='Rechts' v-on:change-position='updateNoseTip($event)' />
             </div>
-            <div class="col-6">
+            <div class='col-6'>
                 <h5>Wangenknochen</h5>
-                <two-d-slider
-                    ref="cheekboneSlider"
-                    topText="Hoch"
-                    bottomText="Runter"
-                    leftText="Nach Innen"
-                    rightText="Nach Außen"
-                    v-on:change-position="updateCheekbone($event)"
-                />
+                <two-d-slider ref='cheekboneSlider' topText='Hoch' bottomText='Runter' leftText='Nach Innen' rightText='Nach Außen' v-on:change-position='updateCheekbone($event)' />
             </div>
-            <div class="col-6">
+            <div class='col-6'>
                 <h5>Kiefer</h5>
-                <two-d-slider
-                    ref="jawSlider"
-                    topText="Rund"
-                    bottomText="Kantig"
-                    leftText="Oval"
-                    rightText="Breit"
-                    v-on:change-position="updateJaw($event)"
-                />
+                <two-d-slider ref='jawSlider' topText='Rund' bottomText='Kantig' leftText='Oval' rightText='Breit' v-on:change-position='updateJaw($event)' />
             </div>
-            <div class="col-6">
+            <div class='col-6'>
                 <h5>Kinn</h5>
-                <two-d-slider
-                    ref="chinSlider"
-                    topText="Spitz"
-                    bottomText="Eckig"
-                    leftText="Nach Innen"
-                    rightText="Nach Außen"
-                    v-on:change-position="updateChin($event)"
-                />
+                <two-d-slider ref='chinSlider' topText='Spitz' bottomText='Eckig' leftText='Nach Innen' rightText='Nach Außen' v-on:change-position='updateChin($event)' />
             </div>
-            <div class="col-6">
+            <div class='col-6'>
                 <h5>Kinnform</h5>
-                <two-d-slider
-                    ref="chinShapeSlider"
-                    topText="Rund"
-                    bottomText="Grübchen"
-                    leftText="Kurz"
-                    rightText="Lang"
-                    v-on:change-position="updateChinShape($event)"
-                />
+                <two-d-slider ref='chinShapeSlider' topText='Rund' bottomText='Grübchen' leftText='Kurz' rightText='Lang' v-on:change-position='updateChinShape($event)' />
             </div>
 
             <h5>Augen</h5>
-            <input
-                type="range"
-                class="form-range-dark"
-                min="-100"
-                max="100"
-                v-model="eyesSize"
-                @input="onEyesSizeUpdated()"
-            />
-            <div style="margin: unset">
-                <p class="float-start">Eng</p>
-                <p class="float-end">Weit</p>
+            <input type='range' class='form-range-dark' min='-100' max='100' v-model='eyesSize' @input='onEyesSizeUpdated()' />
+            <div style='margin: unset'>
+                <p class='float-start'>Eng</p>
+                <p class='float-end'>Weit</p>
             </div>
 
             <h5>Wangen</h5>
-            <input
-                type="range"
-                class="form-range-dark"
-                min="-100"
-                max="100"
-                v-model="cheekWidth"
-                @input="onCheekWidthUpdated()"
-            />
-            <div style="margin: unset">
-                <p class="float-start">Eingefallen</p>
-                <p class="float-end">Geschwollen</p>
+            <input type='range' class='form-range-dark' min='-100' max='100' v-model='cheekWidth' @input='onCheekWidthUpdated()' />
+            <div style='margin: unset'>
+                <p class='float-start'>Eingefallen</p>
+                <p class='float-end'>Geschwollen</p>
             </div>
 
             <h5>Nacken</h5>
-            <input
-                type="range"
-                class="form-range-dark"
-                min="-100"
-                max="100"
-                v-model="neckWidth"
-                @input="onNeckWidthUpdated()"
-            />
-            <div style="margin: unset">
-                <p class="float-start">Eng</p>
-                <p class="float-end">Weit</p>
+            <input type='range' class='form-range-dark' min='-100' max='100' v-model='neckWidth' @input='onNeckWidthUpdated()' />
+            <div style='margin: unset'>
+                <p class='float-start'>Eng</p>
+                <p class='float-end'>Weit</p>
             </div>
 
             <h5>Lippen</h5>
-            <input
-                type="range"
-                class="form-range-dark"
-                min="-100"
-                max="100"
-                v-model="lipsThickness"
-                @input="onLipsThicknessUpdated()"
-            />
-            <div style="margin: unset">
-                <p class="float-start">Dick</p>
-                <p class="float-end">Dünn</p>
+            <input type='range' class='form-range-dark' min='-100' max='100' v-model='lipsThickness' @input='onLipsThicknessUpdated()' />
+            <div style='margin: unset'>
+                <p class='float-start'>Dick</p>
+                <p class='float-end'>Dünn</p>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import TwoDSlider from "../TwoDSlider.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";

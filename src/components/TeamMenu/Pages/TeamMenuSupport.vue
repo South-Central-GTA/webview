@@ -1,9 +1,8 @@
 <template>
-    <div class="team-menu-support">
-    </div>
+    <div class='team-menu-support'></div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 
 import {Vue} from "vue-class-component";
 

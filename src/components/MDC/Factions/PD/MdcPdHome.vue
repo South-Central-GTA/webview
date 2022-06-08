@@ -1,51 +1,42 @@
 <template>
-    <div class="mdc-pd-home">
-        <div class="content row">
-            <div class="col-6">
-                <div class="m-4">
-                    <div class="row p-2" v-if="hasCallSign">
-                        <div class="col-12">
-                            <button class="w-100" type="button" @click="removeCallSign">
+    <div class='mdc-pd-home'>
+        <div class='content row'>
+            <div class='col-6'>
+                <div class='m-4'>
+                    <div class='row p-2' v-if='hasCallSign'>
+                        <div class='col-12'>
+                            <button class='w-100' type='button' @click='removeCallSign'>
                                 Callsign austragen
                             </button>
                         </div>
                     </div>
-                    <div class="row p-2" v-else>
-                        <div class="col-8">
-                            <input
-                                type="text"
-                                class="w-100"
-                                v-model="callSign"
-                                placeholder="5L10"
-                                maxlength="12"
-                            />
+                    <div class='row p-2' v-else>
+                        <div class='col-8'>
+                            <input type='text' class='w-100' v-model='callSign' placeholder='5L10' maxlength='12' />
                         </div>
-                        <div class="col-4">
-                            <button class="w-100" type="button" @click="addCallSign">
+                        <div class='col-4'>
+                            <button class='w-100' type='button' @click='addCallSign'>
                                 Callsign eintragen
                             </button>
                         </div>
                     </div>
-                    <div class="table-holder">
-                        <table class="table table-striped table-hover">
+                    <div class='table-holder'>
+                        <table class='table table-striped table-hover'>
                             <thead>
                             <tr>
-                                <th v-if="isOperator" scope="col"></th>
-                                <th scope="col">Callsign</th>
-                                <th scope="col">Officer</th>
+                                <th v-if='isOperator' scope='col'></th>
+                                <th scope='col'>Callsign</th>
+                                <th scope='col'>Officer</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="sign in callSigns" v-bind:key="sign.id">
-                                <td v-if="isOperator">
-                                    <button
-                                        type="button"
-                                        @click="deleteCallSign(sign.callSign)"
-                                    >
+                            <tr v-for='sign in callSigns' v-bind:key='sign.id'>
+                                <td v-if='isOperator'>
+                                    <button type='button' @click='deleteCallSign(sign.callSign)'>
                                         X
                                     </button>
                                 </td>
-                                <th scope="row">{{ sign.callSign }}</th>
+                                <th scope='row'>{{ sign.callSign }}</th>
                                 <td>{{ sign.names }}</td>
                             </tr>
                             </tbody>
@@ -53,24 +44,24 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="m-4">
+            <div class='col-6'>
+                <div class='m-4'>
                     <h2>911 NOTRUFE</h2>
-                    <div class="table-holder">
-                        <table class="table table-striped table-hover">
+                    <div class='table-holder'>
+                        <table class='table table-striped table-hover'>
                             <thead>
                             <tr>
-                                <th v-if="isOperator" scope="col"></th>
-                                <th scope="col">Uhrzeit</th>
-                                <th scope="col">Nummer</th>
-                                <th scope="col">Beschreibung</th>
-                                <th scope="col">Ort</th>
+                                <th v-if='isOperator' scope='col'></th>
+                                <th scope='col'>Uhrzeit</th>
+                                <th scope='col'>Nummer</th>
+                                <th scope='col'>Beschreibung</th>
+                                <th scope='col'>Ort</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="call in emergencyCalls" v-bind:key="call.id">
-                                <td v-if="isOperator">
-                                    <button type="button" @click="deleteEmergencyCall(call.id)">
+                            <tr v-for='call in emergencyCalls' v-bind:key='call.id'>
+                                <td v-if='isOperator'>
+                                    <button type='button' @click='deleteEmergencyCall(call.id)'>
                                         X
                                     </button>
                                 </td>
@@ -88,7 +79,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import MdcService from "@/scripts/services/mdc.service";
@@ -191,7 +182,7 @@ export default class MdcPdHome extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-pd-home {
     background-color: #cecece;
     height: 100%;

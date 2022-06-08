@@ -1,60 +1,34 @@
 <template>
-    <div class="company-worker-edit">
-        <div class="phone-header">
-            <button type="button" class="icon-button" @click="save()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='company-worker-edit'>
+        <div class='phone-header'>
+            <button type='button' class='icon-button' @click='save()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Zurück & speichern</span>
             </button>
         </div>
 
-        <div class="worker-stats">
-            <div class="phone-gov-button-group">
-                <h6 class="job-position-label">{{ currentRankName }}</h6>
+        <div class='worker-stats'>
+            <div class='phone-gov-button-group'>
+                <h6 class='job-position-label'>{{ currentRankName }}</h6>
                 <h6>{{ member.characterName }}</h6>
-                <div class="row" style="padding-top: 0.5vw">
-                    <div class="col-4">
-                        <p style="padding-top: 0.3vw">Gehalt:</p>
+                <div class='row' style='padding-top: 0.5vw'>
+                    <div class='col-4'>
+                        <p style='padding-top: 0.3vw'>Gehalt:</p>
                     </div>
-                    <div class="col" style="padding: 0 0.8vw 0 0.2vw">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input
-                                ref="salaryInput"
-                                class="form-control"
-                                :value="member.salary"
-                                :readonly="ownProfile && !owner"
-                                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                type="number"
-                                @keypress="allowOnlyNumbers($event)"
-                                @focus="onFocus(true)"
-                                @blur="onFocus(false)"
-                                maxlength="5"
-                            />
+                    <div class='col' style='padding: 0 0.8vw 0 0.2vw'>
+                        <div class='input-group'>
+                            <span class='input-group-text'>$</span>
+                            <input ref='salaryInput' class='form-control' :value='member.salary' :readonly='ownProfile && !owner' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @keypress='allowOnlyNumbers($event)' @focus='onFocus(true)' @blur='onFocus(false)' maxlength='5' />
                         </div>
                     </div>
                 </div>
-                <button
-                    type="button"
-                    class="btn"
-                    :disabled="ownProfile || !rankUpPossible || owner"
-                    @click="rankCharacterUp()"
-                >
+                <button type='button' class='btn' :disabled='ownProfile || !rankUpPossible || owner' @click='rankCharacterUp()'>
                     Befördern
                 </button>
-                <button
-                    type="button"
-                    class="btn"
-                    :disabled="ownProfile || !rankDownPossible || owner"
-                    @click="rankCharacterDown()"
-                >
+                <button type='button' class='btn' :disabled='ownProfile || !rankDownPossible || owner' @click='rankCharacterDown()'>
                     Degradieren
                 </button>
-                <button
-                    type="button"
-                    class="btn"
-                    :disabled="ownProfile || owner"
-                    @click="kickCharacter()"
-                >
+                <button type='button' class='btn' :disabled='ownProfile || owner' @click='kickCharacter()'>
                     Kündigen
                 </button>
             </div>
@@ -62,7 +36,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import character from "@/scripts/services/character.service";
 import alt from "@/scripts/services/alt.service";
 import group from "@/scripts/services/group.service";
@@ -221,7 +195,7 @@ export default class CompanyWorkerEditPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .company-worker-edit {
     overflow: hidden;
     position: absolute;

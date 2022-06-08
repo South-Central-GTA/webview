@@ -1,52 +1,52 @@
 <template>
-    <div class="home-page">
-        <h1 class="clock-text">{{ clock }}</h1>
-        <h1 class="day-text">{{ day }}</h1>
+    <div class='home-page'>
+        <h1 class='clock-text'>{{ clock }}</h1>
+        <h1 class='day-text'>{{ day }}</h1>
 
-        <div class="app-group">
-            <div class="row">
-                <button class="app clear"></button>
-                <button class="app order" @click="openPageId(10)">
-                    <font-awesome-icon class="center" icon="ship"/>
+        <div class='app-group'>
+            <div class='row'>
+                <button class='app clear'></button>
+                <button class='app order' @click='openPageId(10)'>
+                    <font-awesome-icon class='center' icon='ship' />
                 </button>
-                <button class="app company" @click="openPageId(11)">
-                    <font-awesome-icon class="center" icon="building"/>
+                <button class='app company' @click='openPageId(11)'>
+                    <font-awesome-icon class='center' icon='building' />
                 </button>
-                <button class="app locating" @click="openPageId(12)">
-                    <font-awesome-icon class="center" icon="map-marker"/>
-                </button>
-            </div>
-            <div class="row">
-                <button class="app mail" @click="openPageId(5)">
-                    <font-awesome-icon class="center" icon="envelope"/>
-                </button>
-                <button class="app internet" @click="openPageId(6)">
-                    <font-awesome-icon class="center" icon="globe"/>
-                </button>
-                <button class="app clear"></button>
-                <button class="app bank" @click="openPageId(8)">
-                    <font-awesome-icon class="center" icon="money-bill"/>
+                <button class='app locating' @click='openPageId(12)'>
+                    <font-awesome-icon class='center' icon='map-marker' />
                 </button>
             </div>
-            <div class="row">
-                <button class="app phone" @click="openPageId(1)">
-                    <font-awesome-icon class="center" icon="phone"/>
+            <div class='row'>
+                <button class='app mail' @click='openPageId(5)'>
+                    <font-awesome-icon class='center' icon='envelope' />
                 </button>
-                <button class="app contacts" @click="openPageId(3)">
-                    <font-awesome-icon class="center" icon="address-book"/>
+                <button class='app internet' @click='openPageId(6)'>
+                    <font-awesome-icon class='center' icon='globe' />
                 </button>
-                <button class="app texting" @click="openPageId(2)">
-                    <font-awesome-icon class="center" icon="comments"/>
+                <button class='app clear'></button>
+                <button class='app bank' @click='openPageId(8)'>
+                    <font-awesome-icon class='center' icon='money-bill' />
                 </button>
-                <button class="app settings" @click="openPageId(4)">
-                    <font-awesome-icon class="center" icon="cog"/>
+            </div>
+            <div class='row'>
+                <button class='app phone' @click='openPageId(1)'>
+                    <font-awesome-icon class='center' icon='phone' />
+                </button>
+                <button class='app contacts' @click='openPageId(3)'>
+                    <font-awesome-icon class='center' icon='address-book' />
+                </button>
+                <button class='app texting' @click='openPageId(2)'>
+                    <font-awesome-icon class='center' icon='comments' />
+                </button>
+                <button class='app settings' @click='openPageId(4)'>
+                    <font-awesome-icon class='center' icon='cog' />
                 </button>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 
 export default class HomePage extends Vue {
@@ -107,7 +107,7 @@ export default class HomePage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .home-page {
     height: 100%;
     display: flex;

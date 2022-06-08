@@ -1,40 +1,31 @@
 <template>
-    <div
-        class="atm center"
-        :hidden="!active"
-        v-bind:class="{ enable: active, disable: !active }"
-    >
-        <button type="button" class="atm-close-button float-end" @click="close()">
-            <font-awesome-icon class="center" icon="sign-out-alt"/>
+    <div class='atm center' :hidden='!active' v-bind:class='{ enable: active, disable: !active }'>
+        <button type='button' class='atm-close-button float-end' @click='close()'>
+            <font-awesome-icon class='center' icon='sign-out-alt' />
         </button>
 
-        <active-bank-account
-            ref="activeBankAccount"
-            :hidden="currentTab !== 1"
-            v-on:close="close()"
-            v-on:back="resetTab()"
-        />
+        <active-bank-account ref='activeBankAccount' :hidden='currentTab !== 1' v-on:close='close()' v-on:back='resetTab()' />
 
-        <img class="logo" src="@/assets/images/phone/maze-bank-logo.png"/>
+        <img class='logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
-        <div class="bank-accounts-block">
-            <div v-for="bankAccount in bankAccounts" v-bind:key="bankAccount.id">
-                <div class="bank-account" @click="openBankAccount(bankAccount)">
+        <div class='bank-accounts-block'>
+            <div v-for='bankAccount in bankAccounts' v-bind:key='bankAccount.id'>
+                <div class='bank-account' @click='openBankAccount(bankAccount)'>
                     <h1>{{ bankAccount.bankDetails }}</h1>
-                    <h2 v-if="bankAccount.status !== 0">${{ bankAccount.amount }}</h2>
-                    <h2 v-if="bankAccount.status === 0">Wird noch eingerichtet ...</h2>
-                    <h2 v-if="bankAccount.type === 0">Privatkonto</h2>
-                    <h2 v-if="bankAccount.type === 1">Gruppenkonto</h2>
+                    <h2 v-if='bankAccount.status !== 0'>${{ bankAccount.amount }}</h2>
+                    <h2 v-if='bankAccount.status === 0'>Wird noch eingerichtet ...</h2>
+                    <h2 v-if='bankAccount.type === 0'>Privatkonto</h2>
+                    <h2 v-if='bankAccount.type === 1'>Gruppenkonto</h2>
                 </div>
             </div>
         </div>
-        <div class="no-bank-accounts-block" v-if="bankAccounts.length === 0">
+        <div class='no-bank-accounts-block' v-if='bankAccounts.length === 0'>
             <h2>Keine Konten verfügbar...</h2>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import banking from "@/scripts/services/banking.service";
 import ActiveBankAccount from "./Pages/ActiveBankAccount.vue";

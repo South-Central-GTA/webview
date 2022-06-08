@@ -1,16 +1,12 @@
 <template>
-    <div class="mdc-header-bar">
-        <button
-            type="button"
-            class="icon-button float-end p-3"
-            @click="closeButtonClicked()"
-        >
-            <font-awesome-icon class="center text-white" icon="times"/>
+    <div class='mdc-header-bar'>
+        <button type='button' class='icon-button float-end p-3' @click='closeButtonClicked()'>
+            <font-awesome-icon class='center text-white' icon='times' />
         </button>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 
@@ -27,7 +23,7 @@ export default class MdcHeaderBar extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-header-bar {
     flex-shrink: 0;
 }

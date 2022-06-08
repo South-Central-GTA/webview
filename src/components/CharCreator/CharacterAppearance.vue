@@ -1,254 +1,59 @@
 <template>
-    <div class="character-appearance">
+    <div class='character-appearance'>
         <h4>Erscheinungsbild</h4>
-        <div class="row">
-            <div class="col-6">
-                <div :hidden="gender !== 0">
-                    <appearance-menu
-                        ref="maleHairMenu"
-                        title="Haare"
-                        :colors="hairColors"
-                        :names="maleHairlist.map((mh) => mh.name)"
-                        :maxElements="maleHairlist.length"
-                        :clearNumber="0"
-                        :hasOpacity="false"
-                        :hasSecondaryColor="true"
-                        :menuIndex="1"
-                        :currentMenuIndex="menuIndex"
-                        v-on:request-menu="onMenuButtonClicked($event)"
-                        v-on:update-appearance="updateHair($event)"
-                    />
+        <div class='row'>
+            <div class='col-6'>
+                <div :hidden='gender !== 0'>
+                    <appearance-menu ref='maleHairMenu' title='Haare' :colors='hairColors' :names='maleHairlist.map((mh) => mh.name)' :maxElements='maleHairlist.length' :clearNumber='0' :hasOpacity='false' :hasSecondaryColor='true' :menuIndex='1' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateHair($event)' />
                 </div>
-                <div :hidden="gender !== 1">
-                    <appearance-menu
-                        ref="femaleHairMenu"
-                        title="Haare"
-                        :colors="hairColors"
-                        :names="femaleHairlist.map((fh) => fh.name)"
-                        :maxElements="femaleHairlist.length"
-                        :clearNumber="0"
-                        :hasOpacity="false"
-                        :hasSecondaryColor="true"
-                        :menuIndex="1"
-                        :currentMenuIndex="menuIndex"
-                        v-on:request-menu="onMenuButtonClicked($event)"
-                        v-on:update-appearance="updateHair($event)"
-                    />
+                <div :hidden='gender !== 1'>
+                    <appearance-menu ref='femaleHairMenu' title='Haare' :colors='hairColors' :names='femaleHairlist.map((fh) => fh.name)' :maxElements='femaleHairlist.length' :clearNumber='0' :hasOpacity='false' :hasSecondaryColor='true' :menuIndex='1' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateHair($event)' />
                 </div>
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="eyeBrowsMenu"
-                    title="Augenbrauen"
-                    :colors="hairColors"
-                    :names="eyebrowNames"
-                    :maxElements="33"
-                    :clearNumber="255"
-                    :hasOpacity="true"
-                    :hasSecondaryColor="false"
-                    :menuIndex="2"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateEyebrow($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='eyeBrowsMenu' title='Augenbrauen' :colors='hairColors' :names='eyebrowNames' :maxElements='33' :clearNumber='255' :hasOpacity='true' :hasSecondaryColor='false' :menuIndex='2' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateEyebrow($event)' />
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="facialHairMenu"
-                    title="Gesichtsbehaarung"
-                    :colors="hairColors"
-                    :names="facialHairNames"
-                    :maxElements="28"
-                    :clearNumber="255"
-                    :hasOpacity="true"
-                    :hasSecondaryColor="false"
-                    :menuIndex="3"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateFacialhair($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='facialHairMenu' title='Gesichtsbehaarung' :colors='hairColors' :names='facialHairNames' :maxElements='28' :clearNumber='255' :hasOpacity='true' :hasSecondaryColor='false' :menuIndex='3' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateFacialhair($event)' />
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="chestHairMenu"
-                    title="Brustbehaarung"
-                    :colors="hairColors"
-                    :names="null"
-                    :maxElements="16"
-                    :clearNumber="255"
-                    :hasOpacity="true"
-                    :hasSecondaryColor="false"
-                    :menuIndex="4"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateChesthair($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='chestHairMenu' title='Brustbehaarung' :colors='hairColors' :names='null' :maxElements='16' :clearNumber='255' :hasOpacity='true' :hasSecondaryColor='false' :menuIndex='4' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateChesthair($event)' />
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="ageingMenu"
-                    title="Hautalterung"
-                    :colors="null"
-                    :names="null"
-                    :maxElements="14"
-                    :clearNumber="255"
-                    :hasOpacity="true"
-                    :hasSecondaryColor="false"
-                    :menuIndex="5"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateAging($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='ageingMenu' title='Hautalterung' :colors='null' :names='null' :maxElements='14' :clearNumber='255' :hasOpacity='true' :hasSecondaryColor='false' :menuIndex='5' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateAging($event)' />
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="complexionMenu"
-                    title="Teint"
-                    :colors="null"
-                    :names="complexionNames"
-                    :maxElements="11"
-                    :clearNumber="255"
-                    :hasOpacity="true"
-                    :hasSecondaryColor="false"
-                    :menuIndex="6"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateComplexion($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='complexionMenu' title='Teint' :colors='null' :names='complexionNames' :maxElements='11' :clearNumber='255' :hasOpacity='true' :hasSecondaryColor='false' :menuIndex='6' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateComplexion($event)' />
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="frecklesMenu"
-                    title="Hautmale"
-                    :colors="null"
-                    :names="frecklesNames"
-                    :maxElements="17"
-                    :clearNumber="255"
-                    :hasOpacity="true"
-                    :hasSecondaryColor="false"
-                    :menuIndex="7"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateFreckles($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='frecklesMenu' title='Hautmale' :colors='null' :names='frecklesNames' :maxElements='17' :clearNumber='255' :hasOpacity='true' :hasSecondaryColor='false' :menuIndex='7' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateFreckles($event)' />
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="sundamageMenu"
-                    title="Hautschaden"
-                    :colors="null"
-                    :names="sundamageNames"
-                    :maxElements="10"
-                    :clearNumber="255"
-                    :hasOpacity="true"
-                    :hasSecondaryColor="false"
-                    :menuIndex="8"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateSkinDamage($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='sundamageMenu' title='Hautschaden' :colors='null' :names='sundamageNames' :maxElements='10' :clearNumber='255' :hasOpacity='true' :hasSecondaryColor='false' :menuIndex='8' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateSkinDamage($event)' />
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="blemishesMenu"
-                    title="Gesichtsunreinheiten"
-                    :colors="null"
-                    :names="blemishesNames"
-                    :maxElements="23"
-                    :clearNumber="255"
-                    :hasOpacity="true"
-                    :hasSecondaryColor="false"
-                    :menuIndex="9"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateBlemishes($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='blemishesMenu' title='Gesichtsunreinheiten' :colors='null' :names='blemishesNames' :maxElements='23' :clearNumber='255' :hasOpacity='true' :hasSecondaryColor='false' :menuIndex='9' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateBlemishes($event)' />
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="bodyBlemishesMenu"
-                    title="Körperunreinheiten"
-                    :colors="null"
-                    :names="null"
-                    :maxElements="11"
-                    :clearNumber="255"
-                    :hasOpacity="true"
-                    :hasSecondaryColor="false"
-                    :menuIndex="10"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateBodyBlemishes($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='bodyBlemishesMenu' title='Körperunreinheiten' :colors='null' :names='null' :maxElements='11' :clearNumber='255' :hasOpacity='true' :hasSecondaryColor='false' :menuIndex='10' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateBodyBlemishes($event)' />
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="eyeColorMenu"
-                    title="Augenfarbe"
-                    :colors="null"
-                    :names="null"
-                    :maxElements="7"
-                    :clearNumber="0"
-                    :hasOpacity="false"
-                    :hasSecondaryColor="false"
-                    :menuIndex="11"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateEyeColor($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='eyeColorMenu' title='Augenfarbe' :colors='null' :names='null' :maxElements='7' :clearNumber='0' :hasOpacity='false' :hasSecondaryColor='false' :menuIndex='11' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateEyeColor($event)' />
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="blushMenu"
-                    title="Rouge"
-                    :colors="lipsColors"
-                    :names="blushNames"
-                    :maxElements="6"
-                    :clearNumber="255"
-                    :hasOpacity="true"
-                    :hasSecondaryColor="false"
-                    :menuIndex="12"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateBlush($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='blushMenu' title='Rouge' :colors='lipsColors' :names='blushNames' :maxElements='6' :clearNumber='255' :hasOpacity='true' :hasSecondaryColor='false' :menuIndex='12' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateBlush($event)' />
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="makeUpMenu"
-                    title="Make-up"
-                    :colors="null"
-                    :names="makeUpNames"
-                    :maxElements="74"
-                    :clearNumber="255"
-                    :hasOpacity="true"
-                    :hasSecondaryColor="false"
-                    :menuIndex="13"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateMakeup($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='makeUpMenu' title='Make-up' :colors='null' :names='makeUpNames' :maxElements='74' :clearNumber='255' :hasOpacity='true' :hasSecondaryColor='false' :menuIndex='13' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateMakeup($event)' />
             </div>
-            <div class="col-6">
-                <appearance-menu
-                    ref="lipstickMenu"
-                    title="Lippenstift"
-                    :colors="lipsColors"
-                    :names="lipstickNames"
-                    :maxElements="9"
-                    :clearNumber="255"
-                    :hasOpacity="true"
-                    :hasSecondaryColor="false"
-                    :menuIndex="14"
-                    :currentMenuIndex="menuIndex"
-                    v-on:request-menu="onMenuButtonClicked($event)"
-                    v-on:update-appearance="updateLips($event)"
-                />
+            <div class='col-6'>
+                <appearance-menu ref='lipstickMenu' title='Lippenstift' :colors='lipsColors' :names='lipstickNames' :maxElements='9' :clearNumber='255' :hasOpacity='true' :hasSecondaryColor='false' :menuIndex='14' :currentMenuIndex='menuIndex' v-on:request-menu='onMenuButtonClicked($event)' v-on:update-appearance='updateLips($event)' />
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import AppearanceMenu from "./Menus/AppearanceMenu.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";

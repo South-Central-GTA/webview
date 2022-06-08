@@ -1,17 +1,11 @@
 <template>
-    <div class="team-menu-bank-accounts">
-        <div v-if="!isPopupOpen">
+    <div class='team-menu-bank-accounts'>
+        <div v-if='!isPopupOpen'>
             <h2>Bankkonten</h2>
-            <input
-                @input="search()"
-                v-model="searchBar"
-                type="text"
-                class="form-control-dark mb-2"
-                placeholder="Suche nach einer Kontonummer"
-            />
+            <input @input='search()' v-model='searchBar' type='text' class='form-control-dark mb-2' placeholder='Suche nach einer Kontonummer' />
 
-            <div class="table-holder">
-                <table class="table table-striped table-hover">
+            <div class='table-holder'>
+                <table class='table table-striped table-hover'>
                     <thead>
                     <tr>
                         <th>Id</th>
@@ -20,12 +14,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr
-                        v-for="bankAccount in bankAccounts"
-                        v-bind:key="bankAccount.id"
-                        class="entry"
-                        @click="openDetails(bankAccount)"
-                    >
+                    <tr v-for='bankAccount in bankAccounts' v-bind:key='bankAccount.id' class='entry' @click='openDetails(bankAccount)'>
                         <td>{{ bankAccount.id }}</td>
                         <td>{{ bankAccount.bankDetails }}</td>
                         <td>{{ bankAccount.amount }}$</td>
@@ -34,14 +23,14 @@
                 </table>
             </div>
         </div>
-        <div v-else class="details">
-            <button class="icon-button text-white" @click="closeDetails()">
-                <font-awesome-icon class="mx-2" icon="chevron-left"/>
+        <div v-else class='details'>
+            <button class='icon-button text-white' @click='closeDetails()'>
+                <font-awesome-icon class='mx-2' icon='chevron-left' />
                 <span>Bankkonto: {{ this.openBankAccount.bankDetails }}</span>
             </button>
 
-            <div class="detail-table-holder">
-                <table class="table table-striped table-hover">
+            <div class='detail-table-holder'>
+                <table class='table table-striped table-hover'>
                     <thead>
                     <tr>
                         <th>Typ</th>
@@ -51,11 +40,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr
-                        v-for="entry in this.openBankAccount.history"
-                        v-bind:key="entry.id"
-                        class="entry"
-                    >
+                    <tr v-for='entry in this.openBankAccount.history' v-bind:key='entry.id' class='entry'>
                         <td>{{ getType(entry.type) }}</td>
                         <td>{{ entry.purposeOfUse }}</td>
                         <td>{{ entry.income ? "+" : "-" }}{{ entry.amount }}$</td>
@@ -64,8 +49,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="detail-table-holder">
-                <table class="table table-striped table-hover">
+            <div class='detail-table-holder'>
+                <table class='table table-striped table-hover'>
                     <thead>
                     <tr>
                         <th>Charakter ID</th>
@@ -74,11 +59,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr
-                        v-for="access in this.openBankAccount.characterAccesses"
-                        v-bind:key="access.characterId"
-                        class="entry"
-                    >
+                    <tr v-for='access in this.openBankAccount.characterAccesses' v-bind:key='access.characterId' class='entry'>
                         <td>{{ access.characterId }}</td>
                         <td>{{ access.name }}</td>
                         <td>{{ access.owner ? "Ja" : "Nein" }}</td>
@@ -86,8 +67,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="detail-table-holder">
-                <table class="table table-striped table-hover">
+            <div class='detail-table-holder'>
+                <table class='table table-striped table-hover'>
                     <thead>
                     <tr>
                         <th>Gruppen ID</th>
@@ -96,11 +77,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr
-                        v-for="access in this.openBankAccount.groupAccesses"
-                        v-bind:key="access.characterId"
-                        class="entry"
-                    >
+                    <tr v-for='access in this.openBankAccount.groupAccesses' v-bind:key='access.characterId' class='entry'>
                         <td>{{ access.groupId }}</td>
                         <td>{{ access.name }}</td>
                         <td>{{ access.owner ? "Ja" : "Nein" }}</td>
@@ -112,7 +89,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";

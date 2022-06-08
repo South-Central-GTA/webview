@@ -1,112 +1,55 @@
 <template>
-    <div class="clothes-menu">
+    <div class='clothes-menu'>
         <h4>Kleidung</h4>
-        <div class="row">
-            <div class="col-6">
-                <clothing-menu
-                    ref="hatMenu"
-                    title="Kopfbedeckung"
-                    v-on:update-clothing="updateHat($event)"
-                />
+        <div class='row'>
+            <div class='col-6'>
+                <clothing-menu ref='hatMenu' title='Kopfbedeckung' v-on:update-clothing='updateHat($event)' />
             </div>
-            <div class="col-6">
-                <clothing-menu
-                    ref="glassesMenu"
-                    title="Brillen"
-                    v-on:update-clothing="updateGlasses($event)"
-                />
+            <div class='col-6'>
+                <clothing-menu ref='glassesMenu' title='Brillen' v-on:update-clothing='updateGlasses($event)' />
             </div>
-            <div class="col-6">
-                <clothing-menu
-                    ref="earsMenu"
-                    title="Ohren"
-                    v-on:update-clothing="updateEars($event)"
-                />
+            <div class='col-6'>
+                <clothing-menu ref='earsMenu' title='Ohren' v-on:update-clothing='updateEars($event)' />
             </div>
-            <div class="col-6">
-                <clothing-menu
-                    ref="masksMenu"
-                    title="Masken"
-                    v-on:update-clothing="updateMasks($event)"
-                />
+            <div class='col-6'>
+                <clothing-menu ref='masksMenu' title='Masken' v-on:update-clothing='updateMasks($event)' />
             </div>
-            <div class="col-6">
-                <clothing-menu
-                    ref="topMenu"
-                    title="Oberteil"
-                    v-on:update-clothing="updateTop($event)"
-                />
+            <div class='col-6'>
+                <clothing-menu ref='topMenu' title='Oberteil' v-on:update-clothing='updateTop($event)' />
             </div>
-            <div class="col-6">
-                <clothing-menu
-                    ref="backpackMenu"
-                    title="Rucksack"
-                    v-on:update-clothing="updateBackpack($event)"
-                />
+            <div class='col-6'>
+                <clothing-menu ref='backpackMenu' title='Rucksack' v-on:update-clothing='updateBackpack($event)' />
             </div>
-            <div class="col-6">
-                <clothing-menu
-                    ref="torsoMenu"
-                    title="Torso"
-                    v-on:update-clothing="updateTorso($event)"
-                />
+            <div class='col-6'>
+                <clothing-menu ref='torsoMenu' title='Torso' v-on:update-clothing='updateTorso($event)' />
             </div>
-            <div class="col-6">
-                <clothing-menu
-                    ref="undershirtMenu"
-                    title="Unterhemden"
-                    v-on:update-clothing="updateUndershirt($event)"
-                />
+            <div class='col-6'>
+                <clothing-menu ref='undershirtMenu' title='Unterhemden' v-on:update-clothing='updateUndershirt($event)' />
             </div>
-            <div class="col-6">
-                <clothing-menu
-                    ref="accessoriesMenu"
-                    title="Zubehör"
-                    v-on:update-clothing="updateAccessories($event)"
-                />
+            <div class='col-6'>
+                <clothing-menu ref='accessoriesMenu' title='Zubehör' v-on:update-clothing='updateAccessories($event)' />
             </div>
-            <div class="col-6">
-                <clothing-menu
-                    ref="watchMenu"
-                    title="Uhren"
-                    v-on:update-clothing="updateWatch($event)"
-                />
+            <div class='col-6'>
+                <clothing-menu ref='watchMenu' title='Uhren' v-on:update-clothing='updateWatch($event)' />
             </div>
-            <div class="col-6">
-                <clothing-menu
-                    ref="braceletsMenu"
-                    title="Armbänder"
-                    v-on:update-clothing="updateBracelets($event)"
-                />
+            <div class='col-6'>
+                <clothing-menu ref='braceletsMenu' title='Armbänder' v-on:update-clothing='updateBracelets($event)' />
             </div>
-            <div class="col-6">
-                <clothing-menu
-                    ref="pantsMenu"
-                    title="Hosen"
-                    v-on:update-clothing="updateLeg($event)"
-                />
+            <div class='col-6'>
+                <clothing-menu ref='pantsMenu' title='Hosen' v-on:update-clothing='updateLeg($event)' />
             </div>
-            <div class="col-6">
-                <clothing-menu
-                    ref="shoesMenu"
-                    title="Schuhe"
-                    v-on:update-clothing="updateShoes($event)"
-                />
+            <div class='col-6'>
+                <clothing-menu ref='shoesMenu' title='Schuhe' v-on:update-clothing='updateShoes($event)' />
             </div>
         </div>
-        <div class="alert alert-warning">
+        <div class='alert alert-warning'>
             <p>
-                Einige Kleidungsstücke kann GTA nicht laden, wählt bitte nur
-                Kleidungsstücke aus welche geladen werden und keine Schachbrett-Muster
-                Texture haben. Achte bitte auch darauf das keine Haut durch deine
-                Kleidung schaut oder gar Körperteile fehlen. Es kann später als Trolling
-                geahndet werden.
-            </p>
+                Einige Kleidungsstücke kann GTA nicht laden, wählt bitte nur Kleidungsstücke aus welche geladen werden und keine Schachbrett-Muster Texture haben. Achte bitte auch darauf das keine Haut durch deine Kleidung schaut oder gar Körperteile fehlen. Es kann später als Trolling geahndet werden. </p>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import ClothingMenu from "./Menus/ClothingMenu.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";

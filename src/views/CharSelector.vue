@@ -1,82 +1,62 @@
 <template>
-    <div class="charselector">
-        <notifications-holder ref="notificationsHolder" class="unselectable"/>
+    <div class='charselector'>
+        <notifications-holder ref='notificationsHolder' class='unselectable' />
 
-        <nav class="navbar navbar-expand-lg navbar-dark sc-dark">
-            <a class="navbar-brand px-4"> South Central Roleplay </a>
-            <ul class="navbar-nav">
-                <li class="nav-item" v-bind:class="{ active: tabIndex === 0 }">
-                    <a class="nav-link" @click="openMenu(0)">Charaktere</a>
+        <nav class='navbar navbar-expand-lg navbar-dark sc-dark'>
+            <a class='navbar-brand px-4'> South Central Roleplay </a>
+            <ul class='navbar-nav'>
+                <li class='nav-item' v-bind:class='{ active: tabIndex === 0 }'>
+                    <a class='nav-link' @click='openMenu(0)'>Charaktere</a>
                 </li>
-                <li class="nav-item" v-bind:class="{ active: tabIndex === 1 }">
-                    <a class="nav-link disabled" @click="openMenu(1)">Regelwerke</a>
+                <li class='nav-item' v-bind:class='{ active: tabIndex === 1 }'>
+                    <a class='nav-link disabled' @click='openMenu(1)'>Regelwerke</a>
                 </li>
-                <li class="nav-item" v-bind:class="{ active: tabIndex === 2 }">
-                    <a class="nav-link disabled" @click="openMenu(2)">Community</a>
+                <li class='nav-item' v-bind:class='{ active: tabIndex === 2 }'>
+                    <a class='nav-link disabled' @click='openMenu(2)'>Community</a>
                 </li>
-                <li class="nav-item" v-bind:class="{ active: tabIndex === 3 }">
-                    <a class="nav-link disabled" @click="openMenu(3)">Premium</a>
+                <li class='nav-item' v-bind:class='{ active: tabIndex === 3 }'>
+                    <a class='nav-link disabled' @click='openMenu(3)'>Premium</a>
                 </li>
             </ul>
         </nav>
 
-        <div class="row">
-            <div class="col-sm">
-                <div class="card character-list transparent-card text-white">
+        <div class='row'>
+            <div class='col-sm'>
+                <div class='card character-list transparent-card text-white'>
                     <h3>Deine Charaktere</h3>
-                    <div class="character-block" v-if="characters.length !== 0">
-                        <div
-                            v-for="character in characters"
-                            v-bind:key="character.id"
-                            class="character-card"
-                        >
-                            <char-card
-                                @click.right="openCharacterContextMenu($event, character)"
-                                v-bind:character="character"
-                                v-on:select-character="selectCharacter($event)"
-                                v-bind:class="{
+                    <div class='character-block' v-if='characters.length !== 0'>
+                        <div v-for='character in characters' v-bind:key='character.id' class='character-card'>
+                            <char-card @click.right='openCharacterContextMenu($event, character)' v-bind:character='character' v-on:select-character='selectCharacter($event)' v-bind:class='{
                   selected: character.id === currentCharacterId,
                   unselected: character.id !== currentCharacterId,
-                }"
-                            />
+                }' />
                         </div>
                     </div>
 
-                    <div class="create-character-button">
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
-                            @click="createCharacter()"
-                        >
-              <span
-              >Neuen Charakter erstellen
-                <font-awesome-icon icon="sign-in-alt"
-                /></span>
+                    <div class='create-character-button'>
+                        <button type='button' class='btn btn-secondary' @click='createCharacter()'>
+              <span>Neuen Charakter erstellen
+                <font-awesome-icon icon='sign-in-alt' /></span>
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="col-sm">
-                <div class="float-end">
+            <div class='col-sm'>
+                <div class='float-end'>
                     <AccountCard></AccountCard>
                 </div>
             </div>
         </div>
 
-        <div class="bottom-center">
-            <button
-                type="button"
-                class="btn btn-primary play-button"
-                :disabled="currentCharacterId === -1 || characterSpawned"
-                @click="play()"
-            >
-                <span>Spielen <font-awesome-icon icon="play"/></span>
+        <div class='bottom-center'>
+            <button type='button' class='btn btn-primary play-button' :disabled='currentCharacterId === -1 || characterSpawned' @click='play()'>
+                <span>Spielen <font-awesome-icon icon='play' /></span>
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import CharCard from "@/components/CharCard.vue";
 import AccountCard from "@/components/AccountCard.vue";
@@ -184,7 +164,7 @@ export default class CharSelector extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .navbar-brand {
     padding: 0;
 }

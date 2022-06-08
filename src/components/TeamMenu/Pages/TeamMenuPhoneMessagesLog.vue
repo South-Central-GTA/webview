@@ -1,15 +1,9 @@
 <template>
-    <div class="team-menu-phone-messages-log">
+    <div class='team-menu-phone-messages-log'>
         <h2>SMS</h2>
-        <input
-            @input="search()"
-            v-model="phoneNumberSearch"
-            type="text"
-            class="form-control-dark mb-2"
-            placeholder="Suche nach der Sender Nummer."
-        />
-        <div class="table-holder">
-            <table class="table table-striped table-hover">
+        <input @input='search()' v-model='phoneNumberSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach der Sender Nummer.' />
+        <div class='table-holder'>
+            <table class='table table-striped table-hover'>
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -20,7 +14,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="message in messages" v-bind:key="message.id" class="entry">
+                <tr v-for='message in messages' v-bind:key='message.id' class='entry'>
                     <td>{{ message.id }}</td>
                     <td>{{ message.senderPhoneNumber }}</td>
                     <td>{{ message.targetPhoneNumber }}</td>
@@ -33,7 +27,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {PhoneMessageInterface} from "@/scripts/interfaces/phone/phone-message.interface";

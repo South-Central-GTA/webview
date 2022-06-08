@@ -1,190 +1,137 @@
 <template>
-    <div class="mdc-character-record">
-        <div class="content h-100 row m-4">
-            <div class="col-3">
+    <div class='mdc-character-record'>
+        <div class='content h-100 row m-4'>
+            <div class='col-3'>
                 <h3>{{ characterName }}</h3>
                 <h4>Informationen:</h4>
-                <p v-if="phoneNumbers.length === 0">
-                    <b>Handynummern:</b> Keine Suchergebnisse!
-                </p>
-                <p v-if="phoneNumbers.length !== 0"><b>Handynummern:</b></p>
-                <ul v-if="phoneNumbers.length !== 0" class="list-holder">
-                    <li v-for="phoneNumber in phoneNumbers" v-bind:key="phoneNumber">
+                <p v-if='phoneNumbers.length === 0'>
+                    <b>Handynummern:</b> Keine Suchergebnisse! </p>
+                <p v-if='phoneNumbers.length !== 0'><b>Handynummern:</b></p>
+                <ul v-if='phoneNumbers.length !== 0' class='list-holder'>
+                    <li v-for='phoneNumber in phoneNumbers' v-bind:key='phoneNumber'>
                         {{ phoneNumber }}
                     </li>
                 </ul>
 
-                <p v-if="houses.length === 0"><b>Adressen:</b> Keine Suchergebnisse!</p>
-                <p v-if="houses.length !== 0"><b>Adressen:</b></p>
-                <ul v-if="houses.length !== 0" class="list-holder">
-                    <li v-for="house in houses" v-bind:key="house.id">
-                        {{ house.streetName }} {{ house.subName }} Nr.
-                        {{ house.houseNumber }}
+                <p v-if='houses.length === 0'><b>Adressen:</b> Keine Suchergebnisse!</p>
+                <p v-if='houses.length !== 0'><b>Adressen:</b></p>
+                <ul v-if='houses.length !== 0' class='list-holder'>
+                    <li v-for='house in houses' v-bind:key='house.id'>
+                        {{ house.streetName }} {{ house.subName }} Nr. {{ house.houseNumber }}
                     </li>
                 </ul>
 
-                <p v-if="vehicles.length === 0">
-                    <b>Fahrzeuge:</b> Keine Suchergebnisse!
-                </p>
-                <p v-if="vehicles.length !== 0"><b>Fahrzeuge:</b></p>
-                <ul v-if="vehicles.length !== 0" class="list-holder">
-                    <li v-for="vehicle in vehicles" v-bind:key="vehicle.id">
-                        {{ vehicle.displayName }} - {{ vehicle.displayClass }} -
-                        {{ vehicle.numberPlateText }}
+                <p v-if='vehicles.length === 0'>
+                    <b>Fahrzeuge:</b> Keine Suchergebnisse! </p>
+                <p v-if='vehicles.length !== 0'><b>Fahrzeuge:</b></p>
+                <ul v-if='vehicles.length !== 0' class='list-holder'>
+                    <li v-for='vehicle in vehicles' v-bind:key='vehicle.id'>
+                        {{ vehicle.displayName }} - {{ vehicle.displayClass }} - {{ vehicle.numberPlateText }}
                     </li>
                 </ul>
 
                 <p>
-                    <b>Lizenzen:</b>
-                    <span
-                        v-if="
+                    <b>Lizenzen:</b> <span v-if='
               !hasDrivingLicense &&
               !hasBoatsLicense &&
               !hasFlyingLicense &&
               !hasWeaponLicense
-            "
-                    >Keine Suchergebnisse!</span
-                    >
+            '>Keine Suchergebnisse!</span>
                 </p>
-                <div class="row">
-                    <div class="col-6" v-if="hasDrivingLicense">
-                        <label class="form-label">Führerschein:</label><br/>
-                        <div class="btn-group w-100">
-                            <button
-                                type="button"
-                                class="bg-warning"
-                                @click="warnDriverLicense()"
-                            >
+                <div class='row'>
+                    <div class='col-6' v-if='hasDrivingLicense'>
+                        <label class='form-label'>Führerschein:</label><br />
+                        <div class='btn-group w-100'>
+                            <button type='button' class='bg-warning' @click='warnDriverLicense()'>
                                 Verwarnung
                             </button>
-                            <button
-                                type="button"
-                                class="bg-danger mx-1"
-                                @click="removeDriverLicense()"
-                            >
+                            <button type='button' class='bg-danger mx-1' @click='removeDriverLicense()'>
                                 Entziehen
                             </button>
                         </div>
                     </div>
-                    <div class="col-6" v-if="hasBoatsLicense">
-                        <label class="form-label">Bootsschein:</label><br/>
-                        <div class="btn-group w-100">
-                            <button
-                                type="button"
-                                class="bg-warning"
-                                @click="warnBoatLicense()"
-                            >
+                    <div class='col-6' v-if='hasBoatsLicense'>
+                        <label class='form-label'>Bootsschein:</label><br />
+                        <div class='btn-group w-100'>
+                            <button type='button' class='bg-warning' @click='warnBoatLicense()'>
                                 Verwarnung
                             </button>
-                            <button
-                                type="button"
-                                class="bg-danger mx-1"
-                                @click="removeBoatLicense()"
-                            >
+                            <button type='button' class='bg-danger mx-1' @click='removeBoatLicense()'>
                                 Entziehen
                             </button>
                         </div>
                     </div>
-                    <div class="col-6" v-if="hasFlyingLicense">
-                        <label class="form-label">Flugschein:</label><br/>
-                        <div class="btn-group w-100">
-                            <button
-                                type="button"
-                                class="bg-warning"
-                                @click="warnFlyingLicense()"
-                            >
+                    <div class='col-6' v-if='hasFlyingLicense'>
+                        <label class='form-label'>Flugschein:</label><br />
+                        <div class='btn-group w-100'>
+                            <button type='button' class='bg-warning' @click='warnFlyingLicense()'>
                                 Verwarnung
                             </button>
-                            <button
-                                type="button"
-                                class="bg-danger mx-1"
-                                @click="removeFlyingLicense()"
-                            >
+                            <button type='button' class='bg-danger mx-1' @click='removeFlyingLicense()'>
                                 Entziehen
                             </button>
                         </div>
                     </div>
-                    <div class="col-6" v-if="hasWeaponLicense">
-                        <label class="form-label">Waffenschein:</label><br/>
-                        <div class="btn-group w-100">
-                            <button
-                                type="button"
-                                class="bg-danger"
-                                @click="removeWeaponLicense()"
-                            >
+                    <div class='col-6' v-if='hasWeaponLicense'>
+                        <label class='form-label'>Waffenschein:</label><br />
+                        <div class='btn-group w-100'>
+                            <button type='button' class='bg-danger' @click='removeWeaponLicense()'>
                                 Entziehen
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class='col-3'>
                 <h4>Records:</h4>
 
-                <div v-if="records.length !== 0" class="big-list-holder">
-                    <p v-for="record in records" v-bind:key="record.id">
-                        <button
-                            type="button"
-                            v-if="isOperator"
-                            @click="deleteRecord(record.id)"
-                        >
+                <div v-if='records.length !== 0' class='big-list-holder'>
+                    <p v-for='record in records' v-bind:key='record.id'>
+                        <button type='button' v-if='isOperator' @click='deleteRecord(record.id)'>
                             X
                         </button>
-                        {{ record.reason }}<br/>
-                        <span class="date-text"
-                        >{{ record.creatorCharacterName }} -
-              {{ getDate(record.createdAtJson) }}</span
-                        >
+                        {{ record.reason }}<br /> <span class='date-text'>{{ record.creatorCharacterName }} -
+              {{ getDate(record.createdAtJson) }}</span>
                     </p>
                 </div>
 
-                <div class="position-absolute mb-5 bottom-0">
-                    <input class="w-100" v-model="recordInput" type="text"/>
+                <div class='position-absolute mb-5 bottom-0'>
+                    <input class='w-100' v-model='recordInput' type='text' />
 
-                    <button type="button" class="float-end mt-1" @click="createRecord()">
+                    <button type='button' class='float-end mt-1' @click='createRecord()'>
                         Record hinzufügen
                     </button>
                 </div>
             </div>
-            <div class="col-3">
+            <div class='col-3'>
                 <h4>Notizen:</h4>
 
-                <div v-if="notes.length !== 0" class="big-list-holder">
-                    <p v-for="note in notes" v-bind:key="note.id">
-                        <button
-                            type="button"
-                            v-if="isOperator"
-                            @click="deleteNote(note.id)"
-                        >
+                <div v-if='notes.length !== 0' class='big-list-holder'>
+                    <p v-for='note in notes' v-bind:key='note.id'>
+                        <button type='button' v-if='isOperator' @click='deleteNote(note.id)'>
                             X
                         </button>
-                        {{ note.note }}<br/>
-                        <span class="date-text"
-                        >{{ note.creatorCharacterName }} -
-              {{ getDate(note.createdAtJson) }}</span
-                        >
+                        {{ note.note }}<br /> <span class='date-text'>{{ note.creatorCharacterName }} -
+              {{ getDate(note.createdAtJson) }}</span>
                     </p>
                 </div>
 
-                <div class="position-absolute mb-5 bottom-0">
-                    <input class="w-100" v-model="noteInput" type="text"/>
+                <div class='position-absolute mb-5 bottom-0'>
+                    <input class='w-100' v-model='noteInput' type='text' />
 
-                    <button type="button" class="float-end mt-1" @click="createNote()">
+                    <button type='button' class='float-end mt-1' @click='createNote()'>
                         Notiz hinzufügen
                     </button>
                 </div>
             </div>
-            <div class="col-3">
+            <div class='col-3'>
                 <h4>Tickets:</h4>
 
-                <div v-if="tickets.length !== 0" class="big-list-holder">
-                    <p v-for="ticket in tickets" v-bind:key="ticket.referenceId">
-                        [{{ ticket.referenceId }}] {{ ticket.reason }}<br/>Bezahlt:
-                        {{ ticket.payed ? "Ja" : "Nein" }}<br/>
-                        <span class="date-text"
-                        >{{ ticket.creatorCharacterName }} -
-              {{ getDate(ticket.createdAtJson) }}</span
-                        >
+                <div v-if='tickets.length !== 0' class='big-list-holder'>
+                    <p v-for='ticket in tickets' v-bind:key='ticket.referenceId'>
+                        [{{ ticket.referenceId }}] {{ ticket.reason }}<br />Bezahlt: {{ ticket.payed ? "Ja" : "Nein" }}<br />
+                        <span class='date-text'>{{ ticket.creatorCharacterName }} -
+              {{ getDate(ticket.createdAtJson) }}</span>
                     </p>
                 </div>
             </div>
@@ -192,7 +139,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import MdcService from "@/scripts/services/mdc.service";
@@ -427,7 +374,7 @@ export default class MdcCharacterRecord extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-character-record {
     background-color: #cecece;
     height: 100%;

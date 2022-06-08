@@ -1,40 +1,33 @@
 <template>
-    <div class="mdc-fd-base">
+    <div class='mdc-fd-base'>
         <mdc-fd-header-bar></mdc-fd-header-bar>
-        <div class="float-start">
-            <div class="btn-group-vertical m-4">
-                <button type="button" class="w-100 m-2" @click="openPageId(0)">
+        <div class='float-start'>
+            <div class='btn-group-vertical m-4'>
+                <button type='button' class='w-100 m-2' @click='openPageId(0)'>
                     Home
                 </button>
-                <button type="button" class="w-100 m-2" @click="openPageId(1)">
+                <button type='button' class='w-100 m-2' @click='openPageId(1)'>
                     Suche
                 </button>
-                <button type="button" class="w-100 m-2" @click="openPageId(2)">
+                <button type='button' class='w-100 m-2' @click='openPageId(2)'>
                     News
                 </button>
-                <button type="button" class="w-100 m-2" @click="openPageId(3)">
+                <button type='button' class='w-100 m-2' @click='openPageId(3)'>
                     Dateien
                 </button>
             </div>
         </div>
 
-        <mdc-fd-home ref="home" :hidden="pageId !== 0"></mdc-fd-home>
-        <mdc-search ref="search" :hidden="pageId !== 1"></mdc-search>
-        <mdc-apb ref="apb" :hidden="pageId !== 2"></mdc-apb>
-        <mdc-files
-            ref="files"
-            v-on:show-notification="onShowNotification"
-            :hidden="pageId !== 2"
-        ></mdc-files>
+        <mdc-fd-home ref='home' :hidden='pageId !== 0'></mdc-fd-home>
+        <mdc-search ref='search' :hidden='pageId !== 1'></mdc-search>
+        <mdc-apb ref='apb' :hidden='pageId !== 2'></mdc-apb>
+        <mdc-files ref='files' v-on:show-notification='onShowNotification' :hidden='pageId !== 2'></mdc-files>
 
-        <mdc-patient-record
-            ref="patientRecord"
-            :hidden="pageId !== 1000"
-        ></mdc-patient-record>
+        <mdc-patient-record ref='patientRecord' :hidden='pageId !== 1000'></mdc-patient-record>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import {Ref} from "vue-property-decorator";
@@ -162,7 +155,7 @@ export default class MdcFdBase extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-fd-base {
     background-color: #cecece;
     height: 100%;

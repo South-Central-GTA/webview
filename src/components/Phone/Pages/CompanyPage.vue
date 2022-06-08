@@ -1,44 +1,31 @@
 <template>
-    <div class="company-page">
-        <div class="loading" v-if="isLoading && !loadedOnce">
-            <img class="logo" src="@/assets/images/phone/gov-seal.png"/>
+    <div class='company-page'>
+        <div class='loading' v-if='isLoading && !loadedOnce'>
+            <img class='logo' src='@/assets/images/phone/gov-seal.png' />
             <h1>{{ loadingText }}</h1>
         </div>
 
-        <company-manage
-            ref="companyManage"
-            :hidden="currentTab !== 1"
-            v-on:back="resetTab()"
-        />
-        <company-create
-            ref="companyCreate"
-            :hidden="currentTab !== 2"
-            v-on:back="resetTab()"
-        />
+        <company-manage ref='companyManage' :hidden='currentTab !== 1' v-on:back='resetTab()' />
+        <company-create ref='companyCreate' :hidden='currentTab !== 2' v-on:back='resetTab()' />
 
-        <div class="label">
+        <div class='label'>
             <h1>Unternehmensgründung einfach gestaltet.</h1>
             <h2>Government San Andreas</h2>
         </div>
 
-        <img class="logo" src="@/assets/images/phone/gov-seal.png"/>
+        <img class='logo' src='@/assets/images/phone/gov-seal.png' />
 
-        <div v-if="hasData">
-            <div v-if="isPlayerInCompany">
-                <div class="phone-gov-button-group">
-                    <button
-                        type="button"
-                        class="btn"
-                        @click="openTab(1)"
-                        :disabled="!companyReady"
-                    >
+        <div v-if='hasData'>
+            <div v-if='isPlayerInCompany'>
+                <div class='phone-gov-button-group'>
+                    <button type='button' class='btn' @click='openTab(1)' :disabled='!companyReady'>
                         Mein Unternehmen
                     </button>
                 </div>
             </div>
             <div v-else>
-                <div class="phone-gov-button-group">
-                    <button type="button" class="btn" @click="openTab(2)">
+                <div class='phone-gov-button-group'>
+                    <button type='button' class='btn' @click='openTab(2)'>
                         Unternehmen eröffnen
                     </button>
                 </div>
@@ -47,7 +34,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import group from "@/scripts/services/group.service";
 import CompanyManage from "./Components/CompanyPages/CompanyManagePage.vue";
@@ -199,7 +186,7 @@ export default class CompanyPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .company-page {
     overflow: hidden;
     top: 0;

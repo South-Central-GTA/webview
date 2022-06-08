@@ -1,14 +1,13 @@
 <template>
-    <div class="public-garage-vehicle-card">
+    <div class='public-garage-vehicle-card'>
         <h1>
-            <div class="veh-name">{{ vehicle.displayName }}</div>
-            <span class="veh-class">{{ vehicle.displayClass }}</span
-            ><span class="costs"> ${{ vehicle.costs }} pro Stunde</span>
+            <div class='veh-name'>{{ vehicle.displayName }}</div>
+            <span class='veh-class'>{{ vehicle.displayClass }}</span><span class='costs'> ${{ vehicle.costs }} pro Stunde</span>
         </h1>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Prop} from "vue-property-decorator";
 import {Vue} from "vue-class-component";
 import {PublicGarageVehicleInterface} from "@/scripts/interfaces/vehicles/public-garage-vehicle.interface";

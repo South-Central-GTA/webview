@@ -1,30 +1,26 @@
 <template>
-    <div class="phone-delete-bank-account">
-        <div class="phone-header">
-            <button class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='phone-delete-bank-account'>
+        <div class='phone-header'>
+            <button class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Konto schließen</span>
             </button>
         </div>
 
-        <img
-            class="phone-bank-logo"
-            src="@/assets/images/phone/maze-bank-logo.png"
-        />
+        <img class='phone-bank-logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
-        <p class="alert-text">
-            Sind Sie sicher, dass Sie ihr Bankkonto unwiederruflich löschen wollen?
-        </p>
+        <p class='alert-text'>
+            Sind Sie sicher, dass Sie ihr Bankkonto unwiederruflich löschen wollen? </p>
 
-        <div class="phone-bank-button-group">
-            <button type="button" class="btn" @click="deleteBankAccount()">
+        <div class='phone-bank-button-group'>
+            <button type='button' class='btn' @click='deleteBankAccount()'>
                 Ja, Konto löschen
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 
 export default class PhoneActiveBankAccount extends Vue {
@@ -38,7 +34,7 @@ export default class PhoneActiveBankAccount extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .phone-delete-bank-account {
     overflow: hidden;
     position: absolute;

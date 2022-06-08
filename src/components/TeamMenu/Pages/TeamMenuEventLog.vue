@@ -1,15 +1,9 @@
 <template>
-    <div class="team-menu-event-log">
+    <div class='team-menu-event-log'>
         <h2>Eventlog</h2>
-        <input
-            @input="search()"
-            v-model="searchInput"
-            type="text"
-            class="form-control-dark mb-2"
-            placeholder="Suche nach ausführenden Personen"
-        />
-        <div class="table-holder">
-            <table class="table table-striped table-hover">
+        <input @input='search()' v-model='searchInput' type='text' class='form-control-dark mb-2' placeholder='Suche nach ausführenden Personen' />
+        <div class='table-holder'>
+            <table class='table table-striped table-hover'>
                 <thead>
                 <tr>
                     <th>Befehl Name</th>
@@ -19,11 +13,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr
-                    v-for="(command, index) in commands"
-                    v-bind:key="index"
-                    class="entry"
-                >
+                <tr v-for='(command, index) in commands' v-bind:key='index' class='entry'>
                     <td>{{ command.name }}</td>
                     <td>{{ command.arguments }}</td>
                     <td>{{ command.accountName }}</td>
@@ -35,7 +25,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {LogCommandInterface} from "@/scripts/interfaces/team-menu/log-command.interface";

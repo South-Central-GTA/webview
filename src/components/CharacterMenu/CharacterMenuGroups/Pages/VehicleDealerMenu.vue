@@ -1,53 +1,36 @@
 <template>
-    <div class="vehicle-dealer-menu">
+    <div class='vehicle-dealer-menu'>
         <h6>Fahrzeughändler</h6>
 
-        <div v-if="!showNoPermissionsError">
-            <div v-if="closeToBase">
-                <p v-if="vehicles.length === 0" class="text-muted">
-                    Aktuell befinden sich keine Fahrzeuge im Lager.
-                </p>
-                <div v-if="vehicles.length !== 0">
-                    <p class="text-muted">
-                        Klicke das Fahrzeug an welches du aus dem Lager ausparken möchtest.
-                    </p>
-                    <div class="list row g-1">
-                        <div
-                            class="col-4"
-                            v-for="vehicle in vehicles"
-                            v-bind:key="vehicle.id"
-                        >
-                            <vehicle-card
-                                class="btn btn-secondary"
-                                v-bind:vehicle="vehicle"
-                                @click="chooseVehicle(vehicle.id)"
-                            />
+        <div v-if='!showNoPermissionsError'>
+            <div v-if='closeToBase'>
+                <p v-if='vehicles.length === 0' class='text-muted'>
+                    Aktuell befinden sich keine Fahrzeuge im Lager. </p>
+                <div v-if='vehicles.length !== 0'>
+                    <p class='text-muted'>
+                        Klicke das Fahrzeug an welches du aus dem Lager ausparken möchtest. </p>
+                    <div class='list row g-1'>
+                        <div class='col-4' v-for='vehicle in vehicles' v-bind:key='vehicle.id'>
+                            <vehicle-card class='btn btn-secondary' v-bind:vehicle='vehicle' @click='chooseVehicle(vehicle.id)' />
                         </div>
                     </div>
                 </div>
-                <button
-                    v-if="storeVehicleButtonVisible"
-                    class="btn btn-secondary"
-                    @click="storeVehicle()"
-                >
+                <button v-if='storeVehicleButtonVisible' class='btn btn-secondary' @click='storeVehicle()'>
                     {{ vehicleDisplayName }} ins Lager packen
                 </button>
             </div>
             <div v-else>
-                <p class="text-muted">
-                    Du kannst Fahrzeuge nur in der Nähe des Hauptsitzes ausparken.
-                </p>
+                <p class='text-muted'>
+                    Du kannst Fahrzeuge nur in der Nähe des Hauptsitzes ausparken. </p>
             </div>
         </div>
 
-        <p v-if="showNoPermissionsError" class="text-danger">
-            Dein Charakter hat keine Berechtigung um Fahrzeuge aus dem Lager ein- oder
-            auszuparken.
-        </p>
+        <p v-if='showNoPermissionsError' class='text-danger'>
+            Dein Charakter hat keine Berechtigung um Fahrzeuge aus dem Lager ein- oder auszuparken. </p>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import VehicleCard from "@/components/Vehicle/VehicleCard.vue";
 import {Options, Vue} from "vue-class-component";
@@ -130,7 +113,7 @@ export default class VehicleDealerMenu extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .list {
     overflow-y: auto;
     height: 10vw;

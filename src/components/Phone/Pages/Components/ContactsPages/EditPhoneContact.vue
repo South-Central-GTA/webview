@@ -1,61 +1,37 @@
 <template>
-    <div class="edit-phone-contact">
-        <div class="center">
+    <div class='edit-phone-contact'>
+        <div class='center'>
             <h5>Kontakt bearbeiten</h5>
-            <input
-                ref="nameInput"
-                type="text"
-                class="form-control"
-                @focus="onFocus(true)"
-                @blur="onFocus(false)"
-                placeholder="Max Mustermann"
-                maxlength="128"
-                v-bind:class="{
+            <input ref='nameInput' type='text' class='form-control' @focus='onFocus(true)' @blur='onFocus(false)' placeholder='Max Mustermann' maxlength='128' v-bind:class="{
           'is-invalid': nameValidation !== 'OKAY',
           'is-valid': nameValidation === 'OKAY',
-        }"
-            />
-            <div v-if="nameValidation === 'EMPTY'" class="invalid-feedback">
+        }" />
+            <div v-if="nameValidation === 'EMPTY'" class='invalid-feedback'>
                 Bitte gebe einen Namen an.
             </div>
-            <div v-if="nameValidation === 'TO_LONG'" class="invalid-feedback">
+            <div v-if="nameValidation === 'TO_LONG'" class='invalid-feedback'>
                 Der Name ist zu lang.
             </div>
 
-            <input
-                ref="numberInput"
-                class="form-control"
-                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                type="number"
-                @keypress="allowOnlyNumbers($event)"
-                @focus="onFocus(true)"
-                @blur="onFocus(false)"
-                placeholder="55512345678"
-                maxlength="11"
-                v-bind:class="{
+            <input ref='numberInput' class='form-control' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @keypress='allowOnlyNumbers($event)' @focus='onFocus(true)' @blur='onFocus(false)' placeholder='55512345678' maxlength='11' v-bind:class="{
           'is-invalid': numberValidation !== 'OKAY',
           'is-valid': numberValidation === 'OKAY',
-        }"
-            />
-            <div v-if="numberValidation === 'EMPTY'" class="invalid-feedback">
+        }" />
+            <div v-if="numberValidation === 'EMPTY'" class='invalid-feedback'>
                 Bitte gebe eine Nummer an.
             </div>
-            <div v-if="numberValidation === 'NO_NUMBERS'" class="invalid-feedback">
+            <div v-if="numberValidation === 'NO_NUMBERS'" class='invalid-feedback'>
                 Du kannst nur Nummern angeben.
             </div>
-            <div v-if="numberValidation === 'TO_LONG'" class="invalid-feedback">
+            <div v-if="numberValidation === 'TO_LONG'" class='invalid-feedback'>
                 Die Nummer ist zu lang.
             </div>
-            <div v-if="numberValidation === 'TO_LONG'" class="invalid-feedback">
+            <div v-if="numberValidation === 'TO_LONG'" class='invalid-feedback'>
                 Die Nummer ist zu lang.
             </div>
 
-            <div class="edit-button-box">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    @click="updateContact()"
-                >
+            <div class='edit-button-box'>
+                <button type='button' class='btn btn-secondary' @click='updateContact()'>
                     Kontakt bearbeiten
                 </button>
             </div>
@@ -63,7 +39,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {allowOnlyNumbers, isNumeric, onFocus} from "@/scripts/helpers/helpers";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
@@ -132,7 +108,7 @@ export default class EditPhoneContact extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .edit-phone-contact {
     position: absolute;
     top: 0;

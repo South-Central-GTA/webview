@@ -1,5 +1,5 @@
 <template>
-    <div class="loading-circle">
+    <div class='loading-circle'>
         <div></div>
         <div></div>
         <div></div>
@@ -7,7 +7,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 
 export default class LoadingCircle extends Vue {

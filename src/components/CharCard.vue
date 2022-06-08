@@ -1,21 +1,17 @@
 <template>
-    <div class="char-card card" ref="selectButton">
-        <h5 class="character-name">
-            {{ character.name }}
-        </h5>
-        <div class="character-information-box">
-            <p class="sub-text">
-                Charakter zuletzt gespielt oder bearbeitet
-                {{ getCorrectDate(character.lastUsageJson) }}.
-            </p>
-            <p class="sub-text">
-                Charakter erstellt am {{ getCorrectDate(character.createdAtJson) }}.
-            </p>
+    <div class='char-card card' ref='selectButton'>
+        <h5 class='character-name'>
+            {{ character.name }} </h5>
+        <div class='character-information-box'>
+            <p class='sub-text'>
+                Charakter zuletzt gespielt oder bearbeitet {{ getCorrectDate(character.lastUsageJson) }}. </p>
+            <p class='sub-text'>
+                Charakter erstellt am {{ getCorrectDate(character.createdAtJson) }}. </p>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {Prop, Ref} from "vue-property-decorator";
 import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
@@ -51,7 +47,7 @@ export default class CharCard extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .char-card {
     margin: 0.5vw 0vw;
 

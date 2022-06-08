@@ -1,61 +1,33 @@
 <template>
-    <div class="gas-station">
-        <div
-            :hidden="!isRefuelMenuOpen"
-            v-bind:class="{ enable: isRefuelMenuOpen, disable: !isRefuelMenuOpen }"
-        >
-            <div class="background"></div>
-            <div class="modal-dialog">
-                <div class="modal-content sc-card text-white">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tankstelle</h5>
-                        <button
-                            type="button"
-                            class="btn-close-white icon-button float-end"
-                            @click="cancel()"
-                        >
-                            <font-awesome-icon class="center" icon="times"/>
+    <div class='gas-station'>
+        <div :hidden='!isRefuelMenuOpen' v-bind:class='{ enable: isRefuelMenuOpen, disable: !isRefuelMenuOpen }'>
+            <div class='background'></div>
+            <div class='modal-dialog'>
+                <div class='modal-content sc-card text-white'>
+                    <div class='modal-header'>
+                        <h5 class='modal-title'>Tankstelle</h5>
+                        <button type='button' class='btn-close-white icon-button float-end' @click='cancel()'>
+                            <font-awesome-icon class='center' icon='times' />
                         </button>
                     </div>
 
-                    <div class="modal-body">
+                    <div class='modal-body'>
                         <p>
                             Der Treibstoff den du aktuell tanken möchtest kostet dich
-                            <b>${{ fuelPrice }}</b> pro Liter, bezahlen kannst du es an der
-                            Zapfseule.
-                        </p>
+                            <b>${{ fuelPrice }}</b> pro Liter, bezahlen kannst du es an der Zapfseule. </p>
 
-                        <label class="form-label">Treibstoff in Litern</label>
-                        <input
-                            class="form-control"
-                            v-model="fuelAmount"
-                            oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                            type="number"
-                            @keypress="allowOnlyNumbers($event)"
-                            @focus="onFocus(true)"
-                            @blur="onFocus(false)"
-                            placeholder="Treibstoff in Liter"
-                            maxlength="6"
-                        />
+                        <label class='form-label'>Treibstoff in Litern</label>
+                        <input class='form-control' v-model='fuelAmount' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @keypress='allowOnlyNumbers($event)' @focus='onFocus(true)' @blur='onFocus(false)' placeholder='Treibstoff in Liter' maxlength='6' />
 
-                        <p class="text-muted pt-3">
-                            Du könntest maximal {{ maxAmount }} Liter auftanken.
-                        </p>
+                        <p class='text-muted pt-3'>
+                            Du könntest maximal {{ maxAmount }} Liter auftanken. </p>
                     </div>
 
-                    <div class="modal-footer justify-content-evenly row">
-                        <button
-                            type="button"
-                            class="btn btn-primary col-5"
-                            @click="refuel()"
-                        >
+                    <div class='modal-footer justify-content-evenly row'>
+                        <button type='button' class='btn btn-primary col-5' @click='refuel()'>
                             Auftanken
                         </button>
-                        <button
-                            type="button"
-                            class="btn btn-secondary col-5"
-                            @click="cancel()"
-                        >
+                        <button type='button' class='btn btn-secondary col-5' @click='cancel()'>
                             Abbrechen
                         </button>
                     </div>
@@ -65,7 +37,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {allowOnlyNumbers, onFocus} from "@/scripts/helpers/helpers";

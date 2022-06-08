@@ -1,10 +1,10 @@
 <template>
-    <div class="mdc-footer-bar">
+    <div class='mdc-footer-bar'>
         <p>Angemeldet als {{ this.rankName }} {{ this.characterName }}.</p>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 
 @Options({
@@ -21,7 +21,7 @@ export default class MdcFooterBar extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-footer-bar {
     position: absolute;
     bottom: 0;

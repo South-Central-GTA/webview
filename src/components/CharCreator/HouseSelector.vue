@@ -1,81 +1,55 @@
 <template>
-    <div class="house-selector">
-        <div class="selected-box sc-card text-white" v-if="selectedHouseId !== -1">
+    <div class='house-selector'>
+        <div class='selected-box sc-card text-white' v-if='selectedHouseId !== -1'>
             <h4>Ausgewählte Immobilie</h4>
             <h6>
-                {{ selectedHouseStreetName }} {{ selectedHouseSubName }}
-                {{ selectedHouseHouseNumber }}
-            </h6>
-            <div class="row">
-                <div class="col-10">
-                    <button
-                        type="button"
-                        class="btn btn-secondary selected-house-button"
-                        @click="show()"
-                    >
+                {{ selectedHouseStreetName }} {{ selectedHouseSubName }} {{ selectedHouseHouseNumber }} </h6>
+            <div class='row'>
+                <div class='col-10'>
+                    <button type='button' class='btn btn-secondary selected-house-button' @click='show()'>
                         Anschauen
                     </button>
                 </div>
-                <div class="col-2">
-                    <button
-                        type="button"
-                        class="btn btn-secondary remove-house-button"
-                        @click="remove()"
-                    >
-                        <font-awesome-icon class="delete-icon" icon="trash"/>
+                <div class='col-2'>
+                    <button type='button' class='btn btn-secondary remove-house-button' @click='remove()'>
+                        <font-awesome-icon class='delete-icon' icon='trash' />
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class="select-box sc-card text-white bottom-center">
-            <div class="menu">
-                <div class="left">
-                    <button type="button" class="btn btn-secondary" @click="change(-1)">
-                        <font-awesome-icon icon="caret-left"/>
+        <div class='select-box sc-card text-white bottom-center'>
+            <div class='menu'>
+                <div class='left'>
+                    <button type='button' class='btn btn-secondary' @click='change(-1)'>
+                        <font-awesome-icon icon='caret-left' />
                     </button>
                 </div>
 
-                <div v-if="currentHouseId !== -1" style="width: 100%">
-                    <h5 class="text-center">
-                        {{ currentHouseStreetName }} {{ currentHouseSubName }}
-                        {{ currentHouseNumber }}
-                    </h5>
-                    <h6 class="text-center">
-                        {{ currentHouseSouthCentralPoints }} Character Points
-                    </h6>
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        :disabled="selectButtonDisabled"
-                        @click="trySelect()"
-                    >
+                <div v-if='currentHouseId !== -1' style='width: 100%'>
+                    <h5 class='text-center'>
+                        {{ currentHouseStreetName }} {{ currentHouseSubName }} {{ currentHouseNumber }} </h5>
+                    <h6 class='text-center'>
+                        {{ currentHouseSouthCentralPoints }} Character Points </h6>
+                    <button type='button' class='btn btn-primary' :disabled='selectButtonDisabled' @click='trySelect()'>
                         Auswählen
                     </button>
                 </div>
 
-                <div class="right">
-                    <button type="button" class="btn btn-secondary" @click="change(1)">
-                        <font-awesome-icon icon="caret-right"/>
+                <div class='right'>
+                    <button type='button' class='btn btn-secondary' @click='change(1)'>
+                        <font-awesome-icon icon='caret-right' />
                     </button>
                 </div>
             </div>
-            <div class="row" style="padding-top: 0.5vw">
-                <div class="col">
-                    <button
-                        type="button"
-                        class="btn btn-secondary"
-                        @click="changeCameraPos(0)"
-                    >
+            <div class='row' style='padding-top: 0.5vw'>
+                <div class='col'>
+                    <button type='button' class='btn btn-secondary' @click='changeCameraPos(0)'>
                         Haustür Kamera
                     </button>
                 </div>
-                <div class="col">
-                    <button
-                        type="button"
-                        class="btn btn-secondary"
-                        @click="changeCameraPos(1)"
-                    >
+                <div class='col'>
+                    <button type='button' class='btn btn-secondary' @click='changeCameraPos(1)'>
                         Rundflug Kamera
                     </button>
                 </div>
@@ -84,7 +58,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {HouseInterface} from "@/scripts/interfaces/house.interface";

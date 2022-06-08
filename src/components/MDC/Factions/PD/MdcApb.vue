@@ -1,33 +1,21 @@
 <template>
-    <div class="mdc-apb">
-        <div class="content h-100 row m-4">
-            <div class="col-12">
-                <div v-if="bulletIns.length !== 0" class="big-list-holder">
-                    <p v-for="entry in bulletIns" v-bind:key="entry.id">
-                        <button
-                            type="button"
-                            v-if="isOperator"
-                            class="mx-2"
-                            @click="deleteBulletIn(entry.id)"
-                        >
+    <div class='mdc-apb'>
+        <div class='content h-100 row m-4'>
+            <div class='col-12'>
+                <div v-if='bulletIns.length !== 0' class='big-list-holder'>
+                    <p v-for='entry in bulletIns' v-bind:key='entry.id'>
+                        <button type='button' v-if='isOperator' class='mx-2' @click='deleteBulletIn(entry.id)'>
                             X
                         </button>
-                        <span class="date-text"
-                        >{{ entry.creatorCharacterName }} -
-              {{ getDate(entry.createdAtJson) }}</span
-                        >
-                        {{ entry.content }}
+                        <span class='date-text'>{{ entry.creatorCharacterName }} -
+              {{ getDate(entry.createdAtJson) }}</span> {{ entry.content }}
                     </p>
                 </div>
 
-                <div class="position-absolute mb-5 bottom-0" v-if="isOperator">
-                    <input class="w-100" v-model="bulletInInput" type="text"/>
+                <div class='position-absolute mb-5 bottom-0' v-if='isOperator'>
+                    <input class='w-100' v-model='bulletInInput' type='text' />
 
-                    <button
-                        type="button"
-                        class="float-end mt-1"
-                        @click="createBulletIn()"
-                    >
+                    <button type='button' class='float-end mt-1' @click='createBulletIn()'>
                         Bulletin hinzufügen
                     </button>
                 </div>
@@ -36,7 +24,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import MdcService from "@/scripts/services/mdc.service";
@@ -107,7 +95,7 @@ export default class MdcApb extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-apb {
     background-color: #cecece;
     height: 100%;

@@ -1,3 +1,6 @@
+import {ServerEventTimeoutError} from "@/exceptions/server-event-timeout.error";
+import {ServerEventCustomError} from "@/exceptions/server-event-custom.error";
+
 type eventFn = (...args: any[]) => any;
 
 export default new class AltService implements Alt {
@@ -32,6 +35,27 @@ export default new class AltService implements Alt {
                 .replace("]", "")}`
             );
         }
+    }
+
+    public emitServerWithResponse<Template>(eventName: string, ...args: any[]): Promise<Template> {
+        const requestArgs = args;
+        return new Promise<Template>((resolve, reject) => {
+            this.emitServer(eventName, ...requestArgs);
+
+            this.on(eventName, (args: any[]) => {
+                this.off(eventName);
+
+                if (args.length !== requestArgs.length && args.length !== 0 && requestArgs.length !== 0) {
+                    return reject(new ServerEventCustomError(args[0]));
+                }
+
+                resolve(args[0]);
+            });
+
+            setTimeout(() => {
+                reject(new ServerEventTimeoutError());
+            }, 3000);
+        });
     }
 
     public off(eventName: string): void {

@@ -1,74 +1,44 @@
 <template>
-    <div class="clothing-menu mb-5">
+    <div class='clothing-menu mb-5'>
         <h5>{{ title }}</h5>
-        <div class="row">
-            <div class="col-12">
-                <input
-                    type="range"
-                    class="form-range-dark"
-                    min="-1"
-                    :max="maxDrawables"
-                    v-model.number="drawableId"
-                    @input="updateClothing()"
-                />
-                <div style="margin: unset">
-                    <p class="float-end">
+        <div class='row'>
+            <div class='col-12'>
+                <input type='range' class='form-range-dark' min='-1' :max='maxDrawables' v-model.number='drawableId' @input='updateClothing()' />
+                <div style='margin: unset'>
+                    <p class='float-end'>
                         {{
                             this.clothing.drawableId === -1
                                 ? "Nichts"
                                 : this.clothing.drawableId
-                        }}
-                    </p>
+                        }} </p>
                 </div>
             </div>
-            <div class="col-12" v-if="this.clothing.drawableId !== -1">
+            <div class='col-12' v-if='this.clothing.drawableId !== -1'>
                 Variationen
-                <input
-                    type="range"
-                    :disabled="maxTextures < 1"
-                    class="form-range-dark"
-                    min="0"
-                    :max="maxTextures"
-                    v-model.number="textureId"
-                    @input="updateClothing()"
-                />
-                <div style="margin: unset">
-                    <p class="float-end">{{ textureId }}</p>
+                <input type='range' :disabled='maxTextures < 1' class='form-range-dark' min='0' :max='maxTextures' v-model.number='textureId' @input='updateClothing()' />
+                <div style='margin: unset'>
+                    <p class='float-end'>{{ textureId }}</p>
                 </div>
             </div>
-            <div
-                class="col-12"
-                v-if="this.clothing.drawableId !== -1 && this.title !== 'Torso'"
-            >
-                <input
-                    v-model="itemName"
-                    type="text"
-                    class="form-control-dark"
-                    @input="updateClothing()"
-                    placeholder="Item Name"
-                    maxlength="32"
-                    v-bind:class="{
+            <div class='col-12' v-if="this.clothing.drawableId !== -1 && this.title !== 'Torso'">
+                <input v-model='itemName' type='text' class='form-control-dark' @input='updateClothing()' placeholder='Item Name' maxlength='32' v-bind:class="{
             'is-invalid': clothValidation !== 'OKAY',
             'is-valid': clothValidation === 'OKAY',
-          }"
-                />
+          }" />
 
-                <div v-if="clothValidation === 'EMPTY'" class="invalid-feedback">
+                <div v-if="clothValidation === 'EMPTY'" class='invalid-feedback'>
                     Bitte definiere einen Namen für dieses Kleidungsitem.
                 </div>
 
-                <div v-if="clothValidation === 'TO_SHORT'" class="invalid-feedback">
+                <div v-if="clothValidation === 'TO_SHORT'" class='invalid-feedback'>
                     Der Name ist zu kurz.
                 </div>
 
-                <div
-                    v-if="clothValidation === 'SPECIAL_CHARACTERS'"
-                    class="invalid-feedback"
-                >
+                <div v-if="clothValidation === 'SPECIAL_CHARACTERS'" class='invalid-feedback'>
                     Diese Art von Sonderzeichen ist nicht erlaubt.
                 </div>
 
-                <div v-if="clothValidation === 'INVALID'" class="invalid-feedback">
+                <div v-if="clothValidation === 'INVALID'" class='invalid-feedback'>
                     xxx
                 </div>
             </div>
@@ -76,7 +46,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {Prop} from "vue-property-decorator";
 import {ClothingInterface} from "@/scripts/interfaces/character/clothing.interface";

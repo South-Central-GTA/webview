@@ -1,31 +1,24 @@
 <template>
-    <div class="prison">
-        <div class="card w-25 m-5">
-            <div class="card-body">
-                <h5 class="card-title">Gefängnis</h5>
-                <h6 class="card-subtitle mb-2 text-muted">
-                    Los Santos Police Department
-                </h6>
-                <p class="card-text">
-                    Die Zeit läuft auch ab wenn du mit diesem Charakter nicht online bist.
-                </p>
-                <button
-                    type="button"
-                    class="btn btn-secondary p-2"
-                    @click="requestCharacterSelection()"
-                >
+    <div class='prison'>
+        <div class='card w-25 m-5'>
+            <div class='card-body'>
+                <h5 class='card-title'>Gefängnis</h5>
+                <h6 class='card-subtitle mb-2 text-muted'>
+                    Los Santos Police Department </h6>
+                <p class='card-text'>
+                    Die Zeit läuft auch ab wenn du mit diesem Charakter nicht online bist. </p>
+                <button type='button' class='btn btn-secondary p-2' @click='requestCharacterSelection()'>
                     Zurück zur Charakterauswahl
                 </button>
 
-                <p class="text-muted">
-                    Dein Charakter ist noch bis {{ jailedUntil }} im Gefängnis.
-                </p>
+                <p class='text-muted'>
+                    Dein Charakter ist noch bis {{ jailedUntil }} im Gefängnis. </p>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 
@@ -69,7 +62,7 @@ export default class Prison extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .adminprison {
     position: absolute;
     top: 0;

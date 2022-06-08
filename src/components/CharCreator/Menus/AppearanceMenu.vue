@@ -1,118 +1,74 @@
 <template>
-    <div class="appearance-menu">
+    <div class='appearance-menu'>
         <h5>{{ title }}</h5>
-        <div class="menu">
-            <div class="left">
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    @click="onPreviousButtonClicked()"
-                >
-                    <font-awesome-icon icon="caret-left"/>
+        <div class='menu'>
+            <div class='left'>
+                <button type='button' class='btn btn-primary' @click='onPreviousButtonClicked()'>
+                    <font-awesome-icon icon='caret-left' />
                 </button>
             </div>
 
-            <p v-if="appearance.value !== clearNumber && names">
-                {{ names[appearance.value] }} ({{ appearance.value }})
-            </p>
-            <p v-if="appearance.value === clearNumber && clearNumber === 0 && names">
-                {{ names[appearance.value] }}
-            </p>
-            <p v-if="appearance.value !== clearNumber && !names">
-                {{ appearance.value }}
-            </p>
-            <p v-if="appearance.value === clearNumber && clearNumber === 0 && !names">
-                {{ appearance.value }}
-            </p>
-            <p v-if="appearance.value === clearNumber && clearNumber !== 0">Keine</p>
+            <p v-if='appearance.value !== clearNumber && names'>
+                {{ names[appearance.value] }} ({{ appearance.value }}) </p>
+            <p v-if='appearance.value === clearNumber && clearNumber === 0 && names'>
+                {{ names[appearance.value] }} </p>
+            <p v-if='appearance.value !== clearNumber && !names'>
+                {{ appearance.value }} </p>
+            <p v-if='appearance.value === clearNumber && clearNumber === 0 && !names'>
+                {{ appearance.value }} </p>
+            <p v-if='appearance.value === clearNumber && clearNumber !== 0'>Keine</p>
 
             <div>
-                <button
-                    type="button"
-                    class="icon-button"
-                    @click="toggleMenu()"
-                    v-if="hasOpacity || colors !== null"
-                >
-                    <font-awesome-icon class="text-white" icon="cog"/>
+                <button type='button' class='icon-button' @click='toggleMenu()' v-if='hasOpacity || colors !== null'>
+                    <font-awesome-icon class='text-white' icon='cog' />
                 </button>
-                <button
-                    type="button"
-                    class="icon-button"
-                    ref="clearButton"
-                    :hidden="appearance.value === clearNumber"
-                >
-                    <font-awesome-icon class="text-white" icon="trash"/>
+                <button type='button' class='icon-button' ref='clearButton' :hidden='appearance.value === clearNumber'>
+                    <font-awesome-icon class='text-white' icon='trash' />
                 </button>
             </div>
-            <div class="right">
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    @click="onNextButtonClicked()"
-                >
-                    <font-awesome-icon icon="caret-right"/>
+            <div class='right'>
+                <button type='button' class='btn btn-primary' @click='onNextButtonClicked()'>
+                    <font-awesome-icon icon='caret-right' />
                 </button>
             </div>
         </div>
 
-        <div :hidden="currentMenuIndex !== menuIndex" class="sub-menu">
-            <div class="colorBox" v-if="colors !== null">
-                <div v-for="(color, index) in colors" :key="index">
-                    <button
-                        type="button"
-                        class="icon-button"
-                        @click="selectPrimaryColor(index)"
-                    >
-                        <font-awesome-icon
-                            icon="circle"
-                            v-bind:style="{
+        <div :hidden='currentMenuIndex !== menuIndex' class='sub-menu'>
+            <div class='colorBox' v-if='colors !== null'>
+                <div v-for='(color, index) in colors' :key='index'>
+                    <button type='button' class='icon-button' @click='selectPrimaryColor(index)'>
+                        <font-awesome-icon icon='circle' v-bind:style="{
                 color: 'rgb(' + color.r + ', ' + color.g + ', ' + color.b + ')',
-              }"
-                        />
+              }" />
                     </button>
                 </div>
             </div>
 
-            <div style="padding-top: 1vw" v-if="hasSecondaryColor">
-                <p class="text-white-50">Haarspitzen Farbe</p>
-                <div class="colorBox">
-                    <div v-for="(color, index) in colors" :key="index">
-                        <button
-                            type="button"
-                            class="icon-button"
-                            @click="selectSecondaryColor(index)"
-                        >
-                            <font-awesome-icon
-                                icon="circle"
-                                v-bind:style="{
+            <div style='padding-top: 1vw' v-if='hasSecondaryColor'>
+                <p class='text-white-50'>Haarspitzen Farbe</p>
+                <div class='colorBox'>
+                    <div v-for='(color, index) in colors' :key='index'>
+                        <button type='button' class='icon-button' @click='selectSecondaryColor(index)'>
+                            <font-awesome-icon icon='circle' v-bind:style="{
                   color:
                     'rgb(' + color.r + ', ' + color.g + ', ' + color.b + ')',
-                }"
-                            />
+                }" />
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div v-if="hasOpacity">
-                <input
-                    type="range"
-                    class="form-range"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    v-model="opacityString"
-                    @input="updateOpacity()"
-                />
-                <div style="margin: unset">
-                    <p class="float-start">Deckkraft</p>
+            <div v-if='hasOpacity'>
+                <input type='range' class='form-range' min='0' max='1' step='0.01' v-model='opacityString' @input='updateOpacity()' />
+                <div style='margin: unset'>
+                    <p class='float-start'>Deckkraft</p>
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {Prop, Ref} from "vue-property-decorator";
 import {ColorInterface} from "@/scripts/interfaces/color.interface";

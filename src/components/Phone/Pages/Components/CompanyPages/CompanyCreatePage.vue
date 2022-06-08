@@ -1,82 +1,53 @@
 <template>
-    <div class="company-create">
-        <div class="phone-header">
-            <button class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='company-create'>
+        <div class='phone-header'>
+            <button class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Zurück</span>
             </button>
-            <button class="help-button icon-button" @click="showHelp()">
-                <font-awesome-icon icon="question-circle"/>
+            <button class='help-button icon-button' @click='showHelp()'>
+                <font-awesome-icon icon='question-circle' />
             </button>
         </div>
 
-        <img class="logo" src="@/assets/images/phone/gov-seal.png"/>
+        <img class='logo' src='@/assets/images/phone/gov-seal.png' />
 
-        <div v-if="willBeProcessed" class="info-overlay">
-            <img class="logo-big" src="@/assets/images/phone/gov-seal.png"/>
-            <p style="padding-bottom: 3vw">
-                Ihre Anfrage wird bearbeitet, dies kann einen Moment dauern. Wir melden
-                uns mit einer Benachrichtigung bei Ihnen.
-            </p>
+        <div v-if='willBeProcessed' class='info-overlay'>
+            <img class='logo-big' src='@/assets/images/phone/gov-seal.png' />
+            <p style='padding-bottom: 3vw'>
+                Ihre Anfrage wird bearbeitet, dies kann einen Moment dauern. Wir melden uns mit einer Benachrichtigung bei Ihnen. </p>
         </div>
 
-        <div v-if="isHelpVisible" class="info-overlay">
-            <div class="phone-header">
-                <button class="icon-button" @click="hideHelp()">
-                    <font-awesome-icon icon="chevron-left"/>
+        <div v-if='isHelpVisible' class='info-overlay'>
+            <div class='phone-header'>
+                <button class='icon-button' @click='hideHelp()'>
+                    <font-awesome-icon icon='chevron-left' />
                     <span>Zurück</span>
                 </button>
             </div>
 
-            <img class="logo-big" src="@/assets/images/phone/gov-seal.png"/>
+            <img class='logo-big' src='@/assets/images/phone/gov-seal.png' />
             <p>
-                Die Erstellung eines Unternehmens belastet das oben genannte Bankkonto
-                mit $20.500, davon werden Bürogänge, Anmeldungen und Verwaltungskosten
-                gedeckt.
-            </p>
+                Die Erstellung eines Unternehmens belastet das oben genannte Bankkonto mit $20.500, davon werden Bürogänge, Anmeldungen und Verwaltungskosten gedeckt. </p>
         </div>
 
-        <div class="phone-gov-button-group">
-            <input
-                ref="companyName"
-                class="form-control"
-                @input="checkValidation()"
-                @focus="onFocus(true)"
-                @blur="onFocus(false)"
-                type="text"
-                placeholder="Unternehmensname"
-                maxlength="32"
-            />
-            <select-bank-account
-                class="pt-2"
-                ref="selectBank"
-                v-on:change-bank-account="setBankAccount($event)"
-                v-on:setup="setBankAccount($event)"
-            />
+        <div class='phone-gov-button-group'>
+            <input ref='companyName' class='form-control' @input='checkValidation()' @focus='onFocus(true)' @blur='onFocus(false)' type='text' placeholder='Unternehmensname' maxlength='32' />
+            <select-bank-account class='pt-2' ref='selectBank' v-on:change-bank-account='setBankAccount($event)' v-on:setup='setBankAccount($event)' />
 
-            <p class="description">
-                Ausgewählte Immobilie wird der Unternehmenshauptsitz!
-            </p>
+            <p class='description'>
+                Ausgewählte Immobilie wird der Unternehmenshauptsitz! </p>
 
-            <select-house
-                ref="selectHouse"
-                v-on:change-house="setHouse($event)"
-                v-on:setup="setHouse($event)"
-            />
+            <select-house ref='selectHouse' v-on:change-house='setHouse($event)' v-on:setup='setHouse($event)' />
 
-            <button
-                type="button"
-                class="btn"
-                @click="createCompany()"
-                :disabled="!valid"
-            >
+            <button type='button' class='btn' @click='createCompany()' :disabled='!valid'>
                 Unternehmen eröffnen
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import SelectBankAccount from "@/components/General/Banking/SelectBankAccount.vue";
 import SelectHouse from "@/components/General/House/SelectHouse.vue";
@@ -163,7 +134,7 @@ export default class CompanyCreatePage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .company-create {
     overflow: hidden;
     position: absolute;

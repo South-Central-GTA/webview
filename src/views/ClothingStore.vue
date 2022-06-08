@@ -1,54 +1,31 @@
 <template>
-    <div class="clothing-store">
-        <notifications-holder ref="notificationsHolder" class="unselectable"/>
+    <div class='clothing-store'>
+        <notifications-holder ref='notificationsHolder' class='unselectable' />
 
-        <div class="sc-card text-white character-clothes-block">
-            <clothes-menu
-                ref="clothesMenu"
-                v-on:update-clothes="updateClothes($event)"
-            />
+        <div class='sc-card text-white character-clothes-block'>
+            <clothes-menu ref='clothesMenu' v-on:update-clothes='updateClothes($event)' />
 
-            <div class="save-box">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    @click="closeHairSalon()"
-                    :disabled="isSaving"
-                >
+            <div class='save-box'>
+                <button type='button' class='btn btn-secondary' @click='closeHairSalon()' :disabled='isSaving'>
                     Abbrechen
                 </button>
 
-                <button
-                    type="button"
-                    class="btn btn-primary m-2"
-                    @click="requestBuy()"
-                    :disabled="isSaving || !hasChanges"
-                >
+                <button type='button' class='btn btn-primary m-2' @click='requestBuy()' :disabled='isSaving || !hasChanges'>
                     Kleidung in den Warenkorb packen
                 </button>
             </div>
         </div>
 
-        <div class="rotate-box">
-            <div class="row">
-                <div class="col-5">
-                    <button
-                        type="button"
-                        @mousedown="rotateCharacter(-1)"
-                        @mouseup="stopRotateCharacter()"
-                        class="btn rotate-icon btn-secondary"
-                    >
-                        <font-awesome-icon icon="redo"/>
+        <div class='rotate-box'>
+            <div class='row'>
+                <div class='col-5'>
+                    <button type='button' @mousedown='rotateCharacter(-1)' @mouseup='stopRotateCharacter()' class='btn rotate-icon btn-secondary'>
+                        <font-awesome-icon icon='redo' />
                     </button>
                 </div>
-                <div class="col-5">
-                    <button
-                        type="button"
-                        @mousedown="rotateCharacter(1)"
-                        @mouseup="stopRotateCharacter()"
-                        class="btn rotate-icon btn-secondary"
-                    >
-                        <font-awesome-icon icon="undo"/>
+                <div class='col-5'>
+                    <button type='button' @mousedown='rotateCharacter(1)' @mouseup='stopRotateCharacter()' class='btn rotate-icon btn-secondary'>
+                        <font-awesome-icon icon='undo' />
                     </button>
                 </div>
             </div>
@@ -56,7 +33,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
@@ -139,7 +116,7 @@ export default class ClothingStore extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .clothing-store {
     position: absolute;
     top: 0;

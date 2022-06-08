@@ -1,57 +1,43 @@
 <template>
-    <div class="locating-page">
-        <div class="pt-5">
-            <div class="position-relative">
+    <div class='locating-page'>
+        <div class='pt-5'>
+            <div class='position-relative'>
                 <h5>Fahrzeuge Tracking App</h5>
-                <font-awesome-icon class="tracking-app-icon" icon="map-marker"/>
+                <font-awesome-icon class='tracking-app-icon' icon='map-marker' />
             </div>
-            <p class="subtitle">Wir wissen, wo Sie nachts parken.</p>
+            <p class='subtitle'>Wir wissen, wo Sie nachts parken.</p>
         </div>
 
-        <div class="loading" v-if="isLoading && !loadedOnce">
+        <div class='loading' v-if='isLoading && !loadedOnce'>
             <h1>{{ loadingText }}</h1>
         </div>
 
         <div v-else>
-            <div v-if="!isTracking" class="m-2">
-                <div v-if="characterVehicles.length !== 0">
+            <div v-if='!isTracking' class='m-2'>
+                <div v-if='characterVehicles.length !== 0'>
                     <h6>Privatfahrzeuge</h6>
-                    <div class="list">
-                        <div v-for="vehicle in characterVehicles" v-bind:key="vehicle.id">
-                            <vehicle-card
-                                v-bind:vehicle="vehicle"
-                                class="vehicle-entry"
-                                @click="chooseVehicle(vehicle.id)"
-                            />
+                    <div class='list'>
+                        <div v-for='vehicle in characterVehicles' v-bind:key='vehicle.id'>
+                            <vehicle-card v-bind:vehicle='vehicle' class='vehicle-entry' @click='chooseVehicle(vehicle.id)' />
                         </div>
                     </div>
                 </div>
-                <div class="pt-1" v-if="groupVehicles.length !== 0">
+                <div class='pt-1' v-if='groupVehicles.length !== 0'>
                     <h6>Gruppen Fahrzeuge</h6>
-                    <div class="list">
-                        <div v-for="vehicle in groupVehicles" v-bind:key="vehicle.id">
-                            <vehicle-card
-                                v-bind:vehicle="vehicle"
-                                class="vehicle-entry"
-                                @click="chooseVehicle(vehicle.id)"
-                            />
+                    <div class='list'>
+                        <div v-for='vehicle in groupVehicles' v-bind:key='vehicle.id'>
+                            <vehicle-card v-bind:vehicle='vehicle' class='vehicle-entry' @click='chooseVehicle(vehicle.id)' />
                         </div>
                     </div>
                 </div>
-                <div
-                    v-if="
+                <div v-if='
             groupVehicles.length === 0 && this.characterVehicles.length === 0
-          "
-                >
+          '>
                     Sie besitzen keine Fahrzeuge.
                 </div>
             </div>
             <div v-else>
-                <button
-                    type="button"
-                    class="mt-5 btn stop-tracking-button"
-                    @click="stopTracking()"
-                >
+                <button type='button' class='mt-5 btn stop-tracking-button' @click='stopTracking()'>
                     Tracking beenden
                 </button>
             </div>
@@ -59,7 +45,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Options, Vue} from "vue-class-component";
 import VehicleCard from "@/components/Vehicle/VehicleCard.vue";
@@ -158,7 +144,7 @@ export default class LocatingPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .locating-page {
     overflow: hidden;
     top: 0;

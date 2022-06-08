@@ -1,26 +1,20 @@
 <template>
-    <div class="notifications-holder">
-        <div class="notifications-list left">
-            <div
-                v-for="(notification, index) in leftNotifications"
-                v-bind:key="index"
-            >
-                <notification v-bind:notification="notification"/>
+    <div class='notifications-holder'>
+        <div class='notifications-list left'>
+            <div v-for='(notification, index) in leftNotifications' v-bind:key='index'>
+                <notification v-bind:notification='notification' />
             </div>
         </div>
 
-        <div class="notifications-list right">
-            <div
-                v-for="(notification, index) in rightNotifications"
-                v-bind:key="index"
-            >
-                <notification v-bind:notification="notification"/>
+        <div class='notifications-list right'>
+            <div v-for='(notification, index) in rightNotifications' v-bind:key='index'>
+                <notification v-bind:notification='notification' />
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import Notification from "./Notification.vue";
 import {Options, Vue} from "vue-class-component";

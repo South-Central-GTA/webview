@@ -1,33 +1,25 @@
 <template>
-    <div ref="slider" class="two-d-slider">
-        <div
-            ref="bounds"
-            class="drag-box"
-            v-bind:style="{ height: HEIGHT + 'px', width: WIDTH + 'px' }"
-        >
-            <div class="top-text">
-                <p class="text-white">{{ topText }}</p>
+    <div ref='slider' class='two-d-slider'>
+        <div ref='bounds' class='drag-box' v-bind:style="{ height: HEIGHT + 'px', width: WIDTH + 'px' }">
+            <div class='top-text'>
+                <p class='text-white'>{{ topText }}</p>
             </div>
-            <div class="left-text">
-                <p class="text-white">{{ leftText }}</p>
+            <div class='left-text'>
+                <p class='text-white'>{{ leftText }}</p>
             </div>
             <!-- Dot -->
-            <div
-                class="drag-thump"
-                ref="thump"
-                v-bind:style="{ height: MARKER_SIZE + 'px', width: MARKER_SIZE + 'px' }"
-            ></div>
-            <div class="right-text">
-                <p class="text-white">{{ rightText }}</p>
+            <div class='drag-thump' ref='thump' v-bind:style="{ height: MARKER_SIZE + 'px', width: MARKER_SIZE + 'px' }"></div>
+            <div class='right-text'>
+                <p class='text-white'>{{ rightText }}</p>
             </div>
-            <div class="bottom-text">
-                <p class="text-white">{{ bottomText }}</p>
+            <div class='bottom-text'>
+                <p class='text-white'>{{ bottomText }}</p>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {Prop, Ref} from "vue-property-decorator";
 import {TwoDValueInterface} from "@/scripts/interfaces/two-d-value.interface";

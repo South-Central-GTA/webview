@@ -1,45 +1,25 @@
 <template>
-    <div class="supermarket">
-        <div
-            class="sc-card text-white w-25 center"
-            :hidden="!active"
-            v-bind:class="{ enable: active, disable: !active }"
-        >
-            <div class="card-body">
-                <button
-                    type="button"
-                    class="icon-button float-end p-3"
-                    @click="close()"
-                >
-                    <font-awesome-icon class="center text-white" icon="times"/>
+    <div class='supermarket'>
+        <div class='sc-card text-white w-25 center' :hidden='!active' v-bind:class='{ enable: active, disable: !active }'>
+            <div class='card-body'>
+                <button type='button' class='icon-button float-end p-3' @click='close()'>
+                    <font-awesome-icon class='center text-white' icon='times' />
                 </button>
-                <h5 class="card-title">Supermarkt</h5>
+                <h5 class='card-title'>Supermarkt</h5>
 
-                <div class="list row">
-                    <div v-for="item in buyableItems" v-bind:key="item.id" class="col-3">
-                        <image-amount-input
-                            class="mb-3"
-                            v-bind:item="item"
-                            v-bind:class="{
+                <div class='list row'>
+                    <div v-for='item in buyableItems' v-bind:key='item.id' class='col-3'>
+                        <image-amount-input class='mb-3' v-bind:item='item' v-bind:class='{
                 selected: item.id === currentItemId,
                 unselect: item.id !== currentItemId,
-              }"
-                            v-on:choose-item="chooseItem($event)"
-                            v-on:update-amount="updateAmount($event)"
-                        />
+              }' v-on:choose-item='chooseItem($event)' v-on:update-amount='updateAmount($event)' />
                     </div>
                 </div>
 
-                <button
-                    type="button"
-                    class="btn w-100 mt-2"
-                    @click="takeItem()"
-                    :disabled="currentItemId === 0 || !currentAmount"
-                    v-bind:class="{
+                <button type='button' class='btn w-100 mt-2' @click='takeItem()' :disabled='currentItemId === 0 || !currentAmount' v-bind:class="{
             'btn-primary': currentItemId !== 0 && currentAmount,
             'btn-secondary': currentItemId === 0 || !currentAmount,
-          }"
-                >
+          }">
                     {{ buttonText }}
                 </button>
             </div>
@@ -47,7 +27,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import ImageAmountInput from "./ImageAmountInput.vue";
 import {Options, Vue} from "vue-class-component";
@@ -116,7 +96,7 @@ export default class Supermarket extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .supermarket {
     position: absolute;
     top: 0;

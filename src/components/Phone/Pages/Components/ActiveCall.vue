@@ -1,18 +1,18 @@
 <template>
-    <div class="active-call">
-        <h1 class="call-with">{{ displayedName }}</h1>
-        <h1 class="call-time">{{ callTime }}</h1>
-        <div class="actions-block">
-            <div class="rows">
-                <button type="button" class="btn hangup-button" @click="hangupClicked">
-                    <font-awesome-icon class="center" icon="phone"/>
+    <div class='active-call'>
+        <h1 class='call-with'>{{ displayedName }}</h1>
+        <h1 class='call-time'>{{ callTime }}</h1>
+        <div class='actions-block'>
+            <div class='rows'>
+                <button type='button' class='btn hangup-button' @click='hangupClicked'>
+                    <font-awesome-icon class='center' icon='phone' />
                 </button>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
@@ -125,7 +125,7 @@ export default class ActiveCall extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .active-call {
     position: absolute;
     top: 0;

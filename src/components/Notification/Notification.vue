@@ -1,18 +1,15 @@
 <template>
-    <div
-        class="card notification"
-        v-bind:class="{
+    <div class='card notification' v-bind:class='{
       info: notification.type == 0,
       warning: notification.type == 1,
       danger: notification.type == 2,
       success: notification.type == 3,
-    }"
-    >
-        <p class="text-white">{{ notification.text }}</p>
+    }'>
+        <p class='text-white'>{{ notification.text }}</p>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {Prop} from "vue-property-decorator";
 import {NotificationInterface} from "@/scripts/interfaces/notification.interface";
@@ -22,7 +19,7 @@ export default class Notification extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .notification {
     width: 20vw;
     margin: 0.5vw 1vw;

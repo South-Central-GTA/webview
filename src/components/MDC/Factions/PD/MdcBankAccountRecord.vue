@@ -1,42 +1,35 @@
 <template>
-    <div class="mdc-bank-account-record">
-        <div class="content h-100 row m-4">
-            <div class="col-4">
+    <div class='mdc-bank-account-record'>
+        <div class='content h-100 row m-4'>
+            <div class='col-4'>
                 <h3>{{ bankDetails }}</h3>
                 <h4>Informationen:</h4>
-                <p v-if="accesses.length === 0">
-                    <b>Zugriff:</b> Keine Suchergebnisse!
-                </p>
-                <p v-if="accesses.length !== 0"><b>Zugriff:</b></p>
-                <ul v-if="accesses.length !== 0" class="list-holder">
-                    <li v-for="access in accesses" v-bind:key="access.name">
+                <p v-if='accesses.length === 0'>
+                    <b>Zugriff:</b> Keine Suchergebnisse! </p>
+                <p v-if='accesses.length !== 0'><b>Zugriff:</b></p>
+                <ul v-if='accesses.length !== 0' class='list-holder'>
+                    <li v-for='access in accesses' v-bind:key='access.name'>
                         {{ access.name }} Besitzer: {{ access.owner ? "Ja" : "Nein" }}
                     </li>
                 </ul>
             </div>
-            <div class="col-6">
+            <div class='col-6'>
                 <h4>Notizen:</h4>
 
-                <div v-if="notes.length !== 0" class="big-list-holder">
-                    <p v-for="note in notes" v-bind:key="note.id">
-                        <button
-                            type="button"
-                            v-if="isOperator"
-                            @click="deleteNote(note.id)"
-                        >
+                <div v-if='notes.length !== 0' class='big-list-holder'>
+                    <p v-for='note in notes' v-bind:key='note.id'>
+                        <button type='button' v-if='isOperator' @click='deleteNote(note.id)'>
                             X
                         </button>
-                        {{ note.note }}<br/><span class="date-text"
-                    >{{ note.creatorCharacterName }} -
-              {{ getDate(note.createdAtJson) }}</span
-                    >
+                        {{ note.note }}<br /><span class='date-text'>{{ note.creatorCharacterName }} -
+              {{ getDate(note.createdAtJson) }}</span>
                     </p>
                 </div>
 
-                <div class="position-absolute mb-5 bottom-0">
-                    <input class="w-100" v-model="noteInput" type="text"/>
+                <div class='position-absolute mb-5 bottom-0'>
+                    <input class='w-100' v-model='noteInput' type='text' />
 
-                    <button type="button" class="float-end mt-1" @click="createNote()">
+                    <button type='button' class='float-end mt-1' @click='createNote()'>
                         Notiz erstellen
                     </button>
                 </div>
@@ -45,7 +38,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import MdcService from "@/scripts/services/mdc.service";
@@ -155,7 +148,7 @@ export default class MdcBankAccountRecord extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-bank-account-record {
     background-color: #cecece;
     height: 100%;

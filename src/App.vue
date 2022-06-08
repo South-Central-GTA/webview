@@ -1,11 +1,11 @@
 <template>
-    <div ref="cef" id="app" class="unselectable">
-        <router-view class="unselectable"/>
-        <dialog-holder class="unselectable"/>
+    <div ref='cef' id='app' class='unselectable'>
+        <router-view class='unselectable' />
+        <dialog-holder class='unselectable' />
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import DialogHolder from "@/components/DialogHolder.vue";
 import {Options, Vue} from "vue-class-component";

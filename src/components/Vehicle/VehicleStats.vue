@@ -1,37 +1,28 @@
 <template>
-    <div class="vehicle-stats sc-card text-white">
+    <div class='vehicle-stats sc-card text-white'>
         <h4>{{ name }}</h4>
         <div>
             <h6>Geschwindigkeit</h6>
-            <div class="progress">
-                <div
-                    class="progress-bar progress-bar-striped progress-bar-animated bg-dark"
-                    v-bind:style="{ width: vehicleStats.speed + '%' }"
-                ></div>
+            <div class='progress'>
+                <div class='progress-bar progress-bar-striped progress-bar-animated bg-dark' v-bind:style="{ width: vehicleStats.speed + '%' }"></div>
             </div>
         </div>
         <div>
             <h6>Beschleunigung</h6>
-            <div class="progress">
-                <div
-                    class="progress-bar progress-bar-striped progress-bar-animated bg-dark"
-                    v-bind:style="{ width: vehicleStats.acceleration + '%' }"
-                ></div>
+            <div class='progress'>
+                <div class='progress-bar progress-bar-striped progress-bar-animated bg-dark' v-bind:style="{ width: vehicleStats.acceleration + '%' }"></div>
             </div>
         </div>
         <div>
             <h6>Bremskraft</h6>
-            <div class="progress">
-                <div
-                    class="progress-bar progress-bar-striped progress-bar-animated bg-dark"
-                    v-bind:style="{ width: vehicleStats.breaks + '%' }"
-                ></div>
+            <div class='progress'>
+                <div class='progress-bar progress-bar-striped progress-bar-animated bg-dark' v-bind:style="{ width: vehicleStats.breaks + '%' }"></div>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {VehicleStatsInterface} from "@/scripts/interfaces/vehicles/vehicle-stats.interface";

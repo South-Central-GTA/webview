@@ -1,11 +1,10 @@
 <template>
-    <div class="team-menu-item-catalog">
+    <div class='team-menu-item-catalog'>
         <h2>Item Katalog</h2>
-        <input @input="search()" v-model="itemSearch" type="text" class="form-control-dark mb-2"
-               placeholder="Suche nach Namen (Bsp. Schlüssel)"/>
+        <input @input='search()' v-model='itemSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach Namen (Bsp. Schlüssel)' />
 
-        <div class="table-holder">
-            <table class="table table-striped table-hover">
+        <div class='table-holder'>
+            <table class='table table-striped table-hover'>
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -20,9 +19,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="catalogItem in catalogItems" v-bind:key="catalogItem.id" class="entry">
+                <tr v-for='catalogItem in catalogItems' v-bind:key='catalogItem.id' class='entry'>
                     <td>{{ catalogItem.id }}</td>
-                    <td><img class="showcase-image" :src="getImage(catalogItem.image)" v-bind:alt="catalogItem"/></td>
+                    <td><img class='showcase-image' :src='getImage(catalogItem.image)' v-bind:alt='catalogItem' /></td>
                     <td>{{ catalogItem.name }}</td>
                     <td>{{ catalogItem.description }}</td>
                     <td>{{ catalogItem.rarity }}</td>
@@ -40,7 +39,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from '@/scripts/services/alt.service';
 import {Vue} from "vue-class-component";
 import {CatalogItemInterface} from "@/scripts/interfaces/inventory/catalog-item.interface";

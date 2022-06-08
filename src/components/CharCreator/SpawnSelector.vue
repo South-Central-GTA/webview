@@ -1,38 +1,32 @@
 <template>
-    <div class="spawn-selector">
-        <div class="selected-box sc-card text-white" v-if="selectedSpawn.id !== -1">
+    <div class='spawn-selector'>
+        <div class='selected-box sc-card text-white' v-if='selectedSpawn.id !== -1'>
             <h4>Ausgewählter Spawn</h4>
             <h6>{{ selectedSpawn.name }}</h6>
-            <button type="button" class="btn btn-secondary" @click="show()">
+            <button type='button' class='btn btn-secondary' @click='show()'>
                 Anschauen
             </button>
         </div>
 
-        <div class="select-box sc-card text-white bottom-center">
-            <div class="menu">
-                <div class="left">
-                    <button type="button" class="btn btn-secondary" @click="change(-1)">
-                        <font-awesome-icon icon="caret-left"/>
+        <div class='select-box sc-card text-white bottom-center'>
+            <div class='menu'>
+                <div class='left'>
+                    <button type='button' class='btn btn-secondary' @click='change(-1)'>
+                        <font-awesome-icon icon='caret-left' />
                     </button>
                 </div>
 
-                <div class="w-100">
-                    <h5 class="text-center" style="height: 2vw">
-                        {{ currentSpawn.name }}
-                    </h5>
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        @click="select()"
-                        :disabled="selectedSpawn.name === currentSpawn.name"
-                    >
+                <div class='w-100'>
+                    <h5 class='text-center' style='height: 2vw'>
+                        {{ currentSpawn.name }} </h5>
+                    <button type='button' class='btn btn-primary' @click='select()' :disabled='selectedSpawn.name === currentSpawn.name'>
                         Auswählen
                     </button>
                 </div>
 
-                <div class="right">
-                    <button type="button" class="btn btn-secondary" @click="change(1)">
-                        <font-awesome-icon icon="caret-right"/>
+                <div class='right'>
+                    <button type='button' class='btn btn-secondary' @click='change(1)'>
+                        <font-awesome-icon icon='caret-right' />
                     </button>
                 </div>
             </div>
@@ -40,7 +34,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {SpawnInterface} from "@/scripts/interfaces/spawn.interface";

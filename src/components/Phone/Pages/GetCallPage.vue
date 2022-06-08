@@ -1,20 +1,20 @@
 <template>
-    <div class="get-call-page">
-        <h1 class="call-with">{{ displayedName }}</h1>
-        <div class="actions-block">
-            <div class="rows">
-                <button type="button" class="btn hangup-button" @click="deny()">
-                    <font-awesome-icon class="center" icon="phone-slash"/>
+    <div class='get-call-page'>
+        <h1 class='call-with'>{{ displayedName }}</h1>
+        <div class='actions-block'>
+            <div class='rows'>
+                <button type='button' class='btn hangup-button' @click='deny()'>
+                    <font-awesome-icon class='center' icon='phone-slash' />
                 </button>
-                <button type="button" class="btn accept-button" @click="accept()">
-                    <font-awesome-icon class="center" icon="phone"/>
+                <button type='button' class='btn accept-button' @click='accept()'>
+                    <font-awesome-icon class='center' icon='phone' />
                 </button>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {isNumeric} from "@/scripts/helpers/helpers";
 import {Vue} from "vue-class-component";
@@ -51,7 +51,7 @@ export default class GetCallPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .get-call-page {
     width: 100%;
     height: 100%;

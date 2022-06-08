@@ -1,46 +1,35 @@
 <template>
-    <div class="status-bar">
-        <div class="unextended-menu" @click="toggleExpand()">
-            <div class="right">
-                <font-awesome-icon
-                    icon="envelope"
-                    class="blink"
-                    v-if="missingNotifications"
-                />
-                <font-awesome-icon class="connection" icon="signal"/>
-                <font-awesome-icon class="phonecall" icon="phone" v-if="inCall"/>
+    <div class='status-bar'>
+        <div class='unextended-menu' @click='toggleExpand()'>
+            <div class='right'>
+                <font-awesome-icon icon='envelope' class='blink' v-if='missingNotifications' />
+                <font-awesome-icon class='connection' icon='signal' />
+                <font-awesome-icon class='phonecall' icon='phone' v-if='inCall' />
             </div>
         </div>
-        <div v-if="extended" class="extended-menu">
-            <div class="notification-list">
+        <div v-if='extended' class='extended-menu'>
+            <div class='notification-list'>
                 <h1>Benachrichtigungen</h1>
-                <div v-for="notification in notifications" v-bind:key="notification.id">
-                    <div
-                        class="notification"
-                        v-bind:class="{
+                <div v-for='notification in notifications' v-bind:key='notification.id'>
+                    <div class='notification' v-bind:class="{
               'maze-bank': notification.type === 1,
               gov: notification.type === 2,
               delivery: notification.type === 3,
-            }"
-                    >
-                        <button
-                            class="notification-close icon-button"
-                            @click="deleteNotification(notification.id)"
-                        >
-                            <font-awesome-icon icon="times-circle"/>
+            }">
+                        <button class='notification-close icon-button' @click='deleteNotification(notification.id)'>
+                            <font-awesome-icon icon='times-circle' />
                         </button>
                         <p>{{ notification.context }}</p>
                     </div>
                 </div>
-                <h2 v-if="notifications.length == 0">
-                    Du hast keine Benachrichtigungen!
-                </h2>
+                <h2 v-if='notifications.length == 0'>
+                    Du hast keine Benachrichtigungen! </h2>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {PhoneNotificationInterface} from "@/scripts/interfaces/phone/phone-notification";
@@ -97,7 +86,7 @@ export default class StatusBar extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .status-bar {
     position: absolute;
     top: 0;

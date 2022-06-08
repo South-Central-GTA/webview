@@ -1,16 +1,10 @@
 <template>
-    <div class="team-menu-animations">
+    <div class='team-menu-animations'>
         <h2>Animations Catalog</h2>
-        <input
-            @input="search()"
-            v-model="searchBar"
-            type="text"
-            class="form-control-dark mb-2"
-            placeholder="Suche nach einem Namen"
-        />
+        <input @input='search()' v-model='searchBar' type='text' class='form-control-dark mb-2' placeholder='Suche nach einem Namen' />
 
-        <div class="table-holder">
-            <table class="table table-striped table-hover">
+        <div class='table-holder'>
+            <table class='table table-striped table-hover'>
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -20,11 +14,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr
-                    v-for="animation in animations"
-                    v-bind:key="animation.id"
-                    class="entry"
-                >
+                <tr v-for='animation in animations' v-bind:key='animation.id' class='entry'>
                     <td>{{ animation.id }}</td>
                     <td>{{ animation.name }}</td>
                     <td>{{ animation.dictionary }}</td>
@@ -36,7 +26,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";

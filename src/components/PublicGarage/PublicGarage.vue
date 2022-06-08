@@ -1,63 +1,39 @@
 <template>
-    <div
-        class="public-garage"
-        v-bind:class="{ enable: active, disable: !active }"
-    >
-        <div class="sc-card w-25 center" :hidden="!active">
-            <div class="card-body" :hidden="tabIndex !== 1">
-                <button
-                    type="button"
-                    class="btn-close-white icon-button float-end"
-                    @click="close()"
-                >
-                    <font-awesome-icon class="center" icon="times"/>
+    <div class='public-garage' v-bind:class='{ enable: active, disable: !active }'>
+        <div class='sc-card w-25 center' :hidden='!active'>
+            <div class='card-body' :hidden='tabIndex !== 1'>
+                <button type='button' class='btn-close-white icon-button float-end' @click='close()'>
+                    <font-awesome-icon class='center' icon='times' />
                 </button>
 
-                <h5 class="card-title">Öffentliche Garage</h5>
-                <p class="card-text">
-                    Welches Fahrzeug möchtest du aus der Garage holen?
-                </p>
+                <h5 class='card-title'>Öffentliche Garage</h5>
+                <p class='card-text'>
+                    Welches Fahrzeug möchtest du aus der Garage holen? </p>
 
-                <div class="list">
-                    <div v-for="vehicle in parkedVehicles" v-bind:key="vehicle.id">
-                        <public-garage-vehicle-card
-                            v-bind:vehicle="vehicle"
-                            @click="chooseVehicle(vehicle.id)"
-                            v-bind:class="{
+                <div class='list'>
+                    <div v-for='vehicle in parkedVehicles' v-bind:key='vehicle.id'>
+                        <public-garage-vehicle-card v-bind:vehicle='vehicle' @click='chooseVehicle(vehicle.id)' v-bind:class='{
                 selected: vehicle.id === currentVehicleId,
                 unselected: vehicle.id !== currentVehicleId,
-              }"
-                        />
+              }' />
                     </div>
                 </div>
 
-                <button
-                    type="button"
-                    class="btn btn-primary w-100 mt-2"
-                    @click="unparkVehicle()"
-                >
+                <button type='button' class='btn btn-primary w-100 mt-2' @click='unparkVehicle()'>
                     Ausparken
                 </button>
             </div>
-            <div class="card-body" :hidden="tabIndex !== 2">
-                <button
-                    type="button"
-                    class="btn-close-white icon-button float-end"
-                    @click="close()"
-                >
-                    <font-awesome-icon class="center" icon="times"/>
+            <div class='card-body' :hidden='tabIndex !== 2'>
+                <button type='button' class='btn-close-white icon-button float-end' @click='close()'>
+                    <font-awesome-icon class='center' icon='times' />
                 </button>
 
-                <h5 class="card-title">Öffentliche Garage</h5>
-                <p class="card-text">Welches Fahrzeug möchtest du spawnen?</p>
+                <h5 class='card-title'>Öffentliche Garage</h5>
+                <p class='card-text'>Welches Fahrzeug möchtest du spawnen?</p>
 
-                <div class="list">
-                    <div v-for="vehicle in destroyedVehicles" v-bind:key="vehicle.id">
-                        <vehicle-card
-                            class="unselected"
-                            v-bind:vehicle="vehicle"
-                            @click="respawnVehicle(vehicle.id)"
-                        />
+                <div class='list'>
+                    <div v-for='vehicle in destroyedVehicles' v-bind:key='vehicle.id'>
+                        <vehicle-card class='unselected' v-bind:vehicle='vehicle' @click='respawnVehicle(vehicle.id)' />
                     </div>
                 </div>
             </div>
@@ -65,7 +41,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import PublicGarageVehicleCard from "./PublicGarageVehicleCard.vue";
 import VehicleCard from "@/components/Vehicle/VehicleCard.vue";
@@ -140,7 +116,7 @@ export default class PublicGarage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .public-garage {
     position: absolute;
     top: 0;

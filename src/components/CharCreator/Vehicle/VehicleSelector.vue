@@ -1,38 +1,27 @@
 <template>
-    <div class="vehicle-selector">
-        <div class="select-box sc-card text-white bottom-center">
-            <div class="menu">
-                <div class="left">
-                    <button
-                        type="button"
-                        class="btn btn-secondary"
-                        :disabled="buttonBlocked"
-                        @click="changeVehicle(-1)"
-                    >
-                        <font-awesome-icon icon="caret-left"/>
+    <div class='vehicle-selector'>
+        <div class='select-box sc-card text-white bottom-center'>
+            <div class='menu'>
+                <div class='left'>
+                    <button type='button' class='btn btn-secondary' :disabled='buttonBlocked' @click='changeVehicle(-1)'>
+                        <font-awesome-icon icon='caret-left' />
                     </button>
                 </div>
 
-                <div style="width: 100%">
-                    <h5 class="text-center">
-                        {{ name }} <span class="fw-lighter">{{ className }}</span>
+                <div style='width: 100%'>
+                    <h5 class='text-center'>
+                        {{ name }} <span class='fw-lighter'>{{ className }}</span>
                     </h5>
-                    <h6 class="text-center">
-                        {{ characterPoints }} South Central Points
-                    </h6>
-                    <button type="button" class="btn btn-primary" @click="orderVehicle()">
+                    <h6 class='text-center'>
+                        {{ characterPoints }} South Central Points </h6>
+                    <button type='button' class='btn btn-primary' @click='orderVehicle()'>
                         Auswählen
                     </button>
                 </div>
 
-                <div class="right">
-                    <button
-                        type="button"
-                        class="btn btn-secondary"
-                        :disabled="buttonBlocked"
-                        @click="changeVehicle(1)"
-                    >
-                        <font-awesome-icon icon="caret-right"/>
+                <div class='right'>
+                    <button type='button' class='btn btn-secondary' :disabled='buttonBlocked' @click='changeVehicle(1)'>
+                        <font-awesome-icon icon='caret-right' />
                     </button>
                 </div>
             </div>
@@ -40,7 +29,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {CatalogVehicleInterface} from "@/scripts/interfaces/vehicles/catalog-vehicle.interface";

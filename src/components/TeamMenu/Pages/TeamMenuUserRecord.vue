@@ -1,71 +1,46 @@
 <template>
-    <div class="team-menu-user-record">
+    <div class='team-menu-user-record'>
         <h2>User Akte</h2>
         <div>
             <h5>Automatische Einträge:</h5>
-            <ul class="user-records-block list-group">
-                <li
-                    v-for="userRecord in automaticUserRecords"
-                    v-bind:key="userRecord.id"
-                    class="pb-1"
-                >
-                    <div class="border">
-                        [{{ getDate(userRecord.loggedAt) }}]<br/>{{
+            <ul class='user-records-block list-group'>
+                <li v-for='userRecord in automaticUserRecords' v-bind:key='userRecord.id' class='pb-1'>
+                    <div class='border'>
+                        [{{ getDate(userRecord.loggedAt) }}]<br />{{
                             userRecord.text
-                        }}<br/><span style="font-style: italic"
-                    >Ausführendes Teammitglied {{ userRecord.staffAccountName }}</span
-                    >
+                        }}<br /><span style='font-style: italic'>Ausführendes Teammitglied {{ userRecord.staffAccountName }}</span>
                     </div>
                 </li>
             </ul>
         </div>
         <div>
             <h5>Team Einträge:</h5>
-            <ul class="user-records-block list-group">
-                <li
-                    v-for="userRecord in staffUserRecords"
-                    v-bind:key="userRecord.id"
-                    class="pb-1"
-                >
-                    <div class="border">
-                        [{{ getDate(userRecord.loggedAt) }}]<br/>{{
+            <ul class='user-records-block list-group'>
+                <li v-for='userRecord in staffUserRecords' v-bind:key='userRecord.id' class='pb-1'>
+                    <div class='border'>
+                        [{{ getDate(userRecord.loggedAt) }}]<br />{{
                             userRecord.text
-                        }}<br/><span style="font-style: italic"
-                    >Ausführendes Teammitglied {{ userRecord.staffAccountName }}</span
-                    >
+                        }}<br /><span style='font-style: italic'>Ausführendes Teammitglied {{ userRecord.staffAccountName }}</span>
                     </div>
                 </li>
             </ul>
         </div>
 
-        <textarea
-            class="form-control-dark"
-            v-model="manuelUserEntry"
-            rows="2"
-            style="resize: none"
-            maxlength="2048"
-            @focus="onFocus(true)"
-            @blur="onFocus(false)"
-        ></textarea>
+        <textarea class='form-control-dark' v-model='manuelUserEntry' rows='2' style='resize: none' maxlength='2048' @focus='onFocus(true)' @blur='onFocus(false)'></textarea>
 
-        <div class="pt-2">
-            <button
-                type="button"
-                class="btn btn-primary float-end"
-                :disabled="manuelUserEntry.trim().length < 5"
-                @click="saveEntry()"
-            >
+        <div class='pt-2'>
+            <button type='button' class='btn btn-primary float-end' :disabled='manuelUserEntry.trim().length < 5' @click='saveEntry()'>
                 Eintrag speichern
             </button>
         </div>
 
-        <div class="alert alert-warning mt-5">
+        <div class='alert alert-warning mt-5'>
             Einträge können nicht bearbeitet oder gelöscht werden.
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import {onFocus} from "@/scripts/helpers/helpers";

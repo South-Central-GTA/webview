@@ -1,16 +1,10 @@
 <template>
-    <div class="team-menu-character-catalog">
-        <div v-if="!isPopupOpen">
+    <div class='team-menu-character-catalog'>
+        <div v-if='!isPopupOpen'>
             <h2>Charaktere</h2>
-            <input
-                @input="search()"
-                v-model="characterSearch"
-                type="text"
-                class="form-control-dark mb-2"
-                placeholder="Suche nach Namen (Bsp. Max Mustermann)"
-            />
-            <div class="table-holder">
-                <table class="table table-striped table-hover">
+            <input @input='search()' v-model='characterSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach Namen (Bsp. Max Mustermann)' />
+            <div class='table-holder'>
+                <table class='table table-striped table-hover'>
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -22,12 +16,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr
-                        v-for="character in characters"
-                        v-bind:key="character.id"
-                        class="entry"
-                        @click="requestDetails(character)"
-                    >
+                    <tr v-for='character in characters' v-bind:key='character.id' class='entry' @click='requestDetails(character)'>
                         <td>{{ character.id }}</td>
                         <td>{{ character.currentAccountName }}</td>
                         <td>{{ character.name }}</td>
@@ -40,62 +29,55 @@
             </div>
         </div>
 
-        <div v-else class="details">
-            <button class="icon-button text-white" @click="closeDetails()">
-                <font-awesome-icon class="mx-2" icon="chevron-left"/>
+        <div v-else class='details'>
+            <button class='icon-button text-white' @click='closeDetails()'>
+                <font-awesome-icon class='mx-2' icon='chevron-left' />
                 <span>{{ this.openCharacter.name }}</span>
             </button>
 
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-6">
+            <div class='modal-body'>
+                <div class='row'>
+                    <div class='col-6'>
                         <p>
-                            <b>OOC Account:</b> [{{ this.openCharacter.accountId }}]
-                            {{ this.openCharacter.currentAccountName }}
+                            <b>OOC Account:</b> [{{ this.openCharacter.accountId }}] {{ this.openCharacter.currentAccountName }}
                         </p>
                     </div>
-                    <div class="col-6">
+                    <div class='col-6'>
                         <p>
-                            <b>Geschlecht:</b>
-                            {{ this.openCharacter.gender === 0 ? "Männlich" : "Weiblich" }}
-                        </p>
+                            <b>Geschlecht:</b> {{ this.openCharacter.gender === 0 ? "Männlich" : "Weiblich" }} </p>
                     </div>
 
-                    <div class="col-6">
+                    <div class='col-6'>
                         <p>
-                            <b>Status:</b>
-                            {{ getCharacterState(this.openCharacter.characterState) }}
-                        </p>
+                            <b>Status:</b> {{ getCharacterState(this.openCharacter.characterState) }} </p>
                     </div>
-                    <div class="col-6">
+                    <div class='col-6'>
                         <p><b>Alter:</b> {{ this.openCharacter.age }} Jahre</p>
                     </div>
 
-                    <div class="col-6">
+                    <div class='col-6'>
                         <p><b>Herkunft:</b> {{ this.openCharacter.origin }}</p>
                     </div>
-                    <div class="col-6">
+                    <div class='col-6'>
                         <p><b>Körperbau:</b> {{ this.openCharacter.physique }}</p>
                     </div>
 
-                    <div class="col-6">
+                    <div class='col-6'>
                         <p>
-                            <b>Berufsfeld Id:</b>
-                            {{
+                            <b>Berufsfeld Id:</b> {{
                                 this.openCharacter.definedJob === undefined
                                     ? "Kein Berufsfeld"
                                     : this.openCharacter.definedJob.id
-                            }}
-                        </p>
+                                                  }} </p>
                     </div>
 
-                    <div class="col-12">
+                    <div class='col-12'>
                         <p><b>Vorgeschichte:</b> {{ this.openCharacter.story }}</p>
                     </div>
                 </div>
                 <h6>Fahrzeuge</h6>
-                <div class="detail-table-holder">
-                    <table class="table table-striped table-hover">
+                <div class='detail-table-holder'>
+                    <table class='table table-striped table-hover'>
                         <thead>
                         <tr>
                             <th>Fahrzeug ID</th>
@@ -103,11 +85,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr
-                            v-for="vehicle in this.vehicles"
-                            v-bind:key="vehicle.id"
-                            class="entry"
-                        >
+                        <tr v-for='vehicle in this.vehicles' v-bind:key='vehicle.id' class='entry'>
                             <td>{{ vehicle.id }}</td>
                             <td>{{ vehicle.displayName }}</td>
                         </tr>
@@ -115,8 +93,8 @@
                     </table>
                 </div>
                 <h6>Immobilien</h6>
-                <div class="detail-table-holder">
-                    <table class="table table-striped table-hover">
+                <div class='detail-table-holder'>
+                    <table class='table table-striped table-hover'>
                         <thead>
                         <tr>
                             <th>Haus ID</th>
@@ -124,19 +102,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr
-                            v-for="house in this.houses"
-                            v-bind:key="house.id"
-                            class="entry"
-                        >
+                        <tr v-for='house in this.houses' v-bind:key='house.id' class='entry'>
                             <td>{{ house.id }}</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <h6>Gruppen</h6>
-                <div class="detail-table-holder">
-                    <table class="table table-striped table-hover">
+                <div class='detail-table-holder'>
+                    <table class='table table-striped table-hover'>
                         <thead>
                         <tr>
                             <th>Gruppen ID</th>
@@ -144,11 +118,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr
-                            v-for="group in this.groups"
-                            v-bind:key="group.id"
-                            class="entry"
-                        >
+                        <tr v-for='group in this.groups' v-bind:key='group.id' class='entry'>
                             <td>{{ group.id }}</td>
                             <td>{{ group.name }}</td>
                         </tr>
@@ -156,8 +126,8 @@
                     </table>
                 </div>
                 <h6>Bankkonten</h6>
-                <div class="detail-table-holder">
-                    <table class="table table-striped table-hover">
+                <div class='detail-table-holder'>
+                    <table class='table table-striped table-hover'>
                         <thead>
                         <tr>
                             <th>Bankkonto ID</th>
@@ -166,11 +136,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr
-                            v-for="bankAccount in this.bankAccounts"
-                            v-bind:key="bankAccount.id"
-                            class="entry"
-                        >
+                        <tr v-for='bankAccount in this.bankAccounts' v-bind:key='bankAccount.id' class='entry'>
                             <td>{{ bankAccount.id }}</td>
                             <td>{{ bankAccount.amount }}$</td>
                             <td>
@@ -185,7 +151,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {GroupInterface} from "@/scripts/interfaces/group/group.interface";

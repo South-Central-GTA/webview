@@ -1,42 +1,30 @@
 <template>
-    <div class="active-chat">
-        <div class="phone-header">
+    <div class='active-chat'>
+        <div class='phone-header'>
             <div>
                 <span>{{ chat.name }}</span>
             </div>
         </div>
 
-        <div ref="chatList" class="message-block">
-            <div v-for="message in chat.messages" v-bind:key="message.id">
-                <div
-                    class="chat-box"
-                    v-bind:class="{
+        <div ref='chatList' class='message-block'>
+            <div v-for='message in chat.messages' v-bind:key='message.id'>
+                <div class='chat-box' v-bind:class="{
             'your-text': message.local,
             'other-text': !message.local,
-          }"
-                >
-                    <p class="chat">{{ message.context }}</p>
-                    <p class="date-label float-end">{{ getDate(message) }}</p>
+          }">
+                    <p class='chat'>{{ message.context }}</p>
+                    <p class='date-label float-end'>{{ getDate(message) }}</p>
                 </div>
             </div>
         </div>
 
-        <div class="text-box">
-            <input
-                ref="textInput"
-                @focus="onFocus(true)"
-                @blur="onFocus(false)"
-                type="text"
-                class="form-control"
-                placeholder="Nachricht"
-                maxlength="500"
-                v-on:keydown.enter="send"
-            />
+        <div class='text-box'>
+            <input ref='textInput' @focus='onFocus(true)' @blur='onFocus(false)' type='text' class='form-control' placeholder='Nachricht' maxlength='500' v-on:keydown.enter='send' />
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {UID, onFocus} from "@/scripts/helpers/helpers";
 import character from "@/scripts/services/character.service";
@@ -158,7 +146,7 @@ export default class ActiveChat extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .active-chat {
     position: absolute;
     top: 0;

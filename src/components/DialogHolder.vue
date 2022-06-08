@@ -1,65 +1,36 @@
 <template>
-    <div
-        class="dialog-holder"
-        v-bind:class="{ enable: isVisible, disable: !isVisible }"
-    >
-        <div ref="dialog">
-            <div :hidden="!isVisible">
-                <div class="background"></div>
-                <div class="center">
-                    <div class="modal-dialog">
-                        <div class="modal-content sc-dark text-white">
-                            <div class="modal-header">
-                                <h5 class="modal-title">{{ title }}</h5>
-                                <button
-                                    type="button"
-                                    class="icon-button float-end p-3"
-                                    @click="closeButtonClicked()"
-                                >
-                                    <font-awesome-icon class="center text-white" icon="times"/>
+    <div class='dialog-holder' v-bind:class='{ enable: isVisible, disable: !isVisible }'>
+        <div ref='dialog'>
+            <div :hidden='!isVisible'>
+                <div class='background'></div>
+                <div class='center'>
+                    <div class='modal-dialog'>
+                        <div class='modal-content sc-dark text-white'>
+                            <div class='modal-header'>
+                                <h5 class='modal-title'>{{ title }}</h5>
+                                <button type='button' class='icon-button float-end p-3' @click='closeButtonClicked()'>
+                                    <font-awesome-icon class='center text-white' icon='times' />
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <span v-html="description"></span>
-                                <div :hidden="!hasBankAccountSelection" class="pt-3">
-                                    <select-bank-account
-                                        v-on:change-bank-account="setBankAccount($event)"
-                                        v-on:setup="setBankAccount($event)"
-                                    />
+                            <div class='modal-body'>
+                                <span v-html='description'></span>
+                                <div :hidden='!hasBankAccountSelection' class='pt-3'>
+                                    <select-bank-account v-on:change-bank-account='setBankAccount($event)' v-on:setup='setBankAccount($event)' />
                                 </div>
-                                <div :hidden="!hasInputField" class="pt-3">
-                                    <input
-                                        class="form-control-dark"
-                                        type="text"
-                                        v-model="inputContent"
-                                    />
+                                <div :hidden='!hasInputField' class='pt-3'>
+                                    <input class='form-control-dark' type='text' v-model='inputContent' />
                                 </div>
                             </div>
-                            <div class="modal-footer" v-if="type === 0">
-                                <button
-                                    type="button"
-                                    class="btn btn-primary w-50"
-                                    @click="primaryButtonClicked()"
-                                >
+                            <div class='modal-footer' v-if='type === 0'>
+                                <button type='button' class='btn btn-primary w-50' @click='primaryButtonClicked()'>
                                     {{ primaryButton }}
                                 </button>
                             </div>
-                            <div
-                                class="modal-footer justify-content-evenly row"
-                                v-if="type === 1"
-                            >
-                                <button
-                                    type="button"
-                                    class="btn btn-secondary col-5"
-                                    @click="secondaryButtonClicked()"
-                                >
+                            <div class='modal-footer justify-content-evenly row' v-if='type === 1'>
+                                <button type='button' class='btn btn-secondary col-5' @click='secondaryButtonClicked()'>
                                     {{ secondaryButton }}
                                 </button>
-                                <button
-                                    type="button"
-                                    class="btn btn-primary col-5"
-                                    @click="primaryButtonClicked()"
-                                >
+                                <button type='button' class='btn btn-primary col-5' @click='primaryButtonClicked()'>
                                     {{ primaryButton }}
                                 </button>
                             </div>
@@ -71,7 +42,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import SelectBankAccount from "@/components/General/Banking/SelectBankAccount.vue";
 import {Options, Vue} from "vue-class-component";

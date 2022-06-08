@@ -1,28 +1,28 @@
 <template>
-    <div class="game">
-        <notifications-holder class="unselectable"/>
-        <mdc-base/>
-        <set-torso-menu/>
-        <vehicle-sell-menu/>
-        <hud/>
-        <speedo/>
-        <ATM/>
-        <players-list/>
-        <public-garage/>
-        <Ammunation/>
-        <Supermarket/>
-        <GasStation/>
-        <team-menu/>
-        <character-menu/>
+    <div class='game'>
+        <notifications-holder class='unselectable' />
+        <mdc-base />
+        <set-torso-menu />
+        <vehicle-sell-menu />
+        <hud />
+        <speedo />
+        <ATM />
+        <players-list />
+        <public-garage />
+        <Ammunation />
+        <Supermarket />
+        <GasStation />
+        <team-menu />
+        <character-menu />
         <Inventories></Inventories>
-        <context-menu/>
-        <animation-wheel/>
-        <chat/>
-        <phone/>
+        <context-menu />
+        <animation-wheel />
+        <chat />
+        <phone />
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import Chat from "@/components/Chat.vue";
 import Speedo from "@/components/Speedo.vue";
 import Hud from "@/components/Hud.vue";

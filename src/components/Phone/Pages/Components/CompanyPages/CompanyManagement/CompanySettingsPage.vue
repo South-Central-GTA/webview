@@ -1,171 +1,119 @@
 <template>
-    <div class="company-settings">
-        <div class="phone-header">
-            <button type="button" class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='company-settings'>
+        <div class='phone-header'>
+            <button type='button' class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Verwalten</span>
             </button>
         </div>
 
-        <div class="select-box">
+        <div class='select-box'>
             <h1>Bankkonto Verwaltung:</h1>
-            <p class="pt-1">
-                Hier können Sie umstellen auf welches Konto Ihr Gehalt gehen soll:
-            </p>
-            <select-bank-account
-                ref="selectBank"
-                v-on:change-bank-account="setBankAccount($event)"
-            />
+            <p class='pt-1'>
+                Hier können Sie umstellen auf welches Konto Ihr Gehalt gehen soll: </p>
+            <select-bank-account ref='selectBank' v-on:change-bank-account='setBankAccount($event)' />
         </div>
 
-        <div class="select-box" style="margin-top: 0.3vw" :hidden="!isOwner">
+        <div class='select-box' style='margin-top: 0.3vw' :hidden='!isOwner'>
             <h1>Unternehmenssitz:</h1>
-            <p class="pt-1">Hier können Sie den Unternehmenssitz ändern:</p>
-            <select-house ref="selectHouse" v-on:change-house="setHouse($event)"/>
-            <p v-if="leaseCompanies.length !== 0" class="text-muted pt-2 m-0">
-                Keine pachtbaren Unternehmenssitz möglich!
-            </p>
+            <p class='pt-1'>Hier können Sie den Unternehmenssitz ändern:</p>
+            <select-house ref='selectHouse' v-on:change-house='setHouse($event)' />
+            <p v-if='leaseCompanies.length !== 0' class='text-muted pt-2 m-0'>
+                Keine pachtbaren Unternehmenssitz möglich! </p>
         </div>
 
-        <div
-            class="lease-company-holder"
-            v-if="leaseCompanies.length !== 0 && isOwner"
-        >
-            <div class="security-dialog" v-if="isSecurityDialogCancelContractOpen">
+        <div class='lease-company-holder' v-if='leaseCompanies.length !== 0 && isOwner'>
+            <div class='security-dialog' v-if='isSecurityDialogCancelContractOpen'>
                 <p>Möchten Sie den ausgewählten Vertrag wirklich kündigen?</p>
 
-                <div class="phone-gov-button-group">
-                    <button
-                        type="button"
-                        class="btn"
-                        @click="closeCancelContractSecurityDialog()"
-                    >
+                <div class='phone-gov-button-group'>
+                    <button type='button' class='btn' @click='closeCancelContractSecurityDialog()'>
                         Nein
                     </button>
-                    <button type="button" class="btn" @click="cancelContract()">
+                    <button type='button' class='btn' @click='cancelContract()'>
                         Ja
                     </button>
                 </div>
             </div>
 
-            <div class="lease-company-box">
+            <div class='lease-company-box'>
                 <h1>Pachtbare Unternehmenssitze:</h1>
-                <div
-                    v-for="leaseCompany in leaseCompanies"
-                    v-bind:key="leaseCompany.id"
-                    class="pb-3"
-                >
+                <div v-for='leaseCompany in leaseCompanies' v-bind:key='leaseCompany.id' class='pb-3'>
                     <p>Typ: {{ leaseCompany.typeName }} {{ leaseCompany.subName }}</p>
                     <p>
-                        Vertrag endet am {{ getContractEndDate(leaseCompany.cancelDate) }}
-                    </p>
-                    <a
-                        class="card-link"
-                        style="padding: unset"
-                        @click="openCancelContractSecurityDialog(leaseCompany.id)"
-                    >Kündigen</a
-                    >
+                        Vertrag endet am {{ getContractEndDate(leaseCompany.cancelDate) }} </p>
+                    <a class='card-link' style='padding: unset' @click='openCancelContractSecurityDialog(leaseCompany.id)'>Kündigen</a>
                 </div>
             </div>
         </div>
 
-        <div
-            class="delivery-status-visibility-box"
-            @click="setDeliveryVisibility()"
-            v-if="canChangeDeliveryVisibility"
-        >
+        <div class='delivery-status-visibility-box' @click='setDeliveryVisibility()' v-if='canChangeDeliveryVisibility'>
             <h1>Status der Bestellungen:</h1>
             <h2>{{ getStatusString(deliveryVisiblityStatus) }}</h2>
-            <h3 v-if="deliveryVisiblityStatus === 0">
-                Nur Ihre eigene Firma kann die Bestellungen sehen und bearbeiten. Ohne
-                Speditionslizenz macht diese Einstellung jedoch keinen Sinn.
-            </h3>
-            <h3 v-if="deliveryVisiblityStatus === 1">
-                Jedes Unternehmen mit Speditionslizenz kann die Bestellungen des
-                Unternehmens sehen und bearbeiten.
-            </h3>
+            <h3 v-if='deliveryVisiblityStatus === 0'>
+                Nur Ihre eigene Firma kann die Bestellungen sehen und bearbeiten. Ohne Speditionslizenz macht diese Einstellung jedoch keinen Sinn. </h3>
+            <h3 v-if='deliveryVisiblityStatus === 1'>
+                Jedes Unternehmen mit Speditionslizenz kann die Bestellungen des Unternehmens sehen und bearbeiten. </h3>
         </div>
 
-        <div class="license-holder" v-if="canBuyLic || canSellLic">
-            <div class="licences-box" v-if="!isBuyNewLicensesWindowOpen">
-                <div class="security-dialog" v-if="isSellLicenseOpen">
+        <div class='license-holder' v-if='canBuyLic || canSellLic'>
+            <div class='licences-box' v-if='!isBuyNewLicensesWindowOpen'>
+                <div class='security-dialog' v-if='isSellLicenseOpen'>
                     <p>
-                        Möchten Sie die ausgewählte Lizenz für
-                        <b>${{ licPrice }}</b> verkaufen?
-                    </p>
+                        Möchten Sie die ausgewählte Lizenz für <b>${{ licPrice }}</b> verkaufen? </p>
 
-                    <div class="phone-gov-button-group" style="z-index: 9999">
-                        <button type="button" class="btn" @click="closeSellLicenseDialog()">
+                    <div class='phone-gov-button-group' style='z-index: 9999'>
+                        <button type='button' class='btn' @click='closeSellLicenseDialog()'>
                             Nein
                         </button>
-                        <button type="button" class="btn" @click="sellLicenses()">
+                        <button type='button' class='btn' @click='sellLicenses()'>
                             Ja
                         </button>
                     </div>
                 </div>
 
                 <h1>Lizenzen in Besitz:</h1>
-                <div class="licences-scrollbox">
-                    <div
-                        v-for="boughtLicense in boughtLicenses"
-                        v-bind:key="boughtLicense.license"
-                    >
-                        <button
-                            type="button"
-                            class="license-button"
-                            :disabled="!canSellLic"
-                            @click="openSellLicenseDialog(boughtLicense)"
-                        >
+                <div class='licences-scrollbox'>
+                    <div v-for='boughtLicense in boughtLicenses' v-bind:key='boughtLicense.license'>
+                        <button type='button' class='license-button' :disabled='!canSellLic' @click='openSellLicenseDialog(boughtLicense)'>
                             {{ boughtLicense.name }}
                         </button>
                     </div>
                 </div>
 
-                <div class="phone-gov-button-group">
-                    <button
-                        type="button"
-                        class="btn"
-                        :disabled="!canBuyLic"
-                        @click="openLicenesBuyMenu()"
-                    >
+                <div class='phone-gov-button-group'>
+                    <button type='button' class='btn' :disabled='!canBuyLic' @click='openLicenesBuyMenu()'>
                         Neue Lizenzen kaufen
                     </button>
                 </div>
             </div>
 
-            <div class="licences-box" v-if="isBuyNewLicensesWindowOpen">
-                <div class="security-dialog" v-if="isBuyLicenseOpen">
+            <div class='licences-box' v-if='isBuyNewLicensesWindowOpen'>
+                <div class='security-dialog' v-if='isBuyLicenseOpen'>
                     <p>
-                        Möchten Sie die ausgewählten Lizenzen für
-                        <b>${{ licPrice }}</b> erwerben?
-                    </p>
+                        Möchten Sie die ausgewählten Lizenzen für <b>${{ licPrice }}</b> erwerben? </p>
 
-                    <div class="phone-gov-button-group" style="z-index: 9999">
-                        <button type="button" class="btn" @click="closeBuyLicenseDialog()">
+                    <div class='phone-gov-button-group' style='z-index: 9999'>
+                        <button type='button' class='btn' @click='closeBuyLicenseDialog()'>
                             Nein
                         </button>
-                        <button type="button" class="btn" @click="buyLicenses()">Ja</button>
+                        <button type='button' class='btn' @click='buyLicenses()'>Ja</button>
                     </div>
                 </div>
 
                 <h1>Neue Lizenzen kaufen:</h1>
-                <div class="licences-scrollbox">
-                    <div v-for="license in licenses" v-bind:key="license.license">
-                        <button
-                            type="button"
-                            class="license-button"
-                            :disabled="
+                <div class='licences-scrollbox'>
+                    <div v-for='license in licenses' v-bind:key='license.license'>
+                        <button type='button' class='license-button' :disabled='
                 boughtLicenses.find((bl) => bl.license === license.license)
-              "
-                            @click="openBuyLicenseDialog(license)"
-                        >
+              ' @click='openBuyLicenseDialog(license)'>
                             {{ license.name }}
                         </button>
                     </div>
                 </div>
 
-                <div class="phone-gov-button-group pt">
-                    <button type="button" class="btn" @click="closeLicenesBuyMenu()">
+                <div class='phone-gov-button-group pt'>
+                    <button type='button' class='btn' @click='closeLicenesBuyMenu()'>
                         Zurück
                     </button>
                 </div>
@@ -174,7 +122,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import housing from "@/scripts/services/house.service";
 import character from "@/scripts/services/character.service";
@@ -407,7 +355,7 @@ export default class CompanySettingsPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .company-settings {
     position: absolute;
     top: 0;

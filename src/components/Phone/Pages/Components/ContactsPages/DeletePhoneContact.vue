@@ -1,16 +1,16 @@
 <template>
-    <div class="delete-phone-contact">
-        <div class="center">
+    <div class='delete-phone-contact'>
+        <div class='center'>
             <h5>Kontakt löschen</h5>
-            <div class="delete-buttons">
-                <button ref="yesButton">Ja</button>
-                <button ref="noButton">Nein</button>
+            <div class='delete-buttons'>
+                <button ref='yesButton'>Ja</button>
+                <button ref='noButton'>Nein</button>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
 
@@ -34,7 +34,7 @@ export default class DeletePhoneContact extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .delete-phone-contact {
     position: absolute;
     top: 0;

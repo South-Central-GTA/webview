@@ -1,15 +1,9 @@
 <template>
-    <div class="team-menu-account-catalog">
+    <div class='team-menu-account-catalog'>
         <h2>Accounts</h2>
-        <input
-            @input="search()"
-            v-model="accountSearch"
-            type="text"
-            class="form-control-dark mb-2"
-            placeholder="Suche nach aktuellen oder ehemaligen Discord Namen (Bsp. Pride)"
-        />
-        <div class="table-holder">
-            <table class="table table-striped table-hover">
+        <input @input='search()' v-model='accountSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach aktuellen oder ehemaligen Discord Namen (Bsp. Pride)' />
+        <div class='table-holder'>
+            <table class='table table-striped table-hover'>
                 <thead>
                 <tr>
                     <th>Social Club ID</th>
@@ -21,12 +15,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr
-                    v-for="account in accounts"
-                    v-bind:key="account.id"
-                    class="entry"
-                    @click="openUserRecord(account.id)"
-                >
+                <tr v-for='account in accounts' v-bind:key='account.id' class='entry' @click='openUserRecord(account.id)'>
                     <td>{{ account.id }}</td>
                     <td>{{ account.discordId }}</td>
                     <td>{{ account.currentName }}</td>
@@ -40,7 +29,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {AccountInterface} from "@/scripts/interfaces/account.interface";

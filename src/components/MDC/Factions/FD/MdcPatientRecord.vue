@@ -1,84 +1,64 @@
 <template>
-    <div class="mdc-patient-record">
-        <div class="content h-100 row m-4">
-            <div class="col-4">
+    <div class='mdc-patient-record'>
+        <div class='content h-100 row m-4'>
+            <div class='col-4'>
                 <h3>{{ characterName }}</h3>
                 <h4>Informationen:</h4>
-                <p v-if="phoneNumbers.length === 0">
-                    <b>Handynummern:</b> Keine Suchergebnisse!
-                </p>
-                <p v-if="phoneNumbers.length !== 0"><b>Handynummern:</b></p>
-                <ul v-if="phoneNumbers.length !== 0" class="list-holder">
-                    <li v-for="phoneNumber in phoneNumbers" v-bind:key="phoneNumber">
+                <p v-if='phoneNumbers.length === 0'>
+                    <b>Handynummern:</b> Keine Suchergebnisse! </p>
+                <p v-if='phoneNumbers.length !== 0'><b>Handynummern:</b></p>
+                <ul v-if='phoneNumbers.length !== 0' class='list-holder'>
+                    <li v-for='phoneNumber in phoneNumbers' v-bind:key='phoneNumber'>
                         {{ phoneNumber }}
                     </li>
                 </ul>
 
-                <p v-if="houses.length === 0"><b>Adressen:</b> Keine Suchergebnisse!</p>
-                <p v-if="houses.length !== 0"><b>Adressen:</b></p>
-                <ul v-if="houses.length !== 0" class="list-holder">
-                    <li v-for="house in houses" v-bind:key="house.id">
-                        {{ house.streetName }} {{ house.subName }} Nr.
-                        {{ house.houseNumber }}
+                <p v-if='houses.length === 0'><b>Adressen:</b> Keine Suchergebnisse!</p>
+                <p v-if='houses.length !== 0'><b>Adressen:</b></p>
+                <ul v-if='houses.length !== 0' class='list-holder'>
+                    <li v-for='house in houses' v-bind:key='house.id'>
+                        {{ house.streetName }} {{ house.subName }} Nr. {{ house.houseNumber }}
                     </li>
                 </ul>
             </div>
-            <div class="col-4">
+            <div class='col-4'>
                 <h4>Medical History:</h4>
 
-                <div v-if="medicalHistory.length !== 0" class="big-list-holder">
-                    <p v-for="entry in medicalHistory" v-bind:key="entry.id">
-                        <button
-                            type="button"
-                            v-if="isOperator"
-                            @click="deleteMedicalHistory(entry.id)"
-                        >
+                <div v-if='medicalHistory.length !== 0' class='big-list-holder'>
+                    <p v-for='entry in medicalHistory' v-bind:key='entry.id'>
+                        <button type='button' v-if='isOperator' @click='deleteMedicalHistory(entry.id)'>
                             X
                         </button>
-                        {{ entry.content }}<br/>
-                        <span class="date-text"
-                        >{{ entry.creatorCharacterName }} -
-              {{ getDate(entry.createdAtJson) }}</span
-                        >
+                        {{ entry.content }}<br /> <span class='date-text'>{{ entry.creatorCharacterName }} -
+              {{ getDate(entry.createdAtJson) }}</span>
                     </p>
                 </div>
 
-                <div class="position-absolute mb-5 bottom-0">
-                    <input class="w-100" v-model="medicalHistoryInput" type="text"/>
+                <div class='position-absolute mb-5 bottom-0'>
+                    <input class='w-100' v-model='medicalHistoryInput' type='text' />
 
-                    <button
-                        type="button"
-                        class="float-end mt-1"
-                        @click="createMedicalHistory()"
-                    >
+                    <button type='button' class='float-end mt-1' @click='createMedicalHistory()'>
                         Medical History hinzufügen
                     </button>
                 </div>
             </div>
-            <div class="col-4">
+            <div class='col-4'>
                 <h4>Allergien:</h4>
 
-                <div v-if="allergies.length !== 0" class="big-list-holder">
-                    <p v-for="entry in allergies" v-bind:key="entry.id">
-                        <button
-                            type="button"
-                            v-if="isOperator"
-                            @click="deleteAllergy(entry.id)"
-                        >
+                <div v-if='allergies.length !== 0' class='big-list-holder'>
+                    <p v-for='entry in allergies' v-bind:key='entry.id'>
+                        <button type='button' v-if='isOperator' @click='deleteAllergy(entry.id)'>
                             X
                         </button>
-                        {{ entry.content }}<br/>
-                        <span class="date-text"
-                        >{{ entry.creatorCharacterName }} -
-              {{ getDate(entry.createdAtJson) }}</span
-                        >
+                        {{ entry.content }}<br /> <span class='date-text'>{{ entry.creatorCharacterName }} -
+              {{ getDate(entry.createdAtJson) }}</span>
                     </p>
                 </div>
 
-                <div class="position-absolute mb-5 bottom-0">
-                    <input class="w-100" v-model="allergyInput" type="text"/>
+                <div class='position-absolute mb-5 bottom-0'>
+                    <input class='w-100' v-model='allergyInput' type='text' />
 
-                    <button type="button" class="float-end mt-1" @click="createAllergy()">
+                    <button type='button' class='float-end mt-1' @click='createAllergy()'>
                         Neue Allergie hinzufügen
                     </button>
                 </div>
@@ -87,7 +67,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import MdcService from "@/scripts/services/mdc.service";
@@ -196,7 +176,7 @@ export default class MdcPatientRecord extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-patient-record {
     background-color: #cecece;
     height: 100%;

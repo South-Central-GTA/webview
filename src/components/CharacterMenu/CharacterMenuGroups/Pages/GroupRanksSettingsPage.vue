@@ -1,70 +1,44 @@
 <template>
-    <div class="group-ranks-settings-page">
-        <div :hidden="editRankPermissionsOpen">
-            <button class="icon-button text-white" @click="back()">
-                <font-awesome-icon class="mx-2" icon="chevron-left"/>
+    <div class='group-ranks-settings-page'>
+        <div :hidden='editRankPermissionsOpen'>
+            <button class='icon-button text-white' @click='back()'>
+                <font-awesome-icon class='mx-2' icon='chevron-left' />
                 <span>Ränge</span>
             </button>
 
             <p>Hier kannst du die Ränge deiner Gruppe bearbeiten.</p>
 
-            <div class="ranks-block">
-                <div v-for="(rank, index) in ranks" v-bind:key="rank.level">
-                    <div class="row g-2 pt-2">
-                        <div class="col-md-10">
-                            <label class="form-label">Rang {{ rank.level }} Name:</label>
-                            <input
-                                class="form-control-dark"
-                                v-model="rank.name"
-                                type="text"
-                                placeholder="Rangname"
-                                maxlength="46"
-                                @blur="changeName(rank)"
-                            />
+            <div class='ranks-block'>
+                <div v-for='(rank, index) in ranks' v-bind:key='rank.level'>
+                    <div class='row g-2 pt-2'>
+                        <div class='col-md-10'>
+                            <label class='form-label'>Rang {{ rank.level }} Name:</label>
+                            <input class='form-control-dark' v-model='rank.name' type='text' placeholder='Rangname' maxlength='46' @blur='changeName(rank)' />
                         </div>
-                        <div class="col-md-1" v-if="isOwner">
-                            <button
-                                type="button"
-                                class="btn btn-dark delete-rank-button"
-                                @click="editPermission(rank)"
-                            >
-                                <font-awesome-icon icon="cog"/>
+                        <div class='col-md-1' v-if='isOwner'>
+                            <button type='button' class='btn btn-dark delete-rank-button' @click='editPermission(rank)'>
+                                <font-awesome-icon icon='cog' />
                             </button>
                         </div>
-                        <div
-                            class="col-md-1"
-                            v-if="index + 1 === ranks.length && ranks.length !== 1"
-                        >
-                            <button
-                                type="button"
-                                class="btn btn-danger delete-rank-button"
-                                @click="deleteRank(rank)"
-                            >
-                                <font-awesome-icon icon="trash"/>
+                        <div class='col-md-1' v-if='index + 1 === ranks.length && ranks.length !== 1'>
+                            <button type='button' class='btn btn-danger delete-rank-button' @click='deleteRank(rank)'>
+                                <font-awesome-icon icon='trash' />
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <button
-                type="button"
-                class="btn btn-primary w-100 mt-3"
-                @click="create()"
-            >
+            <button type='button' class='btn btn-primary w-100 mt-3' @click='create()'>
                 Neuen Rang hinzufügen
             </button>
         </div>
 
-        <group-permission-settings-page
-            :hidden="!editRankPermissionsOpen"
-            ref="groupPermissionSettingsPage"
-            v-on:back="closeEditRankWindow()"
-        />
+        <group-permission-settings-page :hidden='!editRankPermissionsOpen' ref='groupPermissionSettingsPage' v-on:back='closeEditRankWindow()' />
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import GroupPermissionSettingsPage from "./GroupPermissionSettingsPage.vue";
 import groups from "@/scripts/services/group.service";

@@ -1,40 +1,25 @@
 <template>
-    <div class="withdraw-window">
-        <button type="button" class="atm-close-button float-end" @click="back()">
-            <font-awesome-icon class="center" icon="caret-left"/>
+    <div class='withdraw-window'>
+        <button type='button' class='atm-close-button float-end' @click='back()'>
+            <font-awesome-icon class='center' icon='caret-left' />
         </button>
 
-        <img class="atm-logo" src="@/assets/images/phone/maze-bank-logo.png"/>
+        <img class='atm-logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
-        <div class="button-group">
-            <div class="input-group w-100 mb-3">
-                <span class="input-group-text">$</span>
-                <input
-                    ref="withdrawInput"
-                    class="form-control"
-                    oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                    type="number"
-                    placeholder="Wieviel möchtest du abheben?"
-                    maxlength="7"
-                    @keydown.enter="withdraw()"
-                    @input="checkValue()"
-                    @keypress="allowOnlyNumbers($event)"
-                />
+        <div class='button-group'>
+            <div class='input-group w-100 mb-3'>
+                <span class='input-group-text'>$</span>
+                <input ref='withdrawInput' class='form-control' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' placeholder='Wieviel möchtest du abheben?' maxlength='7' @keydown.enter='withdraw()' @input='checkValue()' @keypress='allowOnlyNumbers($event)' />
             </div>
 
-            <button
-                type="button"
-                class="btn atm-menu-button w-100"
-                @click="withdraw()"
-                :disabled="!isValuePositive"
-            >
+            <button type='button' class='btn atm-menu-button w-100' @click='withdraw()' :disabled='!isValuePositive'>
                 Abheben
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {allowOnlyNumbers, isNumeric} from "@/scripts/helpers/helpers";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
@@ -71,7 +56,7 @@ export default class WithdrawWindow extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .withdraw-window {
     position: absolute;
     top: 0;

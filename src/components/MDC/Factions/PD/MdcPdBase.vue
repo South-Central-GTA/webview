@@ -1,60 +1,38 @@
 <template>
-    <div class="mdc-pd-base">
+    <div class='mdc-pd-base'>
         <mdc-pd-header-bar></mdc-pd-header-bar>
-        <div class="float-start">
-            <div class="btn-group-vertical m-4">
-                <button type="button" class="w-100 m-2" @click="openPageId(0)">
+        <div class='float-start'>
+            <div class='btn-group-vertical m-4'>
+                <button type='button' class='w-100 m-2' @click='openPageId(0)'>
                     Home
                 </button>
-                <button type="button" class="w-100 m-2" @click="openPageId(1)">
+                <button type='button' class='w-100 m-2' @click='openPageId(1)'>
                     Suche
                 </button>
-                <button type="button" class="w-100 m-2" @click="openPageId(2)">
+                <button type='button' class='w-100 m-2' @click='openPageId(2)'>
                     APB
                 </button>
-                <button type="button" class="w-100 m-2" @click="openPageId(3)">
+                <button type='button' class='w-100 m-2' @click='openPageId(3)'>
                     Dateien
                 </button>
             </div>
         </div>
 
-        <mdc-pd-home ref="home" :hidden="pageId !== 0"></mdc-pd-home>
-        <mdc-search ref="search" :hidden="pageId !== 1"></mdc-search>
-        <mdc-apb ref="apb" :hidden="pageId !== 2"></mdc-apb>
-        <mdc-files
-            ref="files"
-            v-on:show-notification="onShowNotification"
-            :hidden="pageId !== 3"
-        ></mdc-files>
+        <mdc-pd-home ref='home' :hidden='pageId !== 0'></mdc-pd-home>
+        <mdc-search ref='search' :hidden='pageId !== 1'></mdc-search>
+        <mdc-apb ref='apb' :hidden='pageId !== 2'></mdc-apb>
+        <mdc-files ref='files' v-on:show-notification='onShowNotification' :hidden='pageId !== 3'></mdc-files>
 
-        <mdc-character-record
-            ref="characterRecord"
-            :hidden="pageId !== 1000"
-        ></mdc-character-record>
-        <mdc-phone-record
-            ref="phoneRecord"
-            :hidden="pageId !== 1001"
-        ></mdc-phone-record>
-        <mdc-vehicle-record
-            ref="vehicleRecord"
-            :hidden="pageId !== 1002"
-        ></mdc-vehicle-record>
-        <mdc-bank-account-record
-            ref="bankAccountRecord"
-            :hidden="pageId !== 1003"
-        ></mdc-bank-account-record>
-        <mdc-mail-account-record
-            ref="mailAccountRecord"
-            :hidden="pageId !== 1004"
-        ></mdc-mail-account-record>
-        <mdc-weapon-record
-            ref="weaponRecord"
-            :hidden="pageId !== 1005"
-        ></mdc-weapon-record>
+        <mdc-character-record ref='characterRecord' :hidden='pageId !== 1000'></mdc-character-record>
+        <mdc-phone-record ref='phoneRecord' :hidden='pageId !== 1001'></mdc-phone-record>
+        <mdc-vehicle-record ref='vehicleRecord' :hidden='pageId !== 1002'></mdc-vehicle-record>
+        <mdc-bank-account-record ref='bankAccountRecord' :hidden='pageId !== 1003'></mdc-bank-account-record>
+        <mdc-mail-account-record ref='mailAccountRecord' :hidden='pageId !== 1004'></mdc-mail-account-record>
+        <mdc-weapon-record ref='weaponRecord' :hidden='pageId !== 1005'></mdc-weapon-record>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import MdcPdHeaderBar from "@/components/MDC/Factions/PD/MdcPdHeaderBar.vue";
@@ -313,7 +291,7 @@ export default class MdcPdBase extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-pd-base {
     background-color: #cecece;
     height: 100%;

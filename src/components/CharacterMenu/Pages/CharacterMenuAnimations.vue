@@ -1,16 +1,10 @@
 <template>
-    <div class="character-menu-animations">
+    <div class='character-menu-animations'>
         <h2>Animationen</h2>
-        <input
-            @input="search()"
-            v-model="searchBar"
-            type="text"
-            class="form-control-dark mb-2"
-            placeholder="Suche nach einem Namen"
-        />
+        <input @input='search()' v-model='searchBar' type='text' class='form-control-dark mb-2' placeholder='Suche nach einem Namen' />
 
-        <div class="table-holder">
-            <table class="table table-striped table-hover">
+        <div class='table-holder'>
+            <table class='table table-striped table-hover'>
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -18,22 +12,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr
-                    v-for="animation in animations"
-                    v-bind:key="animation.id"
-                    class="entry"
-                >
+                <tr v-for='animation in animations' v-bind:key='animation.id' class='entry'>
                     <td>{{ animation.name }}</td>
                     <td>
-                        <button
-                            type="button"
-                            class="btn w-100"
-                            v-bind:class="{
+                        <button type='button' class='btn w-100' v-bind:class="{
                   'btn-outline-primary': !hasAnimation(animation.id),
                   'btn-primary': hasAnimation(animation.id),
-                }"
-                            @click="toggleAnimation(animation.id)"
-                        >
+                }" @click='toggleAnimation(animation.id)'>
                             {{ getLabel(animation) }}
                         </button>
                     </td>
@@ -44,7 +29,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";

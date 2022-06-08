@@ -1,16 +1,10 @@
 <template>
-    <div class="team-menu-group-catalog">
-        <div v-if="!isPopupOpen">
+    <div class='team-menu-group-catalog'>
+        <div v-if='!isPopupOpen'>
             <h2>Gruppen</h2>
-            <input
-                @input="search()"
-                v-model="groupSearch"
-                type="text"
-                class="form-control-dark mb-2"
-                placeholder="Suche nach Namen (Bsp. Fire Department)"
-            />
-            <div class="table-holder">
-                <table class="table table-striped table-hover">
+            <input @input='search()' v-model='groupSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach Namen (Bsp. Fire Department)' />
+            <div class='table-holder'>
+                <table class='table table-striped table-hover'>
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -21,12 +15,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr
-                        v-for="group in groups"
-                        v-bind:key="group.id"
-                        class="entry"
-                        @click="requestDetails(group)"
-                    >
+                    <tr v-for='group in groups' v-bind:key='group.id' class='entry' @click='requestDetails(group)'>
                         <td>{{ group.id }}</td>
                         <td>{{ group.name }}</td>
                         <td>{{ getStatusLabel(group.status) }}</td>
@@ -37,15 +26,15 @@
                 </table>
             </div>
         </div>
-        <div v-else class="details">
-            <button class="icon-button text-white" @click="closeDetails()">
-                <font-awesome-icon class="mx-2" icon="chevron-left"/>
+        <div v-else class='details'>
+            <button class='icon-button text-white' @click='closeDetails()'>
+                <font-awesome-icon class='mx-2' icon='chevron-left' />
                 <span>{{ this.openGroup.name }}</span>
             </button>
 
             <h6>Ränge</h6>
-            <div class="detail-table-holder">
-                <table class="table table-striped table-hover">
+            <div class='detail-table-holder'>
+                <table class='table table-striped table-hover'>
                     <thead>
                     <tr>
                         <th>Level</th>
@@ -53,11 +42,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr
-                        v-for="rank in this.openGroup.ranks"
-                        v-bind:key="rank.level"
-                        class="entry"
-                    >
+                    <tr v-for='rank in this.openGroup.ranks' v-bind:key='rank.level' class='entry'>
                         <td>{{ rank.level }}</td>
                         <td>{{ rank.name }}</td>
                     </tr>
@@ -65,8 +50,8 @@
                 </table>
             </div>
             <h6>Mitglieder</h6>
-            <div class="detail-table-holder">
-                <table class="table table-striped table-hover">
+            <div class='detail-table-holder'>
+                <table class='table table-striped table-hover'>
                     <thead>
                     <tr>
                         <th>Charakter ID</th>
@@ -78,11 +63,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr
-                        v-for="member in this.openGroup.members"
-                        v-bind:key="member.characterId"
-                        class="entry"
-                    >
+                    <tr v-for='member in this.openGroup.members' v-bind:key='member.characterId' class='entry'>
                         <td>{{ member.characterId }}</td>
                         <td>{{ member.characterName }}</td>
                         <td>{{ member.level }}</td>
@@ -94,8 +75,8 @@
                 </table>
             </div>
             <h6>Fahrzeuge</h6>
-            <div class="detail-table-holder">
-                <table class="table table-striped table-hover">
+            <div class='detail-table-holder'>
+                <table class='table table-striped table-hover'>
                     <thead>
                     <tr>
                         <th>Fahrzeug ID</th>
@@ -103,11 +84,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr
-                        v-for="vehicle in this.vehicles"
-                        v-bind:key="vehicle.id"
-                        class="entry"
-                    >
+                    <tr v-for='vehicle in this.vehicles' v-bind:key='vehicle.id' class='entry'>
                         <td>{{ vehicle.id }}</td>
                         <td>{{ vehicle.displayName }}</td>
                     </tr>
@@ -115,19 +92,15 @@
                 </table>
             </div>
             <h6>Immobilien</h6>
-            <div class="detail-table-holder">
-                <table class="table table-striped table-hover">
+            <div class='detail-table-holder'>
+                <table class='table table-striped table-hover'>
                     <thead>
                     <tr>
                         <th>Haus ID</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr
-                        v-for="house in this.openGroup.houses"
-                        v-bind:key="house.id"
-                        class="entry"
-                    >
+                    <tr v-for='house in this.openGroup.houses' v-bind:key='house.id' class='entry'>
                         <td>{{ house.id }}</td>
                     </tr>
                     </tbody>
@@ -137,7 +110,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {GroupInterface} from "@/scripts/interfaces/group/group.interface";

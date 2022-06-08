@@ -1,39 +1,31 @@
 <template>
-    <div class="mdc-vehicle-record">
-        <div class="content h-100 row m-4">
-            <div class="col-4">
+    <div class='mdc-vehicle-record'>
+        <div class='content h-100 row m-4'>
+            <div class='col-4'>
                 <h3>{{ displayName }}</h3>
                 <h4>Informationen:</h4>
                 <p><b>Klasse:</b> {{ displayClass }}</p>
                 <p><b>Nummernschild:</b> {{ numberPlate }}</p>
                 <p>
-                    <b>Besitzer:</b>
-                    {{ ownerName.length !== 0 ? ownerName : "Unbekannt" }}
-                </p>
+                    <b>Besitzer:</b> {{ ownerName.length !== 0 ? ownerName : "Unbekannt" }} </p>
             </div>
-            <div class="col-6">
+            <div class='col-6'>
                 <h4>Notizen:</h4>
 
-                <div v-if="notes.length !== 0" class="big-list-holder">
-                    <p v-for="note in notes" v-bind:key="note.id">
-                        <button
-                            type="button"
-                            v-if="isOperator"
-                            @click="deleteNote(note.id)"
-                        >
+                <div v-if='notes.length !== 0' class='big-list-holder'>
+                    <p v-for='note in notes' v-bind:key='note.id'>
+                        <button type='button' v-if='isOperator' @click='deleteNote(note.id)'>
                             X
                         </button>
-                        {{ note.note }}<br/><span class="date-text"
-                    >{{ note.creatorCharacterName }} -
-              {{ getDate(note.createdAtJson) }}</span
-                    >
+                        {{ note.note }}<br /><span class='date-text'>{{ note.creatorCharacterName }} -
+              {{ getDate(note.createdAtJson) }}</span>
                     </p>
                 </div>
 
-                <div class="position-absolute mb-5 bottom-0">
-                    <input class="w-100" v-model="noteInput" type="text"/>
+                <div class='position-absolute mb-5 bottom-0'>
+                    <input class='w-100' v-model='noteInput' type='text' />
 
-                    <button type="button" class="float-end mt-1" @click="createNote()">
+                    <button type='button' class='float-end mt-1' @click='createNote()'>
                         Notiz erstellen
                     </button>
                 </div>
@@ -42,7 +34,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import MdcService from "@/scripts/services/mdc.service";
@@ -132,7 +124,7 @@ export default class MdcVehicleRecord extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-vehicle-record {
     background-color: #cecece;
     height: 100%;

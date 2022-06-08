@@ -1,87 +1,58 @@
 <template>
-    <div class="character-menu-job">
+    <div class='character-menu-job'>
         <h2>Definierte Berufe</h2>
 
-        <p class="card-text">
-            Charaktere arbeiten bei uns auf dem Server auf definierter Basis wodurch
-            du dich auf das Wesentliche fokusieren kannst, Rollenspiel! Währenddessen
-            du OOC arbeitest bzw. in der Schule bist oder auch nur Zuhause chillst,
-            würde dein Charakter ja auch arbeiten, oder eben nicht.
-        </p>
+        <p class='card-text'>
+            Charaktere arbeiten bei uns auf dem Server auf definierter Basis wodurch du dich auf das Wesentliche fokusieren kannst, Rollenspiel! Währenddessen du OOC arbeitest bzw. in der Schule bist oder auch nur Zuhause chillst, würde dein Charakter ja auch arbeiten, oder eben nicht. </p>
 
-        <div :hidden="!isUnemployed">
+        <div :hidden='!isUnemployed'>
             <h5>In welchem Bereich arbeitet dein Charakter?</h5>
 
-            <hr/>
-            <div class="jobs">
-                <select ref="select" :size="jobs.length">
-                    <option
-                        v-for="(job, i) in jobs"
-                        v-bind:key="job.id"
-                        :selected="0 == i"
-                    >
+            <hr />
+            <div class='jobs'>
+                <select ref='select' :size='jobs.length'>
+                    <option v-for='(job, i) in jobs' v-bind:key='job.id' :selected='0 == i'>
                         {{ job.name }}
                     </option>
                 </select>
             </div>
-            <hr/>
+            <hr />
 
-            <p class="card-text">
-                Wähle das Bankkonto aus auf welchem das Gehalt von deinem definierten
-                Beruf überwiesen werden soll:
-            </p>
+            <p class='card-text'>
+                Wähle das Bankkonto aus auf welchem das Gehalt von deinem definierten Beruf überwiesen werden soll: </p>
 
-            <select-bank-account
-                v-on:change-bank-account="setBankAccount($event)"
-                v-on:setup="setBankAccount($event)"
-            />
+            <select-bank-account v-on:change-bank-account='setBankAccount($event)' v-on:setup='setBankAccount($event)' />
 
-            <div class="bottom-0 position-absolute pb-5">
-                <p class="card-text text-muted">
-                    Solltest du mehr Rollenspiel wollen, können wir dir nur empfehlen eine
-                    unserer spielerbasierten Unternehmen aufzusuchen und dort IC einen Job
-                    dir zu besorgen. Sie bezahlen besser und du hast die beste
-                    Spielerfahrung.
-                </p>
+            <div class='bottom-0 position-absolute pb-5'>
+                <p class='card-text text-muted'>
+                    Solltest du mehr Rollenspiel wollen, können wir dir nur empfehlen eine unserer spielerbasierten Unternehmen aufzusuchen und dort IC einen Job dir zu besorgen. Sie bezahlen besser und du hast die beste Spielerfahrung. </p>
 
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    @click="chooseJob()"
-                    :disabled="!hasBankAccount"
-                >
+                <button type='button' class='btn btn-primary' @click='chooseJob()' :disabled='!hasBankAccount'>
                     Berufsfeld auswählen
                 </button>
             </div>
         </div>
 
-        <div :hidden="isUnemployed">
-            <div v-if="jobId !== 1">
+        <div :hidden='isUnemployed'>
+            <div v-if='jobId !== 1'>
                 <h5>Du arbeitest aktuell im Berufsfeld:</h5>
-                <p class="card-text">{{ jobName }}</p>
-                <hr/>
-                <p class="card-text pt-2">
-                    Was genau dein Charakter beruflich in diesem Berufsfeld macht ist dir
-                    überlassen, definiere es für deinen Charakter realistisch passend.
-                </p>
+                <p class='card-text'>{{ jobName }}</p>
+                <hr />
+                <p class='card-text pt-2'>
+                    Was genau dein Charakter beruflich in diesem Berufsfeld macht ist dir überlassen, definiere es für deinen Charakter realistisch passend. </p>
             </div>
             <div v-else>
-                <p class="card-text">{{ jobName }}</p>
-                <hr/>
+                <p class='card-text'>{{ jobName }}</p>
+                <hr />
             </div>
 
-            <div class="align-bottom">
-                <p class="card-text">
-                    Wähle das Bankkonto aus auf welchem das Gehalt von deinem definierten
-                    Beruf überwiesen werden soll:
-                </p>
+            <div class='align-bottom'>
+                <p class='card-text'>
+                    Wähle das Bankkonto aus auf welchem das Gehalt von deinem definierten Beruf überwiesen werden soll: </p>
 
-                <select-bank-account
-                    v-on:change-bank-account="changeBankAccount($event)"
-                    v-on:setup="setBankAccount($event)"
-                />
+                <select-bank-account v-on:change-bank-account='changeBankAccount($event)' v-on:setup='setBankAccount($event)' />
 
-                <button type="button" class="btn btn-secondary mt-3" @click="quitJob()">
+                <button type='button' class='btn btn-secondary mt-3' @click='quitJob()'>
                     Berufsfeld wechseln
                 </button>
             </div>
@@ -89,7 +60,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";

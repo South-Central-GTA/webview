@@ -1,11 +1,11 @@
 <template>
-    <div class="speedo" :hidden="!active">
-        <canvas ref="backgroundCanvas" width="600" height="600"></canvas>
-        <canvas ref="foregroundCanvas" width="600" height="600"></canvas>
+    <div class='speedo' :hidden='!active'>
+        <canvas ref='backgroundCanvas' width='600' height='600'></canvas>
+        <canvas ref='foregroundCanvas' width='600' height='600'></canvas>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";

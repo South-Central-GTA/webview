@@ -1,13 +1,13 @@
 <template>
-    <div class="phone-contact">
-        <div class="contact-box" @click="openActionsPopup()">
-            <h1 class="name-label">{{ contact.name }}</h1>
-            <h2 class="number-label">{{ getCorrectFormat() }}</h2>
+    <div class='phone-contact'>
+        <div class='contact-box' @click='openActionsPopup()'>
+            <h1 class='name-label'>{{ contact.name }}</h1>
+            <h2 class='number-label'>{{ getCorrectFormat() }}</h2>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {Prop, Ref} from "vue-property-decorator";
 import {PhoneContactInterface} from "@/scripts/interfaces/phone/phone-contact.interface";
@@ -32,7 +32,7 @@ export default class PhoneContact extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .phone-contact {
     background-color: rgb(207, 207, 207);
     width: 100%;

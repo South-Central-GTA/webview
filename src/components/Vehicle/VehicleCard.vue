@@ -1,13 +1,13 @@
 <template>
-    <div class="vehicle-card">
+    <div class='vehicle-card'>
         <h1>
-            <div class="veh-name">{{ vehicle.displayName }}</div>
-            <span class="veh-class">{{ vehicle.displayClass }}</span>
+            <div class='veh-name'>{{ vehicle.displayName }}</div>
+            <span class='veh-class'>{{ vehicle.displayClass }}</span>
         </h1>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {Prop} from "vue-property-decorator";
 import {VehicleInterface} from "@/scripts/interfaces/vehicles/vehicle.interface";

@@ -1,213 +1,120 @@
 <template>
-    <div class="charcreator">
-        <notifications-holder ref="notificationsHolder" class="unselectable"/>
+    <div class='charcreator'>
+        <notifications-holder ref='notificationsHolder' class='unselectable' />
 
-        <nav class="navbar navbar-expand-lg navbar-dark sc-dark">
-            <a class="navbar-brand px-4"> South Central Roleplay </a>
-            <ul class="navbar-nav">
-                <li class="nav-item" style="padding-left: 1vw; font-size: 1.3vw">
-                    <a class="nav-link" @click="closeCharCreation()" :disabled="isSaving">
-                        <font-awesome-icon icon="chevron-left"/>
+        <nav class='navbar navbar-expand-lg navbar-dark sc-dark'>
+            <a class='navbar-brand px-4'> South Central Roleplay </a>
+            <ul class='navbar-nav'>
+                <li class='nav-item' style='padding-left: 1vw; font-size: 1.3vw'>
+                    <a class='nav-link' @click='closeCharCreation()' :disabled='isSaving'>
+                        <font-awesome-icon icon='chevron-left' />
                     </a>
                 </li>
-                <li
-                    class="nav-item"
-                    v-if="isNewCharacter"
-                    v-bind:class="{ active: tabIndex === 0 }"
-                >
-                    <a class="nav-link" @click="openMenu(0)">Eckdaten</a>
+                <li class='nav-item' v-if='isNewCharacter' v-bind:class='{ active: tabIndex === 0 }'>
+                    <a class='nav-link' @click='openMenu(0)'>Eckdaten</a>
                 </li>
-                <li
-                    class="nav-item"
-                    v-if="isNewCharacter"
-                    v-bind:class="{ active: tabIndex === 1 }"
-                >
-                    <a class="nav-link" @click="openMenu(1)">Geschlecht & Eltern</a>
+                <li class='nav-item' v-if='isNewCharacter' v-bind:class='{ active: tabIndex === 1 }'>
+                    <a class='nav-link' @click='openMenu(1)'>Geschlecht & Eltern</a>
                 </li>
-                <li
-                    class="nav-item"
-                    v-if="isNewCharacter"
-                    v-bind:class="{ active: tabIndex === 2 }"
-                >
-                    <a class="nav-link" @click="openMenu(2)">Gesichtszüge</a>
+                <li class='nav-item' v-if='isNewCharacter' v-bind:class='{ active: tabIndex === 2 }'>
+                    <a class='nav-link' @click='openMenu(2)'>Gesichtszüge</a>
                 </li>
-                <li class="nav-item" v-bind:class="{ active: tabIndex === 3 }">
-                    <a class="nav-link" @click="openMenu(3)">Erscheinungsbild</a>
+                <li class='nav-item' v-bind:class='{ active: tabIndex === 3 }'>
+                    <a class='nav-link' @click='openMenu(3)'>Erscheinungsbild</a>
                 </li>
-                <li class="nav-item" v-bind:class="{ active: tabIndex === 4 }">
-                    <a class="nav-link" @click="openMenu(4)">Kleidung</a>
+                <li class='nav-item' v-bind:class='{ active: tabIndex === 4 }'>
+                    <a class='nav-link' @click='openMenu(4)'>Kleidung</a>
                 </li>
-                <li class="nav-item" v-bind:class="{ active: tabIndex === 5 }">
-                    <a class="nav-link" @click="openMenu(5)">Tattoos</a>
+                <li class='nav-item' v-bind:class='{ active: tabIndex === 5 }'>
+                    <a class='nav-link' @click='openMenu(5)'>Tattoos</a>
                 </li>
-                <li class="nav-item" v-bind:class="{ active: tabIndex === 6 }">
-                    <a class="nav-link" @click="openMenu(6)">Fahrzeug</a>
+                <li class='nav-item' v-bind:class='{ active: tabIndex === 6 }'>
+                    <a class='nav-link' @click='openMenu(6)'>Fahrzeug</a>
                 </li>
-                <li class="nav-item" v-bind:class="{ active: tabIndex === 7 }">
-                    <a class="nav-link" @click="openMenu(7)">Immobilie</a>
+                <li class='nav-item' v-bind:class='{ active: tabIndex === 7 }'>
+                    <a class='nav-link' @click='openMenu(7)'>Immobilie</a>
                 </li>
-                <li class="nav-item" v-bind:class="{ active: tabIndex === 8 }">
-                    <a class="nav-link" @click="openMenu(8)">Spawnpunkt</a>
+                <li class='nav-item' v-bind:class='{ active: tabIndex === 8 }'>
+                    <a class='nav-link' @click='openMenu(8)'>Spawnpunkt</a>
                 </li>
             </ul>
         </nav>
 
-        <div class="float-end">
-            <account-card/>
-            <div class="card shopping-basket sc-card">
-                <div class="card-header text-white">Einkaufskorb</div>
-                <ul class="list-group mb-3">
-                    <div class="scrollable">
-                        <li
-                            class="list-group-item sc-card text-white d-flex justify-content-between lh-sm"
-                            v-for="purchaseOrder in purchaseOrders"
-                            v-bind:key="purchaseOrder.id"
-                        >
-                            <div class="float-start">
-                                <h6 class="my-0">{{ purchaseOrder.name }}</h6>
-                                <small class="text-white-50">{{
+        <div class='float-end'>
+            <account-card />
+            <div class='card shopping-basket sc-card'>
+                <div class='card-header text-white'>Einkaufskorb</div>
+                <ul class='list-group mb-3'>
+                    <div class='scrollable'>
+                        <li class='list-group-item sc-card text-white d-flex justify-content-between lh-sm' v-for='purchaseOrder in purchaseOrders' v-bind:key='purchaseOrder.id'>
+                            <div class='float-start'>
+                                <h6 class='my-0'>{{ purchaseOrder.name }}</h6>
+                                <small class='text-white-50'>{{
                                         purchaseOrder.description
-                                    }}</small>
+                                                             }}</small>
                             </div>
-                            <div class="float-end">
-                <span class="text-white-50"
-                >{{ purchaseOrder.southCentralPoints }} SCP</span
-                >
-                                <button
-                                    type="button"
-                                    v-if="purchaseOrder.removeable"
-                                    class="btn delete-button"
-                                    @click="removePurchaseOrder(purchaseOrder)"
-                                >
-                                    <font-awesome-icon class="delete-icon" icon="trash"/>
+                            <div class='float-end'>
+                                <span class='text-white-50'>{{ purchaseOrder.southCentralPoints }} SCP</span>
+                                <button type='button' v-if='purchaseOrder.removeable' class='btn delete-button' @click='removePurchaseOrder(purchaseOrder)'>
+                                    <font-awesome-icon class='delete-icon' icon='trash' />
                                 </button>
                             </div>
                         </li>
                     </div>
-                    <li class="list-group-item sc-card text-white">
-            <span
-            >Gesamte South Central Points (SCP)
-              <strong>{{ characterCosts }}</strong></span
-            >
+                    <li class='list-group-item sc-card text-white'>
+            <span>Gesamte South Central Points (SCP)
+              <strong>{{ characterCosts }}</strong></span>
                     </li>
-                    <div class="p-2">
-                        <button
-                            type="button"
-                            v-if="isNewCharacter"
-                            class="btn btn-primary w-100"
-                            @click="requestBuyCharacter()"
-                            :disabled="isSaving"
-                        >
+                    <div class='p-2'>
+                        <button type='button' v-if='isNewCharacter' class='btn btn-primary w-100' @click='requestBuyCharacter()' :disabled='isSaving'>
                             Kaufen & Charakter erstellen
-                            <font-awesome-icon icon="plus"/>
+                            <font-awesome-icon icon='plus' />
                         </button>
                     </div>
                 </ul>
             </div>
         </div>
 
-        <div
-            class="sc-card charcreator-box text-white"
-            :hidden="tabIndex === 6 || tabIndex === 7 || tabIndex === 8"
-        >
-            <character-formular
-                :hidden="tabIndex !== 0"
-                ref="formularMenu"
-                v-on:update-form="updateForm($event)"
-            />
-            <gender
-                :hidden="tabIndex !== 1"
-                ref="genderMenu"
-                v-on:set-gender="setGender($event)"
-            />
-            <parents
-                :hidden="tabIndex !== 1"
-                ref="parentsMenu"
-                v-on:update-parents="updateParents($event)"
-            />
-            <face-features
-                :hidden="tabIndex !== 2"
-                ref="faceFeaturesMenu"
-                v-on:update-face-features="updateFaceFeatures($event)"
-            />
-            <character-appearance
-                :hidden="tabIndex !== 3"
-                ref="characterAppearanceMenu"
-                v-on:update-appearances="updateAppearances($event)"
-            />
-            <clothes-menu
-                :hidden="tabIndex !== 4"
-                ref="clothesMenu"
-                v-on:update-clothes="updateClothes($event)"
-            />
-            <tattoos
-                :hidden="tabIndex !== 5"
-                ref="tattoosMenu"
-                v-on:update-tattoos="updateTattoos($event)"
-            />
+        <div class='sc-card charcreator-box text-white' :hidden='tabIndex === 6 || tabIndex === 7 || tabIndex === 8'>
+            <character-formular :hidden='tabIndex !== 0' ref='formularMenu' v-on:update-form='updateForm($event)' />
+            <gender :hidden='tabIndex !== 1' ref='genderMenu' v-on:set-gender='setGender($event)' />
+            <parents :hidden='tabIndex !== 1' ref='parentsMenu' v-on:update-parents='updateParents($event)' />
+            <face-features :hidden='tabIndex !== 2' ref='faceFeaturesMenu' v-on:update-face-features='updateFaceFeatures($event)' />
+            <character-appearance :hidden='tabIndex !== 3' ref='characterAppearanceMenu' v-on:update-appearances='updateAppearances($event)' />
+            <clothes-menu :hidden='tabIndex !== 4' ref='clothesMenu' v-on:update-clothes='updateClothes($event)' />
+            <tattoos :hidden='tabIndex !== 5' ref='tattoosMenu' v-on:update-tattoos='updateTattoos($event)' />
         </div>
 
-        <div :hidden="tabIndex !== 6">
-            <vehicle-stats style="margin: 1vw"/>
-            <vehicle-selector/>
+        <div :hidden='tabIndex !== 6'>
+            <vehicle-stats style='margin: 1vw' />
+            <vehicle-selector />
         </div>
-        <div :hidden="tabIndex !== 7">
-            <house-selector/>
+        <div :hidden='tabIndex !== 7'>
+            <house-selector />
         </div>
-        <div :hidden="tabIndex !== 8">
-            <spawn-selector/>
+        <div :hidden='tabIndex !== 8'>
+            <spawn-selector />
         </div>
 
-        <div v-if="tabIndex !== 6 && tabIndex !== 7 && tabIndex !== 8">
-            <div class="camera-box" v-if="!cameraButtonsGotClicked">
-                <button
-                    type="button"
-                    @click="changeCameraPos(0)"
-                    class="reset-camera-button"
-                    v-if="resetCameraButtonVisible"
-                ></button>
-                <button
-                    type="button"
-                    @click="changeCameraPos(1)"
-                    class="head-button"
-                ></button>
-                <button
-                    type="button"
-                    @click="changeCameraPos(2)"
-                    class="belly-button"
-                ></button>
-                <button
-                    type="button"
-                    @click="changeCameraPos(3)"
-                    class="pants-button"
-                ></button>
-                <button
-                    type="button"
-                    @click="changeCameraPos(4)"
-                    class="shoes-button"
-                ></button>
+        <div v-if='tabIndex !== 6 && tabIndex !== 7 && tabIndex !== 8'>
+            <div class='camera-box' v-if='!cameraButtonsGotClicked'>
+                <button type='button' @click='changeCameraPos(0)' class='reset-camera-button' v-if='resetCameraButtonVisible'></button>
+                <button type='button' @click='changeCameraPos(1)' class='head-button'></button>
+                <button type='button' @click='changeCameraPos(2)' class='belly-button'></button>
+                <button type='button' @click='changeCameraPos(3)' class='pants-button'></button>
+                <button type='button' @click='changeCameraPos(4)' class='shoes-button'></button>
             </div>
 
-            <div class="rotate-box">
-                <div class="row">
-                    <div class="col-5">
-                        <button
-                            type="button"
-                            @mousedown="rotateCharacter(-1)"
-                            @mouseup="stopRotateCharacter()"
-                            class="btn rotate-icon btn-secondary"
-                        >
-                            <font-awesome-icon icon="redo"/>
+            <div class='rotate-box'>
+                <div class='row'>
+                    <div class='col-5'>
+                        <button type='button' @mousedown='rotateCharacter(-1)' @mouseup='stopRotateCharacter()' class='btn rotate-icon btn-secondary'>
+                            <font-awesome-icon icon='redo' />
                         </button>
                     </div>
-                    <div class="col-5">
-                        <button
-                            type="button"
-                            @mousedown="rotateCharacter(1)"
-                            @mouseup="stopRotateCharacter()"
-                            class="btn rotate-icon btn-secondary"
-                        >
-                            <font-awesome-icon icon="undo"/>
+                    <div class='col-5'>
+                        <button type='button' @mousedown='rotateCharacter(1)' @mouseup='stopRotateCharacter()' class='btn rotate-icon btn-secondary'>
+                            <font-awesome-icon icon='undo' />
                         </button>
                     </div>
                 </div>
@@ -216,7 +123,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import AccountCard from "@/components/AccountCard.vue";
 import CharacterFormular from "@/components/CharCreator/CharacterFormular.vue";
@@ -651,7 +558,7 @@ export default class CharCreator extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .charcreator {
     height: 100%;
 }

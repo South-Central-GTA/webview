@@ -1,15 +1,9 @@
 <template>
-    <div class="team-menu-helpme">
+    <div class='team-menu-helpme'>
         <h2>Offene Help Me's</h2>
-        <input
-            @input="search()"
-            v-model="playerNameSearch"
-            type="text"
-            class="form-control-dark mb-2"
-            placeholder="Suche nach Spieler Namen"
-        />
-        <div class="table-holder">
-            <table class="table table-striped table-hover">
+        <input @input='search()' v-model='playerNameSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach Spieler Namen' />
+        <div class='table-holder'>
+            <table class='table table-striped table-hover'>
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -18,19 +12,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr
-                    v-for="ticket in tickets"
-                    v-bind:key="ticket.creatorDiscordId"
-                    class="entry"
-                >
+                <tr v-for='ticket in tickets' v-bind:key='ticket.creatorDiscordId' class='entry'>
                     <td>{{ ticket.creatorName }}</td>
                     <td>{{ ticket.context }}</td>
                     <td>
-                        <div class="input-group">
-                            <button
-                                class="btn btn-primary"
-                                @click="takeTicket(ticket.creatorDiscordId)"
-                            >
+                        <div class='input-group'>
+                            <button class='btn btn-primary' @click='takeTicket(ticket.creatorDiscordId)'>
                                 Ticket übernehmen
                             </button>
                         </div>
@@ -42,7 +29,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {HelpMeTicketInterface} from "@/scripts/interfaces/team-menu/help-me-ticket.interface";

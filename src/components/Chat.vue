@@ -1,67 +1,37 @@
 <template>
-    <div
-        class="chat-box"
-        :hidden="!chatVisible"
-        v-bind:style="{ height: chatBoxHeight + 'vw' }"
-    >
-        <div
-            class="chat-list"
-            ref="chatList"
-            v-bind:style="{ height: messagesListHeight + 'vw' }"
-            v-bind:class="{
+    <div class='chat-box' :hidden='!chatVisible' v-bind:style="{ height: chatBoxHeight + 'vw' }">
+        <div class='chat-list' ref='chatList' v-bind:style="{ height: messagesListHeight + 'vw' }" v-bind:class='{
         overflow_visible: inputActive,
         overflow_hidden: !inputActive,
-      }"
-        >
-            <div v-for="(message, index) in messages" v-bind:key="index">
-                <div
-                    v-bind:style="{ 'background-color': message.backgroundColor }"
-                    class="message-box"
-                >
-          <span
-              class="chat-message"
-              v-bind:style="{ color: message.color }"
-              v-bind:class="{
+      }'>
+            <div v-for='(message, index) in messages' v-bind:key='index'>
+                <div v-bind:style="{ 'background-color': message.backgroundColor }" class='message-box'>
+          <span class='chat-message' v-bind:style='{ color: message.color }' v-bind:class='{
               whisper: getIsWisper(message.chatType),
               scream: getIsScream(message.chatType),
               lowemote: getIsLowEmote(message.chatType),
               megaphone: getIsMegaPhone(message.chatType),
               achat: getIsAChat(message.chatType),
-            }"
-          >{{ getTimestamp(message.sendetAt) }} {{
+            }'>{{ getTimestamp(message.sendetAt) }} {{
                   message.beforeChat
-              }}<span v-bind:style="{ color: message.nameColor }">{{
+               }}<span v-bind:style='{ color: message.nameColor }'>{{
                       message.sender
-                  }}</span
-              >{{ message.afterName }}<span v-html="message.context"></span
-              >{{ message.afterChat }}</span
-          >
+                                                                   }}</span>{{ message.afterName }}<span v-html='message.context'></span>{{ message.afterChat }}</span>
                 </div>
             </div>
         </div>
 
-        <div :hidden="!inputActive">
-            <input
-                ref="chatInput"
-                class="input-bar card"
-                type="text"
-                v-on:blur="focusInput()"
-                v-on:keydown.enter="send()"
-                v-on:keydown.up="historyUp()"
-                v-on:keydown.down="historyDown()"
-                v-on:input="handleSuggestions()"
-                spellcheck="false"
-                maxlength="256"
-            />
+        <div :hidden='!inputActive'>
+            <input ref='chatInput' class='input-bar card' type='text' v-on:blur='focusInput()' v-on:keydown.enter='send()' v-on:keydown.up='historyUp()' v-on:keydown.down='historyDown()' v-on:input='handleSuggestions()' spellcheck='false' maxlength='256' />
 
-            <div ref="suggestions" class="suggestions card">
+            <div ref='suggestions' class='suggestions card'>
                 <ul></ul>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Ref} from "vue-property-decorator";
 import {Vue} from "vue-class-component";

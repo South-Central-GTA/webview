@@ -1,31 +1,31 @@
 <template>
-    <div class="settings-page">
-        <div class="phone-header">
+    <div class='settings-page'>
+        <div class='phone-header'>
             <div>
                 <span>Einstellungen</span>
             </div>
         </div>
 
-        <background-setting ref="background" :hidden="currentTab !== 1" v-on:back="resetTab()"/>
+        <background-setting ref='background' :hidden='currentTab !== 1' v-on:back='resetTab()' />
 
-        <div class="phone-button-group">
-            <button type="button" class="btn btn-primary" @click="openTab(1)">
-                <font-awesome-icon class="background-icon" icon="images"/>
+        <div class='phone-button-group'>
+            <button type='button' class='btn btn-primary' @click='openTab(1)'>
+                <font-awesome-icon class='background-icon' icon='images' />
                 <span>Hintergrundbild</span>
             </button>
-            <button type="button" class="btn btn-secondary" disabled>
-                <font-awesome-icon class="call-icon" icon="phone"/>
+            <button type='button' class='btn btn-secondary' disabled>
+                <font-awesome-icon class='call-icon' icon='phone' />
                 <span>Klingeltöne</span>
             </button>
-            <button type="button" class="btn btn-secondary" disabled>
-                <font-awesome-icon class="internet-icon" icon="globe"/>
+            <button type='button' class='btn btn-secondary' disabled>
+                <font-awesome-icon class='internet-icon' icon='globe' />
                 <span>Internet</span>
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import BackgroundSetting from './Components/SettingsPages/BackgroundSetting.vue';
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
@@ -58,7 +58,7 @@ export default class SettingsPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .settings-page {
     height: 100%;
 

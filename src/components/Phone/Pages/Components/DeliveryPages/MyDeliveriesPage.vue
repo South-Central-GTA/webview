@@ -1,65 +1,55 @@
 <template>
-    <div class="my-deliveries-page">
-        <div class="phone-header">
-            <button type="button" class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='my-deliveries-page'>
+        <div class='phone-header'>
+            <button type='button' class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Meine Bestellungen</span>
             </button>
         </div>
 
-        <div v-if="loadedData">
-            <div class="delivery-block" v-if="deliveries.length !== 0">
-                <div
-                    v-for="delivery in deliveries"
-                    v-bind:key="delivery.id"
-                    class="delivery-card"
-                >
-                    <div v-if="delivery.status === 0 || delivery.status === 3">
-                        <button
-                            type="button"
-                            class="remove-button icon-button"
-                            @click="remove(delivery.id)"
-                        >
-                            <font-awesome-icon class="delete-icon" icon="trash"/>
+        <div v-if='loadedData'>
+            <div class='delivery-block' v-if='deliveries.length !== 0'>
+                <div v-for='delivery in deliveries' v-bind:key='delivery.id' class='delivery-card'>
+                    <div v-if='delivery.status === 0 || delivery.status === 3'>
+                        <button type='button' class='remove-button icon-button' @click='remove(delivery.id)'>
+                            <font-awesome-icon class='delete-icon' icon='trash' />
                         </button>
                     </div>
 
                     <h1>{{ getHeaderString(delivery.deliveryType) }}</h1>
 
-                    <hr/>
+                    <hr />
 
-                    <div v-if="delivery.deliveryType === 1">
+                    <div v-if='delivery.deliveryType === 1'>
                         <h2>Anzahl an Produkte: {{ delivery.orderedProducts }} Stück</h2>
-                        <h2 v-if="delivery.status !== 3">
-                            Produkte noch am Hafen: {{ delivery.productsRemaining }} Stück
-                        </h2>
+                        <h2 v-if='delivery.status !== 3'>
+                            Produkte noch am Hafen: {{ delivery.productsRemaining }} Stück </h2>
                     </div>
 
-                    <div v-if="delivery.deliveryType === 3">
+                    <div v-if='delivery.deliveryType === 3'>
                         <h2>Fahrzeug: {{ delivery.displayName }}</h2>
                     </div>
 
                     <h2>Status der Lieferung: {{ getStatusString(delivery.status) }}</h2>
 
-                    <div v-if="delivery.status !== 0">
+                    <div v-if='delivery.status !== 0'>
                         <h2>Fahrer: {{ delivery.supplierFullName }}</h2>
                         <h2>
-                            Handynummer: {{ getCorrectFormat(delivery.supplierPhoneNumber) }}
-                        </h2>
+                            Handynummer: {{ getCorrectFormat(delivery.supplierPhoneNumber) }} </h2>
                     </div>
 
-                    <hr/>
+                    <hr />
                     <h3>{{ getCorrectDate(delivery.createdAt) }}</h3>
                 </div>
             </div>
             <div v-else>
-                <h1 class="error-message">Das Unternehmen hat keine Bestellungen.</h1>
+                <h1 class='error-message'>Das Unternehmen hat keine Bestellungen.</h1>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {DeliveryInterface} from "@/scripts/interfaces/delivery/delivery.interface";
@@ -150,7 +140,7 @@ export default class MyDeliveriesPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .my-deliveries-page {
     overflow: hidden;
     top: 0;

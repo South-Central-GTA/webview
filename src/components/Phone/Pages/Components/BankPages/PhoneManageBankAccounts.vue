@@ -1,39 +1,33 @@
 <template>
-    <div class="phone-manage-bank-accounts">
-        <div class="phone-header">
-            <button class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='phone-manage-bank-accounts'>
+        <div class='phone-header'>
+            <button class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Konten verwalten</span>
             </button>
         </div>
 
-        <img
-            class="phone-bank-logo pb-3"
-            src="@/assets/images/phone/maze-bank-logo.png"
-        />
+        <img class='phone-bank-logo pb-3' src='@/assets/images/phone/maze-bank-logo.png' />
 
-        <div class="bank-accounts-block">
-            <div v-for="bankAccount in bankAccounts" v-bind:key="bankAccount.id">
-                <div
-                    class="bank-account text-center"
-                    @click="openBankAccount(bankAccount.id)"
-                >
+        <div class='bank-accounts-block'>
+            <div v-for='bankAccount in bankAccounts' v-bind:key='bankAccount.id'>
+                <div class='bank-account text-center' @click='openBankAccount(bankAccount.id)'>
                     <h1>{{ bankAccount.bankDetails }}</h1>
-                    <h2 v-if="bankAccount.status === 0">Wird noch eingerichtet ...</h2>
-                    <h2 v-if="bankAccount.status === 1">${{ bankAccount.amount }}</h2>
-                    <h2 class="fst-italic" v-if="bankAccount.type === 0">Privatkonto</h2>
-                    <h2 class="fst-italic" v-if="bankAccount.type === 1">Gruppenkonto</h2>
+                    <h2 v-if='bankAccount.status === 0'>Wird noch eingerichtet ...</h2>
+                    <h2 v-if='bankAccount.status === 1'>${{ bankAccount.amount }}</h2>
+                    <h2 class='fst-italic' v-if='bankAccount.type === 0'>Privatkonto</h2>
+                    <h2 class='fst-italic' v-if='bankAccount.type === 1'>Gruppenkonto</h2>
                 </div>
             </div>
 
-            <div class="no-bank-accounts-block" v-if="bankAccounts.length === 0">
+            <div class='no-bank-accounts-block' v-if='bankAccounts.length === 0'>
                 <h2>Keine Konten verfügbar...</h2>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import banking from "@/scripts/services/banking.service";
 import {Vue} from "vue-class-component";
 import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
@@ -63,7 +57,7 @@ export default class PhoneManageBankAccounts extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .phone-manage-bank-accounts {
     overflow: hidden;
     position: absolute;

@@ -1,66 +1,53 @@
 <template>
-    <div class="hud">
-        <h1 class="disclamer">Repräsentiert nicht den finalen Stand des Servers</h1>
-        <div class="top-right" v-if="active">
-            <div class="row">
-                <div class="col-12">
-                    <h5 class="fs-5 text-end money-color">{{ money }}</h5>
+    <div class='hud'>
+        <h1 class='disclamer'>Repräsentiert nicht den finalen Stand des Servers</h1>
+        <div class='top-right' v-if='active'>
+            <div class='row'>
+                <div class='col-12'>
+                    <h5 class='fs-5 text-end money-color'>{{ money }}</h5>
                 </div>
             </div>
         </div>
-        <div
-            class="bottom-left"
-            v-if="streetName && active"
-            v-bind:class="{ 'slide-down': isDown, 'slide-up': !isDown }"
-        >
-            <div class="row">
-                <div class="col-12">
+        <div class='bottom-left' v-if='streetName && active' v-bind:class="{ 'slide-down': isDown, 'slide-up': !isDown }">
+            <div class='row'>
+                <div class='col-12'>
                     <h5>{{ streetName }}</h5>
                 </div>
-                <div class="col-5">
-                    <h6 class="text-center float-start">{{ direction }}</h6>
+                <div class='col-5'>
+                    <h6 class='text-center float-start'>{{ direction }}</h6>
                 </div>
-                <div class="col-7">
-                    <h6 class="text-center float-end">{{ zone }}</h6>
+                <div class='col-7'>
+                    <h6 class='text-center float-end'>{{ zone }}</h6>
                 </div>
 
-                <div class="col-12" v-if="armor == 0">
-                    <div class="progress mt-2" style="height: 0.4vw">
-                        <div
-                            class="progress-bar bg-success"
-                            v-bind:style="{ width: health + '%' }"
-                        ></div>
+                <div class='col-12' v-if='armor == 0'>
+                    <div class='progress mt-2' style='height: 0.4vw'>
+                        <div class='progress-bar bg-success' v-bind:style="{ width: health + '%' }"></div>
                     </div>
                 </div>
-                <div class="col-6" v-if="armor != 0">
-                    <div class="progress mt-2" style="height: 0.4vw">
-                        <div
-                            class="progress-bar bg-success"
-                            v-bind:style="{ width: health + '%' }"
-                        ></div>
+                <div class='col-6' v-if='armor != 0'>
+                    <div class='progress mt-2' style='height: 0.4vw'>
+                        <div class='progress-bar bg-success' v-bind:style="{ width: health + '%' }"></div>
                     </div>
                 </div>
 
-                <div class="col-6" v-if="armor != 0">
-                    <div class="progress mt-2" style="height: 0.4vw">
-                        <div
-                            class="progress-bar bg-blue"
-                            v-bind:style="{ width: armor + '%' }"
-                        ></div>
+                <div class='col-6' v-if='armor != 0'>
+                    <div class='progress mt-2' style='height: 0.4vw'>
+                        <div class='progress-bar bg-blue' v-bind:style="{ width: armor + '%' }"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div v-if="isFreecam">
-            <div class="center">
-                <img src="@/assets/images/crosshair.png" class="crosshair"/>
+        <div v-if='isFreecam'>
+            <div class='center'>
+                <img src='@/assets/images/crosshair.png' class='crosshair' />
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 
@@ -201,7 +188,7 @@ export default class Hud extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .slide-down {
     margin-bottom: 0;
 }

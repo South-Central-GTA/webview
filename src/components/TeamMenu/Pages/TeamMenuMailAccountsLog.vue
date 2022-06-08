@@ -1,15 +1,9 @@
 <template>
-    <div class="team-menu-mail-accounts-log">
+    <div class='team-menu-mail-accounts-log'>
         <h2>E-Mail Accounts</h2>
-        <input
-            @input="search()"
-            v-model="mailAddressSearch"
-            type="text"
-            class="form-control-dark mb-2"
-            placeholder="Suche nach der E-Mail"
-        />
-        <div class="table-holder">
-            <table class="table table-striped table-hover">
+        <input @input='search()' v-model='mailAddressSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach der E-Mail' />
+        <div class='table-holder'>
+            <table class='table table-striped table-hover'>
                 <thead>
                 <tr>
                     <th>Mail Addresse</th>
@@ -18,11 +12,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr
-                    v-for="account in mailAccounts"
-                    v-bind:key="account.mailAddress"
-                    class="entry"
-                >
+                <tr v-for='account in mailAccounts' v-bind:key='account.mailAddress' class='entry'>
                     <td>{{ account.mailAddress }}</td>
                     <td>{{ getType(account.type) }}</td>
                     <td>{{ getOwner(account) }}</td>
@@ -33,7 +23,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {MailAccountInterface} from "@/scripts/interfaces/mail/mail-account.interface";

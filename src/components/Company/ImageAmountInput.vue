@@ -1,25 +1,16 @@
 <template>
-    <div class="image-amount-input sc-card" @click="choose()">
-        <img :src="getImage(item.image)"/>
-        <div class="input-group">
-            <span class="input-group-text-dark">x</span>
-            <input
-                v-model.number="amount"
-                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                type="number"
-                class="form-control-dark"
-                @keypress="allowOnlyNumbers($event)"
-                @input="sendAmount()"
-                @focus="choose()"
-                maxlength="2"
-            />
+    <div class='image-amount-input sc-card' @click='choose()'>
+        <img :src='getImage(item.image)' />
+        <div class='input-group'>
+            <span class='input-group-text-dark'>x</span>
+            <input v-model.number='amount' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' class='form-control-dark' @keypress='allowOnlyNumbers($event)' @input='sendAmount()' @focus='choose()' maxlength='2' />
         </div>
-        <p class="name">{{ item.name }}</p>
-        <p class="price money-color">${{ item.price }}</p>
+        <p class='name'>{{ item.name }}</p>
+        <p class='price money-color'>${{ item.price }}</p>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {Prop} from "vue-property-decorator";
 import {allowOnlyNumbers} from "@/scripts/helpers/helpers";

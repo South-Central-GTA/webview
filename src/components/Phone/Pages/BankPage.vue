@@ -1,42 +1,28 @@
 <template>
-    <div class="bank-page">
-        <div class="loading" v-if="isLoading && !loadedOnce">
-            <img class="logo" src="@/assets/images/phone/maze-bank-logo.png"/>
+    <div class='bank-page'>
+        <div class='loading' v-if='isLoading && !loadedOnce'>
+            <img class='logo' src='@/assets/images/phone/maze-bank-logo.png' />
             <h1>{{ loadingText }}</h1>
         </div>
 
-        <create-bank-account
-            ref="createBankAccount"
-            :hidden="currentTab !== 1"
-            v-on:back="resetTab()"
-        />
-        <phone-manage-bank-accounts
-            ref="manageBankAccounts"
-            :hidden="currentTab !== 2"
-            v-on:back="resetTab()"
-            v-on:openbankaccount="openBankAccount"
-        />
-        <phone-active-bank-account
-            ref="activeBankAccount"
-            :hidden="currentTab !== 3"
-            v-on:back="openTab(2)"
-            v-on:close="openTab(0)"
-        />
+        <create-bank-account ref='createBankAccount' :hidden='currentTab !== 1' v-on:back='resetTab()' />
+        <phone-manage-bank-accounts ref='manageBankAccounts' :hidden='currentTab !== 2' v-on:back='resetTab()' v-on:openbankaccount='openBankAccount' />
+        <phone-active-bank-account ref='activeBankAccount' :hidden='currentTab !== 3' v-on:back='openTab(2)' v-on:close='openTab(0)' />
 
-        <img class="logo" src="@/assets/images/phone/maze-bank-logo.png"/>
+        <img class='logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
-        <div class="phone-bank-button-group">
-            <button type="button" class="btn" @click="openTab(1)">
+        <div class='phone-bank-button-group'>
+            <button type='button' class='btn' @click='openTab(1)'>
                 Konto eröffnen
             </button>
-            <button type="button" class="btn" @click="openTab(2)">
+            <button type='button' class='btn' @click='openTab(2)'>
                 Konten verwalten
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import banking from "@/scripts/services/banking.service";
 import character from "@/scripts/services/character.service";
@@ -181,7 +167,7 @@ export default class BankPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .bank-page {
     height: 100%;
 

@@ -1,54 +1,42 @@
 <template>
-    <div class="team-menu-vehicle-catalog">
+    <div class='team-menu-vehicle-catalog'>
         <h2>Fahrzeug Katalog</h2>
-        <div class="row">
-            <div class="col-4">
-                <input
-                    @input="search()"
-                    v-model="vehicleSearch"
-                    type="text"
-                    class="form-control-dark mb-2"
-                    placeholder="Suche nach Model (Bsp. dilettante)"
-                />
+        <div class='row'>
+            <div class='col-4'>
+                <input @input='search()' v-model='vehicleSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach Model (Bsp. dilettante)' />
             </div>
-            <div class="col-3">
-                <select
-                    name="class"
-                    ref="classSelection"
-                    class="form-control-dark"
-                    @change="onChangeClass()"
-                >
-                    <option value="ALL">Alle</option>
-                    <option value="BOAT">Boot</option>
-                    <option value="COMMERCIAL">Commercial</option>
-                    <option value="COMPACT">Compact</option>
-                    <option value="COUPE">Coupe</option>
-                    <option value="CYCLE">Fahrrad</option>
-                    <option value="EMERGENCY">Einsatzfahrzeug</option>
-                    <option value="INDUSTRIAL">Industrial</option>
-                    <option value="MILITARY">Militär</option>
-                    <option value="MOTORCYCLE">Motorräder</option>
-                    <option value="MUSCLE">Muscle</option>
-                    <option value="OFF_ROAD">Off-Road</option>
-                    <option value="PLANE">Flugzeug</option>
-                    <option value="SEDAN">Sedan</option>
-                    <option value="SERVICE">Service</option>
-                    <option value="SPORT">Sport</option>
-                    <option value="SPORT_CLASSIC">Sport Classic</option>
-                    <option value="SUPER">Super</option>
-                    <option value="SUV">SUV</option>
-                    <option value="UTILITY">Utility</option>
-                    <option value="VAN">Van</option>
+            <div class='col-3'>
+                <select name='class' ref='classSelection' class='form-control-dark' @change='onChangeClass()'>
+                    <option value='ALL'>Alle</option>
+                    <option value='BOAT'>Boot</option>
+                    <option value='COMMERCIAL'>Commercial</option>
+                    <option value='COMPACT'>Compact</option>
+                    <option value='COUPE'>Coupe</option>
+                    <option value='CYCLE'>Fahrrad</option>
+                    <option value='EMERGENCY'>Einsatzfahrzeug</option>
+                    <option value='INDUSTRIAL'>Industrial</option>
+                    <option value='MILITARY'>Militär</option>
+                    <option value='MOTORCYCLE'>Motorräder</option>
+                    <option value='MUSCLE'>Muscle</option>
+                    <option value='OFF_ROAD'>Off-Road</option>
+                    <option value='PLANE'>Flugzeug</option>
+                    <option value='SEDAN'>Sedan</option>
+                    <option value='SERVICE'>Service</option>
+                    <option value='SPORT'>Sport</option>
+                    <option value='SPORT_CLASSIC'>Sport Classic</option>
+                    <option value='SUPER'>Super</option>
+                    <option value='SUV'>SUV</option>
+                    <option value='UTILITY'>Utility</option>
+                    <option value='VAN'>Van</option>
                 </select>
             </div>
-            <div class="col-4">
-                <p v-if="warningMessage.length !== 0" class="text-danger">
-                    {{ warningMessage }}
-                </p>
+            <div class='col-4'>
+                <p v-if='warningMessage.length !== 0' class='text-danger'>
+                    {{ warningMessage }} </p>
             </div>
         </div>
-        <div class="table-holder">
-            <table class="table table-striped table-hover">
+        <div class='table-holder'>
+            <table class='table table-striped table-hover'>
                 <thead>
                 <tr>
                     <th>Model</th>
@@ -62,7 +50,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="vehicle in vehicles" v-bind:key="vehicle.id" class="entry">
+                <tr v-for='vehicle in vehicles' v-bind:key='vehicle.id' class='entry'>
                     <td>{{ vehicle.model }}</td>
                     <td>{{ vehicle.displayName }}</td>
                     <td>{{ vehicle.displayClass }}</td>
@@ -75,17 +63,9 @@
                     </td>
                     <td>{{ vehicle.southCentralPoints }}</td>
                     <td>
-                        <div class="input-group">
-                            <input
-                                v-model="vehicle.amountOfOrderableVehicles"
-                                type="number"
-                                class="form-control-dark"
-                            />
-                            <span
-                                @click="updateOrderableVehicles(vehicle)"
-                                class="btn btn-primary input-group-text"
-                            >Stück</span
-                            >
+                        <div class='input-group'>
+                            <input v-model='vehicle.amountOfOrderableVehicles' type='number' class='form-control-dark' />
+                            <span @click='updateOrderableVehicles(vehicle)' class='btn btn-primary input-group-text'>Stück</span>
                         </div>
                     </td>
                 </tr>
@@ -95,7 +75,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";

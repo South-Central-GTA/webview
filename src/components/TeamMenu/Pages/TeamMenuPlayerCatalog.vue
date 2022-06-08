@@ -1,15 +1,9 @@
 <template>
-    <div class="team-menu-player-catalog">
+    <div class='team-menu-player-catalog'>
         <h2>Online Spielerliste</h2>
-        <input
-            @input="search()"
-            v-model="searchInput"
-            type="text"
-            class="form-control-dark mb-2"
-            placeholder="Suche nach aktuellen Discord Namen."
-        />
-        <div class="table-holder">
-            <table class="table table-striped table-hover">
+        <input @input='search()' v-model='searchInput' type='text' class='form-control-dark mb-2' placeholder='Suche nach aktuellen Discord Namen.' />
+        <div class='table-holder'>
+            <table class='table table-striped table-hover'>
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -20,12 +14,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr
-                    v-for="player in players"
-                    v-bind:key="player.id"
-                    class="entry"
-                    @click="openUserRecord(player.accountId)"
-                >
+                <tr v-for='player in players' v-bind:key='player.id' class='entry' @click='openUserRecord(player.accountId)'>
                     <td>{{ player.id }}</td>
                     <td>{{ player.accountName }}</td>
                     <td>{{ player.discordId }}</td>
@@ -38,7 +27,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {PlayerInterface} from "@/scripts/interfaces/player.interface";

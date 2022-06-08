@@ -1,200 +1,147 @@
 <template>
-    <div class="vehicle-import-page">
-        <div class="vehicle-import-page-header">
-            <img src="@/assets/images/phone/ssas-logo.png"/>
-            <div class="px-2">
+    <div class='vehicle-import-page'>
+        <div class='vehicle-import-page-header'>
+            <img src='@/assets/images/phone/ssas-logo.png' />
+            <div class='px-2'>
                 <p>Willkommen, {{ name }}!</p>
             </div>
         </div>
 
-        <div v-if="!hasAccess" class="no-access-box">
+        <div v-if='!hasAccess' class='no-access-box'>
             <p>Keine Zugriffsrechte!</p>
         </div>
 
-        <div class="row pt-2" :hidden="isBuyMenuOpen || isOrderMenuOpen">
-            <div class="col-2">
-                <div class="btn-group-vertical p-2 w-100">
-                    <button class="btn btn-dark" @click="openOrderMenu()">
+        <div class='row pt-2' :hidden='isBuyMenuOpen || isOrderMenuOpen'>
+            <div class='col-2'>
+                <div class='btn-group-vertical p-2 w-100'>
+                    <button class='btn btn-dark' @click='openOrderMenu()'>
                         Meine Bestellungen
                     </button>
                 </div>
             </div>
-            <div class="col-8">
-                <input
-                    class="form-control mt-1 mb-1"
-                    @focus="onFocus(true)"
-                    @blur="onFocus(false)"
-                    @input="search()"
-                    v-model="nameSearch"
-                    type="text"
-                    placeholder="Fahrzeugnamen suchen..."
-                />
+            <div class='col-8'>
+                <input class='form-control mt-1 mb-1' @focus='onFocus(true)' @blur='onFocus(false)' @input='search()' v-model='nameSearch' type='text' placeholder='Fahrzeugnamen suchen...' />
 
-                <div class="vehicles-list">
-                    <button
-                        class="icon-button col-4 p-2"
-                        v-for="vehicle in vehicles"
-                        v-bind:key="vehicle.model"
-                        @click="openBuyMenu(vehicle)"
-                    >
-                        <div class="vehicle-entry">
-                            <img :src="getVehicleImage(vehicle.model)"/>
+                <div class='vehicles-list'>
+                    <button class='icon-button col-4 p-2' v-for='vehicle in vehicles' v-bind:key='vehicle.model' @click='openBuyMenu(vehicle)'>
+                        <div class='vehicle-entry'>
+                            <img :src='getVehicleImage(vehicle.model)' />
 
-                            <div class="row">
-                                <div class="col-6">
+                            <div class='row'>
+                                <div class='col-6'>
                                     <h1>{{ vehicle.displayName }}</h1>
                                 </div>
 
-                                <div class="col-6">
+                                <div class='col-6'>
                                     <h1>{{ vehicle.displayClass }}</h1>
                                 </div>
-                                <div class="col-12">
+                                <div class='col-12'>
                                     <h1>
-                                        Verfügbare Anzahl: {{ vehicle.amountOfOrderableVehicles }}
-                                    </h1>
+                                        Verfügbare Anzahl: {{ vehicle.amountOfOrderableVehicles }} </h1>
                                 </div>
 
-                                <div class="col price-box">
+                                <div class='col price-box'>
                                     <h2>
                                         ${{
                                             vehicle.price
                                                 .toString()
                                                 .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-                                        }}
-                                    </h2>
+                                        }} </h2>
                                 </div>
                             </div>
                         </div>
                     </button>
                 </div>
             </div>
-            <div class="col-2">
-                <div class="m-2">
+            <div class='col-2'>
+                <div class='m-2'>
                     <label>Kategorien:</label>
-                    <select
-                        name="class"
-                        ref="classSelection"
-                        id="class-select"
-                        @change="onChangeClass()"
-                    >
-                        <option value="ALL">Alle</option>
-                        <option value="COMPACT">Compact</option>
-                        <option value="SEDAN">Sedan</option>
-                        <option value="SUV">SUV</option>
-                        <option value="COUPE">Coupe</option>
-                        <option value="MUSCLE">Muscle</option>
-                        <option value="SPORT">Sport</option>
-                        <option value="MOTORCYCLE">Motorräder</option>
-                        <option value="CYCLE">Fahrrad</option>
-                        <option value="OFF_ROAD">Off-Road</option>
-                        <option value="INDUSTRIAL">Industrial</option>
-                        <option value="UTILITY">Utility</option>
-                        <option value="VAN">Van</option>
-                        <option value="COMMERCIAL">Commercial</option>
+                    <select name='class' ref='classSelection' id='class-select' @change='onChangeClass()'>
+                        <option value='ALL'>Alle</option>
+                        <option value='COMPACT'>Compact</option>
+                        <option value='SEDAN'>Sedan</option>
+                        <option value='SUV'>SUV</option>
+                        <option value='COUPE'>Coupe</option>
+                        <option value='MUSCLE'>Muscle</option>
+                        <option value='SPORT'>Sport</option>
+                        <option value='MOTORCYCLE'>Motorräder</option>
+                        <option value='CYCLE'>Fahrrad</option>
+                        <option value='OFF_ROAD'>Off-Road</option>
+                        <option value='INDUSTRIAL'>Industrial</option>
+                        <option value='UTILITY'>Utility</option>
+                        <option value='VAN'>Van</option>
+                        <option value='COMMERCIAL'>Commercial</option>
                     </select>
                 </div>
             </div>
         </div>
-        <div class="row" :hidden="!isBuyMenuOpen">
-            <div class="col-2">
-                <div class="btn-group-vertical p-2 w-100">
-                    <button class="btn btn-dark" @click="closeBuyMenu()">Zurück</button>
+        <div class='row' :hidden='!isBuyMenuOpen'>
+            <div class='col-2'>
+                <div class='btn-group-vertical p-2 w-100'>
+                    <button class='btn btn-dark' @click='closeBuyMenu()'>Zurück</button>
                 </div>
             </div>
-            <div class="col-9 p-3 showcase-entry">
-                <div class="row">
-                    <div class="col-6">
-                        <img
-                            class="showcase-image"
-                            :src="getVehicleImage(buyMenuVehicleModel)"
-                        />
-                        <p class="text-muted pt-1" style="font-style: italic">
-                            Dies ist nur ein Vorschaubild.
-                        </p>
+            <div class='col-9 p-3 showcase-entry'>
+                <div class='row'>
+                    <div class='col-6'>
+                        <img class='showcase-image' :src='getVehicleImage(buyMenuVehicleModel)' />
+                        <p class='text-muted pt-1' style='font-style: italic'>
+                            Dies ist nur ein Vorschaubild. </p>
                     </div>
-                    <div class="col">
+                    <div class='col'>
                         <h1>{{ buyMenuVehicleName }} {{ buyMenuVehicleClass }}</h1>
                         <h2>
                             {{
                                 buyMenuVehiclePrice
                                     .toString()
                                     .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-                            }}
-                        </h2>
+                            }} </h2>
                         <p>
-                            Nach dem erfolgreichen Kauf dauert es einen (1) bis vier (4) Tage
-                            bis das Fahrzeug nach Los Santos verschifft wurde. Jede Bestellung
-                            wird einzelnd abgearbeitet.
-                        </p>
-                        <button
-                            class="btn btn-buy w-100 text-white"
-                            @click="requestOrder()"
-                        >
+                            Nach dem erfolgreichen Kauf dauert es einen (1) bis vier (4) Tage bis das Fahrzeug nach Los Santos verschifft wurde. Jede Bestellung wird einzelnd abgearbeitet. </p>
+                        <button class='btn btn-buy w-100 text-white' @click='requestOrder()'>
                             Fahrzeug kostenpflichtig bestellen
                         </button>
-                        <h3 v-if="warningMessage !== ''" class="text-danger p-2">
-                            {{ warningMessage }}
-                        </h3>
-                        <h3 v-if="successMessageVisible" class="text-success p-2">
-                            Fahrzeug wurde erfolgreich bestellt!
-                        </h3>
+                        <h3 v-if="warningMessage !== ''" class='text-danger p-2'>
+                            {{ warningMessage }} </h3>
+                        <h3 v-if='successMessageVisible' class='text-success p-2'>
+                            Fahrzeug wurde erfolgreich bestellt! </h3>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row" :hidden="!isOrderMenuOpen">
-            <div class="col-2">
-                <div class="btn-group-vertical p-2 w-100">
-                    <button class="btn btn-dark" @click="closeOrderMenu()">Zurück</button>
+        <div class='row' :hidden='!isOrderMenuOpen'>
+            <div class='col-2'>
+                <div class='btn-group-vertical p-2 w-100'>
+                    <button class='btn btn-dark' @click='closeOrderMenu()'>Zurück</button>
                 </div>
             </div>
-            <div class="col-9">
-                <input
-                    class="form-control mt-1 mb-1"
-                    @focus="onFocus(true)"
-                    @blur="onFocus(false)"
-                    @input="search()"
-                    v-model="nameSearch"
-                    type="text"
-                    placeholder="Fahrzeugnamen suchen..."
-                />
+            <div class='col-9'>
+                <input class='form-control mt-1 mb-1' @focus='onFocus(true)' @blur='onFocus(false)' @input='search()' v-model='nameSearch' type='text' placeholder='Fahrzeugnamen suchen...' />
 
-                <div class="vehicles-list row">
-                    <div
-                        class="icon-button col-4 p-2"
-                        v-for="vehicle in orderedVehicles"
-                        v-bind:key="vehicle.id"
-                    >
-                        <div class="vehicle-entry">
+                <div class='vehicles-list row'>
+                    <div class='icon-button col-4 p-2' v-for='vehicle in orderedVehicles' v-bind:key='vehicle.id'>
+                        <div class='vehicle-entry'>
                             <h1>
-                                Bestellnummer: #{{ vehicle.id.toString().padStart(6, 0) }}
-                            </h1>
+                                Bestellnummer: #{{ vehicle.id.toString().padStart(6, 0) }} </h1>
 
-                            <img :src="getVehicleImage(vehicle.model)"/>
+                            <img :src='getVehicleImage(vehicle.model)' />
 
-                            <div class="row">
-                                <div class="col-6">
+                            <div class='row'>
+                                <div class='col-6'>
                                     <h1>{{ vehicle.displayName }}</h1>
                                 </div>
 
-                                <div class="col-6">
+                                <div class='col-6'>
                                     <h1>{{ vehicle.displayClass }}</h1>
                                 </div>
                             </div>
 
                             <p>Bestellt von: {{ vehicle.orderedBy }}.</p>
-                            <p v-if="vehicle.deliveryRequestedBy">
-                                Lieferauftrag erstellt von: {{ vehicle.deliveryRequestedBy }} am
-                                {{ getDate(vehicle.deliveryRequestedAt) }}.
-                            </p>
+                            <p v-if='vehicle.deliveryRequestedBy'>
+                                Lieferauftrag erstellt von: {{ vehicle.deliveryRequestedBy }} am {{ getDate(vehicle.deliveryRequestedAt) }}. </p>
 
-                            <div class="m-2">
-                                <button
-                                    class="btn btn-primary w-100"
-                                    v-if="!vehicle.deliveryRequestedBy"
-                                    @click="requestDeliveryTask(vehicle.id)"
-                                    :disabled="!getButtonState(vehicle)"
-                                >
+                            <div class='m-2'>
+                                <button class='btn btn-primary w-100' v-if='!vehicle.deliveryRequestedBy' @click='requestDeliveryTask(vehicle.id)' :disabled='!getButtonState(vehicle)'>
                                     {{ getButtonString(vehicle) }}
                                 </button>
                             </div>
@@ -202,15 +149,15 @@
                     </div>
                 </div>
 
-                <div v-if="orderedVehicles.length === 0">
-                    <h3 class="text-muted p-5">Sie haben noch keine Bestellungen.</h3>
+                <div v-if='orderedVehicles.length === 0'>
+                    <h3 class='text-muted p-5'>Sie haben noch keine Bestellungen.</h3>
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
@@ -458,7 +405,7 @@ export default class VehicleImportPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .vehicle-import-page {
     position: relative;
     width: 100%;

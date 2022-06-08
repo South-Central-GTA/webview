@@ -1,15 +1,9 @@
 <template>
-    <div class="team-menu-mails-log">
+    <div class='team-menu-mails-log'>
         <h2>Mails Log</h2>
-        <input
-            @input="search()"
-            v-model="mailSearch"
-            type="text"
-            class="form-control-dark mb-2"
-            placeholder="Suche nach der E-Mail"
-        />
-        <div class="table-holder">
-            <table class="table table-striped table-hover">
+        <input @input='search()' v-model='mailSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach der E-Mail' />
+        <div class='table-holder'>
+            <table class='table table-striped table-hover'>
                 <thead>
                 <tr>
                     <th>Mail Addresse</th>
@@ -18,12 +12,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr
-                    v-for="mail in mails"
-                    v-bind:key="mail.id"
-                    class="entry"
-                    @click="openDetails(mail)"
-                >
+                <tr v-for='mail in mails' v-bind:key='mail.id' class='entry' @click='openDetails(mail)'>
                     <td>{{ mail.senderMailAddress }}</td>
                     <td>{{ mail.title }}</td>
                     <td>{{ getDate(mail.sendetAtJson) }}</td>
@@ -32,24 +21,20 @@
             </table>
         </div>
 
-        <div class="popup" :hidden="!isPopupOpen">
-            <div class="modal-header transparent-card">
-                <h5 class="modal-title">Mail lesen</h5>
-                <button
-                    type="button"
-                    class="btn-close-white icon-button float-end"
-                    @click="closeDetails()"
-                >
-                    <font-awesome-icon class="center" icon="times"/>
+        <div class='popup' :hidden='!isPopupOpen'>
+            <div class='modal-header transparent-card'>
+                <h5 class='modal-title'>Mail lesen</h5>
+                <button type='button' class='btn-close-white icon-button float-end' @click='closeDetails()'>
+                    <font-awesome-icon class='center' icon='times' />
                 </button>
             </div>
 
-            <div class="mail-context" ref="mailContextElement"></div>
+            <div class='mail-context' ref='mailContextElement'></div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";

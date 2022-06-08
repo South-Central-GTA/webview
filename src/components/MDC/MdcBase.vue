@@ -1,35 +1,27 @@
 <template>
-    <div class="mdc-base" :hidden="!active">
-        <div class="screen">
-            <mdc-header-bar ref="header"></mdc-header-bar>
+    <div class='mdc-base' :hidden='!active'>
+        <div class='screen'>
+            <mdc-header-bar ref='header'></mdc-header-bar>
 
-            <div class="login-screen" :hidden="!isLoading">
-                <h1 class="center text-white">{{ loadingText }}</h1>
+            <div class='login-screen' :hidden='!isLoading'>
+                <h1 class='center text-white'>{{ loadingText }}</h1>
             </div>
 
-            <span v-if="infoMessage.length !== 0" class="info-message">
+            <span v-if='infoMessage.length !== 0' class='info-message'>
         {{ infoMessage }}
       </span>
 
-            <div class="content-screen" :hidden="isLoading">
-                <mdc-pd-base
-                    ref="pdBase"
-                    v-on:show-notification="onShowNotification"
-                    :hidden="factionType !== 1"
-                ></mdc-pd-base>
-                <mdc-fd-base
-                    ref="fdBase"
-                    v-on:show-notification="onShowNotification"
-                    :hidden="factionType !== 2"
-                ></mdc-fd-base>
+            <div class='content-screen' :hidden='isLoading'>
+                <mdc-pd-base ref='pdBase' v-on:show-notification='onShowNotification' :hidden='factionType !== 1'></mdc-pd-base>
+                <mdc-fd-base ref='fdBase' v-on:show-notification='onShowNotification' :hidden='factionType !== 2'></mdc-fd-base>
             </div>
 
-            <mdc-footer-bar :hidden="isLoading" ref="footer"></mdc-footer-bar>
+            <mdc-footer-bar :hidden='isLoading' ref='footer'></mdc-footer-bar>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import MdcFooterBar from "@/components/MDC/General/MdcFooterBar.vue";
@@ -219,7 +211,7 @@ export default class MdcBase extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-base {
     z-index: 9999;
     position: absolute;

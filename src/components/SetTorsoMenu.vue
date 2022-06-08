@@ -1,36 +1,20 @@
 <template>
-    <div
-        class="set-torso-menu"
-        :hidden="!isVisible"
-        v-bind:class="{ enable: isVisible, disable: !isVisible }"
-    >
-        <div class="modal-dialog">
-            <div class="modal-content sc-dark text-white">
-                <div class="modal-header">
-                    <h5 class="modal-title">Torso aktualisieren</h5>
-                    <button
-                        type="button"
-                        class="text-white icon-button float-end"
-                        @click="close()"
-                    >
-                        <font-awesome-icon class="center" icon="times"/>
+    <div class='set-torso-menu' :hidden='!isVisible' v-bind:class='{ enable: isVisible, disable: !isVisible }'>
+        <div class='modal-dialog'>
+            <div class='modal-content sc-dark text-white'>
+                <div class='modal-header'>
+                    <h5 class='modal-title'>Torso aktualisieren</h5>
+                    <button type='button' class='text-white icon-button float-end' @click='close()'>
+                        <font-awesome-icon class='center' icon='times' />
                     </button>
                 </div>
 
-                <div class="modal-body">
-                    <clothing-menu
-                        ref="torsoMenu"
-                        title="Torso"
-                        v-on:update-clothing="updateTorso($event)"
-                    />
+                <div class='modal-body'>
+                    <clothing-menu ref='torsoMenu' title='Torso' v-on:update-clothing='updateTorso($event)' />
                 </div>
 
-                <div class="modal-footer justify-content-evenly row">
-                    <button
-                        type="button"
-                        class="btn btn-primary col-5"
-                        @click="onTorsoUpdateButtonClicked()"
-                    >
+                <div class='modal-footer justify-content-evenly row'>
+                    <button type='button' class='btn btn-primary col-5' @click='onTorsoUpdateButtonClicked()'>
                         Torso aktualisieren
                     </button>
                 </div>
@@ -39,7 +23,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Options, Vue} from "vue-class-component";
 import ClothingMenu from "@/components/CharCreator/Menus/ClothingMenu.vue";

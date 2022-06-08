@@ -1,97 +1,49 @@
 <template>
-    <div class="active-bank-accounts">
-        <button type="button" class="atm-close-button float-end" @click="back()">
-            <font-awesome-icon class="center" icon="caret-left"/>
+    <div class='active-bank-accounts'>
+        <button type='button' class='atm-close-button float-end' @click='back()'>
+            <font-awesome-icon class='center' icon='caret-left' />
         </button>
 
-        <withdraw-window
-            ref="withdrawWindow"
-            :hidden="currentTab !== 1"
-            v-on:back="resetTab()"
-            @withdraw="withdraw"
-        />
+        <withdraw-window ref='withdrawWindow' :hidden='currentTab !== 1' v-on:back='resetTab()' @withdraw='withdraw' />
 
-        <deposit-window
-            ref="depositWindow"
-            :hidden="currentTab !== 2"
-            v-on:back="resetTab()"
-            @deposit="deposit"
-        />
+        <deposit-window ref='depositWindow' :hidden='currentTab !== 2' v-on:back='resetTab()' @deposit='deposit' />
 
-        <money-transfer
-            ref="transferWindow"
-            :hidden="currentTab !== 3"
-            v-on:back="resetTab()"
-            @transfer="transfer"
-        />
+        <money-transfer ref='transferWindow' :hidden='currentTab !== 3' v-on:back='resetTab()' @transfer='transfer' />
 
-        <bank-history
-            ref="bankHistory"
-            :hidden="currentTab !== 4"
-            v-on:back="resetTab()"
-        />
+        <bank-history ref='bankHistory' :hidden='currentTab !== 4' v-on:back='resetTab()' />
 
-        <delete-bank-account
-            :hidden="currentTab !== 5"
-            v-on:back="resetTab()"
-            v-on:deletebankaccount="deleteBankAccount($event)"
-        />
+        <delete-bank-account :hidden='currentTab !== 5' v-on:back='resetTab()' v-on:deletebankaccount='deleteBankAccount($event)' />
 
-        <img class="atm-logo" src="@/assets/images/phone/maze-bank-logo.png"/>
+        <img class='atm-logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
-        <div class="account-stats">
+        <div class='account-stats'>
             <h2>{{ details }}</h2>
             <h1>${{ amount }}</h1>
         </div>
 
-        <div class="row bottom-center py-5">
-            <div class="col-6">
-                <button
-                    type="button"
-                    @click="openTab(1)"
-                    class="btn atm-menu-button"
-                    :disabled="!canWithdraw"
-                >
+        <div class='row bottom-center py-5'>
+            <div class='col-6'>
+                <button type='button' @click='openTab(1)' class='btn atm-menu-button' :disabled='!canWithdraw'>
                     Abheben
                 </button>
             </div>
-            <div class="col-6">
-                <button
-                    type="button"
-                    @click="openTab(2)"
-                    class="btn atm-menu-button"
-                    :disabled="!canDeposit"
-                >
+            <div class='col-6'>
+                <button type='button' @click='openTab(2)' class='btn atm-menu-button' :disabled='!canDeposit'>
                     Einzahlen
                 </button>
             </div>
-            <div class="col-6">
-                <button
-                    type="button"
-                    @click="openTab(3)"
-                    class="btn atm-menu-button"
-                    :disabled="!canTransfer"
-                >
+            <div class='col-6'>
+                <button type='button' @click='openTab(3)' class='btn atm-menu-button' :disabled='!canTransfer'>
                     Überweisungen
                 </button>
             </div>
-            <div class="col-6">
-                <button
-                    type="button"
-                    @click="openTab(4)"
-                    class="btn atm-menu-button"
-                    :disabled="!canSeeHistory"
-                >
+            <div class='col-6'>
+                <button type='button' @click='openTab(4)' class='btn atm-menu-button' :disabled='!canSeeHistory'>
                     Umsätze
                 </button>
             </div>
-            <div class="col-6">
-                <button
-                    type="button"
-                    @click="openTab(5)"
-                    class="btn atm-menu-button"
-                    :disabled="!canManage"
-                >
+            <div class='col-6'>
+                <button type='button' @click='openTab(5)' class='btn atm-menu-button' :disabled='!canManage'>
                     Konto schließen
                 </button>
             </div>
@@ -99,7 +51,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import DepositWindow from "./DepositWindow.vue";
 import WithdrawWindow from "./WithdrawWindow.vue";
@@ -264,7 +216,7 @@ export default class ActiveBankAccount extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .active-bank-accounts {
     position: absolute;
     top: 0;

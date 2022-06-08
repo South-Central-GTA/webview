@@ -1,43 +1,28 @@
 <template>
-    <div class="inventory">
-        <div class="row">
-            <div class="col-7">
-                <h5 class="name-text">{{ header }}</h5>
+    <div class='inventory'>
+        <div class='row'>
+            <div class='col-7'>
+                <h5 class='name-text'>{{ header }}</h5>
             </div>
-            <div class="col-5">
-                <p class="weight-text float-end m-0">
-                    Gewichtlimit: {{ currentWeight }} / {{ maxWeight }}
-                </p>
+            <div class='col-5'>
+                <p class='weight-text float-end m-0'>
+                    Gewichtlimit: {{ currentWeight }} / {{ maxWeight }} </p>
             </div>
-            <div class="col-12 m-0">
-                <input
-                    type="text"
-                    @focus="onFocus(true)"
-                    @blur="onFocus(false)"
-                    @input="search()"
-                    v-model="itemSearch"
-                    id="search-bar"
-                    class="form-control float-end m-1 text-white"
-                    placeholder="Suche nach bestimmten Item..."
-                />
+            <div class='col-12 m-0'>
+                <input type='text' @focus='onFocus(true)' @blur='onFocus(false)' @input='search()' v-model='itemSearch' id='search-bar' class='form-control float-end m-1 text-white' placeholder='Suche nach bestimmten Item...' />
             </div>
         </div>
 
-        <div class="items-block">
-            <div v-for="item in items" v-bind:key="item.slot">
-                <item-slot
-                    v-bind:item="item"
-                    @click.right="openContextMenu($event, item)"
-                    v-on:start-dragging="startDragging"
-                    v-on:stop-dragging="stopDragging"
-                />
+        <div class='items-block'>
+            <div v-for='item in items' v-bind:key='item.slot'>
+                <item-slot v-bind:item='item' @click.right='openContextMenu($event, item)' v-on:start-dragging='startDragging' v-on:stop-dragging='stopDragging' />
             </div>
-            <div class="drop-zone" v-if="dropZoneVisible" @mouseup="onMouseUp"></div>
+            <div class='drop-zone' v-if='dropZoneVisible' @mouseup='onMouseUp'></div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import ItemSlot from "@/components/Inventories/ItemSlot.vue";
 import {Options, Vue} from "vue-class-component";
 import {Prop, Watch} from "vue-property-decorator";
@@ -181,7 +166,7 @@ export default class Inventory extends Vue {
     }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .inventory {
     padding: 0;
 }

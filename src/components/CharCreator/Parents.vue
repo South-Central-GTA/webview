@@ -1,59 +1,31 @@
 <template>
-    <div class="parents">
+    <div class='parents'>
         <h4>Eltern</h4>
         <h5>Mütterlicher Stammbaum</h5>
-        <input
-            type="range"
-            class="form-range-dark"
-            min="0"
-            :max="parentList.length - 1"
-            v-model="blendOneIndex"
-            @input="onFatherChanged()"
-        />
+        <input type='range' class='form-range-dark' min='0' :max='parentList.length - 1' v-model='blendOneIndex' @input='onFatherChanged()' />
         <p>{{ parentList[blendOneIndex].name }}</p>
 
         <h5>Väterlicher Stammbaum</h5>
-        <input
-            type="range"
-            class="form-range-dark"
-            min="0"
-            :max="parentList.length - 1"
-            v-model="blendTwoIndex"
-            @input="onMotherChanged()"
-        />
+        <input type='range' class='form-range-dark' min='0' :max='parentList.length - 1' v-model='blendTwoIndex' @input='onMotherChanged()' />
         <p>{{ parentList[blendTwoIndex].name }}</p>
 
         <h5>Ähnlichkeit</h5>
-        <input
-            type="range"
-            class="form-range-dark"
-            min="0"
-            max="100"
-            v-model="similarity"
-            @input="onsimilarityChanged()"
-        />
+        <input type='range' class='form-range-dark' min='0' max='100' v-model='similarity' @input='onsimilarityChanged()' />
         <div>
-            <p class="float-start">Väterlicher Stammbaum</p>
-            <p class="float-end">Mütterlicher Stammbaum</p>
+            <p class='float-start'>Väterlicher Stammbaum</p>
+            <p class='float-end'>Mütterlicher Stammbaum</p>
         </div>
 
         <h5>Haut Ähnlichkeit</h5>
-        <input
-            type="range"
-            class="form-range-dark"
-            min="0"
-            max="100"
-            v-model="skinSimilarity"
-            @input="onSkinsimilarityChanged()"
-        />
+        <input type='range' class='form-range-dark' min='0' max='100' v-model='skinSimilarity' @input='onSkinsimilarityChanged()' />
         <div>
-            <p class="float-start">Väterlicher Stammbaum</p>
-            <p class="float-end">Mütterlicher Stammbaum</p>
+            <p class='float-start'>Väterlicher Stammbaum</p>
+            <p class='float-end'>Mütterlicher Stammbaum</p>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {ParentsInterface} from "@/scripts/interfaces/character/parents.interface";
 

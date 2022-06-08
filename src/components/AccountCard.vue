@@ -1,26 +1,25 @@
 <template>
-    <div class="account-card">
-        <div class="transparent-card text-white">
-            <div class="d-flex">
-                <div class="p-2 flex-grow-1">
+    <div class='account-card'>
+        <div class='transparent-card text-white'>
+            <div class='d-flex'>
+                <div class='p-2 flex-grow-1'>
                     <h3>{{ name }}</h3>
                     <h6>
-                        South Central Points:
-                        <span class="badge bg-dark" style="color: white">{{
-                                characterPoints
-                            }}</span>
+                        South Central Points: <span class='badge bg-dark' style='color: white'>{{
+                            characterPoints
+                                                                                               }}</span>
                     </h6>
                 </div>
 
                 <div>
-                    <img :src="avatarUrl" class="avatar"/>
+                    <img :src='avatarUrl' class='avatar' />
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import account from "@/scripts/services/account.service";
 import {Options, Vue} from "vue-class-component";
 import {AccountInterface} from "@/scripts/interfaces/account.interface";
@@ -59,7 +58,7 @@ export default class AccountCard extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .account-card {
     margin: 1vw;
     text-align: right;

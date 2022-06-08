@@ -1,18 +1,14 @@
 ﻿<template>
-    <div class="context-menu" :hidden="!active">
-        <div ref="actionMenu" class="actions-box">
-            <div
-                class="action"
-                v-for="(action, index) in contextMenu.actions"
-                v-bind:key="index"
-            >
-                <a @click.prevent="chooseAction(action)">{{ action.title }}</a>
+    <div class='context-menu' :hidden='!active'>
+        <div ref='actionMenu' class='actions-box'>
+            <div class='action' v-for='(action, index) in contextMenu.actions' v-bind:key='index'>
+                <a @click.prevent='chooseAction(action)'>{{ action.title }}</a>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
@@ -98,7 +94,7 @@ export default class ContextMenu extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 $pos-x: var(--pos-x);
 $pos-y: var(--pos-y);
 

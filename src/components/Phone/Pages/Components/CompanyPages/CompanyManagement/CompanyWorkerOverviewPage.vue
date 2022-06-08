@@ -1,43 +1,33 @@
 <template>
-    <div class="company-worker-overview">
-        <div class="phone-header">
-            <button type="button" class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='company-worker-overview'>
+        <div class='phone-header'>
+            <button type='button' class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Mitarbeiter</span>
             </button>
         </div>
 
-        <company-worker-edit
-            ref="workerEdit"
-            :hidden="!isEditingWindowOpen"
-            v-on:back="closeEditWorker()"
-        />
+        <company-worker-edit ref='workerEdit' :hidden='!isEditingWindowOpen' v-on:back='closeEditWorker()' />
 
-        <div class="workers-block" v-if="members.length !== 0">
-            <button
-                v-for="member in members"
-                v-bind:key="member.characterName"
-                class="workers-card"
-                :disabled="member.owner && !isOwner"
-                @click="openEditWorker(member)"
-            >
+        <div class='workers-block' v-if='members.length !== 0'>
+            <button v-for='member in members' v-bind:key='member.characterName' class='workers-card' :disabled='member.owner && !isOwner' @click='openEditWorker(member)'>
                 <h1>
                     {{
                         member.characterName
-                    }}<span class="salary-text">$ {{ member.salary }}</span>
+                    }}<span class='salary-text'>$ {{ member.salary }}</span>
                 </h1>
             </button>
         </div>
 
-        <div class="company-stats">
-            <hr/>
+        <div class='company-stats'>
+            <hr />
             <h2>{{ members.length }} Mitarbeiter</h2>
-            <hr/>
+            <hr />
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import CompanyWorkerEdit from "./CompanyWorkerEditPage.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
@@ -93,7 +83,7 @@ export default class CompanyWorkerOverviewPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .company-worker-overview {
     overflow: hidden;
     position: absolute;

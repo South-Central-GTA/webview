@@ -1,61 +1,45 @@
 <template>
-    <div class="internet-app programm">
-        <div class="programm">
-            <div class="topbar-internet">
-                <div class="row p-2" v-if="pageId !== 0">
-                    <div class="col-md-1">
-                        <button
-                            type="button"
-                            class="btn w-100 btn-secondary"
-                            @click="reset()"
-                        >
+    <div class='internet-app programm'>
+        <div class='programm'>
+            <div class='topbar-internet'>
+                <div class='row p-2' v-if='pageId !== 0'>
+                    <div class='col-md-1'>
+                        <button type='button' class='btn w-100 btn-secondary' @click='reset()'>
                             Home
                         </button>
                     </div>
-                    <div class="col-md-11">
-                        <input
-                            type="text"
-                            class="form-control"
-                            v-model="internetAddress"
-                            readonly
-                            disabled
-                        />
+                    <div class='col-md-11'>
+                        <input type='text' class='form-control' v-model='internetAddress' readonly disabled />
                     </div>
                 </div>
-                <div class="row p-2" v-else>
-                    <div class="col-md-12">
-                        <input
-                            type="text"
-                            class="form-control"
-                            v-model="internetAddress"
-                            readonly
-                            disabled
-                        />
+                <div class='row p-2' v-else>
+                    <div class='col-md-12'>
+                        <input type='text' class='form-control' v-model='internetAddress' readonly disabled />
                     </div>
                 </div>
             </div>
-            <div class="app-group" v-if="pageId === 0">
-                <div class="row">
-                    <button class="app vehicle-dealership" @click="openPageId(1)">
-                        <font-awesome-icon class="center" icon="car"/>
+            <div class='app-group' v-if='pageId === 0'>
+                <div class='row'>
+                    <button class='app vehicle-dealership' @click='openPageId(1)'>
+                        <font-awesome-icon class='center' icon='car' />
                     </button>
-                    <button class="app clear"></button>
-                    <button class="app clear"></button>
-                    <button class="app clear"></button>
-                    <button class="app clear"></button>
-                    <button class="app clear"></button>
-                    <button class="app clear"></button>
-                    <button class="app clear"></button>
-                    <button class="app clear"></button>
+                    <button class='app clear'></button>
+                    <button class='app clear'></button>
+                    <button class='app clear'></button>
+                    <button class='app clear'></button>
+                    <button class='app clear'></button>
+                    <button class='app clear'></button>
+                    <button class='app clear'></button>
+                    <button class='app clear'></button>
                 </div>
             </div>
 
-            <vehicle-import-page ref="vehicleImportPage" :hidden="pageId !== 1"/>
+            <vehicle-import-page ref='vehicleImportPage' :hidden='pageId !== 1' />
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
@@ -108,7 +92,7 @@ export default class InternetApp extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .internet-app {
     width: 100%;
     height: 100%;

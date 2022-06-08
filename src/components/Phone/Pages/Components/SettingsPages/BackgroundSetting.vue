@@ -1,32 +1,24 @@
 <template>
-    <div class="background-setting">
-        <div class="phone-header">
-            <button type="button" class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='background-setting'>
+        <div class='phone-header'>
+            <button type='button' class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Hintergrundbild</span>
             </button>
         </div>
 
-        <div class="thumbnail-block">
-            <div v-for="index in maxBackgrounds" :key="index">
-                <button
-                    type="button"
-                    class="thumbnail"
-                    @click="selectBackground(index - 1)"
-                >
-                    <font-awesome-icon
-                        v-if="currentBackgroundId === index - 1"
-                        icon="hand-pointer"
-                        class="selected-icon"
-                    />
-                    <img :src="getImage(index - 1)" v-bind:alt="index"/>
+        <div class='thumbnail-block'>
+            <div v-for='index in maxBackgrounds' :key='index'>
+                <button type='button' class='thumbnail' @click='selectBackground(index - 1)'>
+                    <font-awesome-icon v-if='currentBackgroundId === index - 1' icon='hand-pointer' class='selected-icon' />
+                    <img :src='getImage(index - 1)' v-bind:alt='index' />
                 </button>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 
@@ -54,7 +46,7 @@ export default class BackgroundSetting extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .background-setting {
     overflow: hidden;
     position: absolute;

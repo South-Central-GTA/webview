@@ -1,37 +1,23 @@
 <template>
-    <div class="mdc-files">
-        <div class="content row m-4">
-            <div class="col">
-                <mdc-file
-                    ref="file"
-                    :hidden="!isFileOpen"
-                    v-on:show-notification="onShowNotification"
-                    v-on:close="onCloseFile()"
-                ></mdc-file>
+    <div class='mdc-files'>
+        <div class='content row m-4'>
+            <div class='col'>
+                <mdc-file ref='file' :hidden='!isFileOpen' v-on:show-notification='onShowNotification' v-on:close='onCloseFile()'></mdc-file>
 
-                <div
-                    class="background"
-                    style="z-index: 99999 !important"
-                    v-if="showDeleteDialog"
-                >
-                    <div class="center">
-                        <div class="modal-dialog">
-                            <div
-                                class="modal-content bg-white overflow-hidden"
-                                style="border-radius: 0 !important"
-                            >
-                                <div class="p-4">
-                                    <h5 class="modal-title">Datei löschen?</h5>
-                                    <span
-                                    >Sind Sie sich sicher das diese Datei gelöscht werden
-                    soll?</span
-                                    >
+                <div class='background' style='z-index: 99999 !important' v-if='showDeleteDialog'>
+                    <div class='center'>
+                        <div class='modal-dialog'>
+                            <div class='modal-content bg-white overflow-hidden' style='border-radius: 0 !important'>
+                                <div class='p-4'>
+                                    <h5 class='modal-title'>Datei löschen?</h5>
+                                    <span>Sind Sie sich sicher das diese Datei gelöscht werden 
+                                        soll?</span>
                                 </div>
-                                <div class="py-2 justify-content-evenly row">
-                                    <button type="button" class="col-5" @click="deleteFile()">
+                                <div class='py-2 justify-content-evenly row'>
+                                    <button type='button' class='col-5' @click='deleteFile()'>
                                         Ja
                                     </button>
-                                    <button type="button" class="col-5" @click="closeDialog()">
+                                    <button type='button' class='col-5' @click='closeDialog()'>
                                         Nein
                                     </button>
                                 </div>
@@ -40,57 +26,28 @@
                     </div>
                 </div>
 
-                <div
-                    class="background"
-                    style="z-index: 99999 !important"
-                    v-if="showSetPermissionDialog"
-                >
-                    <div class="center">
-                        <div class="modal-dialog">
-                            <div
-                                class="modal-content bg-white overflow-hidden"
-                                style="border-radius: 0 !important"
-                            >
-                                <div class="p-4">
-                                    <h5 class="modal-title">Zugriffseinschränkung</h5>
-                                    <span
-                                    >Welcher Rang soll Lesezugriff auf diesen Ordner
-                    haben?</span
-                                    >
-                                    <select
-                                        class="form-select"
-                                        @change="onChangeReadPermission($event)"
-                                    >
-                                        <option
-                                            v-for="groupRank in groupRanks"
-                                            v-bind:key="groupRank.level"
-                                            :value="groupRank.level"
-                                            :selected="readGroupRankLevel === groupRank.level"
-                                        >
+                <div class='background' style='z-index: 99999 !important' v-if='showSetPermissionDialog'>
+                    <div class='center'>
+                        <div class='modal-dialog'>
+                            <div class='modal-content bg-white overflow-hidden' style='border-radius: 0 !important'>
+                                <div class='p-4'>
+                                    <h5 class='modal-title'>Zugriffseinschränkung</h5>
+                                    <span>Welcher Rang soll Lesezugriff auf diesen Ordner haben?</span>
+                                    <select class='form-select' @change='onChangeReadPermission($event)'>
+                                        <option v-for='groupRank in groupRanks' v-bind:key='groupRank.level' :value='groupRank.level' :selected='readGroupRankLevel === groupRank.level'>
                                             {{ groupRank.name }}
                                         </option>
                                     </select>
 
-                                    <span class="pt-4"
-                                    >Welcher Rang soll in dem Ordner was bearbeiten
-                    dürfen?</span
-                                    >
-                                    <select
-                                        class="form-select"
-                                        @change="onChangeWritePermission($event)"
-                                    >
-                                        <option
-                                            v-for="groupRank in groupRanks"
-                                            v-bind:key="groupRank.level"
-                                            :value="groupRank.level"
-                                            :selected="writeGroupRankLevel === groupRank.level"
-                                        >
-                                            {{ groupRank.name }}
-                                        </option>
-                                    </select>
+                                    <span class='pt-4'>Welcher Rang soll in dem Ordner was bearbeiten
+                    dürfen?</span> <select class='form-select' @change='onChangeWritePermission($event)'>
+                                    <option v-for='groupRank in groupRanks' v-bind:key='groupRank.level' :value='groupRank.level' :selected='writeGroupRankLevel === groupRank.level'>
+                                        {{ groupRank.name }}
+                                    </option>
+                                </select>
                                 </div>
-                                <div class="py-2 justify-content-evenly row">
-                                    <button type="button" class="col-5" @click="closeDialog()">
+                                <div class='py-2 justify-content-evenly row'>
+                                    <button type='button' class='col-5' @click='closeDialog()'>
                                         Okay
                                     </button>
                                 </div>
@@ -99,73 +56,49 @@
                     </div>
                 </div>
 
-                <div v-if="!isFileOpen">
-                    <button
-                        class="icon-button"
-                        @click="backToRoot()"
-                        v-if="directoryId !== null"
-                    >
-                        <font-awesome-icon icon="chevron-left"/>
-                        <span class="px-2">{{ directoryName }}</span>
+                <div v-if='!isFileOpen'>
+                    <button class='icon-button' @click='backToRoot()' v-if='directoryId !== null'>
+                        <font-awesome-icon icon='chevron-left' />
+                        <span class='px-2'>{{ directoryName }}</span>
                     </button>
 
-                    <div class="table-fix-head" ref="mdcFiles">
-                        <table class="table table-striped table-hover">
+                    <div class='table-fix-head' ref='mdcFiles'>
+                        <table class='table table-striped table-hover'>
                             <thead>
                             <tr>
                                 <th></th>
-                                <th @click="orderByAlphabet()">Name</th>
-                                <th @click="orderByOwner()">Eigentümer</th>
-                                <th @click="orderByLastChange()">Letzte Änderungen</th>
+                                <th @click='orderByAlphabet()'>Name</th>
+                                <th @click='orderByOwner()'>Eigentümer</th>
+                                <th @click='orderByLastChange()'>Letzte Änderungen</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="file in files" v-bind:key="file.id" class="entry">
+                            <tr v-for='file in files' v-bind:key='file.id' class='entry'>
                                 <td>
-                                    <font-awesome-icon :icon="getIcon(file.isDirectory)"/>
+                                    <font-awesome-icon :icon='getIcon(file.isDirectory)' />
                                 </td>
-                                <td
-                                    v-if="editFileNameId !== file.id"
-                                    @click="clickEntry(file)"
-                                >
+                                <td v-if='editFileNameId !== file.id' @click='clickEntry(file)'>
                                     {{ file.title }}
                                 </td>
-                                <td v-if="editFileNameId === file.id">
-                                    <input
-                                        v-model="file.title"
-                                        v-on:keyup.enter="requestFileNameChange(file)"
-                                        maxlength="50"
-                                    />
+                                <td v-if='editFileNameId === file.id'>
+                                    <input v-model='file.title' v-on:keyup.enter='requestFileNameChange(file)' maxlength='50' />
                                 </td>
                                 <td>{{ file.creatorCharacterName }}</td>
-                                <td class="date">
-                                    {{ getDate(file.lastEditAtJson) }} -
-                                    <i>{{ file.lastEditCharacterName }}</i>
+                                <td class='date'>
+                                    {{ getDate(file.lastEditAtJson) }} - <i>{{ file.lastEditCharacterName }}</i>
                                 </td>
-                                <td class="pointer-event">
-                                    <button
-                                        class="icon-button"
-                                        @click="editFileName(file)"
-                                        v-if="
+                                <td class='pointer-event'>
+                                    <button class='icon-button' @click='editFileName(file)' v-if='
                         file.creatorCharacterId === characterId || isOperator
-                      "
-                                    >
-                                        <font-awesome-icon icon="pen"/>
+                      '>
+                                        <font-awesome-icon icon='pen' />
                                     </button>
-                                    <button
-                                        class="icon-button"
-                                        @click="requestDeleteFile(file)"
-                                        v-if="isOperator"
-                                    >
-                                        <font-awesome-icon icon="trash"/>
+                                    <button class='icon-button' @click='requestDeleteFile(file)' v-if='isOperator'>
+                                        <font-awesome-icon icon='trash' />
                                     </button>
-                                    <button
-                                        class="icon-button"
-                                        @click="requestSetAccessPermission(file)"
-                                        v-if="isOwner && file.isDirectory"
-                                    >
-                                        <font-awesome-icon icon="universal-access"/>
+                                    <button class='icon-button' @click='requestSetAccessPermission(file)' v-if='isOwner && file.isDirectory'>
+                                        <font-awesome-icon icon='universal-access' />
                                     </button>
                                 </td>
                             </tr>
@@ -173,19 +106,11 @@
                         </table>
                     </div>
 
-                    <div class="pb-5 position-absolute bottom-0">
-                        <button
-                            type="button"
-                            v-if="directoryId === null"
-                            @click="createDirectory()"
-                        >
+                    <div class='pb-5 position-absolute bottom-0'>
+                        <button type='button' v-if='directoryId === null' @click='createDirectory()'>
                             Ordner erstellen
                         </button>
-                        <button
-                            type="button"
-                            v-if="directoryId !== null"
-                            @click="createFile()"
-                        >
+                        <button type='button' v-if='directoryId !== null' @click='createFile()'>
                             Textdatei erstellen
                         </button>
                     </div>
@@ -195,7 +120,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import GroupService from "@/scripts/services/group.service";
@@ -203,7 +128,6 @@ import MdcFile from "@/components/MDC/General/MdcFile.vue";
 import {Ref} from "vue-property-decorator";
 import MdcService from "@/scripts/services/mdc.service";
 import character from "@/scripts/services/character.service";
-import {eventBusService} from "@/scripts/services/event-bus.service";
 import {GroupRankInterface} from "@/scripts/interfaces/group/group-rank.interface";
 import {FileInterface} from "@/scripts/interfaces/filesystem/file.interface";
 import {FileSystemRankSetup} from "@/scripts/interfaces/filesystem/file-system-rank-setup";
@@ -355,12 +279,11 @@ export default class MdcFiles extends Vue {
     }
 
     private requestSetAccessPermission(file: FileInterface): void {
-        eventBusService
-            .sendEventWithResponse<FileSystemRankSetup>(
-                "filesystem:getranksetup",
-                this.groupId,
-                file.id
-            )
+        alt.emitServerWithResponse<FileSystemRankSetup>(
+            "filesystem:getranksetup",
+            this.groupId,
+            file.id
+        )
             .then((setup: FileSystemRankSetup) => {
                 this.showSetPermissionDialog = true;
                 this.fileToEdit = file;
@@ -483,7 +406,7 @@ export default class MdcFiles extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-files {
     background-color: #cecece;
     height: 100%;

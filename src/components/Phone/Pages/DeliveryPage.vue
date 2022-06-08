@@ -1,69 +1,38 @@
 <template>
-    <div class="delivery-page">
-        <div class="loading" v-if="isLoading && !loadedOnce">
-            <font-awesome-icon class="order-products-icon" icon="shipping-fast"/>
+    <div class='delivery-page'>
+        <div class='loading' v-if='isLoading && !loadedOnce'>
+            <font-awesome-icon class='order-products-icon' icon='shipping-fast' />
             <h1 v-if="errorMessage == ''">{{ loadingText }}</h1>
             <h2 v-else>{{ errorMessage }}</h2>
         </div>
 
-        <order-products-page
-            ref="orderProducts"
-            :hidden="currentTab != 1"
-            v-on:back="resetTab()"
-        />
-        <open-deliveries-page
-            ref="openDeliveries"
-            :hidden="currentTab != 2"
-            v-on:back="resetTab()"
-        />
-        <my-deliveries-page
-            ref="myDeliveries"
-            :hidden="currentTab != 3"
-            v-on:back="resetTab()"
-        />
-        <my-current-delivery-page
-            ref="myCurrentDelivery"
-            :hidden="currentTab != 4"
-            v-on:back="resetTab()"
-        />
+        <order-products-page ref='orderProducts' :hidden='currentTab != 1' v-on:back='resetTab()' />
+        <open-deliveries-page ref='openDeliveries' :hidden='currentTab != 2' v-on:back='resetTab()' />
+        <my-deliveries-page ref='myDeliveries' :hidden='currentTab != 3' v-on:back='resetTab()' />
+        <my-current-delivery-page ref='myCurrentDelivery' :hidden='currentTab != 4' v-on:back='resetTab()' />
 
-        <div class="header-image">
-            <h1>Los Santos<br/>Shipping Service</h1>
+        <div class='header-image'>
+            <h1>Los Santos<br />Shipping Service</h1>
         </div>
-        <div class="phone-delivery-button-group">
-            <button
-                type="button"
-                class="btn order-products-button"
-                @click="openTab(1)"
-            >
-                <font-awesome-icon class="order-products-icon" icon="shipping-fast"/>
+        <div class='phone-delivery-button-group'>
+            <button type='button' class='btn order-products-button' @click='openTab(1)'>
+                <font-awesome-icon class='order-products-icon' icon='shipping-fast' />
                 <h1>Produkte bestellen</h1>
             </button>
-            <button type="button" class="btn" @click="openTab(3)">
+            <button type='button' class='btn' @click='openTab(3)'>
                 Meine Bestellungen
             </button>
-            <button
-                type="button"
-                class="btn"
-                @click="openTab(2)"
-                v-if="!hasOpenDelivery"
-                :disabled="!canSeeOpenDeliveries"
-            >
+            <button type='button' class='btn' @click='openTab(2)' v-if='!hasOpenDelivery' :disabled='!canSeeOpenDeliveries'>
                 Offene Aufträge
             </button>
-            <button
-                type="button"
-                class="btn"
-                @click="openTab(4)"
-                v-if="hasOpenDelivery"
-            >
+            <button type='button' class='btn' @click='openTab(4)' v-if='hasOpenDelivery'>
                 Mein Auftrag
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import group from "@/scripts/services/group.service";
 import OrderProductsPage from "@/components/Phone/Pages/Components/DeliveryPages/OrderProductsPage.vue";
@@ -234,7 +203,7 @@ export default class DeliveryPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .delivery-page {
     height: 100%;
     text-align: center;

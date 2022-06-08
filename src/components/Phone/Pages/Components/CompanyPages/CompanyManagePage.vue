@@ -1,28 +1,20 @@
 <template>
-    <div class="company-manage">
-        <div class="phone-header">
-            <button class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='company-manage'>
+        <div class='phone-header'>
+            <button class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Mein Unternehmen</span>
             </button>
         </div>
 
-        <company-worker-overview
-            ref="companyWorkerOverview"
-            :hidden="currentTab !== 1"
-            v-on:back="resetTab()"
-        />
-        <company-settings
-            ref="companySettings"
-            :hidden="currentTab !== 2"
-            v-on:back="resetTab()"
-        />
+        <company-worker-overview ref='companyWorkerOverview' :hidden='currentTab !== 1' v-on:back='resetTab()' />
+        <company-settings ref='companySettings' :hidden='currentTab !== 2' v-on:back='resetTab()' />
 
-        <img class="gov-logo" src="@/assets/images/phone/gov-seal.png"/>
+        <img class='gov-logo' src='@/assets/images/phone/gov-seal.png' />
 
-        <div class="company-stats">
+        <div class='company-stats'>
             <h1>{{ companyName }}</h1>
-            <div v-if="canManageMembers">
+            <div v-if='canManageMembers'>
                 <h3>Unternehmenskonto:</h3>
                 <h2>${{ bankAccountAmout }}</h2>
             </div>
@@ -30,21 +22,16 @@
             <h2>{{ officeHouseText }}</h2>
         </div>
 
-        <div class="phone-gov-button-group">
-            <button
-                type="button"
-                class="btn"
-                @click="openTab(1)"
-                :disabled="!canManageMembers"
-            >
+        <div class='phone-gov-button-group'>
+            <button type='button' class='btn' @click='openTab(1)' :disabled='!canManageMembers'>
                 Mitarbeiter
             </button>
-            <button type="button" class="btn" @click="openTab(2)">Verwalten</button>
+            <button type='button' class='btn' @click='openTab(2)'>Verwalten</button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import character from "@/scripts/services/character.service";
 import banking from "@/scripts/services/banking.service";
 import houseing from "@/scripts/services/house.service";
@@ -203,7 +190,7 @@ export default class CompanyManagePage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .company-manage {
     overflow: hidden;
     position: absolute;

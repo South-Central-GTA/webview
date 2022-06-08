@@ -1,27 +1,22 @@
 <template>
-    <div class="delete-bank-account">
-        <button type="button" class="atm-close-button float-end" @click="back()">
-            <font-awesome-icon class="center" icon="caret-left"/>
+    <div class='delete-bank-account'>
+        <button type='button' class='atm-close-button float-end' @click='back()'>
+            <font-awesome-icon class='center' icon='caret-left' />
         </button>
 
-        <img class="atm-logo" src="@/assets/images/phone/maze-bank-logo.png"/>
+        <img class='atm-logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
-        <div class="bottom-center py-5">
+        <div class='bottom-center py-5'>
             <p>
-                Sind Sie sicher, dass Sie ihr Bankkonto unwiederruflich löschen wollen?
-            </p>
-            <button
-                type="button"
-                class="btn w-100 atm-menu-button"
-                @click="deleteBankAccount()"
-            >
+                Sind Sie sicher, dass Sie ihr Bankkonto unwiederruflich löschen wollen? </p>
+            <button type='button' class='btn w-100 atm-menu-button' @click='deleteBankAccount()'>
                 Ja, Konto unwiederruflich löschen
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 
 export default class DeleteBankAccount extends Vue {

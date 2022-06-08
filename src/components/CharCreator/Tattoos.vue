@@ -1,49 +1,23 @@
 <template>
-    <div class="tattoos">
+    <div class='tattoos'>
         <h4>Tattoos</h4>
-        <div class="row">
-            <tattoo-menu
-                ref="hatMenu"
-                title="Kopf"
-                v-on:update-tattoo="updateHead($event)"
-            />
-            <tattoo-menu
-                ref="torsoMenu"
-                title="Torso"
-                v-on:update-tattoo="updateTorso($event)"
-            />
-            <tattoo-menu
-                ref="leftArmMenu"
-                title="Linker Arm"
-                v-on:update-tattoo="updateLeftArm($event)"
-            />
-            <tattoo-menu
-                ref="rightArmMenu"
-                title="Rechter Arm"
-                v-on:update-tattoo="updateRightArm($event)"
-            />
-            <tattoo-menu
-                ref="leftLegMenu"
-                title="Linkes Bein"
-                v-on:update-tattoo="updateLeftLeg($event)"
-            />
-            <tattoo-menu
-                ref="rightLegMenu"
-                title="Rechtes Bein"
-                v-on:update-tattoo="updateRightLeg($event)"
-            />
+        <div class='row'>
+            <tattoo-menu ref='hatMenu' title='Kopf' v-on:update-tattoo='updateHead($event)' />
+            <tattoo-menu ref='torsoMenu' title='Torso' v-on:update-tattoo='updateTorso($event)' />
+            <tattoo-menu ref='leftArmMenu' title='Linker Arm' v-on:update-tattoo='updateLeftArm($event)' />
+            <tattoo-menu ref='rightArmMenu' title='Rechter Arm' v-on:update-tattoo='updateRightArm($event)' />
+            <tattoo-menu ref='leftLegMenu' title='Linkes Bein' v-on:update-tattoo='updateLeftLeg($event)' />
+            <tattoo-menu ref='rightLegMenu' title='Rechtes Bein' v-on:update-tattoo='updateRightLeg($event)' />
         </div>
 
-        <div class="alert alert-info">
+        <div class='alert alert-info'>
             <p>
-                Zahlreiche Kopf-Tattoos können perfekt mit Haaren kombiniert werden,
-                dies ist GTA interne Logik das haben wir uns nicht ausgedacht.
-            </p>
+                Zahlreiche Kopf-Tattoos können perfekt mit Haaren kombiniert werden, dies ist GTA interne Logik das haben wir uns nicht ausgedacht. </p>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import TattooMenu from "@/components/CharCreator/Menus/TattooMenu.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";

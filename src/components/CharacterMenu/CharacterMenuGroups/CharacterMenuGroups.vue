@@ -1,122 +1,77 @@
 <template>
-    <div class="character-menu-groups">
+    <div class='character-menu-groups'>
         <h2>Gruppen</h2>
 
-        <div :hidden="groupSelected">
-            <div class="groups-block">
-                <div v-for="group in groups" v-bind:key="group.id">
-                    <button
-                        type="button"
-                        class="group-button btn btn-primary w-100"
-                        @click="selectGroup(group)"
-                    >
+        <div :hidden='groupSelected'>
+            <div class='groups-block'>
+                <div v-for='group in groups' v-bind:key='group.id'>
+                    <button type='button' class='group-button btn btn-primary w-100' @click='selectGroup(group)'>
                         {{ group.name }} #{{ group.id }}
                     </button>
                 </div>
-                <div v-if="groups.length === 0">
+                <div v-if='groups.length === 0'>
                     Dein Charakter ist in keiner Gruppe.
                 </div>
             </div>
         </div>
-        <div :hidden="!groupSelected">
-            <leave-group-page
-                ref="leaveGroupPage"
-                :hidden="pageIndex !== 0"
-                v-on:back="resetPage()"
-                v-on:leave="leaveGroup()"
-            />
+        <div :hidden='!groupSelected'>
+            <leave-group-page ref='leaveGroupPage' :hidden='pageIndex !== 0' v-on:back='resetPage()' v-on:leave='leaveGroup()' />
 
-            <group-ranks-settings-page
-                ref="groupRanksSettingsPage"
-                :hidden="pageIndex !== 1"
-                v-on:back="resetPage()"
-            />
+            <group-ranks-settings-page ref='groupRanksSettingsPage' :hidden='pageIndex !== 1' v-on:back='resetPage()' />
 
-            <close-group-page
-                ref="closeGroupPage"
-                :hidden="pageIndex !== 2"
-                v-on:back="resetPage()"
-                v-on:delete="deleteGroup()"
-            />
+            <close-group-page ref='closeGroupPage' :hidden='pageIndex !== 2' v-on:back='resetPage()' v-on:delete='deleteGroup()' />
 
-            <div :hidden="pageIndex !== -1">
-                <button class="icon-button text-white" @click="back()">
-                    <font-awesome-icon class="mx-2" icon="chevron-left"/>
-                    <span class="">{{ groupName }}</span>
+            <div :hidden='pageIndex !== -1'>
+                <button class='icon-button text-white' @click='back()'>
+                    <font-awesome-icon class='mx-2' icon='chevron-left' />
+                    <span class=''>{{ groupName }}</span>
                 </button>
 
-                <div class="pt-1">
-                    <div class="section-box mt-2">
+                <div class='pt-1'>
+                    <div class='section-box mt-2'>
                         <h6>Online Spieler</h6>
                         <p>{{ groupOnlinePlayersNames.join(", ") }}</p>
                     </div>
 
-                    <div class="section-box mt-2" v-if="isOwner">
+                    <div class='section-box mt-2' v-if='isOwner'>
                         <h6>Verwaltungs Optionen</h6>
-                        <button
-                            type="button"
-                            class="btn btn-secondary w-100"
-                            @click="openPage(1)"
-                        >
+                        <button type='button' class='btn btn-secondary w-100' @click='openPage(1)'>
                             Ränge verwalten
                         </button>
                     </div>
 
-                    <div class="section-box mt-2" v-if="isOwner">
-                        <div class="row mb-2">
-                            <div class="col-4">
+                    <div class='section-box mt-2' v-if='isOwner'>
+                        <div class='row mb-2'>
+                            <div class='col-4'>
                                 <h6>Gruppen Inventare Verwaltung</h6>
                             </div>
-                            <div class="col-8">
-                                <input
-                                    type="text"
-                                    @input="search()"
-                                    v-model="groupMemberSearch"
-                                    id="search-bar"
-                                    class="form-control-dark w-100"
-                                    placeholder="Suche nach bestimmten Charakter"
-                                />
+                            <div class='col-8'>
+                                <input type='text' @input='search()' v-model='groupMemberSearch' id='search-bar' class='form-control-dark w-100' placeholder='Suche nach bestimmten Charakter' />
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div
-                                class="col-3"
-                                v-for="member in groupMembers"
-                                v-bind:key="member.characterId"
-                            >
-                                <button
-                                    type="button"
-                                    class="btn btn-secondary w-100 mb-1"
-                                    @click="openMemberInventory(member.characterId)"
-                                >
+                        <div class='row'>
+                            <div class='col-3' v-for='member in groupMembers' v-bind:key='member.characterId'>
+                                <button type='button' class='btn btn-secondary w-100 mb-1' @click='openMemberInventory(member.characterId)'>
                                     {{ member.characterName }}
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="section-box mt-2" :hidden="!hasVehicleDealer">
-                        <vehicle-dealer-menu ref="vehicleDealerMenu"/>
+                    <div class='section-box mt-2' :hidden='!hasVehicleDealer'>
+                        <vehicle-dealer-menu ref='vehicleDealerMenu' />
                     </div>
 
-                    <div class="red-section-box text-danger mt-4" v-if="!isOwner">
+                    <div class='red-section-box text-danger mt-4' v-if='!isOwner'>
                         <h6>Gefährlicher Bereich</h6>
-                        <button
-                            type="button"
-                            class="btn btn-danger w-100"
-                            @click="openPage(0)"
-                        >
+                        <button type='button' class='btn btn-danger w-100' @click='openPage(0)'>
                             Gruppe verlassen
                         </button>
                     </div>
-                    <div class="red-section-box text-danger mt-4" v-else>
+                    <div class='red-section-box text-danger mt-4' v-else>
                         <h6>Gefährlicher Bereich</h6>
-                        <button
-                            type="button"
-                            class="btn btn-danger w-100"
-                            @click="openPage(2)"
-                        >
+                        <button type='button' class='btn btn-danger w-100' @click='openPage(2)'>
                             Gruppe löschen
                         </button>
                     </div>
@@ -126,7 +81,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import group from "@/scripts/services/group.service";
 import character from "@/scripts/services/character.service";

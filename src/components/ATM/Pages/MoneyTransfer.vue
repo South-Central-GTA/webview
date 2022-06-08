@@ -1,62 +1,35 @@
 <template>
-    <div class="money-transfer">
-        <button type="button" class="atm-close-button float-end" @click="back()">
-            <font-awesome-icon class="center" icon="caret-left"/>
+    <div class='money-transfer'>
+        <button type='button' class='atm-close-button float-end' @click='back()'>
+            <font-awesome-icon class='center' icon='caret-left' />
         </button>
 
-        <img class="atm-logo" src="@/assets/images/phone/maze-bank-logo.png"/>
+        <img class='atm-logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
-        <div class="button-group">
-            <div class="row">
-                <div class="col-12">
-                    <input
-                        ref="receiverBankDetails"
-                        class="form-control mb-3"
-                        type="text"
-                        oninput="this.value = this.value.toUpperCase();"
-                        placeholder="Konto des Empfängers (SA-123456789)"
-                        @input="checkPattern()"
-                        maxlength="12"
-                    />
+        <div class='button-group'>
+            <div class='row'>
+                <div class='col-12'>
+                    <input ref='receiverBankDetails' class='form-control mb-3' type='text' oninput='this.value = this.value.toUpperCase();' placeholder='Konto des Empfängers (SA-123456789)' @input='checkPattern()' maxlength='12' />
                 </div>
-                <div class="col-12">
-                    <div class="input-group w-100 mb-3">
-                        <span class="input-group-text">$</span>
-                        <input
-                            ref="transferValueInput"
-                            class="form-control"
-                            oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                            type="number"
-                            placeholder="Wieviel Geld überweisen?"
-                            maxlength="7"
-                            @keypress="allowOnlyNumbers($event)"
-                        />
+                <div class='col-12'>
+                    <div class='input-group w-100 mb-3'>
+                        <span class='input-group-text'>$</span>
+                        <input ref='transferValueInput' class='form-control' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' placeholder='Wieviel Geld überweisen?' maxlength='7' @keypress='allowOnlyNumbers($event)' />
                     </div>
                 </div>
-                <div class="col-12">
-                    <input
-                        class="form-control"
-                        type="text"
-                        v-model="purposeOfUse"
-                        placeholder="Überweisungsgrund"
-                        maxlength="64"
-                    />
+                <div class='col-12'>
+                    <input class='form-control' type='text' v-model='purposeOfUse' placeholder='Überweisungsgrund' maxlength='64' />
                 </div>
             </div>
 
-            <button
-                type="button"
-                class="btn atm-menu-button w-100"
-                @click="transfer()"
-                :disabled="!bankDetailsValid || !isValuePositive"
-            >
+            <button type='button' class='btn atm-menu-button w-100' @click='transfer()' :disabled='!bankDetailsValid || !isValuePositive'>
                 Überweisen
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {allowOnlyNumbers, isNumeric} from "@/scripts/helpers/helpers";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";

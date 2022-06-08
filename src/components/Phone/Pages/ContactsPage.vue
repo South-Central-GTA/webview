@@ -1,90 +1,65 @@
 <template>
-    <div class="contacts-page">
-        <div :hidden="!isAddContactPopupOpen">
-            <add-phone-contact
-                ref="addPhoneContact"
-                v-on:add-contact="addContact($event)"
-            />
+    <div class='contacts-page'>
+        <div :hidden='!isAddContactPopupOpen'>
+            <add-phone-contact ref='addPhoneContact' v-on:add-contact='addContact($event)' />
         </div>
 
-        <div :hidden="!isEditContactPopupOpen">
-            <edit-phone-contact
-                ref="editPhoneContact"
-                v-on:update-contact="updateContact($event)"
-            />
+        <div :hidden='!isEditContactPopupOpen'>
+            <edit-phone-contact ref='editPhoneContact' v-on:update-contact='updateContact($event)' />
         </div>
 
-        <div :hidden="!isDeletePopupOpen">
-            <delete-phone-contact v-on:delete-contact="deleteContact($event)"/>
+        <div :hidden='!isDeletePopupOpen'>
+            <delete-phone-contact v-on:delete-contact='deleteContact($event)' />
         </div>
 
-        <div class="my-phone">
+        <div class='my-phone'>
             <h1>Ich</h1>
             <h2>{{ getCorrectFormat(myNumber) }}</h2>
-            <div class="new-contact-block">
-                <button
-                    type="button"
-                    class="btn new-contact-button"
-                    @click="openAddContactPopup()"
-                >
-                    <font-awesome-icon class="center" icon="plus"/>
+            <div class='new-contact-block'>
+                <button type='button' class='btn new-contact-button' @click='openAddContactPopup()'>
+                    <font-awesome-icon class='center' icon='plus' />
                 </button>
             </div>
         </div>
 
-        <div class="actions-popup" v-if="isActionsPopupOpen">
+        <div class='actions-popup' v-if='isActionsPopupOpen'>
             <h4>{{ currentContact.name }}</h4>
             <h5>{{ getCorrectFormat(currentContact.phoneNumber) }}</h5>
-            <div class="center w-100">
-                <div style="padding-top: 20px">
-                    <button type="button" class="btn call-button" @click="callContact()">
-                        <font-awesome-icon class="center" icon="phone"/>
+            <div class='center w-100'>
+                <div style='padding-top: 20px'>
+                    <button type='button' class='btn call-button' @click='callContact()'>
+                        <font-awesome-icon class='center' icon='phone' />
                     </button>
-                    <button type="button" class="btn text-button" @click="textContact()">
-                        <font-awesome-icon class="center" icon="comments"/>
+                    <button type='button' class='btn text-button' @click='textContact()'>
+                        <font-awesome-icon class='center' icon='comments' />
                     </button>
                 </div>
-                <div style="padding-top: 10px">
-                    <button
-                        type="button"
-                        class="btn delete-button"
-                        @click="openDeletePopup()"
-                    >
-                        <font-awesome-icon class="center" icon="trash"/>
+                <div style='padding-top: 10px'>
+                    <button type='button' class='btn delete-button' @click='openDeletePopup()'>
+                        <font-awesome-icon class='center' icon='trash' />
                     </button>
-                    <button
-                        type="button"
-                        class="btn edit-button"
-                        @click="openEditContactPopup()"
-                    >
-                        <font-awesome-icon class="center" icon="cog"/>
+                    <button type='button' class='btn edit-button' @click='openEditContactPopup()'>
+                        <font-awesome-icon class='center' icon='cog' />
                     </button>
                 </div>
             </div>
-            <button
-                type="button"
-                class="btn close-button"
-                @click="closeActionsPopup()"
-            >
-                <font-awesome-icon class="center" icon="times"/>
+            <button type='button' class='btn close-button' @click='closeActionsPopup()'>
+                <font-awesome-icon class='center' icon='times' />
             </button>
         </div>
 
-        <div class="contacts-block" v-if="sortedContacts !== null">
-            <div v-for="sorted in sortedContacts" v-bind:key="sorted.Letter">
-                <h1 v-if="sorted.contacts.length !== 0">{{ sorted.letter }}</h1>
-                <div v-for="contact in sorted.contacts" v-bind:key="contact.id">
-                    <phone-contact
-                        v-bind:contact="contact"
-                        v-on:clicked-contact="openActionsPopup($event)"
-                    />
+        <div class='contacts-block' v-if='sortedContacts !== null'>
+            <div v-for='sorted in sortedContacts' v-bind:key='sorted.Letter'>
+                <h1 v-if='sorted.contacts.length !== 0'>{{ sorted.letter }}</h1>
+                <div v-for='contact in sorted.contacts' v-bind:key='contact.id'>
+                    <phone-contact v-bind:contact='contact' v-on:clicked-contact='openActionsPopup($event)' />
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {replaceUmlaut} from "@/scripts/helpers/helpers";
 import PhoneContact from "./Components/ContactsPages/PhoneContact.vue";
 import AddPhoneContact from "./Components/ContactsPages/AddPhoneContact.vue";
@@ -239,7 +214,7 @@ export default class ContactsPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .contacts-page {
     height: 100%;
 

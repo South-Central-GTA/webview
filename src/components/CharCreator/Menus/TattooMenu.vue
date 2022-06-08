@@ -1,44 +1,31 @@
 <template>
-    <div class="tattoo-menu">
+    <div class='tattoo-menu'>
         <h5>{{ title }}</h5>
-        <div class="menu">
-            <div class="left">
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    @click="onPreviousButtonClicked()"
-                >
-                    <font-awesome-icon icon="caret-left"/>
+        <div class='menu'>
+            <div class='left'>
+                <button type='button' class='btn btn-primary' @click='onPreviousButtonClicked()'>
+                    <font-awesome-icon icon='caret-left' />
                 </button>
             </div>
 
-            <p v-if="tattoo.hash !== 0">{{ name }}</p>
-            <p v-if="tattoo.hash === 0">Kein Tattoo</p>
+            <p v-if='tattoo.hash !== 0'>{{ name }}</p>
+            <p v-if='tattoo.hash === 0'>Kein Tattoo</p>
 
             <div>
-                <button
-                    type="button"
-                    class="icon-button"
-                    @click="clear"
-                    :hidden="tattoo.hash === 0"
-                >
-                    <font-awesome-icon icon="trash"/>
+                <button type='button' class='icon-button' @click='clear' :hidden='tattoo.hash === 0'>
+                    <font-awesome-icon icon='trash' />
                 </button>
             </div>
-            <div class="right">
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    @click="onNextButtonClicked()"
-                >
-                    <font-awesome-icon icon="caret-right"/>
+            <div class='right'>
+                <button type='button' class='btn btn-primary' @click='onNextButtonClicked()'>
+                    <font-awesome-icon icon='caret-right' />
                 </button>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {Prop} from "vue-property-decorator";
 import {TattooInterface} from "@/scripts/interfaces/character/tattoo.interface";

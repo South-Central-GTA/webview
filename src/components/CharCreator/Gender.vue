@@ -1,24 +1,24 @@
 <template>
-    <div class="gender">
+    <div class='gender'>
         <h4>Geschlecht</h4>
-        <div class="row">
-            <div class="col-6">
-                <div class="float-end">
-                    <button @click="setGender(0)" type="button" class="icon-button">
-                        <font-awesome-icon icon="mars" v-bind:class="{ male: gender === 0}"/>
+        <div class='row'>
+            <div class='col-6'>
+                <div class='float-end'>
+                    <button @click='setGender(0)' type='button' class='icon-button'>
+                        <font-awesome-icon icon='mars' v-bind:class='{ male: gender === 0}' />
                     </button>
                 </div>
             </div>
-            <div class="col-6">
-                <button @click="setGender(1)" type="button" class="icon-button">
-                    <font-awesome-icon icon="venus" v-bind:class="{ female: gender === 1}"/>
+            <div class='col-6'>
+                <button @click='setGender(1)' type='button' class='icon-button'>
+                    <font-awesome-icon icon='venus' v-bind:class='{ female: gender === 1}' />
                 </button>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 
 import {Vue} from "vue-class-component";
 

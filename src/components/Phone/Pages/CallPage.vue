@@ -1,51 +1,41 @@
 <template>
-    <div class="call-page">
-        <input
-            ref="numberInput"
-            class="form-control mt-3"
-            @keypress="allowOnlyNumbers($event)"
-            @input="validate()"
-            oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-            type="number"
-            maxlength="11"
-            @focus="onFocus(true)"
-            @blur="onFocus(false)"
-        />
+    <div class='call-page'>
+        <input ref='numberInput' class='form-control mt-3' @keypress='allowOnlyNumbers($event)' @input='validate()' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' maxlength='11' @focus='onFocus(true)' @blur='onFocus(false)' />
 
-        <div v-if="addContactButtonVisible">
-            <a class="contact-button" @click="addAsContact()">Kontakt hinzufügen</a>
+        <div v-if='addContactButtonVisible'>
+            <a class='contact-button' @click='addAsContact()'>Kontakt hinzufügen</a>
         </div>
 
-        <div class="number-block">
-            <div class="rows">
-                <button type="button" class="btn" @click="addNumber(1)">1</button>
-                <button type="button" class="btn" @click="addNumber(2)">2</button>
-                <button type="button" class="btn" @click="addNumber(3)">3</button>
+        <div class='number-block'>
+            <div class='rows'>
+                <button type='button' class='btn' @click='addNumber(1)'>1</button>
+                <button type='button' class='btn' @click='addNumber(2)'>2</button>
+                <button type='button' class='btn' @click='addNumber(3)'>3</button>
             </div>
-            <div class="rows">
-                <button type="button" class="btn" @click="addNumber(4)">4</button>
-                <button type="button" class="btn" @click="addNumber(5)">5</button>
-                <button type="button" class="btn" @click="addNumber(6)">6</button>
+            <div class='rows'>
+                <button type='button' class='btn' @click='addNumber(4)'>4</button>
+                <button type='button' class='btn' @click='addNumber(5)'>5</button>
+                <button type='button' class='btn' @click='addNumber(6)'>6</button>
             </div>
-            <div class="rows">
-                <button type="button" class="btn" @click="addNumber(7)">7</button>
-                <button type="button" class="btn" @click="addNumber(8)">8</button>
-                <button type="button" class="btn" @click="addNumber(9)">9</button>
+            <div class='rows'>
+                <button type='button' class='btn' @click='addNumber(7)'>7</button>
+                <button type='button' class='btn' @click='addNumber(8)'>8</button>
+                <button type='button' class='btn' @click='addNumber(9)'>9</button>
             </div>
-            <div class="rows">
-                <button class="btn correct-button" @click="removeNumber()">
-                    <font-awesome-icon class="center" icon="caret-left"/>
+            <div class='rows'>
+                <button class='btn correct-button' @click='removeNumber()'>
+                    <font-awesome-icon class='center' icon='caret-left' />
                 </button>
-                <button type="button" class="btn" @click="addNumber(0)">0</button>
-                <button class="btn call-button" @click="requestCall()">
-                    <font-awesome-icon class="center" icon="phone"/>
+                <button type='button' class='btn' @click='addNumber(0)'>0</button>
+                <button class='btn call-button' @click='requestCall()'>
+                    <font-awesome-icon class='center' icon='phone' />
                 </button>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import ActiveCall from "./Components/ActiveCall.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
@@ -121,7 +111,7 @@ export default class CallPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .call-page {
     background-color: rgb(235, 235, 235);
     height: 100%;

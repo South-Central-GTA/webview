@@ -1,42 +1,36 @@
 <template>
-    <div class="item-slot row"
-         @mousedown="onMouseDown"
-         @mouseup="onMouseUp"
-         v-bind:class="{ 
+    <div class='item-slot row' @mousedown='onMouseDown' @mouseup='onMouseUp' v-bind:class='{ 
             poor: this.item.catalogItem.rarity === 0, 
             common: this.item.catalogItem.rarity === 1, 
             uncommon: this.item.catalogItem.rarity === 2, 
             rare: this.item.catalogItem.rarity === 3, 
             epic: this.item.catalogItem.rarity === 4, 
-            legendary: this.item.catalogItem.rarity === 5}">
-        <div class="col-1">
-            <img class="item-icon" :src="getImage(item)"/>
-            <img v-if="!this.item.isBought" class="unbought-icon" src="@/assets/images/coupon.png"/>
-            <img v-if="this.item.itemState === 2" class="equipp-icon" src="@/assets/images/equipped-icon.png"/>
-            <img v-if="this.item.itemState === 3" class="equipp-icon"
-                 src="@/assets/images/force-equipped-icon.png"/>
+            legendary: this.item.catalogItem.rarity === 5}'>
+        <div class='col-1'>
+            <img class='item-icon' :src='getImage(item)' />
+            <img v-if='!this.item.isBought' class='unbought-icon' src='@/assets/images/coupon.png' />
+            <img v-if='this.item.itemState === 2' class='equipp-icon' src='@/assets/images/equipped-icon.png' />
+            <img v-if='this.item.itemState === 3' class='equipp-icon' src='@/assets/images/force-equipped-icon.png' />
         </div>
-        <div class="col-9">
-            <div class="row">
-                <div class="col-12">
-                    <p>{{ this.getName(item) }} <span class="note-text">{{ item.note }}</span></p>
+        <div class='col-9'>
+            <div class='row'>
+                <div class='col-12'>
+                    <p>{{ this.getName(item) }} <span class='note-text'>{{ item.note }}</span></p>
                 </div>
-                <div class="col-12 description-text text-white-50">
+                <div class='col-12 description-text text-white-50'>
                     <p>{{ this.item.catalogItem.description }}</p>
-                    <div v-if="this.item.attachmentItems">
+                    <div v-if='this.item.attachmentItems'>
                         <p>Angebaute Erweiterungen:</p>
-                        <div v-for="attachedWeaponComponent in this.item.attachmentItems"
-                             v-bind:key="attachedWeaponComponent.id">
-                            <div class="row">
-                                <div class="col-1">
-                                    <img class="attached-weapon-component-icon"
-                                         :src="getImage(attachedWeaponComponent)"/>
+                        <div v-for='attachedWeaponComponent in this.item.attachmentItems' v-bind:key='attachedWeaponComponent.id'>
+                            <div class='row'>
+                                <div class='col-1'>
+                                    <img class='attached-weapon-component-icon' :src='getImage(attachedWeaponComponent)' />
                                 </div>
-                                <div class="col-9 pt-1">
-                                    <div class="col-12">
+                                <div class='col-9 pt-1'>
+                                    <div class='col-12'>
                                         <p>{{ this.getName(attachedWeaponComponent) }}</p>
                                     </div>
-                                    <div class="col-12 note-text">
+                                    <div class='col-12 note-text'>
                                         <p>{{ attachedWeaponComponent.noten }}</p>
                                     </div>
                                 </div>
@@ -46,14 +40,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-2">
-            <p v-if="this.item.condition !== -1">{{ this.item.condition }} / 100</p>
-            <p v-if="this.item.amount > 1 && this.item.catalogItem.stackable">x{{ this.item.amount }}</p>
+        <div class='col-2'>
+            <p v-if='this.item.condition !== -1'>{{ this.item.condition }} / 100</p>
+            <p v-if='this.item.amount > 1 && this.item.catalogItem.stackable'>x{{ this.item.amount }}</p>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {ItemInterface} from '@/scripts/interfaces/inventory/item.interface';
 import {Vue} from "vue-class-component";
 import {Prop, Watch} from "vue-property-decorator";
@@ -106,7 +100,7 @@ export default class ItemSlot extends Vue {
     }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .item-slot {
     position: relative;
     pointer-events: all;

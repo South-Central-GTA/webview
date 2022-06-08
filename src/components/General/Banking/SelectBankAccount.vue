@@ -1,25 +1,15 @@
 <template>
-    <div class="select-bank-account">
-        <select
-            class="form-select"
-            @change="onChange($event)"
-            :disabled="bankAccounts.length <= 1"
-        >
-            <option :hidden="bankAccounts.length != 0">Bankkonto benötigt</option>
-            <option
-                v-for="(bankAccount, i) in bankAccounts"
-                v-bind:key="bankAccount.id"
-                :hidden="bankAccounts.length == 0"
-                :value="bankAccount.id"
-                :selected="selectedIndex == i"
-            >
+    <div class='select-bank-account'>
+        <select class='form-select' @change='onChange($event)' :disabled='bankAccounts.length <= 1'>
+            <option :hidden='bankAccounts.length != 0'>Bankkonto benötigt</option>
+            <option v-for='(bankAccount, i) in bankAccounts' v-bind:key='bankAccount.id' :hidden='bankAccounts.length == 0' :value='bankAccount.id' :selected='selectedIndex == i'>
                 {{ bankAccount.bankDetails }}
             </option>
         </select>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import banking from "@/scripts/services/banking.service";
 import {Vue} from "vue-class-component";
 import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";

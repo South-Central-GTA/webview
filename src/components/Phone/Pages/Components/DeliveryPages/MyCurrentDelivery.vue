@@ -1,20 +1,20 @@
 <template>
-    <div class="my-delivery-page">
-        <div class="phone-header">
-            <button type="button" class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='my-delivery-page'>
+        <div class='phone-header'>
+            <button type='button' class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Mein Auftrag</span>
             </button>
         </div>
-        <div class="delivery-card">
+        <div class='delivery-card'>
             <h1>{{ companyName }}</h1>
 
-            <div v-if="deliveryType === 1">
+            <div v-if='deliveryType === 1'>
                 <h2>Anzahl an Produkten gesamt: {{ orderedProducts }} Stück</h2>
                 <h2>Produkte noch am Hafen: {{ productsLeft }} Stück</h2>
             </div>
 
-            <div v-if="deliveryType === 3">
+            <div v-if='deliveryType === 3'>
                 <h2>Fahrzeug: {{ displayName }}</h2>
             </div>
 
@@ -22,18 +22,18 @@
             <p>Unternehmen sehen den Klarnamen sowie Handynummer des Fahrers.</p>
         </div>
 
-        <div class="phone-delivery-button-group">
-            <button type="button" class="btn" @click="stop()">
+        <div class='phone-delivery-button-group'>
+            <button type='button' class='btn' @click='stop()'>
                 Auftrag abbrechen
             </button>
-            <button type="button" class="btn" @click="requestMarker()">
+            <button type='button' class='btn' @click='requestMarker()'>
                 Markierung erneuern
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {ProductsDeliveryInterface} from "@/scripts/interfaces/delivery/products-delivery.interface";
@@ -126,7 +126,7 @@ export default class MyCurrentDeliveryPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .my-delivery-page {
     overflow: hidden;
     top: 0;

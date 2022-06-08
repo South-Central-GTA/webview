@@ -1,32 +1,28 @@
 <template>
-    <div class="open-chats-page">
-        <div class="phone-header">
+    <div class='open-chats-page'>
+        <div class='phone-header'>
             <div>
                 <span>Nachrichten</span>
             </div>
         </div>
 
-        <div :hidden="!isChatOpen">
-            <active-chat ref="activeChat"/>
+        <div :hidden='!isChatOpen'>
+            <active-chat ref='activeChat' />
         </div>
 
-        <div class="chats-block">
-            <div v-for="chat in chats" v-bind:key="chat.id">
-                <open-chat
-                    v-bind:chat="chat"
-                    v-on:open-chat="openChat($event)"
-                    v-on:delete-chat="deleteChat($event)"
-                />
+        <div class='chats-block'>
+            <div v-for='chat in chats' v-bind:key='chat.id'>
+                <open-chat v-bind:chat='chat' v-on:open-chat='openChat($event)' v-on:delete-chat='deleteChat($event)' />
             </div>
         </div>
 
-        <div class="no-messages-block" v-if="chats.length === 0">
+        <div class='no-messages-block' v-if='chats.length === 0'>
             <h4>Keine Nachrichten verfügbar...</h4>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import ActiveChat from "./Components/ActiveChat.vue";
 import OpenChat from "./Components/OpenChat.vue";
 import {UID} from "@/scripts/helpers/helpers";
@@ -173,7 +169,7 @@ export default class OpenChatsPage extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .open-chats-page {
     height: 100%;
     text-align: center;

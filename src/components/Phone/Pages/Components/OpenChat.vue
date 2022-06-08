@@ -1,31 +1,31 @@
 <template>
-    <div class="open-chat">
-        <div class="bar"></div>
+    <div class='open-chat'>
+        <div class='bar'></div>
 
-        <div class="delete-popup" v-if="isDeletePopupOpen">
+        <div class='delete-popup' v-if='isDeletePopupOpen'>
             <h1>Diesen Chat löschen?</h1>
-            <button @click="deleteChat($event)">Ja</button>
-            <button @click="closeDeletePopup($event)">Nein</button>
+            <button @click='deleteChat($event)'>Ja</button>
+            <button @click='closeDeletePopup($event)'>Nein</button>
         </div>
 
-        <div class="chat-entry" @click="openChat()">
-            <div class="delete-button float-end">
-                <button type="button" class="btn" @click="openDeletePopup($event)">
-                    <font-awesome-icon class="center" icon="trash"/>
+        <div class='chat-entry' @click='openChat()'>
+            <div class='delete-button float-end'>
+                <button type='button' class='btn' @click='openDeletePopup($event)'>
+                    <font-awesome-icon class='center' icon='trash' />
                 </button>
             </div>
 
-            <div class="chat-header">
+            <div class='chat-header'>
                 <h1>{{ chat.name }}</h1>
-                <div v-if="unreadedMessages" class="new-message-notifier"></div>
-                <p class="prev">{{ lastMessage }}</p>
+                <div v-if='unreadedMessages' class='new-message-notifier'></div>
+                <p class='prev'>{{ lastMessage }}</p>
             </div>
-            <p class="date">{{ dateFromLastMessage }}</p>
+            <p class='date'>{{ dateFromLastMessage }}</p>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Vue} from "vue-class-component";
 import {Prop, Watch} from "vue-property-decorator";
 import {PhoneChatInterface} from "@/scripts/interfaces/phone/phone-chat.interface";
@@ -138,7 +138,7 @@ export default class OpenChat extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .open-chat {
     background-color: rgb(207, 207, 207);
     width: 100%;

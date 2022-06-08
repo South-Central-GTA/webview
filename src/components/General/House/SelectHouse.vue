@@ -1,25 +1,15 @@
 <template>
-    <div class="select-house">
-        <select
-            class="form-select"
-            @change="onChange($event)"
-            :disabled="houses.length <= 1"
-        >
-            <option :hidden="houses.length != 0">Immobilie benötigt</option>
-            <option
-                v-for="(house, i) in houses"
-                v-bind:key="house.Id"
-                :hidden="houses.length == 0"
-                :value="house.id"
-                :selected="selectedIndex == i"
-            >
+    <div class='select-house'>
+        <select class='form-select' @change='onChange($event)' :disabled='houses.length <= 1'>
+            <option :hidden='houses.length != 0'>Immobilie benötigt</option>
+            <option v-for='(house, i) in houses' v-bind:key='house.Id' :hidden='houses.length == 0' :value='house.id' :selected='selectedIndex == i'>
                 {{ house.streetName + " " + house.subName + " " + house.houseNumber }}
             </option>
         </select>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import house from "@/scripts/services/house.service";
 import {Vue} from "vue-class-component";
 import {HouseInterface} from "@/scripts/interfaces/house.interface";

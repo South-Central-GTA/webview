@@ -1,15 +1,9 @@
 <template>
-    <div class="team-menu-player-vehicle-catalog">
+    <div class='team-menu-player-vehicle-catalog'>
         <h2>Spielerfahrzeug</h2>
-        <input
-            @input="search()"
-            v-model="searchInput"
-            type="text"
-            class="form-control-dark mb-2"
-            placeholder="Suche nach Fahrzeug Models (Bsp. Sultan)"
-        />
-        <div class="table-holder">
-            <table class="table table-striped table-hover">
+        <input @input='search()' v-model='searchInput' type='text' class='form-control-dark mb-2' placeholder='Suche nach Fahrzeug Models (Bsp. Sultan)' />
+        <div class='table-holder'>
+            <table class='table table-striped table-hover'>
                 <thead>
                 <tr>
                     <th>Fahrzeugb ID</th>
@@ -20,7 +14,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="vehicle in vehicles" v-bind:key="vehicle.id" class="entry">
+                <tr v-for='vehicle in vehicles' v-bind:key='vehicle.id' class='entry'>
                     <td>{{ vehicle.id }}</td>
                     <td>{{ vehicle.model }}</td>
                     <td>{{ vehicle.displayName }}</td>
@@ -41,7 +35,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {VehicleInterface} from "@/scripts/interfaces/vehicles/vehicle.interface";

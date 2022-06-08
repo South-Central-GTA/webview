@@ -1,44 +1,27 @@
 <template>
-    <div class="phone-add-permission-bank-account">
-        <div class="phone-header">
-            <button class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='phone-add-permission-bank-account'>
+        <div class='phone-header'>
+            <button class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Hinzufügen</span>
             </button>
         </div>
 
-        <img
-            class="phone-bank-logo"
-            src="@/assets/images/phone/maze-bank-logo.png"
-        />
+        <img class='phone-bank-logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
-        <p class="alert-text">
-            Gebe den Namen der Person an, welche Sie Zugriffsrechte auf Ihr Bankkonto
-            geben wollen.
-        </p>
+        <p class='alert-text'>
+            Gebe den Namen der Person an, welche Sie Zugriffsrechte auf Ihr Bankkonto geben wollen. </p>
 
-        <div class="phone-bank-button-group">
-            <input
-                v-model="characterName"
-                class="form-control"
-                type="text"
-                @focus="onFocus(true)"
-                @blur="onFocus(false)"
-                placeholder="Max Mustermann"
-            />
-            <button
-                type="button"
-                class="btn"
-                @click="addPerson()"
-                :disabled="characterName === ''"
-            >
+        <div class='phone-bank-button-group'>
+            <input v-model='characterName' class='form-control' type='text' @focus='onFocus(true)' @blur='onFocus(false)' placeholder='Max Mustermann' />
+            <button type='button' class='btn' @click='addPerson()' :disabled="characterName === ''">
                 Person hinzufügen
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {onFocus} from "@/scripts/helpers/helpers";
@@ -70,7 +53,7 @@ export default class PhoneAddPermissionBankAccount extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .phone-add-permission-bank-account {
     overflow: hidden;
     position: absolute;

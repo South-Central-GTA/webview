@@ -1,60 +1,38 @@
 <template>
-    <div class="phone-permission-bank-account">
-        <div class="phone-header">
-            <button class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='phone-permission-bank-account'>
+        <div class='phone-header'>
+            <button class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Berechtigungen</span>
             </button>
         </div>
 
-        <phone-add-permission-bank-account
-            ref="phoneAddPermissionBankAccount"
-            :hidden="currentTab !== 1"
-            v-on:back="resetTab()"
-        />
-        <phone-manage-permission-bank-account
-            ref="phoneManagePermissionBankAccount"
-            :hidden="currentTab !== 2"
-            v-on:back="resetTab()"
-        />
+        <phone-add-permission-bank-account ref='phoneAddPermissionBankAccount' :hidden='currentTab !== 1' v-on:back='resetTab()' />
+        <phone-manage-permission-bank-account ref='phoneManagePermissionBankAccount' :hidden='currentTab !== 2' v-on:back='resetTab()' />
 
-        <img
-            class="phone-bank-logo"
-            src="@/assets/images/phone/maze-bank-logo.png"
-        />
+        <img class='phone-bank-logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
-        <div class="character-access-block">
-            <div
-                v-for="characterAccess in characterAccesses"
-                v-bind:key="characterAccess.name"
-            >
-                <button
-                    type="button"
-                    class="btn character-access-btn"
-                    @click="openCharacterAccessSettings(characterAccess)"
-                    :disabled="characterAccess.characterId === characterId"
-                >
+        <div class='character-access-block'>
+            <div v-for='characterAccess in characterAccesses' v-bind:key='characterAccess.name'>
+                <button type='button' class='btn character-access-btn' @click='openCharacterAccessSettings(characterAccess)' :disabled='characterAccess.characterId === characterId'>
                     {{ characterAccess.name }}
                 </button>
             </div>
 
-            <div
-                class="no-character-access-block"
-                v-if="characterAccesses.length === 0"
-            >
+            <div class='no-character-access-block' v-if='characterAccesses.length === 0'>
                 <h2>Keine Zugriffsrechte vergeben...</h2>
             </div>
         </div>
 
-        <div class="phone-bank-button-group">
-            <button type="button" class="btn" @click="openTab(1)">
+        <div class='phone-bank-button-group'>
+            <button type='button' class='btn' @click='openTab(1)'>
                 Person hinzufügen
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import character from "@/scripts/services/character.service";
 import PhoneAddPermissionBankAccount from "./PhoneAddPermissionBankAccount.vue";
 import PhoneManagePermissionBankAccount from "./PhoneManagePermissionBankAccount.vue";
@@ -116,7 +94,7 @@ export default class PhonePermissionBankAccount extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .phone-permission-bank-account {
     overflow: hidden;
     position: absolute;

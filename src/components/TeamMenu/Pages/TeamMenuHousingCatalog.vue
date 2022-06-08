@@ -1,16 +1,10 @@
 <template>
-    <div class="team-menu-housing-catalog">
-        <div v-if="!isPopupOpen">
+    <div class='team-menu-housing-catalog'>
+        <div v-if='!isPopupOpen'>
             <h2>Häuser</h2>
-            <input
-                @input="search()"
-                v-model="houseSearch"
-                type="text"
-                class="form-control-dark mb-2"
-                placeholder="Suche nach Haus ID"
-            />
-            <div class="table-holder">
-                <table class="table table-striped table-hover">
+            <input @input='search()' v-model='houseSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach Haus ID' />
+            <div class='table-holder'>
+                <table class='table table-striped table-hover'>
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -22,12 +16,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr
-                        v-for="house in houses"
-                        v-bind:key="house.id"
-                        class="entry"
-                        @click="requestDetails(house)"
-                    >
+                    <tr v-for='house in houses' v-bind:key='house.id' class='entry' @click='requestDetails(house)'>
                         <td>{{ house.id }}</td>
                         <td>
                             {{ house.ownerId === -1 ? "Kein Besitzer" : house.ownerId }}
@@ -49,15 +38,15 @@
                 </table>
             </div>
         </div>
-        <div v-else class="details">
-            <button class="icon-button text-white" @click="closeDetails()">
-                <font-awesome-icon class="mx-2" icon="chevron-left"/>
+        <div v-else class='details'>
+            <button class='icon-button text-white' @click='closeDetails()'>
+                <font-awesome-icon class='mx-2' icon='chevron-left' />
                 <span>Haus ID: {{ openHouse.id }}</span>
             </button>
 
             <h6>Türen</h6>
-            <div class="detail-table-holder">
-                <table class="table table-striped table-hover">
+            <div class='detail-table-holder'>
+                <table class='table table-striped table-hover'>
                     <thead>
                     <tr>
                         <th>Tür ID</th>
@@ -68,11 +57,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr
-                        v-for="door in this.openHouse.doors"
-                        v-bind:key="door.id"
-                        class="entry"
-                    >
+                    <tr v-for='door in this.openHouse.doors' v-bind:key='door.id' class='entry'>
                         <td>{{ door.id }}</td>
                         <td>{{ door.locked ? "Abgeschlossen" : "Aufgeschlossen" }}</td>
                         <td>{{ door.positionX }}</td>
@@ -86,7 +71,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {HouseInterface} from "@/scripts/interfaces/house.interface";

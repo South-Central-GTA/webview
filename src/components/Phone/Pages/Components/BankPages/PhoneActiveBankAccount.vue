@@ -1,84 +1,45 @@
 <template>
-    <div class="phone-active-bank-account">
-        <div class="phone-header">
-            <button class="icon-button" @click="back()">
-                <font-awesome-icon icon="chevron-left"/>
+    <div class='phone-active-bank-account'>
+        <div class='phone-header'>
+            <button class='icon-button' @click='back()'>
+                <font-awesome-icon icon='chevron-left' />
                 <span>Konto verwalten</span>
             </button>
         </div>
 
-        <phone-bank-money-transfer
-            :hidden="currentTab !== 1"
-            @back="resetTab()"
-            @phonetransfer="phonetransfer"
-        />
+        <phone-bank-money-transfer :hidden='currentTab !== 1' @back='resetTab()' @phonetransfer='phonetransfer' />
 
-        <phone-permission-bank-account
-            ref="phonePermissionBankAccount"
-            :hidden="currentTab !== 2"
-            @back="resetTab()"
-        />
+        <phone-permission-bank-account ref='phonePermissionBankAccount' :hidden='currentTab !== 2' @back='resetTab()' />
 
-        <bank-history
-            ref="bankHistory"
-            :hidden="currentTab !== 3"
-            @back="resetTab()"
-        />
+        <bank-history ref='bankHistory' :hidden='currentTab !== 3' @back='resetTab()' />
 
-        <phone-delete-bank-account
-            :hidden="currentTab !== 4"
-            @back="resetTab()"
-            @deletebankaccount="deleteBankAccount"
-        />
+        <phone-delete-bank-account :hidden='currentTab !== 4' @back='resetTab()' @deletebankaccount='deleteBankAccount' />
 
-        <img
-            class="phone-bank-logo"
-            src="@/assets/images/phone/maze-bank-logo.png"
-        />
+        <img class='phone-bank-logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
-        <div class="account-stats">
+        <div class='account-stats'>
             <h2>{{ details }}</h2>
             <h1>${{ amount }}</h1>
         </div>
 
-        <div class="phone-bank-button-group">
-            <button
-                type="button"
-                class="btn"
-                @click="openTab(1)"
-                :disabled="!canTransfer"
-            >
+        <div class='phone-bank-button-group'>
+            <button type='button' class='btn' @click='openTab(1)' :disabled='!canTransfer'>
                 Überweisungen
             </button>
-            <button
-                type="button"
-                class="btn"
-                @click="openTab(2)"
-                :disabled="!canManage"
-            >
+            <button type='button' class='btn' @click='openTab(2)' :disabled='!canManage'>
                 Berechtigungen
             </button>
-            <button
-                type="button"
-                class="btn"
-                @click="openTab(3)"
-                :disabled="!canSeeHistory"
-            >
+            <button type='button' class='btn' @click='openTab(3)' :disabled='!canSeeHistory'>
                 Umsätze
             </button>
-            <button
-                type="button"
-                class="btn"
-                @click="openTab(4)"
-                :disabled="!canManage"
-            >
+            <button type='button' class='btn' @click='openTab(4)' :disabled='!canManage'>
                 Konto löschen
             </button>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import character from "@/scripts/services/character.service";
 import groupService from "@/scripts/services/group.service";
@@ -209,7 +170,7 @@ export default class PhoneActiveBankAccount extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .phone-active-bank-account {
     overflow: hidden;
     position: absolute;

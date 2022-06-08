@@ -1,37 +1,27 @@
 <template>
-    <div class="mdc-search">
-        <div class="content row m-4">
-            <div class="col">
+    <div class='mdc-search'>
+        <div class='content row m-4'>
+            <div class='col'>
                 <h5>Interne Suche:</h5>
-                <input
-                    class="w-100"
-                    :placeholder="placeHolderText"
-                    v-model="searchInput"
-                    type="text"
-                    :disabled="isLoading"
-                />
-                <button class="w-100 mt-2" @click="searchClicked" :disabled="isLoading">
+                <input class='w-100' :placeholder='placeHolderText' v-model='searchInput' type='text' :disabled='isLoading' />
+                <button class='w-100 mt-2' @click='searchClicked' :disabled='isLoading'>
                     Suchen
                 </button>
 
-                <div v-if="searchEntities.length !== 0" class="list-holder pt-5">
-                    <div
-                        class="pb-1"
-                        v-for="(entity, index) in searchEntities"
-                        v-bind:key="index"
-                    >
-                        <button class="w-100" @click="clickEntity(entity)">
+                <div v-if='searchEntities.length !== 0' class='list-holder pt-5'>
+                    <div class='pb-1' v-for='(entity, index) in searchEntities' v-bind:key='index'>
+                        <button class='w-100' @click='clickEntity(entity)'>
                             {{ entity.name }}
                         </button>
                     </div>
                 </div>
-                <div v-else class="text-center pt-5">Keine Suchergebnisse!</div>
+                <div v-else class='text-center pt-5'>Keine Suchergebnisse!</div>
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import {MdcSearchEntityInterface} from "@/scripts/interfaces/mdc/mdc-search-entity.interface";
@@ -87,7 +77,7 @@ export default class MdcSearch extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-search {
     background-color: #cecece;
     height: 100%;

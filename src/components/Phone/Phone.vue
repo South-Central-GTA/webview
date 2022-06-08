@@ -1,97 +1,50 @@
 <template>
-    <div
-        class="phone"
-        v-bind:class="{
+    <div class='phone' v-bind:class="{
       'slide-down': isPhoneDown,
       'slide-up': !isPhoneDown,
       'vertical-phone': isPhoneVertical,
       'horizontal-phone': !isPhoneVertical,
-    }"
-        :hidden="!active"
-    >
-        <button
-            type="button"
-            v-bind:class="{
+    }" :hidden='!active'>
+        <button type='button' v-bind:class="{
         'vertical-home-button': isPhoneVertical,
         'horizontal-home-button': !isPhoneVertical,
-      }"
-            @click="backToHome"
-        ></button>
-        <div
-            v-bind:class="{
+      }" @click='backToHome'></button>
+        <div v-bind:class="{
         'vertical-background': isPhoneVertical,
         'horizontal-background': !isPhoneVertical,
-      }"
-            :style="{ backgroundImage: 'url(\'' + getImage(backgroundId) + '\')' }"
-        >
-            <status-bar ref="statusBar"/>
+      }" :style="{ backgroundImage: 'url(\'' + getImage(backgroundId) + '\')' }">
+            <status-bar ref='statusBar' />
 
-            <home-page :hidden="pageId !== 0" v-on:open-pageid="openPageId($event)"/>
+            <home-page :hidden='pageId !== 0' v-on:open-pageid='openPageId($event)' />
 
-            <call-page
-                ref="callPage"
-                :hidden="pageId !== 1"
-                v-on:add-contact="addContractFromCallField($event)"
-                v-on:call-number="callNumber($event)"
-            />
+            <call-page ref='callPage' :hidden='pageId !== 1' v-on:add-contact='addContractFromCallField($event)' v-on:call-number='callNumber($event)' />
 
-            <open-chats-page
-                ref="openChatsPage"
-                :hidden="pageId !== 2"
-                v-on:add-chat="addChat($event)"
-                v-on:delete-chat="deleteChat($event)"
-            />
+            <open-chats-page ref='openChatsPage' :hidden='pageId !== 2' v-on:add-chat='addChat($event)' v-on:delete-chat='deleteChat($event)' />
 
-            <contacts-page
-                ref="contactsPage"
-                :hidden="pageId !== 3"
-                v-on:call-contact="callContact($event)"
-                v-on:text-contact="textContact($event)"
-                v-on:add-contact="addContact($event)"
-                v-on:edit-contact="editContact($event)"
-                v-on:remove-contact="removeContact($event)"
-            />
+            <contacts-page ref='contactsPage' :hidden='pageId !== 3' v-on:call-contact='callContact($event)' v-on:text-contact='textContact($event)' v-on:add-contact='addContact($event)' v-on:edit-contact='editContact($event)' v-on:remove-contact='removeContact($event)' />
 
-            <settings-page ref="settings" :hidden="pageId !== 4"/>
+            <settings-page ref='settings' :hidden='pageId !== 4' />
 
-            <mail-app
-                ref="mailApp"
-                :hidden="pageId !== 5"
-                v-on:close-app="backToHome"
-            />
+            <mail-app ref='mailApp' :hidden='pageId !== 5' v-on:close-app='backToHome' />
 
-            <internet-app
-                ref="internetApp"
-                :hidden="pageId !== 6"
-                v-on:close-app="backToHome"
-            />
+            <internet-app ref='internetApp' :hidden='pageId !== 6' v-on:close-app='backToHome' />
 
-            <bank-page ref="banking" :hidden="pageId !== 8"/>
+            <bank-page ref='banking' :hidden='pageId !== 8' />
 
-            <delivery-page ref="delivery" :hidden="pageId !== 10"/>
+            <delivery-page ref='delivery' :hidden='pageId !== 10' />
 
-            <company-page ref="company" :hidden="pageId !== 11"/>
+            <company-page ref='company' :hidden='pageId !== 11' />
 
-            <locating-page ref="locating" :hidden="pageId !== 12"/>
+            <locating-page ref='locating' :hidden='pageId !== 12' />
 
-            <get-call-page
-                ref="getCallPage"
-                :hidden="pageId !== 1000"
-                v-on:deny="onHangup(true)"
-            />
+            <get-call-page ref='getCallPage' :hidden='pageId !== 1000' v-on:deny='onHangup(true)' />
 
-            <active-call
-                ref="activeCall"
-                :hidden="pageId !== 1001"
-                v-on:close="onAfterCall()"
-                v-on:hangup="onHangup(true)"
-                v-on:connect-call="onConnectCall($event)"
-            />
+            <active-call ref='activeCall' :hidden='pageId !== 1001' v-on:close='onAfterCall()' v-on:hangup='onHangup(true)' v-on:connect-call='onConnectCall($event)' />
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import StatusBar from "./Pages/Components/StatusBar.vue";
 import HomePage from "./Pages/HomePage.vue";
@@ -448,7 +401,7 @@ export default class Phone extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .phone {
     position: absolute;
     background: #2c2c2c;

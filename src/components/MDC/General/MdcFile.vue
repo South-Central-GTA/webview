@@ -1,25 +1,25 @@
 <template>
-    <div class="mdc-file">
-        <div class="content row">
-            <div class="col">
-                <button class="icon-button" @click="closeFile()">
-                    <font-awesome-icon icon="chevron-left"/>
-                    <span class="px-2">{{ fileName }}</span>
+    <div class='mdc-file'>
+        <div class='content row'>
+            <div class='col'>
+                <button class='icon-button' @click='closeFile()'>
+                    <font-awesome-icon icon='chevron-left' />
+                    <span class='px-2'>{{ fileName }}</span>
                 </button>
 
-                <custom-editor ref="customEditor"/>
+                <custom-editor ref='customEditor' />
 
-                <div class="pb-5 position-absolute bottom-0">
-                    <div v-if="isEditorVisible">
-                        <button type="button" @click="revokeEditFile()">
+                <div class='pb-5 position-absolute bottom-0'>
+                    <div v-if='isEditorVisible'>
+                        <button type='button' @click='revokeEditFile()'>
                             Änderungen verwerfen
                         </button>
-                        <button type="button" class="mx-2" @click="save()">
+                        <button type='button' class='mx-2' @click='save()'>
                             Änderungen speichern
                         </button>
                     </div>
                     <div v-else>
-                        <button type="button" @click="requestEdit()">
+                        <button type='button' @click='requestEdit()'>
                             Textdatei bearbeiten
                         </button>
                     </div>
@@ -29,7 +29,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
 import CustomEditor from "@/components/General/CustomEditor.vue";
@@ -118,7 +118,7 @@ export default class MdcFile extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-file {
     background-color: #cecece;
     height: 100%;

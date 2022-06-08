@@ -1,17 +1,17 @@
 <template>
-    <div class="mdc-fd-header-bar">
-        <div class="content row">
-            <div class="col-10">
-                <p class="">Los Santos Fire Department</p>
+    <div class='mdc-fd-header-bar'>
+        <div class='content row'>
+            <div class='col-10'>
+                <p class=''>Los Santos Fire Department</p>
             </div>
-            <div class="col-1">
-                <img class="logo" src="@/assets/images/lsfd.png"/>
+            <div class='col-1'>
+                <img class='logo' src='@/assets/images/lsfd.png' />
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import {Options, Vue} from "vue-class-component";
 
 @Options({
@@ -23,7 +23,7 @@ export default class MdcFdHeaderBar extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .mdc-fd-header-bar {
     color: white;
     background-color: rgb(95, 0, 0);

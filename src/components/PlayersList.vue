@@ -1,11 +1,11 @@
 <template>
-    <div class="players-list" v-bind:class="{ enable: active, disable: !active }">
-        <div class="sc-card text-white w-50 center" :hidden="!active">
-            <div class="card-body">
-                <h5 class="card-title">Online Spielerliste</h5>
+    <div class='players-list' v-bind:class='{ enable: active, disable: !active }'>
+        <div class='sc-card text-white w-50 center' :hidden='!active'>
+            <div class='card-body'>
+                <h5 class='card-title'>Online Spielerliste</h5>
 
-                <div class="table-holder">
-                    <table class="table table-striped table-hover">
+                <div class='table-holder'>
+                    <table class='table table-striped table-hover'>
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -13,11 +13,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr
-                            v-for="player in players"
-                            v-bind:key="player.id"
-                            class="entry"
-                        >
+                        <tr v-for='player in players' v-bind:key='player.id' class='entry'>
                             <td>{{ player.id }}</td>
                             <td>{{ player.characterName }}</td>
                         </tr>
@@ -29,7 +25,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import alt from "@/scripts/services/alt.service";
 import {Options, Vue} from "vue-class-component";
 import {PlayerInterface} from "@/scripts/interfaces/player.interface";
@@ -60,7 +56,7 @@ export default class PlayersList extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang='scss'>
 .players-list {
     position: absolute;
     top: 0;
