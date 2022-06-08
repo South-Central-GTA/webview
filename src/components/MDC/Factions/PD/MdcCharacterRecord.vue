@@ -180,37 +180,20 @@ export default class MdcCharacterRecord extends Vue {
     private recordInput: string = "";
 
     public mounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
     }
 
     public unmounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
 
-    public setup(
-        character: CharacterInterface,
-        records: CriminalRecordInterface[],
-        tickets: PoliceTicketInterface[],
-        notes: MdcNoteInterface[],
-        vehicles: VehicleInterface[],
-        houses: HouseInterface[],
-        bankAccounts: BankAccountInterface[],
-        phoneNumbers: string[]
-    ): void {
+    public setup(character: CharacterInterface, records: CriminalRecordInterface[], tickets: PoliceTicketInterface[], notes: MdcNoteInterface[], vehicles: VehicleInterface[], houses: HouseInterface[], bankAccounts: BankAccountInterface[], phoneNumbers: string[]): void {
         this.characterId = character.id;
         this.characterName = character.name;
 
         this.phoneNumbers = [];
         phoneNumbers.forEach((phoneNumber: string) => {
-            this.phoneNumbers.push(
-                phoneNumber.substring(0, 3) +
-                " - " +
-                phoneNumber.substring(3, phoneNumber.length)
-            );
+            this.phoneNumbers.push(phoneNumber.substring(0, 3) + " - " + phoneNumber.substring(3, phoneNumber.length));
         });
 
         this.records = records;
@@ -219,9 +202,7 @@ export default class MdcCharacterRecord extends Vue {
         this.vehicles = vehicles;
         this.houses = houses;
 
-        const driverLicense = character.licenses.find(
-            (l) => l.type === PersonalLicenseType.DRIVING
-        );
+        const driverLicense = character.licenses.find((l) => l.type === PersonalLicenseType.DRIVING);
         if (driverLicense) {
             this.hasDrivingLicense = true;
             this.driverLicenseId = driverLicense.id;
@@ -229,9 +210,7 @@ export default class MdcCharacterRecord extends Vue {
             this.hasDrivingLicense = false;
         }
 
-        const boatsLicense = character.licenses.find(
-            (l) => l.type === PersonalLicenseType.BOATS
-        );
+        const boatsLicense = character.licenses.find((l) => l.type === PersonalLicenseType.BOATS);
         if (boatsLicense) {
             this.hasBoatsLicense = true;
             this.boatLicenseId = boatsLicense.id;
@@ -239,9 +218,7 @@ export default class MdcCharacterRecord extends Vue {
             this.hasBoatsLicense = false;
         }
 
-        const flyingLicense = character.licenses.find(
-            (l) => l.type === PersonalLicenseType.FLYING
-        );
+        const flyingLicense = character.licenses.find((l) => l.type === PersonalLicenseType.FLYING);
         if (flyingLicense) {
             this.hasFlyingLicense = true;
             this.flyingLicenseId = flyingLicense.id;
@@ -249,9 +226,7 @@ export default class MdcCharacterRecord extends Vue {
             this.hasFlyingLicense = false;
         }
 
-        const weaponLicense = character.licenses.find(
-            (l) => l.type === PersonalLicenseType.WEAPON
-        );
+        const weaponLicense = character.licenses.find((l) => l.type === PersonalLicenseType.WEAPON);
         if (weaponLicense) {
             this.hasWeaponLicense = true;
             this.weaponLicenseId = weaponLicense.id;
@@ -269,11 +244,7 @@ export default class MdcCharacterRecord extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "policemdc:createrecord",
-            this.characterId,
-            this.recordInput
-        );
+        alt.emitServer("policemdc:createrecord", this.characterId, this.recordInput);
 
         this.recordInput = "";
     }
@@ -287,12 +258,7 @@ export default class MdcCharacterRecord extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "policemdc:createnote",
-            this.characterId,
-            MdcSearchType.NAME,
-            this.noteInput
-        );
+        alt.emitServer("policemdc:createnote", this.characterId, MdcSearchType.NAME, this.noteInput);
 
         this.noteInput = "";
     }
@@ -302,59 +268,31 @@ export default class MdcCharacterRecord extends Vue {
     }
 
     private warnDriverLicense(): void {
-        alt.emitServer(
-            "policemdc:warnlicense",
-            PersonalLicenseType.DRIVING,
-            this.driverLicenseId
-        );
+        alt.emitServer("policemdc:warnlicense", PersonalLicenseType.DRIVING, this.driverLicenseId);
     }
 
     private removeDriverLicense(): void {
-        alt.emitServer(
-            "policemdc:removelicense",
-            PersonalLicenseType.DRIVING,
-            this.driverLicenseId
-        );
+        alt.emitServer("policemdc:removelicense", PersonalLicenseType.DRIVING, this.driverLicenseId);
     }
 
     private warnBoatLicense(): void {
-        alt.emitServer(
-            "policemdc:warnlicense",
-            PersonalLicenseType.BOATS,
-            this.boatLicenseId
-        );
+        alt.emitServer("policemdc:warnlicense", PersonalLicenseType.BOATS, this.boatLicenseId);
     }
 
     private removeBoatLicense(): void {
-        alt.emitServer(
-            "policemdc:removelicense",
-            PersonalLicenseType.BOATS,
-            this.boatLicenseId
-        );
+        alt.emitServer("policemdc:removelicense", PersonalLicenseType.BOATS, this.boatLicenseId);
     }
 
     private warnFlyingLicense(): void {
-        alt.emitServer(
-            "policemdc:warnlicense",
-            PersonalLicenseType.FLYING,
-            this.flyingLicenseId
-        );
+        alt.emitServer("policemdc:warnlicense", PersonalLicenseType.FLYING, this.flyingLicenseId);
     }
 
     private removeFlyingLicense(): void {
-        alt.emitServer(
-            "policemdc:removelicense",
-            PersonalLicenseType.FLYING,
-            this.flyingLicenseId
-        );
+        alt.emitServer("policemdc:removelicense", PersonalLicenseType.FLYING, this.flyingLicenseId);
     }
 
     private removeWeaponLicense(): void {
-        alt.emitServer(
-            "policemdc:removelicense",
-            PersonalLicenseType.WEAPON,
-            this.weaponLicenseId
-        );
+        alt.emitServer("policemdc:removelicense", PersonalLicenseType.WEAPON, this.weaponLicenseId);
     }
 
     private getDate(dateJson: string): string {
@@ -364,11 +302,7 @@ export default class MdcCharacterRecord extends Vue {
 
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "numeric", day: "numeric",
         });
     }
 }

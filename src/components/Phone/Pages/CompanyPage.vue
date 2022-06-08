@@ -46,8 +46,7 @@ import {CompanyInterface} from "@/scripts/interfaces/group/company.interface";
 
 @Options({
     components: {
-        CompanyManage,
-        CompanyCreate,
+        CompanyManage, CompanyCreate,
     },
 })
 export default class CompanyPage extends Vue {
@@ -82,9 +81,7 @@ export default class CompanyPage extends Vue {
             .CompanyChanged.on((company?: CompanyInterface) => this.setup(company));
         this.setup(group.getInstance().Company);
 
-        alt.on("company:setlicensetable", (args: any[]) =>
-            this.setLicenseTable(args[0])
-        );
+        alt.on("company:setlicensetable", (args: any[]) => this.setLicenseTable(args[0]));
         alt.on("company:resetphoneapp", () => this.resetPhoneApp());
     }
 

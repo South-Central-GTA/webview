@@ -52,9 +52,7 @@ export default class HairSalon extends Vue {
 
     public mounted(): void {
         alt.emit("tattoostudio:getcharacter");
-        alt.on("tattoostudio:setcharacter", (character: CharacterInterface) =>
-            this.setCharacter(character)
-        );
+        alt.on("tattoostudio:setcharacter", (character: CharacterInterface) => this.setCharacter(character));
     }
 
     public unmounted(): void {

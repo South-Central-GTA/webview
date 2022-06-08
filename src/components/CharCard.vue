@@ -25,9 +25,7 @@ export default class CharCard extends Vue {
     }
 
     public unmounted(): void {
-        this.selectButton.removeEventListener("click", () =>
-            this.selectCharacter()
-        );
+        this.selectButton.removeEventListener("click", () => this.selectCharacter());
     }
 
     private selectCharacter(): void {
@@ -37,11 +35,7 @@ export default class CharCard extends Vue {
     private getCorrectDate(dateString: string): string {
         const date = new Date(JSON.parse(dateString));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            month: "long",
-            year: "numeric",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", month: "long", year: "numeric", day: "numeric",
         });
     }
 }

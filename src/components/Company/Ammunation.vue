@@ -46,9 +46,7 @@ export default class Ammunation extends Vue {
     private buttonText = "";
 
     public mounted(): void {
-        alt.on("ammunation:openmenu", (buyableItems: CatalogItemInterface[]) =>
-            this.setup(buyableItems)
-        );
+        alt.on("ammunation:openmenu", (buyableItems: CatalogItemInterface[]) => this.setup(buyableItems));
     }
 
     public unmounted(): void {
@@ -80,11 +78,7 @@ export default class Ammunation extends Vue {
     }
 
     private takeItem(): void {
-        alt.emitServer(
-            "ammunation:buyitem",
-            this.currentItemId,
-            this.currentAmount
-        );
+        alt.emitServer("ammunation:buyitem", this.currentItemId, this.currentAmount);
         this.close();
     }
 

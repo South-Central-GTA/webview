@@ -41,10 +41,7 @@
 
 <script lang='ts'>
 import {
-    UID,
-    isNumeric,
-    allowOnlyNumbers,
-    onFocus,
+    UID, isNumeric, allowOnlyNumbers, onFocus,
 } from "@/scripts/helpers/helpers";
 import {Ref} from "vue-property-decorator";
 import {Vue} from "vue-class-component";
@@ -99,9 +96,7 @@ export default class AddPhoneContact extends Vue {
         }
 
         const newContact: PhoneContactInterface = {
-            id: UID(),
-            name: this.nameInput.value,
-            phoneNumber: this.numberInput.value,
+            id: UID(), name: this.nameInput.value, phoneNumber: this.numberInput.value,
         };
 
         this.$emit("add-contact", newContact);

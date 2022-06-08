@@ -52,8 +52,7 @@ import {GroupRankInterface} from "@/scripts/interfaces/group/group-rank.interfac
     },
 })
 export default class GroupRanksSettingsPage extends Vue {
-    @Ref()
-    private readonly groupPermissionSettingsPage!: GroupPermissionSettingsPage;
+    @Ref() private readonly groupPermissionSettingsPage!: GroupPermissionSettingsPage;
 
     private ranks: GroupRankInterface[] | undefined = [];
     private groupId = -1;
@@ -89,12 +88,7 @@ export default class GroupRanksSettingsPage extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "groupmenu:changerankname",
-            rank.groupId,
-            rank.level,
-            rank.name
-        );
+        alt.emitServer("groupmenu:changerankname", rank.groupId, rank.level, rank.name);
     }
 
     private editPermission(rank: GroupRankInterface): void {

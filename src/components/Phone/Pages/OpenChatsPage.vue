@@ -34,8 +34,7 @@ import {PhoneContactInterface} from "@/scripts/interfaces/phone/phone-contact.in
 
 @Options({
     components: {
-        ActiveChat,
-        OpenChat,
+        ActiveChat, OpenChat,
     },
 })
 export default class OpenChatsPage extends Vue {
@@ -53,9 +52,7 @@ export default class OpenChatsPage extends Vue {
     private chats: PhoneChatInterface[] = [];
 
     public mounted(): void {
-        alt.on("phone:opennewchat", (oldId: number, chat: PhoneChatInterface) =>
-            this.openNewChat(oldId, chat)
-        );
+        alt.on("phone:opennewchat", (oldId: number, chat: PhoneChatInterface) => this.openNewChat(oldId, chat));
     }
 
     public unmounted(): void {
@@ -112,11 +109,7 @@ export default class OpenChatsPage extends Vue {
             this.openChat(chat);
         } else {
             const newChat: PhoneChatInterface = {
-                id: UID(),
-                name: contact.name,
-                phoneNumber: contact.phoneNumber,
-                lastUsage: "",
-                messages: [],
+                id: UID(), name: contact.name, phoneNumber: contact.phoneNumber, lastUsage: "", messages: [],
             };
             this.chats.push(newChat);
 

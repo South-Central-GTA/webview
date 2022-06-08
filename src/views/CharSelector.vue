@@ -68,9 +68,7 @@ import {NotificationPositionTypes} from "@/scripts/enums/notification-position.t
 
 @Options({
     components: {
-        NotificationsHolder,
-        CharCard,
-        AccountCard,
+        NotificationsHolder, CharCard, AccountCard,
     },
 })
 export default class CharSelector extends Vue {
@@ -84,42 +82,27 @@ export default class CharSelector extends Vue {
     public mounted(): void {
         alt.emit("charselector:ready");
 
-        alt.on(
-            "charselector:setup",
-            (characters: CharacterInterface[], lastCharacterId: number) =>
-                this.setup(characters, lastCharacterId)
-        );
+        alt.on("charselector:setup", (characters: CharacterInterface[], lastCharacterId: number) => this.setup(characters, lastCharacterId));
     }
 
     public unmounted(): void {
         alt.off("charselector:setup");
     }
 
-    private setup(
-        characters: CharacterInterface[],
-        lastCharacterId: number
-    ): void {
+    private setup(characters: CharacterInterface[], lastCharacterId: number): void {
         this.characters = characters;
         this.currentCharacterId = lastCharacterId;
         this.notificationsHolder?.setPosition(NotificationPositionTypes.RIGHT);
     }
 
-    private openCharacterContextMenu(
-        mouseEvent: MouseEvent,
-        character: CharacterInterface
-    ): void {
+    private openCharacterContextMenu(mouseEvent: MouseEvent, character: CharacterInterface): void {
         mouseEvent.preventDefault();
         this.$contextmenu({
-            x: mouseEvent.pageX,
-            y: mouseEvent.pageY,
-            items: [
-                {
-                    label: character.name + " löschen",
-                    onClick: () => {
-                        this.deleteCharacter(character);
-                    },
+            x: mouseEvent.pageX, y: mouseEvent.pageY, items: [{
+                label: character.name + " löschen", onClick: () => {
+                    this.deleteCharacter(character);
                 },
-            ],
+            },],
         });
     }
 

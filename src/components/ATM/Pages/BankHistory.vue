@@ -72,15 +72,10 @@ export default class BankHistory extends Vue {
     private mobileVersion: boolean = false;
     private currentSelectionIndex: number = 0;
 
-    public setup(
-        allHistory: BankHistoryEntryInterface[],
-        mobileVersion: boolean
-    ): void {
-        allHistory.sort(
-            (a: BankHistoryEntryInterface, b: BankHistoryEntryInterface) => {
-                return this.getTime(b.sendetAtJson) - this.getTime(a.sendetAtJson);
-            }
-        );
+    public setup(allHistory: BankHistoryEntryInterface[], mobileVersion: boolean): void {
+        allHistory.sort((a: BankHistoryEntryInterface, b: BankHistoryEntryInterface) => {
+            return this.getTime(b.sendetAtJson) - this.getTime(a.sendetAtJson);
+        });
 
         this.allHistory = allHistory;
 
@@ -123,20 +118,11 @@ export default class BankHistory extends Vue {
         const date = new Date(JSON.parse(jsonDate));
         if (this.mobileVersion) {
             return date.toLocaleDateString("de-DE", {
-                hour: "numeric",
-                minute: "numeric",
-                month: "numeric",
-                year: "numeric",
-                day: "numeric",
+                hour: "numeric", minute: "numeric", month: "numeric", year: "numeric", day: "numeric",
             });
         } else {
             return date.toLocaleDateString("de-DE", {
-                weekday: "long",
-                hour: "numeric",
-                minute: "numeric",
-                month: "long",
-                year: "numeric",
-                day: "numeric",
+                weekday: "long", hour: "numeric", minute: "numeric", month: "long", year: "numeric", day: "numeric",
             });
         }
     }
@@ -158,9 +144,7 @@ export default class BankHistory extends Vue {
             return;
         }
 
-        this.history = this.cachedHistory.filter((h) =>
-            h.purposeOfUse.toLowerCase().includes(this.entrySearch.toLowerCase())
-        );
+        this.history = this.cachedHistory.filter((h) => h.purposeOfUse.toLowerCase().includes(this.entrySearch.toLowerCase()));
     }
 
     private getTime(dateJson: string) {

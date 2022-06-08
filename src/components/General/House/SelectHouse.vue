@@ -25,22 +25,15 @@ export default class SelectHouse extends Vue {
     public mounted(): void {
         house
             .getInstance()
-            .onChange.on((houses: HouseInterface[]) =>
-            this.update(houses.filter((h) => h.houseType === 0))
-        );
+            .onChange.on((houses: HouseInterface[]) => this.update(houses.filter((h) => h.houseType === 0)));
 
-        this.setup(
-            house.getInstance().getHouses.filter((h) => h.houseType === 0),
-            false
-        );
+        this.setup(house.getInstance().getHouses.filter((h) => h.houseType === 0), false);
     }
 
     public unmounted(): void {
         house
             .getInstance()
-            .onChange.off((houses: HouseInterface[]) =>
-            this.update(houses.filter((h) => h.houseType === 0))
-        );
+            .onChange.off((houses: HouseInterface[]) => this.update(houses.filter((h) => h.houseType === 0)));
     }
 
     private update(houses: HouseInterface[]): void {

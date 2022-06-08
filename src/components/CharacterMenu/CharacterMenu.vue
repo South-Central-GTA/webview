@@ -73,9 +73,7 @@ import CharacterMenuGroups from "@/components/CharacterMenu/CharacterMenuGroups/
 
 @Options({
     components: {
-        CharacterMenuGroups,
-        CharacterMenuJob,
-        CharacterMenuAnimations,
+        CharacterMenuGroups, CharacterMenuJob, CharacterMenuAnimations,
     },
 })
 export default class CharacterMenu extends Vue {

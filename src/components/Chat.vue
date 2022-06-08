@@ -49,9 +49,7 @@ export default class Chat extends Vue {
     @Ref() private readonly suggestions!: HTMLElement;
 
     private messages: MessageInterface[] = [];
-    private messagesListHeight =
-        this.MAX_MESSAGES_ON_CHAT *
-        (this.MESSAGE_FONT_SIZE + this.MESSAGE_FONT_SIZE_PUFFER);
+    private messagesListHeight = this.MAX_MESSAGES_ON_CHAT * (this.MESSAGE_FONT_SIZE + this.MESSAGE_FONT_SIZE_PUFFER);
     private chatBoxHeight = this.messagesListHeight;
 
     private chatVisible = true;
@@ -67,19 +65,11 @@ export default class Chat extends Vue {
     public mounted(): void {
         alt.emit("chat:ready");
 
-        alt.on("chat:pushmessage", (message: MessageInterface) =>
-            this.addToMessages(message)
-        );
+        alt.on("chat:pushmessage", (message: MessageInterface) => this.addToMessages(message));
         alt.on("chat:toggleinput", (state: boolean) => this.toggleChatInput(state));
-        alt.on("chat:togglevisibility", (state: boolean) =>
-            this.toggleChatVisibility(state)
-        );
-        alt.on("chat:toggletimestamp", (state: boolean) =>
-            this.toggleTimestamp(state)
-        );
-        alt.on("chat:setcommands", (commands: CommandInterface[]) =>
-            this.setCommands(commands)
-        );
+        alt.on("chat:togglevisibility", (state: boolean) => this.toggleChatVisibility(state));
+        alt.on("chat:toggletimestamp", (state: boolean) => this.toggleTimestamp(state));
+        alt.on("chat:setcommands", (commands: CommandInterface[]) => this.setCommands(commands));
     }
 
     public unmounted(): void {
@@ -114,11 +104,7 @@ export default class Chat extends Vue {
         this.suggestions.style.display = "none";
 
         // Check for length, for slash and if the second char in string is a space, if so just return.
-        if (
-            this.chatInput.value.length <= 1 ||
-            this.chatInput.value[0] !== "/" ||
-            this.chatInput.value[1] === " "
-        ) {
+        if (this.chatInput.value.length <= 1 || this.chatInput.value[0] !== "/" || this.chatInput.value[1] === " ") {
             return;
         }
 
@@ -135,12 +121,7 @@ export default class Chat extends Vue {
         let suggestions: CommandInterface[] = [];
 
         this.cachedCommands.forEach((command: CommandInterface) => {
-            if (
-                command.name.toLowerCase().includes(message[0].toLowerCase()) ||
-                command.aliases.find((n) =>
-                    n.toLowerCase().includes(message[0].toLowerCase())
-                )
-            ) {
+            if (command.name.toLowerCase().includes(message[0].toLowerCase()) || command.aliases.find((n) => n.toLowerCase().includes(message[0].toLowerCase()))) {
                 suggestions.push(command);
             }
         });
@@ -165,9 +146,7 @@ export default class Chat extends Vue {
                 cmdName = cmd.name.toLowerCase();
             }
 
-            const sugg = cmd.aliases.find((n) =>
-                n.toLowerCase().includes(message[0].toLowerCase())
-            );
+            const sugg = cmd.aliases.find((n) => n.toLowerCase().includes(message[0].toLowerCase()));
             if (sugg) {
                 cmdName = sugg;
             }
@@ -246,11 +225,7 @@ export default class Chat extends Vue {
         this.history.unshift(this.chatInput.value);
 
         const isCommand = this.chatInput.value[0] === "/";
-        alt.emit(
-            "chat:sendmessage",
-            isCommand,
-            this.chatInput.value.replace(/(<([^>]+)>)/gi, "")
-        );
+        alt.emit("chat:sendmessage", isCommand, this.chatInput.value.replace(/(<([^>]+)>)/gi, ""));
         this.chatInput.value = "";
     }
 
@@ -263,10 +238,7 @@ export default class Chat extends Vue {
         this.historyIndex++;
 
         setTimeout(() => {
-            this.chatInput.setSelectionRange(
-                this.chatInput.value.length + 1,
-                this.chatInput.value.length + 1
-            );
+            this.chatInput.setSelectionRange(this.chatInput.value.length + 1, this.chatInput.value.length + 1);
         }, 1);
     }
 
@@ -288,9 +260,7 @@ export default class Chat extends Vue {
     }
 
     private getScrolledUpMessagesAmount() {
-        const amount = Math.round(
-            this.chatList?.scrollHeight - this.chatList?.scrollTop
-        );
+        const amount = Math.round(this.chatList?.scrollHeight - this.chatList?.scrollTop);
         return amount > 0 ? amount : 0;
     }
 
@@ -300,15 +270,9 @@ export default class Chat extends Vue {
         }
 
         const date = new Date(JSON.parse(timeJson));
-        return (
-            "[" +
-            date.toLocaleTimeString("de-DE", {
-                hour: "numeric",
-                minute: "numeric",
-                second: "numeric",
-            }) +
-            "]"
-        );
+        return ("[" + date.toLocaleTimeString("de-DE", {
+                hour: "numeric", minute: "numeric", second: "numeric",
+            }) + "]");
     }
 
     private getIsWisper(chatType: ChatType): boolean {

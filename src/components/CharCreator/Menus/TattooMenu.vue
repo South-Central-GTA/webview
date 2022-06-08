@@ -42,24 +42,17 @@ export default class TattooMenu extends Vue {
     private overlayCollections: PedOverlayCollectionInterface[] = [];
 
     private tattoo: TattooInterface = {
-        collection: "",
-        hash: "",
+        collection: "", hash: "",
     };
 
-    public setMax(
-        overlays: PedOverlayInterface[],
-        allCollections: PedOverlayCollectionInterface[],
-        tattoo?: TattooInterface
-    ): void {
+    public setMax(overlays: PedOverlayInterface[], allCollections: PedOverlayCollectionInterface[], tattoo?: TattooInterface): void {
         this.overlays = overlays;
         this.overlayCollections = allCollections;
         this.names = this.overlays.flatMap((poc) => poc.Title);
 
         if (tattoo !== undefined && tattoo?.hash !== "") {
             this.tattoo = tattoo;
-            const overlay = this.overlays.find(
-                (o) => o.OverlayHash === Number.parseInt(tattoo.hash)
-            );
+            const overlay = this.overlays.find((o) => o.OverlayHash === Number.parseInt(tattoo.hash));
 
             if (overlay != undefined) {
                 this.index = this.overlays.indexOf(overlay);
@@ -90,8 +83,7 @@ export default class TattooMenu extends Vue {
 
     private clear(): void {
         this.tattoo = {
-            collection: "",
-            hash: "",
+            collection: "", hash: "",
         };
 
         this.index = -1;
@@ -104,13 +96,7 @@ export default class TattooMenu extends Vue {
         this.name = this.overlays[this.index].Title;
         this.tattoo.hash = this.overlays[this.index].OverlayHash.toString();
 
-        const collection = this.overlayCollections.find((oc) =>
-            oc.Overlays.find(
-                (o) =>
-                    this.name == o.Title &&
-                    Number.parseInt(this.tattoo.hash) === o.OverlayHash
-            )
-        );
+        const collection = this.overlayCollections.find((oc) => oc.Overlays.find((o) => this.name == o.Title && Number.parseInt(this.tattoo.hash) === o.OverlayHash));
 
         if (collection === undefined) {
             return;

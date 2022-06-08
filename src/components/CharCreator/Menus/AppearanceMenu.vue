@@ -89,10 +89,7 @@ export default class AppearanceMenu extends Vue {
     private opacityString: string = "0.5";
 
     private appearance: AppearanceInterface = {
-        value: this.clearNumber,
-        opacity: 1,
-        primaryColor: 0,
-        secondaryColor: 0,
+        value: this.clearNumber, opacity: 1, primaryColor: 0, secondaryColor: 0,
     };
 
     public mounted(): void {
@@ -114,8 +111,7 @@ export default class AppearanceMenu extends Vue {
         this.appearance.value--;
 
         // For max values look intro the description of https://natives.altv.mp/#/0x48F44967FA05CC1E
-        if (this.appearance.value < 0 || this.appearance.value > this.maxElements)
-            this.appearance.value = this.maxElements;
+        if (this.appearance.value < 0 || this.appearance.value > this.maxElements) this.appearance.value = this.maxElements;
 
         this.$emit("update-appearance", this.appearance);
     }
@@ -135,10 +131,7 @@ export default class AppearanceMenu extends Vue {
 
     private clear(): void {
         this.appearance = {
-            value: this.clearNumber,
-            opacity: 1,
-            primaryColor: 0,
-            secondaryColor: 0,
+            value: this.clearNumber, opacity: 1, primaryColor: 0, secondaryColor: 0,
         };
 
         this.$emit("update-appearance", this.appearance);

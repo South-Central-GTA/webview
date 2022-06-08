@@ -35,9 +35,7 @@ import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.inter
 
 @Options({
     components: {
-        CreateBankAccount,
-        PhoneManageBankAccounts,
-        PhoneActiveBankAccount,
+        CreateBankAccount, PhoneManageBankAccounts, PhoneActiveBankAccount,
     },
 })
 export default class BankPage extends Vue {
@@ -64,17 +62,13 @@ export default class BankPage extends Vue {
     public mounted(): void {
         banking
             .getInstance()
-            .onChange.on((bankAccounts: BankAccountInterface[]) =>
-            this.setup(bankAccounts)
-        );
+            .onChange.on((bankAccounts: BankAccountInterface[]) => this.setup(bankAccounts));
     }
 
     public unmounted(): void {
         banking
             .getInstance()
-            .onChange.off((bankAccounts: BankAccountInterface[]) =>
-            this.setup(bankAccounts)
-        );
+            .onChange.off((bankAccounts: BankAccountInterface[]) => this.setup(bankAccounts));
     }
 
     public open(): void {
@@ -126,18 +120,11 @@ export default class BankPage extends Vue {
     private setup(bankAccounts: BankAccountInterface[]): void {
         this.bankAccounts = bankAccounts;
 
-        const ownedBankAccounts = this.bankAccounts.filter(
-            (b) =>
-                b.characterAccesses.find(
-                    (ca) => ca.characterId == character.getInstance().getCharacterId
-                )?.owner
-        );
+        const ownedBankAccounts = this.bankAccounts.filter((b) => b.characterAccesses.find((ca) => ca.characterId == character.getInstance().getCharacterId)?.owner);
         this.createBankAccount?.setup(ownedBankAccounts.length === 0);
 
         if (this.currentTab === 3) {
-            const bankAccount = this.bankAccounts.find(
-                (b) => b.id === this.currentBankAccount.id
-            );
+            const bankAccount = this.bankAccounts.find((b) => b.id === this.currentBankAccount.id);
             if (bankAccount) {
                 this.activeBankAccount.setup(bankAccount);
             }

@@ -130,9 +130,7 @@ export default class TeamMenuVehicleCatalog extends Vue {
 
     public mounted(): void {
         alt.on("groupcatalog:setup", (args: any) => this.setup(args[0]));
-        alt.on("groupcatalog:opendetails", (args: any) =>
-            this.openDetails(args[0], args[1], args[2])
-        );
+        alt.on("groupcatalog:opendetails", (args: any) => this.openDetails(args[0], args[1], args[2]));
     }
 
     public unmounted(): void {
@@ -150,11 +148,7 @@ export default class TeamMenuVehicleCatalog extends Vue {
         alt.emitServer("groupcatalog:requestdetails", group.id);
     }
 
-    private openDetails(
-        group: GroupInterface,
-        bankAccount: BankAccountInterface,
-        vehicles: VehicleInterface[]
-    ): void {
+    private openDetails(group: GroupInterface, bankAccount: BankAccountInterface, vehicles: VehicleInterface[]): void {
         this.openGroup = group;
         this.bankAccount = bankAccount;
         this.vehicles = vehicles;
@@ -172,9 +166,7 @@ export default class TeamMenuVehicleCatalog extends Vue {
         }
 
         this.groups = this.chacheGroups;
-        this.groups = this.groups.filter((g) =>
-            g.name.toLowerCase().includes(this.groupSearch.toLowerCase())
-        );
+        this.groups = this.groups.filter((g) => g.name.toLowerCase().includes(this.groupSearch.toLowerCase()));
     }
 
     private getGroupTypeLabel(type: number): string {

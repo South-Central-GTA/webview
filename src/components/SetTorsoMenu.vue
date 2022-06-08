@@ -44,12 +44,8 @@ export default class SetTorsoMenu extends Vue {
     private textureId = 0;
 
     public mounted(): void {
-        alt.on("settorsomenu:show", (maxDrawables: number, gender: GenderType) =>
-            this.show(maxDrawables, gender)
-        );
-        alt.on("settorsomenu:setmaxtextures", (maxTextures: number) =>
-            this.setMaxTextures(maxTextures)
-        );
+        alt.on("settorsomenu:show", (maxDrawables: number, gender: GenderType) => this.show(maxDrawables, gender));
+        alt.on("settorsomenu:setmaxtextures", (maxTextures: number) => this.setMaxTextures(maxTextures));
     }
 
     public unmounted(): void {

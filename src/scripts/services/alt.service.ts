@@ -14,9 +14,8 @@ export default new class AltService implements Alt {
         } else {
             console.log(`AltV-Service: Emit Event - ${eventName}`);
             console.log(`AltV-Service: Params for Event - ${JSON.stringify(args)
-                .replace("[", "")
-                .replace("]", "")}`
-            );
+                    .replace("[", "")
+                    .replace("]", "")}`);
         }
     }
 
@@ -31,9 +30,8 @@ export default new class AltService implements Alt {
         } else {
             console.log(`AltV-Service: Emit Event to Server - ${eventName}`);
             console.log(`AltV-Service: Params for Event to Server - ${JSON.stringify(args)
-                .replace("[", "")
-                .replace("]", "")}`
-            );
+                    .replace("[", "")
+                    .replace("]", "")}`);
         }
     }
 

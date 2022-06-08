@@ -79,13 +79,9 @@ export default class HouseSelector extends Vue {
     private selectButtonDisabled = false;
 
     public mounted(): void {
-        alt.on("houseselector:sethouseinfo", (house: HouseInterface) =>
-            this.setInfo(house)
-        );
+        alt.on("houseselector:sethouseinfo", (house: HouseInterface) => this.setInfo(house));
         alt.on("houseselector:block", (state: boolean) => this.block(state));
-        alt.on("houseselector:select", (house: HouseInterface) =>
-            this.select(house)
-        );
+        alt.on("houseselector:select", (house: HouseInterface) => this.select(house));
     }
 
     public unmounted(): void {

@@ -190,12 +190,8 @@ export default class VehicleImportPage extends Vue {
     private cachedVehicles: CatalogVehicleInterface[] = this.vehicles;
 
     public mounted(): void {
-        alt.on("vehicledealer:setup", (args: any[]) =>
-            this.setup(args[0], args[1], args[2])
-        );
-        alt.on("vehicledealer:setwarning", (args: any[]) =>
-            this.setWarningMessage(args[0])
-        );
+        alt.on("vehicledealer:setup", (args: any[]) => this.setup(args[0], args[1], args[2]));
+        alt.on("vehicledealer:setwarning", (args: any[]) => this.setWarningMessage(args[0]));
         alt.on("vehicledealer:setorders", (args: any[]) => this.setOrders(args[0]));
         alt.on("vehicledealer:ordersuccessfull", () => this.orderSuccessfull());
         alt.on("vehicledealer:update", (args: any[]) => this.update(args[0]));
@@ -216,11 +212,7 @@ export default class VehicleImportPage extends Vue {
         this.warningMessage = "";
     }
 
-    private setup(
-        name: string,
-        hasAcccess: boolean,
-        vehicles: CatalogVehicleInterface[]
-    ): void {
+    private setup(name: string, hasAcccess: boolean, vehicles: CatalogVehicleInterface[]): void {
         this.name = name;
         this.hasAccess = hasAcccess;
         this.vehicles = vehicles;
@@ -249,9 +241,7 @@ export default class VehicleImportPage extends Vue {
     }
 
     private update(vehicle: CatalogVehicleInterface): void {
-        const cachedIndex = this.cachedVehicles.findIndex(
-            (v) => v.model === vehicle.model
-        );
+        const cachedIndex = this.cachedVehicles.findIndex((v) => v.model === vehicle.model);
         this.cachedVehicles[cachedIndex] = vehicle;
 
         const index = this.vehicles.findIndex((v) => v.model === vehicle.model);
@@ -309,9 +299,7 @@ export default class VehicleImportPage extends Vue {
     }
 
     private getVehicleImage(vehicleModel: string): string {
-        return (
-            "http://assets/southcentral-assets/vehicles/" + vehicleModel + ".jpg"
-        );
+        return ("http://assets/southcentral-assets/vehicles/" + vehicleModel + ".jpg");
     }
 
     private search(): void {
@@ -327,15 +315,9 @@ export default class VehicleImportPage extends Vue {
         }
 
         if (this.classSelection.value === "ALL") {
-            this.vehicles = this.vehicles.filter((v) =>
-                v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase())
-            );
+            this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()));
         } else {
-            this.vehicles = this.vehicles.filter(
-                (v) =>
-                    v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()) &&
-                    v.classId.toLowerCase() == this.classSelection.value.toLowerCase()
-            );
+            this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()) && v.classId.toLowerCase() == this.classSelection.value.toLowerCase());
         }
     }
 
@@ -346,24 +328,15 @@ export default class VehicleImportPage extends Vue {
             if (this.nameSearch === "") {
                 this.vehicles = this.cachedVehicles;
             } else {
-                this.vehicles = this.vehicles.filter((v) =>
-                    v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase())
-                );
+                this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()));
             }
             return;
         }
 
         if (this.nameSearch === "") {
-            this.vehicles = this.vehicles.filter(
-                (v) =>
-                    v.classId.toLowerCase() === this.classSelection.value.toLowerCase()
-            );
+            this.vehicles = this.vehicles.filter((v) => v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
         } else {
-            this.vehicles = this.vehicles.filter(
-                (v) =>
-                    v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()) &&
-                    v.classId.toLowerCase() === this.classSelection.value.toLowerCase()
-            );
+            this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()) && v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
         }
     }
 
@@ -386,11 +359,7 @@ export default class VehicleImportPage extends Vue {
     private getDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            weekday: "short",
-            hour: "numeric",
-            minute: "numeric",
-            month: "long",
-            day: "numeric",
+            weekday: "short", hour: "numeric", minute: "numeric", month: "long", day: "numeric",
         });
     }
 

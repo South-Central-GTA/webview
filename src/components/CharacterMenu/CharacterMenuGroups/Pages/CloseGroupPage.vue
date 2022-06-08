@@ -40,8 +40,7 @@ export default class CloseGroupPage extends Vue {
     }
 
     private validateButton(): void {
-        this.closeButtonEnabled =
-            this.groupName == this.securityQuestionInput.value;
+        this.closeButtonEnabled = this.groupName == this.securityQuestionInput.value;
     }
 
     private deleteGroup(): void {

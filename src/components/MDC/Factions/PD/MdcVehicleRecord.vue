@@ -57,25 +57,14 @@ export default class MdcVehicleRecord extends Vue {
     private noteInput: string = "";
 
     public mounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
     }
 
     public unmounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
 
-    public setup(
-        vehicleId: number,
-        displayName: string,
-        displayClass: string,
-        numberPlate: string,
-        ownerName: string,
-        notes: MdcNoteInterface[]
-    ): void {
+    public setup(vehicleId: number, displayName: string, displayClass: string, numberPlate: string, ownerName: string, notes: MdcNoteInterface[]): void {
         this.vehicleId = vehicleId;
         this.displayName = displayName;
         this.displayClass = displayClass;
@@ -93,12 +82,7 @@ export default class MdcVehicleRecord extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "policemdc:createnote",
-            this.vehicleId,
-            MdcSearchType.VEHICLE,
-            this.noteInput
-        );
+        alt.emitServer("policemdc:createnote", this.vehicleId, MdcSearchType.VEHICLE, this.noteInput);
 
         this.noteInput = "";
     }
@@ -114,11 +98,7 @@ export default class MdcVehicleRecord extends Vue {
 
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "numeric", day: "numeric",
         });
     }
 }

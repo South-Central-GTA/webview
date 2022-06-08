@@ -64,9 +64,7 @@ export default class TeamMenuPlayerVehicleCatalog extends Vue {
             return;
         }
 
-        this.vehicles = this.cachedVehicles.filter((v) =>
-            v.model.toLowerCase().includes(this.searchInput.toLowerCase())
-        );
+        this.vehicles = this.cachedVehicles.filter((v) => v.model.toLowerCase().includes(this.searchInput.toLowerCase()));
     }
 }
 </script>

@@ -84,11 +84,7 @@ export default class VehicleSellMenu extends Vue {
     private selectedBankAccount: BankAccountInterface | undefined;
 
     public mounted(): void {
-        alt.on(
-            "vehiclesellmenu:show",
-            (hasBankAccount: boolean, isGroupVehicle: boolean) =>
-                this.show(hasBankAccount, isGroupVehicle)
-        );
+        alt.on("vehiclesellmenu:show", (hasBankAccount: boolean, isGroupVehicle: boolean) => this.show(hasBankAccount, isGroupVehicle));
     }
 
     public unmounted(): void {
@@ -128,21 +124,12 @@ export default class VehicleSellMenu extends Vue {
 
     private onBuyCash(): void {
         this.close();
-        alt.emitServer(
-            "vehiclesellmenu:requestcash",
-            Number.parseInt(this.targetId),
-            Number.parseInt(this.price)
-        );
+        alt.emitServer("vehiclesellmenu:requestcash", Number.parseInt(this.targetId), Number.parseInt(this.price));
     }
 
     private onBuyBank(): void {
         this.close();
-        alt.emitServer(
-            "vehiclesellmenu:requestbank",
-            Number.parseInt(this.targetId),
-            Number.parseInt(this.price),
-            this.selectedBankAccount?.id
-        );
+        alt.emitServer("vehiclesellmenu:requestbank", Number.parseInt(this.targetId), Number.parseInt(this.price), this.selectedBankAccount?.id);
     }
 
     private onFocus(state: boolean): void {

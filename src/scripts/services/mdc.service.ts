@@ -23,9 +23,7 @@ export default class MdcService {
     private readonly onIsOperator = new LiteEvent<boolean>();
 
     public listenToEvents(): void {
-        alt.on("mdc:updateoperatorpermission", (args: any[]) =>
-            this.onUpdateOperatorPermission(args[0])
-        );
+        alt.on("mdc:updateoperatorpermission", (args: any[]) => this.onUpdateOperatorPermission(args[0]));
     }
 
     private onUpdateOperatorPermission(isOperator: boolean): void {

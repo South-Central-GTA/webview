@@ -87,13 +87,7 @@ export default class CharacterMenuJob extends Vue {
     private selectedBankAccount?: BankAccountInterface;
 
     public mounted(): void {
-        alt.on(
-            "jobmenu:setup",
-            (
-                jobs: DefinedJobDataInterface[],
-                playerDefinedJob: DefinedJobDataInterface
-            ) => this.setup(jobs, playerDefinedJob)
-        );
+        alt.on("jobmenu:setup", (jobs: DefinedJobDataInterface[], playerDefinedJob: DefinedJobDataInterface) => this.setup(jobs, playerDefinedJob));
         alt.on("jobmenu:sendplayerjob", (args: any[]) => this.setJob(args[0]));
     }
 
@@ -102,10 +96,7 @@ export default class CharacterMenuJob extends Vue {
         alt.off("jobmenu:sendplayerjob");
     }
 
-    private setup(
-        jobs: DefinedJobDataInterface[],
-        playerDefinedJob: DefinedJobDataInterface
-    ): void {
+    private setup(jobs: DefinedJobDataInterface[], playerDefinedJob: DefinedJobDataInterface): void {
         this.jobs = jobs;
 
         this.setJob(playerDefinedJob);
@@ -113,8 +104,7 @@ export default class CharacterMenuJob extends Vue {
     }
 
     private setJob(playerDefinedJob: DefinedJobDataInterface): void {
-        this.isUnemployed =
-            playerDefinedJob === undefined || playerDefinedJob === null;
+        this.isUnemployed = playerDefinedJob === undefined || playerDefinedJob === null;
 
         if (!this.isUnemployed) {
             this.jobName = playerDefinedJob.name;
@@ -123,11 +113,7 @@ export default class CharacterMenuJob extends Vue {
     }
 
     private chooseJob(): void {
-        alt.emitServer(
-            "definedjob:select",
-            this.jobs[this.select.options.selectedIndex].id,
-            this.selectedBankAccount?.id
-        );
+        alt.emitServer("definedjob:select", this.jobs[this.select.options.selectedIndex].id, this.selectedBankAccount?.id);
     }
 
     private quitJob(): void {

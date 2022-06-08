@@ -106,9 +106,7 @@ export default class TeamMenuVehicleCatalog extends Vue {
     }
 
     private update(vehicle: CatalogVehicleInterface): void {
-        const cachedIndex = this.cachedVehicles.findIndex(
-            (v) => v.model === vehicle.model
-        );
+        const cachedIndex = this.cachedVehicles.findIndex((v) => v.model === vehicle.model);
         this.cachedVehicles[cachedIndex] = vehicle;
 
         const index = this.vehicles.findIndex((v) => v.model === vehicle.model);
@@ -136,17 +134,11 @@ export default class TeamMenuVehicleCatalog extends Vue {
 
     private updateOrderableVehicles(vehicle: CatalogVehicleInterface): void {
         if (vehicle.amountOfOrderableVehicles < 0) {
-            this.showWarningMessage(
-                "Die Zahl an bestellbaren Fahrzeugen darf nicht negativ sein."
-            );
+            this.showWarningMessage("Die Zahl an bestellbaren Fahrzeugen darf nicht negativ sein.");
             return;
         }
 
-        alt.emitServer(
-            "vehiclecatalog:requestsetorderablevehiclesamount",
-            vehicle.model,
-            vehicle.amountOfOrderableVehicles
-        );
+        alt.emitServer("vehiclecatalog:requestsetorderablevehiclesamount", vehicle.model, vehicle.amountOfOrderableVehicles);
     }
 
     private showWarningMessage(message: string): void {
@@ -169,17 +161,11 @@ export default class TeamMenuVehicleCatalog extends Vue {
         }
 
         if (this.classSelection.value === "ALL") {
-            this.vehicles = this.vehicles.filter((v) =>
-                v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase())
-            );
+            this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase()));
         } else {
-            this.vehicles = this.vehicles.filter(
-                (v) =>
-                    v.displayName
-                        .toLowerCase()
-                        .includes(this.vehicleSearch.toLowerCase()) &&
-                    v.classId.toLowerCase() === this.classSelection.value.toLowerCase()
-            );
+            this.vehicles = this.vehicles.filter((v) => v.displayName
+                .toLowerCase()
+                .includes(this.vehicleSearch.toLowerCase()) && v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
         }
     }
 
@@ -190,26 +176,17 @@ export default class TeamMenuVehicleCatalog extends Vue {
             if (this.vehicleSearch === "") {
                 this.vehicles = this.cachedVehicles;
             } else {
-                this.vehicles = this.vehicles.filter((v) =>
-                    v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase())
-                );
+                this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase()));
             }
             return;
         }
 
         if (this.vehicleSearch === "") {
-            this.vehicles = this.vehicles.filter(
-                (v) =>
-                    v.classId.toLowerCase() === this.classSelection.value.toLowerCase()
-            );
+            this.vehicles = this.vehicles.filter((v) => v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
         } else {
-            this.vehicles = this.vehicles.filter(
-                (v) =>
-                    v.displayName
-                        .toLowerCase()
-                        .includes(this.vehicleSearch.toLowerCase()) &&
-                    v.classId.toLowerCase() === this.classSelection.value.toLowerCase()
-            );
+            this.vehicles = this.vehicles.filter((v) => v.displayName
+                .toLowerCase()
+                .includes(this.vehicleSearch.toLowerCase()) && v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
         }
     }
 }

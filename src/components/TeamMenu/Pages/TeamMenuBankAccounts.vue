@@ -123,11 +123,9 @@ export default class TeamMenuBankAccounts extends Vue {
 
     private openDetails(bankAccount: BankAccountInterface): void {
         this.openBankAccount = bankAccount;
-        this.openBankAccount.history.sort(
-            (a: BankHistoryEntryInterface, b: BankHistoryEntryInterface) => {
-                return this.getTime(b.sendetAtJson) - this.getTime(a.sendetAtJson);
-            }
-        );
+        this.openBankAccount.history.sort((a: BankHistoryEntryInterface, b: BankHistoryEntryInterface) => {
+            return this.getTime(b.sendetAtJson) - this.getTime(a.sendetAtJson);
+        });
 
         this.isPopupOpen = true;
     }
@@ -142,20 +140,13 @@ export default class TeamMenuBankAccounts extends Vue {
             return;
         }
 
-        this.bankAccounts = this.cachedBankAccounts.filter((m) =>
-            m.bankDetails.toLowerCase().includes(this.searchBar.toLowerCase())
-        );
+        this.bankAccounts = this.cachedBankAccounts.filter((m) => m.bankDetails.toLowerCase().includes(this.searchBar.toLowerCase()));
     }
 
     private getDate(jsonDate: string): string {
         const date = new Date(JSON.parse(jsonDate));
         return date.toLocaleDateString("de-DE", {
-            weekday: "long",
-            hour: "numeric",
-            minute: "numeric",
-            month: "long",
-            year: "numeric",
-            day: "numeric",
+            weekday: "long", hour: "numeric", minute: "numeric", month: "long", year: "numeric", day: "numeric",
         });
     }
 

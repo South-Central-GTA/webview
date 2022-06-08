@@ -31,13 +31,10 @@ export default class NotificationsHolder extends Vue {
 
     private leftNotifications: NotificationInterface[] = [];
     private rightNotifications: NotificationInterface[] = [];
-    private notificationPosition: NotificationPositionTypes =
-        NotificationPositionTypes.LEFT;
+    private notificationPosition: NotificationPositionTypes = NotificationPositionTypes.LEFT;
 
     public mounted(): void {
-        alt.on("notification:push", (notification: NotificationInterface) =>
-            this.push(notification)
-        );
+        alt.on("notification:push", (notification: NotificationInterface) => this.push(notification));
     }
 
     public unmounted(): void {

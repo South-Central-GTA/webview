@@ -42,15 +42,11 @@ export default class MdcApb extends Vue {
     private bulletInInput: string = "";
 
     public mounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
     }
 
     public unmounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
 
     public setup(factionType: FactionType, bulletIns: ApbEntryInterface[]): void {
@@ -85,11 +81,7 @@ export default class MdcApb extends Vue {
 
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "numeric", day: "numeric",
         });
     }
 }

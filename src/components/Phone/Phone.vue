@@ -117,12 +117,8 @@ export default class Phone extends Vue {
         alt.on("phone:setup", (phone: PhoneInterface) => this.setup(phone));
         alt.on("phone:reset", () => this.reset());
         alt.on("phone:toggle", (state: boolean) => this.toggle(state));
-        alt.on("phone:openactivecall", (displayedName: string) =>
-            this.openActiveCall(displayedName)
-        );
-        alt.on("phone:getcallfrom", (displayedName: string) =>
-            this.getCall(displayedName)
-        );
+        alt.on("phone:openactivecall", (displayedName: string) => this.openActiveCall(displayedName));
+        alt.on("phone:getcallfrom", (displayedName: string) => this.getCall(displayedName));
         alt.on("phone:setphonedown", (state: boolean) => this.setPhoneDown(state));
         alt.on("phone:callgothungup", () => this.onHangup(false));
     }
@@ -145,10 +141,7 @@ export default class Phone extends Vue {
         this.phone = phone;
         this.backgroundId = phone.backgroundImageId;
 
-        this.statusBar?.setNotifications(
-            this.phone.notifications,
-            this.phone.lastTimeOpendNotifications
-        );
+        this.statusBar?.setNotifications(this.phone.notifications, this.phone.lastTimeOpendNotifications);
         this.openChatsPage?.setup(this.phone.ownerId, this.phone.chats);
         this.contactsPage?.setup(this.phone.phoneNumber, this.phone.contacts);
         this.settings?.setup(this.backgroundId);
@@ -387,11 +380,7 @@ export default class Phone extends Vue {
     }
 
     private getImage(id: number): string {
-        const images = require.context(
-            "@/assets/images/phone/backgrounds/",
-            false,
-            /\.jpg$/
-        );
+        const images = require.context("@/assets/images/phone/backgrounds/", false, /\.jpg$/);
         return images("./background" + id + ".jpg");
     }
 

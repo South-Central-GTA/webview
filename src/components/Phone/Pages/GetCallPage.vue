@@ -24,9 +24,7 @@ export default class GetCallPage extends Vue {
 
     public setup(displayedName: string): void {
         if (isNumeric(displayedName)) {
-            displayedName = this.getCorrectFormat(
-                Number.parseInt(displayedName).toString()
-            );
+            displayedName = this.getCorrectFormat(Number.parseInt(displayedName).toString());
         }
 
         this.displayedName = displayedName;
@@ -42,11 +40,7 @@ export default class GetCallPage extends Vue {
     }
 
     private getCorrectFormat(numberString: string): string {
-        return (
-            numberString.substring(0, 3) +
-            " - " +
-            numberString.substring(3, numberString.length)
-        );
+        return (numberString.substring(0, 3) + " - " + numberString.substring(3, numberString.length));
     }
 }
 </script>

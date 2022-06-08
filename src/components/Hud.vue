@@ -70,18 +70,8 @@ export default class Hud extends Vue {
     public mounted(): void {
         alt.emit("hud:ready");
 
-        alt.on("hud:updatehealth", (health: number, armor: number) =>
-            this.updateHealth(health, armor)
-        );
-        alt.on(
-            "hud:sendposition",
-            (
-                zone: string,
-                direction: string,
-                streetName: string,
-                crossingStreetName: string
-            ) => this.updatePosition(zone, direction, streetName, crossingStreetName)
-        );
+        alt.on("hud:updatehealth", (health: number, armor: number) => this.updateHealth(health, armor));
+        alt.on("hud:sendposition", (zone: string, direction: string, streetName: string, crossingStreetName: string) => this.updatePosition(zone, direction, streetName, crossingStreetName));
         alt.on("hud:setmoney", (amount: number) => this.setMoneyUI(amount));
         alt.on("hud:toggleui", (state: boolean) => this.toggleUI(state));
         alt.on("hud:moveup", () => this.moveUp());
@@ -146,20 +136,10 @@ export default class Hud extends Vue {
                 break;
         }
 
-        this.date =
-            day +
-            " | " +
-            ("0" + dt.getHours()).slice(-2) +
-            ":" +
-            ("0" + dt.getMinutes()).slice(-2);
+        this.date = day + " | " + ("0" + dt.getHours()).slice(-2) + ":" + ("0" + dt.getMinutes()).slice(-2);
     }
 
-    private updatePosition(
-        zone: string,
-        direction: string,
-        streetName: string,
-        crossingStreetName: string
-    ): void {
+    private updatePosition(zone: string, direction: string, streetName: string, crossingStreetName: string): void {
         this.zone = zone;
         this.direction = direction;
 

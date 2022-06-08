@@ -59,8 +59,7 @@ import {HouseInterface} from "@/scripts/interfaces/house.interface";
 
 @Options({
     components: {
-        SelectBankAccount,
-        SelectHouse,
+        SelectBankAccount, SelectHouse,
     },
 })
 export default class CompanyCreatePage extends Vue {
@@ -104,12 +103,7 @@ export default class CompanyCreatePage extends Vue {
             return;
         }
 
-        alt.emit(
-            "phonecompany:create",
-            this.companyName.value,
-            this.selectedBankAccount?.id,
-            this.selectedHouse?.id
-        );
+        alt.emit("phonecompany:create", this.companyName.value, this.selectedBankAccount?.id, this.selectedHouse?.id);
 
         this.willBeProcessed = true;
         setTimeout(() => {
@@ -121,11 +115,7 @@ export default class CompanyCreatePage extends Vue {
     }
 
     private checkValidation(): void {
-        this.valid =
-            this.companyName.value != "" &&
-            /^[a-zA-ZÀ-ž&., -]*$/.test(this.companyName.value) &&
-            this.selectBank.hasBank &&
-            this.selectHouse.hasHouse;
+        this.valid = this.companyName.value != "" && /^[a-zA-ZÀ-ž&., -]*$/.test(this.companyName.value) && this.selectBank.hasBank && this.selectHouse.hasHouse;
     }
 
     private onFocus(state: boolean): void {

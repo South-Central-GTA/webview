@@ -93,28 +93,18 @@ export default class MdcPatientRecord extends Vue {
     private allergyInput: string = "";
 
     public mounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
     }
 
     public unmounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
 
     private onIsOperatorChanged(value: boolean): void {
         this.isOperator = value;
     }
 
-    public setup(
-        character: CharacterInterface,
-        houses: HouseInterface[],
-        phoneNumbers: string[],
-        medicalHistory: MdcMedicalEntryInterface[],
-        allergies: MdcAllergyInterface[]
-    ): void {
+    public setup(character: CharacterInterface, houses: HouseInterface[], phoneNumbers: string[], medicalHistory: MdcMedicalEntryInterface[], allergies: MdcAllergyInterface[]): void {
         this.characterId = character.id;
         this.characterName = character.name;
         this.houses = houses;
@@ -128,11 +118,7 @@ export default class MdcPatientRecord extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "firemdc:createmedicalhistory",
-            this.characterId,
-            this.medicalHistoryInput
-        );
+        alt.emitServer("firemdc:createmedicalhistory", this.characterId, this.medicalHistoryInput);
 
         this.medicalHistoryInput = "";
     }
@@ -146,11 +132,7 @@ export default class MdcPatientRecord extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "firemdc:createallergy",
-            this.characterId,
-            this.allergyInput
-        );
+        alt.emitServer("firemdc:createallergy", this.characterId, this.allergyInput);
 
         this.allergyInput = "";
     }
@@ -166,11 +148,7 @@ export default class MdcPatientRecord extends Vue {
 
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "numeric", day: "numeric",
         });
     }
 }

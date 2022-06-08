@@ -176,18 +176,8 @@ export default class CharacterFormular extends Vue {
 
     private form: CharacterFormInterface = {
         profile: {
-            firstName: "",
-            lastName: "",
-            origin: "",
-            story: "",
-            age: 0,
-            bodySize: 0,
-            physique: "",
-        },
-        startMoney: 0,
-        hasPhone: false,
-        hasDrivingLicense: false,
-        isRegistered: false,
+            firstName: "", lastName: "", origin: "", story: "", age: 0, bodySize: 0, physique: "",
+        }, startMoney: 0, hasPhone: false, hasDrivingLicense: false, isRegistered: false,
     };
 
     private age = "";

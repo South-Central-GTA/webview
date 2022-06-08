@@ -35,10 +35,7 @@ import {CallSignInterface} from "@/scripts/interfaces/mdc/call-sign.interface";
 
 @Options({
     components: {
-        MdcFdBase,
-        MdcPdBase,
-        MdcHeaderBar,
-        MdcFooterBar,
+        MdcFdBase, MdcPdBase, MdcHeaderBar, MdcFooterBar,
     },
 })
 export default class MdcBase extends Vue {
@@ -59,18 +56,8 @@ export default class MdcBase extends Vue {
     private infoTimeout: number | undefined;
 
     public mounted(): void {
-        alt.on(
-            "mdc:open",
-            (
-                factionType: FactionType,
-                canLogin: boolean,
-                characterName: string,
-                rankName?: string
-            ) => this.onOpen(factionType, canLogin, characterName, rankName)
-        );
-        alt.on("mdc:updatecallsigns", (args: any[]) =>
-            this.onUpdateCallSigns(args[0], args[1])
-        );
+        alt.on("mdc:open", (factionType: FactionType, canLogin: boolean, characterName: string, rankName?: string) => this.onOpen(factionType, canLogin, characterName, rankName));
+        alt.on("mdc:updatecallsigns", (args: any[]) => this.onUpdateCallSigns(args[0], args[1]));
         alt.on("mdc:sendentities", (args: any[]) => this.onSetEntities(args[0]));
         alt.on("mdc:close", () => this.onClose());
     }
@@ -86,12 +73,7 @@ export default class MdcBase extends Vue {
         this.showInfoMessage(message);
     }
 
-    private onOpen(
-        factionType: FactionType,
-        canLogin: boolean,
-        characterName: string,
-        rankName?: string
-    ): void {
+    private onOpen(factionType: FactionType, canLogin: boolean, characterName: string, rankName?: string): void {
         this.active = true;
         this.rankName = rankName;
         this.characterName = characterName;
@@ -104,10 +86,7 @@ export default class MdcBase extends Vue {
         }
     }
 
-    private onUpdateCallSigns(
-        callSigns: CallSignInterface[],
-        hasCallSign: boolean
-    ): void {
+    private onUpdateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
         switch (this.factionType) {
             case FactionType.POLICE_DEPARTMENT:
                 this.pdBase.updateCallSigns(callSigns, hasCallSign);

@@ -116,8 +116,7 @@ export default class PhoneManagePermissionBankAccount extends Vue {
     private depositPermission: BankingPermission = BankingPermission.DEPOSIT;
     private withdrawPermission: BankingPermission = BankingPermission.WITHDRAW;
     private transferPermission: BankingPermission = BankingPermission.TRANSFER;
-    private seeTransactionPermission: BankingPermission =
-        BankingPermission.SEE_HISTORY;
+    private seeTransactionPermission: BankingPermission = BankingPermission.SEE_HISTORY;
     private managePermission: BankingPermission = BankingPermission.MANAGEMENT;
 
     private canDeposit = false;
@@ -134,16 +133,12 @@ export default class PhoneManagePermissionBankAccount extends Vue {
     public mounted(): void {
         banking
             .getInstance()
-            .onChange.on((bankAccounts: BankAccountInterface[]) =>
-            this.updateBankAccounts(bankAccounts)
-        );
+            .onChange.on((bankAccounts: BankAccountInterface[]) => this.updateBankAccounts(bankAccounts));
     }
 
     private updateBankAccounts(bankAccounts: BankAccountInterface[]): void {
         const bankAccount = bankAccounts.find((b) => b.id === this.bankAccountId);
-        const characterAccess = bankAccount?.characterAccesses.find(
-            (ca) => ca.characterId === this.characterId
-        );
+        const characterAccess = bankAccount?.characterAccesses.find((ca) => ca.characterId === this.characterId);
 
         if (characterAccess === undefined) {
             return;
@@ -152,30 +147,17 @@ export default class PhoneManagePermissionBankAccount extends Vue {
         this.setup(this.bankAccountId, characterAccess);
     }
 
-    public setup(
-        bankAccountId: number,
-        characterAccess: BankAccountCharacterAccessInterface
-    ): void {
+    public setup(bankAccountId: number, characterAccess: BankAccountCharacterAccessInterface): void {
         this.bankAccountId = bankAccountId;
         this.characterId = characterAccess.characterId;
         this.characterName = characterAccess.name;
         this.characterAccess = characterAccess;
 
-        this.canDeposit =
-            (characterAccess.permission & BankingPermission.DEPOSIT) ===
-            BankingPermission.DEPOSIT;
-        this.canWithdraw =
-            (characterAccess.permission & BankingPermission.WITHDRAW) ===
-            BankingPermission.WITHDRAW;
-        this.canTransfer =
-            (characterAccess.permission & BankingPermission.TRANSFER) ===
-            BankingPermission.TRANSFER;
-        this.canSeeTransaction =
-            (characterAccess.permission & BankingPermission.SEE_HISTORY) ===
-            BankingPermission.SEE_HISTORY;
-        this.canManage =
-            (characterAccess.permission & BankingPermission.MANAGEMENT) ===
-            BankingPermission.MANAGEMENT;
+        this.canDeposit = (characterAccess.permission & BankingPermission.DEPOSIT) === BankingPermission.DEPOSIT;
+        this.canWithdraw = (characterAccess.permission & BankingPermission.WITHDRAW) === BankingPermission.WITHDRAW;
+        this.canTransfer = (characterAccess.permission & BankingPermission.TRANSFER) === BankingPermission.TRANSFER;
+        this.canSeeTransaction = (characterAccess.permission & BankingPermission.SEE_HISTORY) === BankingPermission.SEE_HISTORY;
+        this.canManage = (characterAccess.permission & BankingPermission.MANAGEMENT) === BankingPermission.MANAGEMENT;
     }
 
     private addPermission(permission: BankingPermission): void {
@@ -187,12 +169,7 @@ export default class PhoneManagePermissionBankAccount extends Vue {
             return;
         }
 
-        alt.emit(
-            "phonebank:addpermission",
-            this.characterAccess?.bankAccountId,
-            this.characterAccess?.characterId,
-            permission
-        );
+        alt.emit("phonebank:addpermission", this.characterAccess?.bankAccountId, this.characterAccess?.characterId, permission);
     }
 
     private removePermission(permission: BankingPermission): void {
@@ -204,21 +181,12 @@ export default class PhoneManagePermissionBankAccount extends Vue {
             return;
         }
 
-        alt.emit(
-            "phonebank:removepermission",
-            this.characterAccess?.bankAccountId,
-            this.characterAccess?.characterId,
-            permission
-        );
+        alt.emit("phonebank:removepermission", this.characterAccess?.bankAccountId, this.characterAccess?.characterId, permission);
     }
 
     private removeAccess(): void {
         this.back();
-        alt.emit(
-            "phonebank:removeaccess",
-            this.characterAccess?.bankAccountId,
-            this.characterAccess?.characterId
-        );
+        alt.emit("phonebank:removeaccess", this.characterAccess?.bankAccountId, this.characterAccess?.characterId);
     }
 
     private back(): void {

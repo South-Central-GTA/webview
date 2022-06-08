@@ -67,47 +67,32 @@ export default class MdcMailAccountRecord extends Vue {
     private noteInput: string = "";
 
     public mounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
     }
 
     public unmounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
 
-    public setup(
-        mailAccount: MailAccountInterface,
-        notes: MdcNoteInterface[]
-    ): void {
+    public setup(mailAccount: MailAccountInterface, notes: MdcNoteInterface[]): void {
         this.mailAddress = mailAccount.mailAddress;
         this.notes = notes;
 
         this.accesses = [];
 
-        mailAccount.characterAccesses.forEach(
-            (access: MailAccountCharacterAccessInterface) => {
-                this.accesses.push({
-                    name: access.name,
-                    owner: access.owner,
-                });
-            }
-        );
+        mailAccount.characterAccesses.forEach((access: MailAccountCharacterAccessInterface) => {
+            this.accesses.push({
+                name: access.name, owner: access.owner,
+            });
+        });
 
-        console.log(
-            "mailAccount.groupAccesses: " + JSON.stringify(mailAccount.groupAccesses)
-        );
+        console.log("mailAccount.groupAccesses: " + JSON.stringify(mailAccount.groupAccesses));
 
-        mailAccount.groupAccesses.forEach(
-            (access: MailAccountGroupAccessInterface) => {
-                this.accesses.push({
-                    name: access.groupName,
-                    owner: access.owner,
-                });
-            }
-        );
+        mailAccount.groupAccesses.forEach((access: MailAccountGroupAccessInterface) => {
+            this.accesses.push({
+                name: access.groupName, owner: access.owner,
+            });
+        });
     }
 
     private onIsOperatorChanged(value: boolean): void {
@@ -119,12 +104,7 @@ export default class MdcMailAccountRecord extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "policemdc:createnote",
-            this.mailAddress,
-            MdcSearchType.MAIL,
-            this.noteInput
-        );
+        alt.emitServer("policemdc:createnote", this.mailAddress, MdcSearchType.MAIL, this.noteInput);
 
         this.noteInput = "";
     }
@@ -140,11 +120,7 @@ export default class MdcMailAccountRecord extends Vue {
 
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "numeric", day: "numeric",
         });
     }
 }

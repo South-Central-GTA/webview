@@ -28,9 +28,7 @@ export default class Prison extends Vue {
     public mounted(): void {
         alt.emit("prison:ready");
 
-        alt.on("prison:start", (jailedUntilDateJson: string) =>
-            this.start(jailedUntilDateJson)
-        );
+        alt.on("prison:start", (jailedUntilDateJson: string) => this.start(jailedUntilDateJson));
     }
 
     public unmounted(): void {
@@ -52,11 +50,7 @@ export default class Prison extends Vue {
 
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "long", day: "numeric",
         });
     }
 }

@@ -181,15 +181,9 @@ export default class Inventories extends Vue {
         alt.emit("inventory:ready");
 
         alt.on("inventory:toggleui", (state: boolean) => this.toggleUI(state));
-        alt.on("inventory:setup", (inventories: InventoryInterface[]) =>
-            this.setup(inventories)
-        );
-        alt.on("inventory:sendcharactersinrange", (args: any[]) =>
-            this.openCharactersAroundMenu(args[0])
-        );
-        alt.on("itemactions:opencontextmenu", (args: any[]) =>
-            this.openItemContextMenu(args[0])
-        );
+        alt.on("inventory:setup", (inventories: InventoryInterface[]) => this.setup(inventories));
+        alt.on("inventory:sendcharactersinrange", (args: any[]) => this.openCharactersAroundMenu(args[0]));
+        alt.on("itemactions:opencontextmenu", (args: any[]) => this.openItemContextMenu(args[0]));
 
         document.addEventListener("mousemove", this.onMouseMove);
         document.addEventListener("mouseup", this.onMouseUp);
@@ -207,10 +201,7 @@ export default class Inventories extends Vue {
         // TODO: clear current context on close and here.
     }
 
-    private requestItemContextMenu(
-        mouseEvent: MouseEvent,
-        item: ItemInterface
-    ): void {
+    private requestItemContextMenu(mouseEvent: MouseEvent, item: ItemInterface): void {
         if (item.itemState === ItemState.FORCE_EQUIPPED) {
             return;
         }
@@ -229,30 +220,21 @@ export default class Inventories extends Vue {
 
         actions.forEach((action: ActionInterface) => {
             items.push({
-                label: action.title,
-                onClick: () => {
+                label: action.title, onClick: () => {
                     this.chooseItemAction(action);
                 },
             });
         });
 
         this.$contextmenu({
-            x: this.pageX,
-            y: this.pageY,
-            items: items,
+            x: this.pageX, y: this.pageY, items: items,
         });
     }
 
-    private startItemDragging(
-        event: MouseEvent,
-        element: Element,
-        item: ItemInterface
-    ): void {
-        if (
-            this.ownInventories
-                .flatMap((i) => i.items)
-                .findIndex((i) => i.id === item.id) !== -1
-        ) {
+    private startItemDragging(event: MouseEvent, element: Element, item: ItemInterface): void {
+        if (this.ownInventories
+            .flatMap((i) => i.items)
+            .findIndex((i) => i.id === item.id) !== -1) {
             if (this.extraneousInventory !== null) {
                 this.extraneousInventory?.toggleDropZone(true);
             }
@@ -262,11 +244,9 @@ export default class Inventories extends Vue {
             }
         }
 
-        if (
-            this.extraneousInventories
-                .flatMap((i) => i.items)
-                .findIndex((i) => i.id === item.id) !== -1
-        ) {
+        if (this.extraneousInventories
+            .flatMap((i) => i.items)
+            .findIndex((i) => i.id === item.id) !== -1) {
             if (this.extraneousInventory !== null) {
                 this.extraneousInventory?.toggleDropZone(false);
             }
@@ -292,11 +272,7 @@ export default class Inventories extends Vue {
 
     private stopItemDragging(event: MouseEvent, item: ItemInterface): void {
         if (this.showcaseItem) {
-            if (
-                !this.currentItem ||
-                item.itemState === ItemState.EQUIPPED ||
-                item.itemState === ItemState.FORCE_EQUIPPED
-            ) {
+            if (!this.currentItem || item.itemState === ItemState.EQUIPPED || item.itemState === ItemState.FORCE_EQUIPPED) {
                 return;
             }
 
@@ -423,19 +399,13 @@ export default class Inventories extends Vue {
 
     private onSetNameClicked(): void {
         if (this.itemName.length === 0) {
-            alt.emit(
-                "notification:error",
-                "Bitte definiere einen Namen für dieses Kleidungsitem."
-            );
+            alt.emit("notification:error", "Bitte definiere einen Namen für dieses Kleidungsitem.");
             return;
         } else if (this.itemName.length <= 5) {
             alt.emit("notification:error", "Der Name ist zu kurz.");
             return;
         } else if (!/^[1-9a-zA-ZÀ-ž, ]*$/.test(this.itemName)) {
-            alt.emit(
-                "notification:error",
-                "Diese Art von Sonderzeichen ist nicht erlaubt."
-            );
+            alt.emit("notification:error", "Diese Art von Sonderzeichen ist nicht erlaubt.");
             return;
         }
 
@@ -480,10 +450,7 @@ export default class Inventories extends Vue {
                 return;
             }
 
-            alt.emitServer(
-                "item:removeattachment",
-                Number.parseInt(action.customData)
-            );
+            alt.emitServer("item:removeattachment", Number.parseInt(action.customData));
             return;
         }
 
@@ -520,10 +487,8 @@ export default class Inventories extends Vue {
             return;
         }
 
-        this.showcaseItem.style.left =
-            event.pageX - this.showcaseItem.offsetWidth * 0.5 + "px";
-        this.showcaseItem.style.top =
-            event.pageY - this.showcaseItem.offsetHeight * 0.5 + "px";
+        this.showcaseItem.style.left = event.pageX - this.showcaseItem.offsetWidth * 0.5 + "px";
+        this.showcaseItem.style.top = event.pageY - this.showcaseItem.offsetHeight * 0.5 + "px";
     }
 
     private getItemName(item: ItemInterface): string {
@@ -576,8 +541,7 @@ export default class Inventories extends Vue {
         }
 
         this.extraneousInventory.clearSearchBar();
-        this.activeExtraneousInventoryIndex =
-            this.extraneousInventories.indexOf(inventory);
+        this.activeExtraneousInventoryIndex = this.extraneousInventories.indexOf(inventory);
     }
 
     private getInventoryIcon(type: InventoryType): string {

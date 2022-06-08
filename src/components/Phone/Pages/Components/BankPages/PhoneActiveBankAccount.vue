@@ -56,15 +56,11 @@ import {GroupPermission} from "@/scripts/enums/group.permission";
 
 @Options({
     components: {
-        BankHistory,
-        PhoneBankMoneyTransfer,
-        PhoneDeleteBankAccount,
-        PhonePermissionBankAccount,
+        BankHistory, PhoneBankMoneyTransfer, PhoneDeleteBankAccount, PhonePermissionBankAccount,
     },
 })
 export default class PhoneActiveBankAccount extends Vue {
-    @Ref()
-    private readonly phonePermissionBankAccount!: PhonePermissionBankAccount;
+    @Ref() private readonly phonePermissionBankAccount!: PhonePermissionBankAccount;
     @Ref() private readonly bankHistory!: BankHistory;
 
     private id = 0;
@@ -86,31 +82,19 @@ export default class PhoneActiveBankAccount extends Vue {
         this.canTransfer = false;
         this.canManage = false;
 
-        const characterAccess = bankAccount.characterAccesses.find(
-            (ca) => ca.characterId == character.getInstance().getCharacterId
-        );
+        const characterAccess = bankAccount.characterAccesses.find((ca) => ca.characterId == character.getInstance().getCharacterId);
         if (characterAccess !== undefined) {
-            this.canSeeHistory =
-                (characterAccess.permission & BankingPermission.SEE_HISTORY) ===
-                BankingPermission.SEE_HISTORY || characterAccess.owner;
-            this.canTransfer =
-                (characterAccess.permission & BankingPermission.TRANSFER) ===
-                BankingPermission.TRANSFER || characterAccess.owner;
-            this.canManage =
-                (characterAccess.permission & BankingPermission.MANAGEMENT) ===
-                BankingPermission.MANAGEMENT || characterAccess.owner;
+            this.canSeeHistory = (characterAccess.permission & BankingPermission.SEE_HISTORY) === BankingPermission.SEE_HISTORY || characterAccess.owner;
+            this.canTransfer = (characterAccess.permission & BankingPermission.TRANSFER) === BankingPermission.TRANSFER || characterAccess.owner;
+            this.canManage = (characterAccess.permission & BankingPermission.MANAGEMENT) === BankingPermission.MANAGEMENT || characterAccess.owner;
         }
 
         if (bankAccount.type === 1) {
             const group = groupService
                 .getInstance()
-                .AllGroups?.find((g) =>
-                    bankAccount.groupAccesses.some((ga) => ga.groupId === g.id)
-                );
+                .AllGroups?.find((g) => bankAccount.groupAccesses.some((ga) => ga.groupId === g.id));
             if (group !== undefined) {
-                const member = group.members.find(
-                    (m) => m.characterId === character.getInstance().getCharacterId
-                );
+                const member = group.members.find((m) => m.characterId === character.getInstance().getCharacterId);
                 if (member !== undefined) {
                     if (member.owner) {
                         this.canSeeHistory = true;
@@ -119,12 +103,8 @@ export default class PhoneActiveBankAccount extends Vue {
                     } else {
                         const rank = group.ranks.find((r) => r.level === member.level);
                         if (rank !== undefined) {
-                            this.canSeeHistory =
-                                (rank.groupPermission & GroupPermission.BANKING_SEE_HISTORY) ===
-                                GroupPermission.BANKING_SEE_HISTORY;
-                            this.canTransfer =
-                                (rank.groupPermission & GroupPermission.BANKING_TRANSFER) ===
-                                GroupPermission.BANKING_TRANSFER;
+                            this.canSeeHistory = (rank.groupPermission & GroupPermission.BANKING_SEE_HISTORY) === GroupPermission.BANKING_SEE_HISTORY;
+                            this.canTransfer = (rank.groupPermission & GroupPermission.BANKING_TRANSFER) === GroupPermission.BANKING_TRANSFER;
                         }
                     }
                 }
@@ -135,10 +115,7 @@ export default class PhoneActiveBankAccount extends Vue {
             this.openTab(0);
         }
 
-        this.phonePermissionBankAccount.setup(
-            this.id,
-            bankAccount.characterAccesses
-        );
+        this.phonePermissionBankAccount.setup(this.id, bankAccount.characterAccesses);
     }
 
     public resetTab(): void {

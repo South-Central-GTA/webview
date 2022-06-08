@@ -55,24 +55,14 @@ export default class MdcWeaponRecord extends Vue {
     private noteInput: string = "";
 
     public mounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
     }
 
     public unmounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
 
-    public setup(
-        weaponId: number,
-        serialNumber: string,
-        ownerName: string,
-        weaponName: string,
-        notes: MdcNoteInterface[]
-    ): void {
+    public setup(weaponId: number, serialNumber: string, ownerName: string, weaponName: string, notes: MdcNoteInterface[]): void {
         this.weaponId = weaponId;
         this.serialNumber = serialNumber;
         this.ownerName = ownerName;
@@ -89,12 +79,7 @@ export default class MdcWeaponRecord extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "policemdc:createnote",
-            this.weaponId,
-            MdcSearchType.WEAPON,
-            this.noteInput
-        );
+        alt.emitServer("policemdc:createnote", this.weaponId, MdcSearchType.WEAPON, this.noteInput);
 
         this.noteInput = "";
     }
@@ -110,11 +95,7 @@ export default class MdcWeaponRecord extends Vue {
 
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "numeric", day: "numeric",
         });
     }
 }

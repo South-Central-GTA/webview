@@ -54,29 +54,19 @@ export default class TeamMenuUserRecord extends Vue {
 
     public setup(accountId: number, userRecords: UserRecordInterface[]) {
         this.accountId = accountId;
-        this.automaticUserRecords = userRecords.filter(
-            (ur) => ur.userRecordType == 0
-        );
+        this.automaticUserRecords = userRecords.filter((ur) => ur.userRecordType == 0);
         this.staffUserRecords = userRecords.filter((ur) => ur.userRecordType == 1);
     }
 
     private saveEntry(): void {
-        alt.emitServer(
-            "userrecord:saveentry",
-            this.accountId,
-            this.manuelUserEntry
-        );
+        alt.emitServer("userrecord:saveentry", this.accountId, this.manuelUserEntry);
         this.manuelUserEntry = "";
     }
 
     private getDate(loggedAtJson: string): string {
         const date = new Date(JSON.parse(loggedAtJson));
         return date.toLocaleDateString("de-DE", {
-            weekday: "short",
-            hour: "numeric",
-            minute: "numeric",
-            month: "long",
-            day: "numeric",
+            weekday: "short", hour: "numeric", minute: "numeric", month: "long", day: "numeric",
         });
     }
 

@@ -98,11 +98,7 @@ export default class ClothesMenu extends Vue {
     };
 
     public mounted(): void {
-        alt.on(
-            "clothesmenu:setmaxtexturevariation",
-            (maxTextures: MaxDrawablesTexturesInterface) =>
-                this.setMaxDrawablesTextures(maxTextures)
-        );
+        alt.on("clothesmenu:setmaxtexturevariation", (maxTextures: MaxDrawablesTexturesInterface) => this.setMaxDrawablesTextures(maxTextures));
     }
 
     public unmounted(): void {
@@ -125,10 +121,7 @@ export default class ClothesMenu extends Vue {
         // this.shoesMenu.setClothing(this.clothes.Shoes);
     }
 
-    public setGender(
-        maxDrawables: MaxDrawablesInterface,
-        gender: GenderType
-    ): void {
+    public setGender(maxDrawables: MaxDrawablesInterface, gender: GenderType): void {
         this.hatMenu?.setup(maxDrawables.maxHat, gender);
         this.glassesMenu?.setup(maxDrawables.maxGlasses, gender);
         this.earsMenu?.setup(maxDrawables.maxEars, gender);
@@ -185,9 +178,7 @@ export default class ClothesMenu extends Vue {
         return this.shoesMenu?.isValid();
     }
 
-    private setMaxDrawablesTextures(
-        maxTextures: MaxDrawablesTexturesInterface
-    ): void {
+    private setMaxDrawablesTextures(maxTextures: MaxDrawablesTexturesInterface): void {
         this.hatMenu?.setMaxTextures(maxTextures.maxHat);
         this.glassesMenu?.setMaxTextures(maxTextures.maxGlasses);
         this.earsMenu?.setMaxTextures(maxTextures.maxEars);

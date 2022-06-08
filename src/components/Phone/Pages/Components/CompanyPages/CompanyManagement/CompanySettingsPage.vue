@@ -140,9 +140,7 @@ import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.inter
 
 @Options({
     components: {
-        CompanyWorkerEdit,
-        SelectBankAccount,
-        SelectHouse,
+        CompanyWorkerEdit, SelectBankAccount, SelectHouse,
     },
 })
 export default class CompanySettingsPage extends Vue {
@@ -175,27 +173,16 @@ export default class CompanySettingsPage extends Vue {
     public mounted(): void {
         housing
             .getInstance()
-            .onChange.on((houses: HouseInterface[] | undefined) =>
-            this.updateLeaseCompany(houses)
-        );
+            .onChange.on((houses: HouseInterface[] | undefined) => this.updateLeaseCompany(houses));
 
-        alt.on("company:resethouseselect", (id: number) =>
-            this.resetHouseSelect(id)
-        );
+        alt.on("company:resethouseselect", (id: number) => this.resetHouseSelect(id));
     }
 
     public unmounted(): void {
         alt.off("company:resethouseselect");
     }
 
-    public setup(
-        company: CompanyInterface,
-        licenses: LicenseInterface[],
-        isOwner: boolean,
-        canSellLic: boolean,
-        canBuyLic: boolean,
-        canChangeDeliveryVisibility: boolean
-    ): void {
+    public setup(company: CompanyInterface, licenses: LicenseInterface[], isOwner: boolean, canSellLic: boolean, canBuyLic: boolean, canChangeDeliveryVisibility: boolean): void {
         this.companyId = company.id;
         this.deliveryVisiblityStatus = company.deliveryVisibilityStatus;
 
@@ -215,9 +202,7 @@ export default class CompanySettingsPage extends Vue {
             }
         });
 
-        const worker = company.members.find(
-            (m) => m.characterId == character.getInstance().getCharacterId
-        );
+        const worker = company.members.find((m) => m.characterId == character.getInstance().getCharacterId);
 
         if (worker !== undefined) {
             this.selectBank.setBankAccount(worker.bankAccountId);
@@ -241,9 +226,7 @@ export default class CompanySettingsPage extends Vue {
             return;
         }
 
-        this.leaseCompanies = houses.filter(
-            (h) => h.houseType === 1 && h.groupOwnerId === this.companyId
-        ) as LeaseCompanyInterface[];
+        this.leaseCompanies = houses.filter((h) => h.houseType === 1 && h.groupOwnerId === this.companyId) as LeaseCompanyInterface[];
     }
 
     private resetHouseSelect(id: number): void {
@@ -253,10 +236,7 @@ export default class CompanySettingsPage extends Vue {
     private getContractEndDate(leaseDate: string): string {
         const date = new Date(JSON.parse(leaseDate));
         return date.toLocaleDateString("de-DE", {
-            weekday: "long",
-            month: "long",
-            day: "numeric",
-            year: "numeric",
+            weekday: "long", month: "long", day: "numeric", year: "numeric",
         });
     }
 
@@ -290,11 +270,7 @@ export default class CompanySettingsPage extends Vue {
     }
 
     private cancelContract(): void {
-        alt.emit(
-            "phoneleasecompany:cancelcontract",
-            this.companyId,
-            this.leaseCompanyId
-        );
+        alt.emit("phoneleasecompany:cancelcontract", this.companyId, this.leaseCompanyId);
         this.closeCancelContractSecurityDialog();
     }
 

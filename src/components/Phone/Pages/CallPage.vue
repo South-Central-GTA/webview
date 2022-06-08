@@ -75,10 +75,7 @@ export default class CallPage extends Vue {
             const startPos = this.numberInput.selectionStart;
             const endPos = this.numberInput.selectionEnd;
 
-            this.numberInput.value =
-                this.numberInput.value.substring(0, startPos) +
-                number +
-                this.numberInput.value.substring(endPos, this.numberInput.value.length);
+            this.numberInput.value = this.numberInput.value.substring(0, startPos) + number + this.numberInput.value.substring(endPos, this.numberInput.value.length);
         } else {
             this.numberInput.value += number;
         }
@@ -87,10 +84,7 @@ export default class CallPage extends Vue {
     }
 
     private removeNumber(): void {
-        this.numberInput.value = this.numberInput.value.substring(
-            0,
-            this.numberInput.value.length - 1
-        );
+        this.numberInput.value = this.numberInput.value.substring(0, this.numberInput.value.length - 1);
         this.validate();
     }
 

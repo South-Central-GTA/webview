@@ -162,20 +162,14 @@ export default class MdcFiles extends Vue {
         this.groupId = GroupService.getInstance().Faction?.id ?? -1;
         this.directoryId = null;
 
-        alt.on("filesystem:opendirectory", (args: any[]) =>
-            this.onOpenDirectory(args[0], args[1], args[2])
-        );
+        alt.on("filesystem:opendirectory", (args: any[]) => this.onOpenDirectory(args[0], args[1], args[2]));
         alt.on("filesystem:openfile", (args: any[]) => this.onOpenFile(args[0]));
 
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
         this.characterId = character.getInstance().getCharacterId;
 
         if (this.groupId !== -1) {
-            const member = GroupService.getInstance().Faction?.members.find(
-                (w) => w.characterId == character.getInstance().getCharacterId
-            );
+            const member = GroupService.getInstance().Faction?.members.find((w) => w.characterId == character.getInstance().getCharacterId);
             if (member !== undefined) {
                 this.isOwner = member.owner;
             }
@@ -186,9 +180,7 @@ export default class MdcFiles extends Vue {
         alt.off("filesystem:opendirectory");
         alt.off("filesystem:openfile");
 
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
 
     private onShowNotification(message: string): void {
@@ -199,11 +191,7 @@ export default class MdcFiles extends Vue {
         this.isOperator = value;
     }
 
-    private onOpenDirectory(
-        directoryId: number | null,
-        directoryName: string,
-        files: FileInterface[]
-    ): void {
+    private onOpenDirectory(directoryId: number | null, directoryName: string, files: FileInterface[]): void {
         this.directoryId = directoryId;
         this.directoryName = directoryName;
         this.files = files;
@@ -225,11 +213,7 @@ export default class MdcFiles extends Vue {
         }
 
         const groupLevel = Number(eventData.target.value);
-        alt.emitServer(
-            "filesystem:setreadpermission",
-            this.fileToEdit?.id,
-            groupLevel
-        );
+        alt.emitServer("filesystem:setreadpermission", this.fileToEdit?.id, groupLevel);
         this.onShowNotification("Schreibberechtigungen wurden angepasst.");
     }
 
@@ -239,11 +223,7 @@ export default class MdcFiles extends Vue {
         }
 
         const groupLevel = Number(eventData.target.value);
-        alt.emitServer(
-            "filesystem:setwritepermission",
-            this.fileToEdit?.id,
-            groupLevel
-        );
+        alt.emitServer("filesystem:setwritepermission", this.fileToEdit?.id, groupLevel);
         this.onShowNotification("Leseberechtigungen wurden angepasst.");
     }
 
@@ -279,11 +259,7 @@ export default class MdcFiles extends Vue {
     }
 
     private requestSetAccessPermission(file: FileInterface): void {
-        alt.emitServerWithResponse<FileSystemRankSetup>(
-            "filesystem:getranksetup",
-            this.groupId,
-            file.id
-        )
+        alt.emitServerWithResponse<FileSystemRankSetup>("filesystem:getranksetup", this.groupId, file.id)
             .then((setup: FileSystemRankSetup) => {
                 this.showSetPermissionDialog = true;
                 this.fileToEdit = file;
@@ -294,9 +270,7 @@ export default class MdcFiles extends Vue {
     }
 
     private orderByAlphabet(): void {
-        this.files.sort((a: FileInterface, b: FileInterface) =>
-            a.title.localeCompare(b.title)
-        );
+        this.files.sort((a: FileInterface, b: FileInterface) => a.title.localeCompare(b.title));
         this.onShowNotification("Sortiere Liste alphabetisch.");
     }
 
@@ -387,12 +361,7 @@ export default class MdcFiles extends Vue {
     private getDate(jsonDate: string): string {
         const date = new Date(JSON.parse(jsonDate));
         return date.toLocaleDateString("de-DE", {
-            weekday: "short",
-            hour: "numeric",
-            minute: "numeric",
-            month: "numeric",
-            year: "numeric",
-            day: "numeric",
+            weekday: "short", hour: "numeric", minute: "numeric", month: "numeric", year: "numeric", day: "numeric",
         });
     }
 

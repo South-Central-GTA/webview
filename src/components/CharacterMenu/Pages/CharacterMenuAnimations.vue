@@ -45,15 +45,9 @@ export default class CharacterMenuAnimations extends Vue {
     private playerAnimations: number[] = [];
 
     public mounted(): void {
-        alt.on("animationcatalog:usersetup", (args: any[]) =>
-            this.setup(args[0], args[1])
-        );
-        alt.on("animationcatalog:addplayeranim", (args: any[]) =>
-            this.onAddPlayerAnimation(args[0])
-        );
-        alt.on("animationcatalog:removelayeranim", (args: any[]) =>
-            this.onRemovePlayerAnimation(args[0])
-        );
+        alt.on("animationcatalog:usersetup", (args: any[]) => this.setup(args[0], args[1]));
+        alt.on("animationcatalog:addplayeranim", (args: any[]) => this.onAddPlayerAnimation(args[0]));
+        alt.on("animationcatalog:removelayeranim", (args: any[]) => this.onRemovePlayerAnimation(args[0]));
     }
 
     public unmounted(): void {
@@ -62,10 +56,7 @@ export default class CharacterMenuAnimations extends Vue {
         alt.off("animationcatalog:removelayeranim");
     }
 
-    private setup(
-        animations: AnimationInterface[],
-        playerAnimations: number[]
-    ): void {
+    private setup(animations: AnimationInterface[], playerAnimations: number[]): void {
         this.cachedAnimations = this.animations;
 
         this.playerAnimations = playerAnimations;
@@ -82,9 +73,7 @@ export default class CharacterMenuAnimations extends Vue {
     }
 
     private onRemovePlayerAnimation(animationId: number): void {
-        this.playerAnimations = this.playerAnimations.filter(
-            (id) => id !== animationId
-        );
+        this.playerAnimations = this.playerAnimations.filter((id) => id !== animationId);
         this.sortAnimations(this.animations);
     }
 
@@ -109,19 +98,17 @@ export default class CharacterMenuAnimations extends Vue {
     }
 
     private sortAnimations(animations: AnimationInterface[]): void {
-        this.animations = animations.sort(
-            (a: AnimationInterface, b: AnimationInterface) => {
-                if (this.hasAnimation(a.id) && !this.hasAnimation(b.id)) {
-                    return -1;
-                }
-
-                if (!this.hasAnimation(a.id) && this.hasAnimation(b.id)) {
-                    return 1;
-                }
-
-                return 0;
+        this.animations = animations.sort((a: AnimationInterface, b: AnimationInterface) => {
+            if (this.hasAnimation(a.id) && !this.hasAnimation(b.id)) {
+                return -1;
             }
-        );
+
+            if (!this.hasAnimation(a.id) && this.hasAnimation(b.id)) {
+                return 1;
+            }
+
+            return 0;
+        });
     }
 
     private search(): void {
@@ -130,9 +117,7 @@ export default class CharacterMenuAnimations extends Vue {
             return;
         }
 
-        this.animations = this.cachedAnimations.filter((m) =>
-            m.name.toLowerCase().includes(this.searchBar.toLowerCase())
-        );
+        this.animations = this.cachedAnimations.filter((m) => m.name.toLowerCase().includes(this.searchBar.toLowerCase()));
     }
 }
 </script>

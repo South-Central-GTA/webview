@@ -30,12 +30,8 @@ export default class AdminPrison extends Vue {
     public mounted(): void {
         alt.emit("adminprison:ready");
 
-        alt.on("adminprison:start", (totalCheckpoints: number) =>
-            this.start(totalCheckpoints)
-        );
-        alt.on("adminprison:update", (leftCheckpoints: number) =>
-            this.update(leftCheckpoints)
-        );
+        alt.on("adminprison:start", (totalCheckpoints: number) => this.start(totalCheckpoints));
+        alt.on("adminprison:update", (leftCheckpoints: number) => this.update(leftCheckpoints));
     }
 
     public unmounted() {

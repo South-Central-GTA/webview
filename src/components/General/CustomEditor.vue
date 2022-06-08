@@ -83,13 +83,9 @@ import {CharacterCount} from "@tiptap/extension-character-count";
 })
 export default class CustomEditor extends Vue {
     private editor: Editor = new Editor({
-        extensions: [
-            StarterKit,
-            CharacterCount.configure({
-                limit: 2000000,
-            }),
-        ],
-        editable: false,
+        extensions: [StarterKit, CharacterCount.configure({
+            limit: 2000000,
+        }),], editable: false,
     });
 
     private isToolbarVisible: boolean = false;

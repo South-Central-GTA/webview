@@ -53,9 +53,7 @@ export default class TeamMenuMailAccountsLog extends Vue {
         }
 
         this.mailAccounts = this.cachedMailAccounts;
-        this.mailAccounts = this.mailAccounts.filter((m) =>
-            m.mailAddress?.includes(this.mailAddressSearch.toLowerCase())
-        );
+        this.mailAccounts = this.mailAccounts.filter((m) => m.mailAddress?.includes(this.mailAddressSearch.toLowerCase()));
     }
 
     private getType(type: number): string {
@@ -70,9 +68,7 @@ export default class TeamMenuMailAccountsLog extends Vue {
     }
 
     private getOwner(mailAccount: MailAccountInterface): string {
-        const characterAccess = mailAccount.characterAccesses.find(
-            (ca) => ca.owner
-        );
+        const characterAccess = mailAccount.characterAccesses.find((ca) => ca.owner);
         if (characterAccess !== undefined) {
             return characterAccess.name;
         } else {
@@ -88,11 +84,7 @@ export default class TeamMenuMailAccountsLog extends Vue {
     private getDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "numeric", day: "numeric",
         });
     }
 }

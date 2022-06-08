@@ -68,44 +68,31 @@ export default class MdcBankAccountRecord extends Vue {
     private noteInput: string = "";
 
     public mounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
     }
 
     public unmounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
 
-    public setup(
-        bankAccount: BankAccountInterface,
-        notes: MdcNoteInterface[]
-    ): void {
+    public setup(bankAccount: BankAccountInterface, notes: MdcNoteInterface[]): void {
         this.bankAccountId = bankAccount.id;
         this.bankDetails = bankAccount.bankDetails;
         this.notes = notes;
 
         this.accesses = [];
 
-        bankAccount.characterAccesses.forEach(
-            (access: BankAccountCharacterAccessInterface) => {
-                this.accesses.push({
-                    name: access.name,
-                    owner: access.owner,
-                });
-            }
-        );
+        bankAccount.characterAccesses.forEach((access: BankAccountCharacterAccessInterface) => {
+            this.accesses.push({
+                name: access.name, owner: access.owner,
+            });
+        });
 
-        bankAccount.groupAccesses.forEach(
-            (access: BankAccountGroupAccessInterface) => {
-                this.accesses.push({
-                    name: access.name,
-                    owner: access.owner,
-                });
-            }
-        );
+        bankAccount.groupAccesses.forEach((access: BankAccountGroupAccessInterface) => {
+            this.accesses.push({
+                name: access.name, owner: access.owner,
+            });
+        });
     }
 
     private onIsOperatorChanged(value: boolean): void {
@@ -117,12 +104,7 @@ export default class MdcBankAccountRecord extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "policemdc:createnote",
-            this.bankAccountId,
-            MdcSearchType.BANK_ACCOUNT,
-            this.noteInput
-        );
+        alt.emitServer("policemdc:createnote", this.bankAccountId, MdcSearchType.BANK_ACCOUNT, this.noteInput);
 
         this.noteInput = "";
     }
@@ -138,11 +120,7 @@ export default class MdcBankAccountRecord extends Vue {
 
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "numeric", day: "numeric",
         });
     }
 }

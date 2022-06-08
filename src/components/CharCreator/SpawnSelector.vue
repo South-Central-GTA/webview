@@ -47,12 +47,8 @@ export default class SpawnSelector extends Vue {
     private selectedSpawn?: SpawnInterface;
 
     public mounted(): void {
-        alt.on("spawnselector:setinfo", (spawn: SpawnInterface) =>
-            this.setInfo(spawn)
-        );
-        alt.on("spawnselector:defaultselect", (spawn: SpawnInterface) =>
-            this.defaultSelect(spawn)
-        );
+        alt.on("spawnselector:setinfo", (spawn: SpawnInterface) => this.setInfo(spawn));
+        alt.on("spawnselector:defaultselect", (spawn: SpawnInterface) => this.defaultSelect(spawn));
     }
 
     public unmounted(): void {
@@ -65,10 +61,7 @@ export default class SpawnSelector extends Vue {
 
         this.buttonDisabled = false;
 
-        if (
-            this.selectedSpawn !== undefined &&
-            this.currentSpawn.id === this.selectedSpawn.id
-        ) {
+        if (this.selectedSpawn !== undefined && this.currentSpawn.id === this.selectedSpawn.id) {
             this.selectButtonDisabled = true;
         }
     }
@@ -85,10 +78,7 @@ export default class SpawnSelector extends Vue {
         this.selectedSpawn = spawn;
 
         this.selectButtonDisabled = false;
-        if (
-            this.currentSpawn !== undefined &&
-            this.currentSpawn.id === this.selectedSpawn.id
-        ) {
+        if (this.currentSpawn !== undefined && this.currentSpawn.id === this.selectedSpawn.id) {
             this.selectButtonDisabled = true;
         }
     }

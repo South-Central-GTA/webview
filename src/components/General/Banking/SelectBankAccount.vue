@@ -25,9 +25,7 @@ export default class SelectBankAccount extends Vue {
     public mounted(): void {
         banking
             .getInstance()
-            .onChange.on((bankAccounts: BankAccountInterface[]) =>
-            this.update(bankAccounts)
-        );
+            .onChange.on((bankAccounts: BankAccountInterface[]) => this.update(bankAccounts));
 
         this.setup(banking.getInstance().getBankAccounts, false);
     }
@@ -35,9 +33,7 @@ export default class SelectBankAccount extends Vue {
     public unmounted(): void {
         banking
             .getInstance()
-            .onChange.off((bankAccounts: BankAccountInterface[]) =>
-            this.update(bankAccounts)
-        );
+            .onChange.off((bankAccounts: BankAccountInterface[]) => this.update(bankAccounts));
     }
 
     private update(bankAccounts: BankAccountInterface[]): void {

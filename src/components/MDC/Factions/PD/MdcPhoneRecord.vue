@@ -53,27 +53,15 @@ export default class MdcPhoneRecord extends Vue {
     private noteInput: string = "";
 
     public mounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
     }
 
     public unmounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
 
-    public setup(
-        phoneId: number,
-        phoneNumber: string,
-        ownerCharacterName: string,
-        notes: MdcNoteInterface[]
-    ): void {
-        this.phoneNumber =
-            phoneNumber.substring(0, 3) +
-            " - " +
-            phoneNumber.substring(3, phoneNumber.length);
+    public setup(phoneId: number, phoneNumber: string, ownerCharacterName: string, notes: MdcNoteInterface[]): void {
+        this.phoneNumber = phoneNumber.substring(0, 3) + " - " + phoneNumber.substring(3, phoneNumber.length);
         this.phoneId = phoneId;
         this.characterName = ownerCharacterName;
         this.notes = notes;
@@ -88,12 +76,7 @@ export default class MdcPhoneRecord extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "policemdc:createnote",
-            this.phoneId,
-            MdcSearchType.NUMBER,
-            this.noteInput
-        );
+        alt.emitServer("policemdc:createnote", this.phoneId, MdcSearchType.NUMBER, this.noteInput);
 
         this.noteInput = "";
     }
@@ -109,11 +92,7 @@ export default class MdcPhoneRecord extends Vue {
 
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "numeric", day: "numeric",
         });
     }
 }

@@ -57,19 +57,13 @@ export default class TeamMenuPhoneMessagesLog extends Vue {
         }
 
         this.messages = this.cachedMessages;
-        this.messages = this.messages.filter((m) =>
-            m.senderPhoneNumber?.includes(this.phoneNumberSearch.toLowerCase())
-        );
+        this.messages = this.messages.filter((m) => m.senderPhoneNumber?.includes(this.phoneNumberSearch.toLowerCase()));
     }
 
     private getDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "numeric", day: "numeric",
         });
     }
 }

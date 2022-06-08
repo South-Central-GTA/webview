@@ -76,10 +76,7 @@ interface SortedContactInterface {
 
 @Options({
     components: {
-        PhoneContact,
-        AddPhoneContact,
-        EditPhoneContact,
-        DeletePhoneContact,
+        PhoneContact, AddPhoneContact, EditPhoneContact, DeletePhoneContact,
     },
 })
 export default class ContactsPage extends Vue {
@@ -103,8 +100,7 @@ export default class ContactsPage extends Vue {
             const letter = alphabet[index];
 
             const sorted: SortedContactInterface = {
-                letter: letter,
-                contacts: contacts
+                letter: letter, contacts: contacts
                     .filter((c) => c.name[0].toUpperCase() === letter)
                     .sort((a, b) => a.name.localeCompare(b.name)),
             };
@@ -119,13 +115,10 @@ export default class ContactsPage extends Vue {
 
         // We have also to check all other characters to so we are just checking if there is any contacts left.
         const sortedMap = this.sortedContacts.flatMap((sc) => sc.contacts);
-        const missingContacts = contacts.filter(
-            (c) => !sortedMap.find((sm) => sm.id === c.id)
-        );
+        const missingContacts = contacts.filter((c) => !sortedMap.find((sm) => sm.id === c.id));
 
         const sorted: SortedContactInterface = {
-            letter: "Andere Zeichen",
-            contacts: missingContacts.sort((a, b) => a.name.localeCompare(b.name)),
+            letter: "Andere Zeichen", contacts: missingContacts.sort((a, b) => a.name.localeCompare(b.name)),
         };
 
         this.sortedContacts.push(sorted);
@@ -201,11 +194,7 @@ export default class ContactsPage extends Vue {
     }
 
     private getCorrectFormat(numberString: string): string {
-        return (
-            numberString.substring(0, 3) +
-            " - " +
-            numberString.substring(3, numberString.length)
-        );
+        return (numberString.substring(0, 3) + " - " + numberString.substring(3, numberString.length));
     }
 
     private isNumeric(value: string): boolean {

@@ -86,9 +86,7 @@ export default class TeamMenuHouseingCatalog extends Vue {
 
     public mounted(): void {
         alt.on("housingcatalog:setup", (args: any) => this.setup(args[0]));
-        alt.on("housingcatalog:opendetails", (args: any) =>
-            this.openDetails(args[0])
-        );
+        alt.on("housingcatalog:opendetails", (args: any) => this.openDetails(args[0]));
     }
 
     public unmounted(): void {
@@ -120,9 +118,7 @@ export default class TeamMenuHouseingCatalog extends Vue {
             return;
         }
 
-        this.houses = this.cachedHouses.filter(
-            (h) => h.id == Number.parseInt(this.houseSearch)
-        );
+        this.houses = this.cachedHouses.filter((h) => h.id == Number.parseInt(this.houseSearch));
     }
 }
 </script>

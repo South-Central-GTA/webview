@@ -42,28 +42,19 @@ export default class StatusBar extends Vue {
     private notifications: PhoneNotificationInterface[] = [];
 
     public mounted(): void {
-        alt.on(
-            "phone:pushnotification",
-            (notification: PhoneNotificationInterface) =>
-                this.pushNotification(notification)
-        );
+        alt.on("phone:pushnotification", (notification: PhoneNotificationInterface) => this.pushNotification(notification));
     }
 
     public unmounted(): void {
         alt.off("phone:pushnotification");
     }
 
-    public setNotifications(
-        notifications: PhoneNotificationInterface[],
-        lastTimeOpendNotifications: string
-    ): void {
+    public setNotifications(notifications: PhoneNotificationInterface[], lastTimeOpendNotifications: string): void {
         this.notifications = notifications;
 
         if (this.notifications.length > 0) {
             const lastUsage = new Date(JSON.parse(lastTimeOpendNotifications));
-            const lastMessageDate = new Date(
-                JSON.parse(this.notifications[this.notifications.length - 1].createdAt)
-            );
+            const lastMessageDate = new Date(JSON.parse(this.notifications[this.notifications.length - 1].createdAt));
             this.missingNotifications = lastUsage < lastMessageDate;
         }
     }

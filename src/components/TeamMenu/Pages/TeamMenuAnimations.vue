@@ -58,9 +58,7 @@ export default class TeamMenuAnimations extends Vue {
             return;
         }
 
-        this.animations = this.cachedAnimations.filter((m) =>
-            m.name.toLowerCase().includes(this.searchBar.toLowerCase())
-        );
+        this.animations = this.cachedAnimations.filter((m) => m.name.toLowerCase().includes(this.searchBar.toLowerCase()));
     }
 }
 </script>

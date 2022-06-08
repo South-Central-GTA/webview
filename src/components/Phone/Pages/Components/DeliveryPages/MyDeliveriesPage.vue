@@ -59,9 +59,7 @@ export default class MyDeliveriesPage extends Vue {
     private loadedData = false;
 
     public mounted(): void {
-        alt.on("delivery:sendgroupdeliveries", (args: any[]) =>
-            this.setup(args[0])
-        );
+        alt.on("delivery:sendgroupdeliveries", (args: any[]) => this.setup(args[0]));
     }
 
     public unmounted(): void {
@@ -112,21 +110,13 @@ export default class MyDeliveriesPage extends Vue {
     }
 
     private getCorrectFormat(numberString: string): string {
-        return (
-            numberString.substring(0, 3) +
-            " - " +
-            numberString.substring(3, numberString.length)
-        );
+        return (numberString.substring(0, 3) + " - " + numberString.substring(3, numberString.length));
     }
 
     private getCorrectDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            weekday: "long",
-            hour: "numeric",
-            minute: "numeric",
-            month: "long",
-            day: "numeric",
+            weekday: "long", hour: "numeric", minute: "numeric", month: "long", day: "numeric",
         });
     }
 

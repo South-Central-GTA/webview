@@ -31,8 +31,7 @@ export default class Speedo extends Vue {
 
     private readonly radius = 140;
     private readonly center: TwoDValueInterface = {
-        x: 400,
-        y: 400,
+        x: 400, y: 400,
     };
 
     private gear = 1;
@@ -45,11 +44,7 @@ export default class Speedo extends Vue {
     // Function gets called when view is ready and loaded.
     public mounted(): void {
         alt.on("speedo:toggleui", (state: boolean) => this.toggleVehicleUI(state));
-        alt.on(
-            "speedo:getinformation",
-            (vehicleInformations: VehicleInformationInterface) =>
-                this.setVehicleInformations(vehicleInformations)
-        );
+        alt.on("speedo:getinformation", (vehicleInformations: VehicleInformationInterface) => this.setVehicleInformations(vehicleInformations));
 
         const foregroundCtx = this.foregroundCanvas?.getContext("2d");
         if (foregroundCtx) {
@@ -119,13 +114,7 @@ export default class Speedo extends Vue {
     private drawOuterCircleBackground(): void {
         this.backgroundCtx.beginPath();
         this.backgroundCtx.strokeStyle = "rgba(0, 0, 0, 0.5)";
-        this.backgroundCtx.arc(
-            this.center.x,
-            this.center.y,
-            this.radius,
-            0,
-            Math.PI * 2
-        );
+        this.backgroundCtx.arc(this.center.x, this.center.y, this.radius, 0, Math.PI * 2);
         this.backgroundCtx.lineWidth = 25;
         this.backgroundCtx.stroke();
     }
@@ -133,55 +122,27 @@ export default class Speedo extends Vue {
     private drawInnerCircleBackground(): void {
         this.backgroundCtx.beginPath();
         this.backgroundCtx.fillStyle = "rgba(0, 0, 0, 0.2)";
-        this.backgroundCtx.arc(
-            this.center.x,
-            this.center.y,
-            this.radius - 12,
-            0,
-            Math.PI * 2
-        );
+        this.backgroundCtx.arc(this.center.x, this.center.y, this.radius - 12, 0, Math.PI * 2);
         this.backgroundCtx.fill();
     }
 
     private drawDrivenKilometreBox(): void {
-        this.backgroundCtx.fillRect(
-            this.center.x - 50,
-            this.center.y + 75,
-            100,
-            21
-        );
+        this.backgroundCtx.fillRect(this.center.x - 50, this.center.y + 75, 100, 21);
     }
 
     private drawSpeedBox(): void {
-        this.backgroundCtx.fillRect(
-            this.center.x - 60,
-            this.center.y + 20,
-            120,
-            50
-        );
+        this.backgroundCtx.fillRect(this.center.x - 60, this.center.y + 20, 120, 50);
     }
 
     private drawFuelBox(): void {
         this.backgroundCtx.beginPath();
         this.backgroundCtx.fillStyle = "rgba(0, 0, 0, 0.2)";
-        this.backgroundCtx.arc(
-            this.center.x - 42,
-            this.center.y - 25,
-            25,
-            Math.PI - 0.5,
-            0.5
-        );
+        this.backgroundCtx.arc(this.center.x - 42, this.center.y - 25, 25, Math.PI - 0.5, 0.5);
         this.backgroundCtx.fill();
 
         this.backgroundCtx.beginPath();
         this.backgroundCtx.strokeStyle = "rgba(0, 0, 0, 0.3)";
-        this.backgroundCtx.arc(
-            this.center.x - 42,
-            this.center.y - 25,
-            27,
-            Math.PI - 0.5,
-            0.5
-        );
+        this.backgroundCtx.arc(this.center.x - 42, this.center.y - 25, 27, Math.PI - 0.5, 0.5);
         this.backgroundCtx.lineWidth = 4;
         this.backgroundCtx.stroke();
     }
@@ -284,13 +245,7 @@ export default class Speedo extends Vue {
     private drawUpperCircle(): void {
         this.backgroundCtx.beginPath();
         this.backgroundCtx.strokeStyle = "#fff";
-        this.backgroundCtx.arc(
-            this.center.x,
-            this.center.y,
-            this.radius * 1.086,
-            2.78,
-            6.65
-        );
+        this.backgroundCtx.arc(this.center.x, this.center.y, this.radius * 1.086, 2.78, 6.65);
         this.backgroundCtx.lineWidth = 5;
         this.backgroundCtx.stroke();
     }
@@ -298,25 +253,13 @@ export default class Speedo extends Vue {
     private drawUpperRedCircle(): void {
         this.backgroundCtx.beginPath();
         this.backgroundCtx.strokeStyle = "#e74c3c";
-        this.backgroundCtx.arc(
-            this.center.x,
-            this.center.y,
-            this.radius * 0.99,
-            6.03,
-            6.64
-        );
+        this.backgroundCtx.arc(this.center.x, this.center.y, this.radius * 0.99, 6.03, 6.64);
         this.backgroundCtx.lineWidth = 10;
         this.backgroundCtx.stroke();
 
         this.backgroundCtx.beginPath();
         this.backgroundCtx.strokeStyle = "#c0392b";
-        this.backgroundCtx.arc(
-            this.center.x,
-            this.center.y,
-            this.radius * 0.95,
-            6.03,
-            6.64
-        );
+        this.backgroundCtx.arc(this.center.x, this.center.y, this.radius * 0.95, 6.03, 6.64);
         this.backgroundCtx.lineWidth = 5;
         this.backgroundCtx.stroke();
     }
@@ -324,13 +267,7 @@ export default class Speedo extends Vue {
     private drawUpperSecondCircle(): void {
         this.backgroundCtx.beginPath();
         this.backgroundCtx.strokeStyle = "#ccc";
-        this.backgroundCtx.arc(
-            this.center.x,
-            this.center.y,
-            this.radius * 1.05,
-            2.78,
-            6.64
-        );
+        this.backgroundCtx.arc(this.center.x, this.center.y, this.radius * 1.05, 2.78, 6.64);
         this.backgroundCtx.lineWidth = 12;
         this.backgroundCtx.stroke();
     }
@@ -350,47 +287,19 @@ export default class Speedo extends Vue {
             const innerTicky = tickRadius - Math.sin(rad) * tickRadius;
 
             if (tick <= 10) {
-                this.backgroundCtx.fillText(
-                    numberToPrint.toString(),
-                    this.center.x - tickRadius - 8 + innerTickX,
-                    this.center.y - tickRadius - 14 + innerTicky + 5
-                );
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 8 + innerTickX, this.center.y - tickRadius - 14 + innerTicky + 5);
             } else if (tick < 50) {
-                this.backgroundCtx.fillText(
-                    numberToPrint.toString(),
-                    this.center.x - tickRadius - 4 + innerTickX - 5,
-                    this.center.y - tickRadius - 14 + innerTicky + 5
-                );
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 4 + innerTickX - 5, this.center.y - tickRadius - 14 + innerTicky + 5);
             } else if (tick < 90) {
-                this.backgroundCtx.fillText(
-                    numberToPrint.toString(),
-                    this.center.x - tickRadius - 8 + innerTickX,
-                    this.center.y - tickRadius - 12 + innerTicky
-                );
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 8 + innerTickX, this.center.y - tickRadius - 12 + innerTicky);
             } else if (tick === 90) {
-                this.backgroundCtx.fillText(
-                    numberToPrint.toString(),
-                    this.center.x - tickRadius - 10 + innerTickX + 4,
-                    this.center.y - tickRadius - 10 + innerTicky
-                );
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 10 + innerTickX + 4, this.center.y - tickRadius - 10 + innerTicky);
             } else if (tick < 145) {
-                this.backgroundCtx.fillText(
-                    numberToPrint.toString(),
-                    this.center.x - tickRadius - 14 + innerTickX + 10,
-                    this.center.y - tickRadius - 12 + innerTicky
-                );
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 14 + innerTickX + 10, this.center.y - tickRadius - 12 + innerTicky);
             } else if (tick < 180) {
-                this.backgroundCtx.fillText(
-                    numberToPrint.toString(),
-                    this.center.x - tickRadius - 16 + innerTickX + 10,
-                    this.center.y - tickRadius - 12 + innerTicky
-                );
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 16 + innerTickX + 10, this.center.y - tickRadius - 12 + innerTicky);
             } else {
-                this.backgroundCtx.fillText(
-                    numberToPrint.toString(),
-                    this.center.x - tickRadius - 31 + innerTickX + 15,
-                    this.center.y - tickRadius - 14 + innerTicky + 5
-                );
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 31 + innerTickX + 15, this.center.y - tickRadius - 14 + innerTicky + 5);
             }
 
             numberToPrint++;
@@ -402,11 +311,7 @@ export default class Speedo extends Vue {
         this.backgroundCtx.textBaseline = "middle";
         this.backgroundCtx.textAlign = "end";
         this.backgroundCtx.fillStyle = "rgba(0, 0, 0, 0.2)";
-        this.backgroundCtx.fillText(
-            "888888",
-            this.center.x + 28,
-            this.center.y + 87
-        );
+        this.backgroundCtx.fillText("888888", this.center.x + 28, this.center.y + 87);
     }
 
     private drawDrivenKilometrePlaceholderUnit(): void {
@@ -460,11 +365,7 @@ export default class Speedo extends Vue {
         this.foregroundCtx.textBaseline = "middle";
         this.foregroundCtx.textAlign = "end";
         this.foregroundCtx.fillStyle = "#fff";
-        this.foregroundCtx.fillText(
-            this.drivenKilometre.toFixed(0),
-            this.center.x + 28,
-            this.center.y + 87
-        );
+        this.foregroundCtx.fillText(this.drivenKilometre.toFixed(0), this.center.x + 28, this.center.y + 87);
     }
 
     private drawDrivenKilometreUnit(): void {
@@ -480,11 +381,7 @@ export default class Speedo extends Vue {
         this.foregroundCtx.textBaseline = "middle";
         this.foregroundCtx.textAlign = "end";
         this.foregroundCtx.fillStyle = "#fff";
-        this.foregroundCtx.fillText(
-            this.speed.toString(),
-            this.center.x + 21,
-            this.center.y + 48
-        );
+        this.foregroundCtx.fillText(this.speed.toString(), this.center.x + 21, this.center.y + 48);
     }
 
     private drawGearPlaceholderText(): void {
@@ -500,11 +397,7 @@ export default class Speedo extends Vue {
         this.foregroundCtx.textBaseline = "middle";
         this.foregroundCtx.textAlign = "center";
         this.foregroundCtx.fillStyle = "#fff";
-        this.foregroundCtx.fillText(
-            this.gear.toString(),
-            this.center.x + 18,
-            this.center.y - 44
-        );
+        this.foregroundCtx.fillText(this.gear.toString(), this.center.x + 18, this.center.y - 44);
     }
 
     private drawNeedle(): void {
@@ -548,27 +441,16 @@ export default class Speedo extends Vue {
         this.foregroundCtx.lineTo(0, 2);
         this.foregroundCtx.fill();
         this.foregroundCtx.rotate(-radian);
-        this.foregroundCtx.translate(
-            -(this.center.x - 42.5),
-            -(this.center.y - 25)
-        );
+        this.foregroundCtx.translate(-(this.center.x - 42.5), -(this.center.y - 25));
         this.foregroundCtx.beginPath();
 
         this.foregroundCtx.fillStyle = "#ccc";
-        this.foregroundCtx.arc(
-            this.center.x - 42.5,
-            this.center.y - 25,
-            4,
-            0,
-            Math.PI * 2
-        );
+        this.foregroundCtx.arc(this.center.x - 42.5, this.center.y - 25, 4, 0, Math.PI * 2);
         this.foregroundCtx.fill();
         this.foregroundCtx.closePath();
     }
 
-    private setVehicleInformations(
-        vehicleInformations: VehicleInformationInterface
-    ) {
+    private setVehicleInformations(vehicleInformations: VehicleInformationInterface) {
         this.speed = Math.round(vehicleInformations.speed);
         this.gear = vehicleInformations.gear;
         this.rpm = vehicleInformations.rpm - 0.1;
@@ -576,12 +458,7 @@ export default class Speedo extends Vue {
         this.engineOn = vehicleInformations.engine;
         this.drivenKilometre = vehicleInformations.drivenKilometre;
 
-        this.foregroundCtx.clearRect(
-            this.center.x - 200,
-            this.center.y - 200,
-            600,
-            600
-        );
+        this.foregroundCtx.clearRect(this.center.x - 200, this.center.y - 200, 600, 600);
 
         if (this.engineOn) {
             this.drawDrivenKilometreText();

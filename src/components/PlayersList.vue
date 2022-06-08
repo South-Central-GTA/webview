@@ -38,11 +38,7 @@ export default class PlayersList extends Vue {
     private players: PlayerInterface[] = [];
 
     public mounted(): void {
-        alt.on(
-            "playerslist:toggle",
-            (visible: boolean, players: PlayerInterface[]) =>
-                this.toggle(visible, players)
-        );
+        alt.on("playerslist:toggle", (visible: boolean, players: PlayerInterface[]) => this.toggle(visible, players));
     }
 
     public unmounted(): void {

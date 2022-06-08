@@ -124,38 +124,14 @@ export default class FaceFeatures extends Vue {
         this.neckWidth = this.faceFeatures.neckWidth * 100;
         this.lipsThickness = this.faceFeatures.lipsThickness * 100;
 
-        this.browSlider.setPosition(
-            this.faceFeatures.browWidth,
-            this.faceFeatures.browHeight
-        );
-        this.noseSlider.setPosition(
-            this.faceFeatures.noseWidth,
-            this.faceFeatures.noseHeight
-        );
-        this.noseProfilSlider.setPosition(
-            -this.faceFeatures.noseLength,
-            -this.faceFeatures.noseBridge
-        );
-        this.noseTipSlider.setPosition(
-            -this.faceFeatures.noseBridgeShift,
-            this.faceFeatures.noseTip
-        );
-        this.cheekboneSlider.setPosition(
-            this.faceFeatures.cheekboneWidth,
-            this.faceFeatures.cheekboneHeight
-        );
-        this.jawSlider.setPosition(
-            this.faceFeatures.jawWidth,
-            this.faceFeatures.jawHeight
-        );
-        this.chinSlider.setPosition(
-            this.faceFeatures.chinPosition,
-            this.faceFeatures.chinWidth
-        );
-        this.chinShapeSlider.setPosition(
-            this.faceFeatures.chinLength,
-            this.faceFeatures.chinShape
-        );
+        this.browSlider.setPosition(this.faceFeatures.browWidth, this.faceFeatures.browHeight);
+        this.noseSlider.setPosition(this.faceFeatures.noseWidth, this.faceFeatures.noseHeight);
+        this.noseProfilSlider.setPosition(-this.faceFeatures.noseLength, -this.faceFeatures.noseBridge);
+        this.noseTipSlider.setPosition(-this.faceFeatures.noseBridgeShift, this.faceFeatures.noseTip);
+        this.cheekboneSlider.setPosition(this.faceFeatures.cheekboneWidth, this.faceFeatures.cheekboneHeight);
+        this.jawSlider.setPosition(this.faceFeatures.jawWidth, this.faceFeatures.jawHeight);
+        this.chinSlider.setPosition(this.faceFeatures.chinPosition, this.faceFeatures.chinWidth);
+        this.chinShapeSlider.setPosition(this.faceFeatures.chinLength, this.faceFeatures.chinShape);
     }
 
     private onEyesSizeUpdated(): void {

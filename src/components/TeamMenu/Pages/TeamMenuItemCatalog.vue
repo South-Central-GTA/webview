@@ -51,11 +51,9 @@ export default class TeamMenuItemCatalog extends Vue {
 
     public mounted(): void {
         alt.on("itemcatalog:setup", (args: any) => this.setup(args[0]));
+        alt.emitServerWithResponse("itemcatalog:open");
     }
 
-    public unmounted(): void {
-        alt.off("itemcatalog:setup");
-    }
 
     private setup(catalogItems: CatalogItemInterface[]): void {
         catalogItems.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
@@ -64,8 +62,7 @@ export default class TeamMenuItemCatalog extends Vue {
     }
 
     private getImage(image: string): string {
-        if (!image)
-            return "";
+        if (!image) return "";
 
         const images = require.context('../../../assets/images/item_icons/', false, /\.png$/);
         return images("./" + image + ".png");

@@ -45,8 +45,7 @@ import {LicenseInterface} from "@/scripts/interfaces/group/license.interface";
 
 @Options({
     components: {
-        CompanyWorkerOverview,
-        CompanySettings,
+        CompanyWorkerOverview, CompanySettings,
     },
 })
 export default class CompanyManagePage extends Vue {
@@ -78,9 +77,7 @@ export default class CompanyManagePage extends Vue {
 
         this.companyName = this.company.name;
 
-        const member = this.company.members.find(
-            (w) => w.characterId == character.getInstance().getCharacterId
-        );
+        const member = this.company.members.find((w) => w.characterId == character.getInstance().getCharacterId);
         if (member !== undefined) {
             if (member.owner) {
                 // Check if the player is owner, if not check if he has the rank with permissions to manage.
@@ -91,28 +88,17 @@ export default class CompanyManagePage extends Vue {
             } else {
                 const rank = this.company.ranks.find((r) => r.level === member.level);
                 if (rank !== undefined) {
-                    this.canManageMembers =
-                        (rank.groupPermission & GroupPermission.MANAGER_MEMBERS) ===
-                        GroupPermission.MANAGER_MEMBERS;
-                    this.canBuyLics =
-                        (rank.groupPermission & GroupPermission.BUY_LICENSES) ===
-                        GroupPermission.BUY_LICENSES;
-                    this.canSellLics =
-                        (rank.groupPermission & GroupPermission.SELL_LICENSES) ===
-                        GroupPermission.SELL_LICENSES;
-                    this.canChangeDeliveryVisibility =
-                        (rank.groupPermission &
-                            GroupPermission.CHANGE_DELIVERY_VISIBILITY) ===
-                        GroupPermission.CHANGE_DELIVERY_VISIBILITY;
+                    this.canManageMembers = (rank.groupPermission & GroupPermission.MANAGER_MEMBERS) === GroupPermission.MANAGER_MEMBERS;
+                    this.canBuyLics = (rank.groupPermission & GroupPermission.BUY_LICENSES) === GroupPermission.BUY_LICENSES;
+                    this.canSellLics = (rank.groupPermission & GroupPermission.SELL_LICENSES) === GroupPermission.SELL_LICENSES;
+                    this.canChangeDeliveryVisibility = (rank.groupPermission & GroupPermission.CHANGE_DELIVERY_VISIBILITY) === GroupPermission.CHANGE_DELIVERY_VISIBILITY;
                 }
             }
         }
 
         const bankAccount = banking
             .getInstance()
-            .getBankAccounts.find((b) =>
-                b.groupAccesses.some((ga) => ga.groupId === this.company?.id)
-            );
+            .getBankAccounts.find((b) => b.groupAccesses.some((ga) => ga.groupId === this.company?.id));
         if (bankAccount !== undefined) {
             this.bankAccountAmout = bankAccount.amount;
         }
@@ -121,12 +107,9 @@ export default class CompanyManagePage extends Vue {
 
         const house = houseing
             .getInstance()
-            .getHouses.find(
-                (h) => h.groupOwnerId === company.id && h.houseType === 0
-            );
+            .getHouses.find((h) => h.groupOwnerId === company.id && h.houseType === 0);
         if (house !== undefined) {
-            this.officeHouseText =
-                house.streetName + " " + house.subName + " " + house.houseNumber;
+            this.officeHouseText = house.streetName + " " + house.subName + " " + house.houseNumber;
         }
 
         if (this.currentTab === 1) {
@@ -138,22 +121,12 @@ export default class CompanyManagePage extends Vue {
         }
 
         if (this.currentTab === 2) {
-            this.companySettings.setup(
-                this.company,
-                this.licenses,
-                this.isOwner,
-                this.canSellLics,
-                this.canBuyLics,
-                this.canChangeDeliveryVisibility
-            );
+            this.companySettings.setup(this.company, this.licenses, this.isOwner, this.canSellLics, this.canBuyLics, this.canChangeDeliveryVisibility);
         }
     }
 
     public resetTab(): void {
-        if (
-            this.currentTab === 1 &&
-            this.companyWorkerOverview.getIsEditingWindowOpen
-        ) {
+        if (this.currentTab === 1 && this.companyWorkerOverview.getIsEditingWindowOpen) {
             this.companyWorkerOverview.closeWindow();
             return;
         }
@@ -171,14 +144,7 @@ export default class CompanyManagePage extends Vue {
         }
 
         if (id === 2) {
-            this.companySettings.setup(
-                this.company,
-                this.licenses,
-                this.isOwner,
-                this.canSellLics,
-                this.canBuyLics,
-                this.canChangeDeliveryVisibility
-            );
+            this.companySettings.setup(this.company, this.licenses, this.isOwner, this.canSellLics, this.canBuyLics, this.canChangeDeliveryVisibility);
         }
 
         this.currentTab = id;

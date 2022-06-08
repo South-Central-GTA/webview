@@ -318,9 +318,7 @@ export default class MailApp extends Vue {
     public mounted(): void {
         mailing
             .getInstance()
-            .onChange.on((mailAccounts: MailAccountInterface[]) =>
-            this.update(mailAccounts)
-        );
+            .onChange.on((mailAccounts: MailAccountInterface[]) => this.update(mailAccounts));
         this.update(mailing.getInstance().getMailAccounts);
         this.characterId = character.getInstance().getCharacterId;
 
@@ -328,17 +326,13 @@ export default class MailApp extends Vue {
 
         alt.on("mail:senderror", (args: any[]) => this.showErrorMessage(args[0]));
         alt.on("mail:sendinfo", (args: any[]) => this.showInfoMessage(args[0]));
-        alt.on("mail:sendbackup", (args: any[]) =>
-            this.setBackup(args[0], args[1])
-        );
+        alt.on("mail:sendbackup", (args: any[]) => this.setBackup(args[0], args[1]));
     }
 
     public unmounted(): void {
         mailing
             .getInstance()
-            .onChange.off((mailAccounts: MailAccountInterface[]) =>
-            this.update(mailAccounts)
-        );
+            .onChange.off((mailAccounts: MailAccountInterface[]) => this.update(mailAccounts));
 
         alt.off("mail:senderror");
         alt.off("mail:sendinfo");
@@ -385,9 +379,7 @@ export default class MailApp extends Vue {
         this.hasAccount = mailAccounts.length !== 0;
 
         if (this.currentMailAddress !== "") {
-            const currentMailAccount = mailAccounts.find(
-                (m) => m.mailAddress == this.currentMailAddress
-            );
+            const currentMailAccount = mailAccounts.find((m) => m.mailAddress == this.currentMailAddress);
             if (currentMailAccount !== undefined) {
                 this.openAccount(currentMailAccount);
             } else {
@@ -411,33 +403,21 @@ export default class MailApp extends Vue {
         this.currentAccount = mailAccount;
         this.currentMailAddress = mailAccount.mailAddress;
 
-        const characterAccess = mailAccount.characterAccesses.find(
-            (ca) => ca.characterId == character.getInstance().getCharacterId
-        );
+        const characterAccess = mailAccount.characterAccesses.find((ca) => ca.characterId == character.getInstance().getCharacterId);
         if (characterAccess !== undefined) {
             this.isOwner = characterAccess.owner;
-            this.canSending =
-                (characterAccess.permission & MailingPermission.SENDING) ===
-                MailingPermission.SENDING || characterAccess.owner;
-            this.canReading =
-                (characterAccess.permission & MailingPermission.READING) ===
-                MailingPermission.READING || characterAccess.owner;
-            this.canDeleting =
-                (characterAccess.permission & MailingPermission.DELETING) ===
-                MailingPermission.DELETING || characterAccess.owner;
+            this.canSending = (characterAccess.permission & MailingPermission.SENDING) === MailingPermission.SENDING || characterAccess.owner;
+            this.canReading = (characterAccess.permission & MailingPermission.READING) === MailingPermission.READING || characterAccess.owner;
+            this.canDeleting = (characterAccess.permission & MailingPermission.DELETING) === MailingPermission.DELETING || characterAccess.owner;
         }
 
         if (mailAccount.type === 1) {
             const group = groupService
                 .getInstance()
-                .AllGroups?.find((g) =>
-                    mailAccount.groupAccesses.some((ga) => ga.groupId === g.id)
-                );
+                .AllGroups?.find((g) => mailAccount.groupAccesses.some((ga) => ga.groupId === g.id));
 
             if (group !== undefined) {
-                const member = group.members.find(
-                    (m) => m.characterId === character.getInstance().getCharacterId
-                );
+                const member = group.members.find((m) => m.characterId === character.getInstance().getCharacterId);
                 if (member !== undefined) {
                     if (member.owner) {
                         this.canSending = true;
@@ -447,15 +427,9 @@ export default class MailApp extends Vue {
                     } else {
                         const rank = group.ranks.find((r) => r.level === member.level);
                         if (rank !== undefined) {
-                            this.canSending =
-                                (rank.groupPermission & GroupPermission.MAILING_SENDING) ===
-                                GroupPermission.MAILING_SENDING;
-                            this.canReading =
-                                (rank.groupPermission & GroupPermission.MAILING_READING) ===
-                                GroupPermission.MAILING_READING;
-                            this.canDeleting =
-                                (rank.groupPermission & GroupPermission.MAILING_DELETING) ===
-                                GroupPermission.MAILING_DELETING;
+                            this.canSending = (rank.groupPermission & GroupPermission.MAILING_SENDING) === GroupPermission.MAILING_SENDING;
+                            this.canReading = (rank.groupPermission & GroupPermission.MAILING_READING) === GroupPermission.MAILING_READING;
+                            this.canDeleting = (rank.groupPermission & GroupPermission.MAILING_DELETING) === GroupPermission.MAILING_DELETING;
                         }
                     }
                 }
@@ -530,11 +504,9 @@ export default class MailApp extends Vue {
             return;
         }
 
-        this.mails = this.cachedMails.filter((p) =>
-            p.senderMailAddress
-                .toLowerCase()
-                .includes(this.mailNameSearch.toLowerCase())
-        );
+        this.mails = this.cachedMails.filter((p) => p.senderMailAddress
+            .toLowerCase()
+            .includes(this.mailNameSearch.toLowerCase()));
     }
 
     private readMail(mail: MailInterface): void {
@@ -550,11 +522,7 @@ export default class MailApp extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "mailing:deletemail",
-            this.currentMailAddress,
-            this.currentMailIdToDelete
-        );
+        alt.emitServer("mailing:deletemail", this.currentMailAddress, this.currentMailIdToDelete);
         this.closeDeletePopup();
     }
 
@@ -564,13 +532,7 @@ export default class MailApp extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "mailing:sendmail",
-            this.currentMailAddress,
-            this.targetMailAddress,
-            this.newTitle,
-            this.customEditor.getContent
-        );
+        alt.emitServer("mailing:sendmail", this.currentMailAddress, this.targetMailAddress, this.newTitle, this.customEditor.getContent);
 
         this.closeMailPopup();
         this.setBackup("", "");
@@ -581,20 +543,12 @@ export default class MailApp extends Vue {
             return;
         }
 
-        alt.emitServer(
-            "mailing:addcharacteraccess",
-            this.currentAccount?.mailAddress,
-            this.characterName
-        );
+        alt.emitServer("mailing:addcharacteraccess", this.currentAccount?.mailAddress, this.characterName);
         this.characterName = "";
     }
 
     private removePerson(characterId: number): void {
-        alt.emitServer(
-            "mailing:removecharacteraccess",
-            this.currentAccount?.mailAddress,
-            characterId
-        );
+        alt.emitServer("mailing:removecharacteraccess", this.currentAccount?.mailAddress, characterId);
     }
 
     private openTab(id: number): void {
@@ -612,113 +566,57 @@ export default class MailApp extends Vue {
     }
 
     private validCreateButton(): void {
-        this.isCreateButtonValid =
-            /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9À-ž._äöüÄÖÜ]+(?<![_.])$/.test(
-                this.newMailAddress
-            );
+        this.isCreateButtonValid = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9À-ž._äöüÄÖÜ]+(?<![_.])$/.test(this.newMailAddress);
     }
 
     private validSendButton(): void {
-        this.isSendButtonValid =
-            /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9À-ž._äöüÄÖÜ]+(?<![_.])$/.test(
-                this.targetMailAddress
-            ) || this.newTitle != "";
+        this.isSendButtonValid = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9À-ž._äöüÄÖÜ]+(?<![_.])$/.test(this.targetMailAddress) || this.newTitle != "";
     }
 
     private getDate(jsonDate: string): string {
         const date = new Date(JSON.parse(jsonDate));
         return date.toLocaleDateString("de-DE", {
-            weekday: "long",
-            hour: "numeric",
-            minute: "numeric",
-            month: "long",
-            year: "numeric",
-            day: "numeric",
+            weekday: "long", hour: "numeric", minute: "numeric", month: "long", year: "numeric", day: "numeric",
         });
     }
 
     private toggleCanRead(event: any, characterId: number): void {
         const state = event.currentTarget.checked;
         if (state) {
-            alt.emitServer(
-                "mailing:addpermission",
-                this.currentAccount?.mailAddress,
-                characterId,
-                MailingPermission.READING
-            );
+            alt.emitServer("mailing:addpermission", this.currentAccount?.mailAddress, characterId, MailingPermission.READING);
         } else {
-            alt.emitServer(
-                "mailing:removepermission",
-                this.currentAccount?.mailAddress,
-                characterId,
-                MailingPermission.READING
-            );
+            alt.emitServer("mailing:removepermission", this.currentAccount?.mailAddress, characterId, MailingPermission.READING);
         }
     }
 
     private toggleCanSend(event: any, characterId: number): void {
         const state = event.currentTarget.checked;
         if (state) {
-            alt.emitServer(
-                "mailing:addpermission",
-                this.currentAccount?.mailAddress,
-                characterId,
-                MailingPermission.SENDING
-            );
+            alt.emitServer("mailing:addpermission", this.currentAccount?.mailAddress, characterId, MailingPermission.SENDING);
         } else {
-            alt.emitServer(
-                "mailing:removepermission",
-                this.currentAccount?.mailAddress,
-                characterId,
-                MailingPermission.SENDING
-            );
+            alt.emitServer("mailing:removepermission", this.currentAccount?.mailAddress, characterId, MailingPermission.SENDING);
         }
     }
 
     private toggleCanDelete(event: any, characterId: number): void {
         const state = event.currentTarget.checked;
         if (state) {
-            alt.emitServer(
-                "mailing:addpermission",
-                this.currentAccount?.mailAddress,
-                characterId,
-                MailingPermission.DELETING
-            );
+            alt.emitServer("mailing:addpermission", this.currentAccount?.mailAddress, characterId, MailingPermission.DELETING);
         } else {
-            alt.emitServer(
-                "mailing:removepermission",
-                this.currentAccount?.mailAddress,
-                characterId,
-                MailingPermission.DELETING
-            );
+            alt.emitServer("mailing:removepermission", this.currentAccount?.mailAddress, characterId, MailingPermission.DELETING);
         }
     }
 
-    private checkCanRead(
-        characterAccess: MailAccountCharacterAccessInterface
-    ): boolean {
-        return (
-            (characterAccess.permission & MailingPermission.READING) ===
-            MailingPermission.READING
-        );
+    private checkCanRead(characterAccess: MailAccountCharacterAccessInterface): boolean {
+        return ((characterAccess.permission & MailingPermission.READING) === MailingPermission.READING);
     }
 
-    private checkCanSend(
-        characterAccess: MailAccountCharacterAccessInterface
-    ): boolean {
-        return (
-            (characterAccess.permission & MailingPermission.SENDING) ===
-            MailingPermission.SENDING
-        );
+    private checkCanSend(characterAccess: MailAccountCharacterAccessInterface): boolean {
+        return ((characterAccess.permission & MailingPermission.SENDING) === MailingPermission.SENDING);
     }
 
-    private checkCanDelete(
-        characterAccess: MailAccountCharacterAccessInterface
-    ): boolean {
-        return (
-            (characterAccess.permission & MailingPermission.DELETING) ===
-            MailingPermission.DELETING
-        );
+    private checkCanDelete(characterAccess: MailAccountCharacterAccessInterface): boolean {
+        return ((characterAccess.permission & MailingPermission.DELETING) === MailingPermission.DELETING);
     }
 }
 </script>

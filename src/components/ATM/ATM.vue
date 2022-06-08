@@ -49,9 +49,7 @@ export default class ATM extends Vue {
     public mounted(): void {
         banking
             .getInstance()
-            .onChange.on((bankAccounts: BankAccountInterface[]) =>
-            this.update(bankAccounts)
-        );
+            .onChange.on((bankAccounts: BankAccountInterface[]) => this.update(bankAccounts));
 
         alt.on("atm:openmenu", () => this.open());
     }
@@ -68,9 +66,7 @@ export default class ATM extends Vue {
         this.bankAccounts = bankAccounts;
 
         if (this.currentTab === 1) {
-            const bankAccount = this.bankAccounts.find(
-                (b) => b.id === this.currentBankAccount.id
-            );
+            const bankAccount = this.bankAccounts.find((b) => b.id === this.currentBankAccount.id);
 
             if (bankAccount) {
                 this.activeBankAccount.setup(bankAccount);

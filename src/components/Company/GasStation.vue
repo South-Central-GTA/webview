@@ -49,11 +49,7 @@ export default class GasStation extends Vue {
     private fuelPrice: number = 0;
 
     public mounted(): void {
-        alt.on(
-            "gasstation:openrefuelmenu",
-            (maxPossibleFuel: number, fuelPrice: number) =>
-                this.showRefuelMenu(maxPossibleFuel, fuelPrice)
-        );
+        alt.on("gasstation:openrefuelmenu", (maxPossibleFuel: number, fuelPrice: number) => this.showRefuelMenu(maxPossibleFuel, fuelPrice));
     }
 
     public unmounted(): void {

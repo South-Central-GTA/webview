@@ -43,9 +43,7 @@ export default class OpenDeliveriesPage extends Vue {
     private companyId = 0;
 
     public mounted(): void {
-        alt.on("delivery:sendopendeliveries", (args: any[]) =>
-            this.updateDeliveries(args[0])
-        );
+        alt.on("delivery:sendopendeliveries", (args: any[]) => this.updateDeliveries(args[0]));
     }
 
     public unmounted(): void {
@@ -83,11 +81,7 @@ export default class OpenDeliveriesPage extends Vue {
     private getCorrectDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            weekday: "long",
-            hour: "numeric",
-            minute: "numeric",
-            month: "long",
-            day: "numeric",
+            weekday: "long", hour: "numeric", minute: "numeric", month: "long", day: "numeric",
         });
     }
 

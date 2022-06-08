@@ -50,13 +50,7 @@ import {MdcSearchEntityInterface} from "@/scripts/interfaces/mdc/mdc-search-enti
 
 @Options({
     components: {
-        MdcApb,
-        MdcFile,
-        MdcFiles,
-        MdcPatientRecord,
-        MdcSearch,
-        MdcFdHome,
-        MdcFdHeaderBar,
+        MdcApb, MdcFile, MdcFiles, MdcPatientRecord, MdcSearch, MdcFdHome, MdcFdHeaderBar,
     },
 })
 export default class MdcFdBase extends Vue {
@@ -71,38 +65,16 @@ export default class MdcFdBase extends Vue {
     public setup(): void {
         this.openPageId(0);
 
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
 
-        alt.on("firemdc:openapbscreen", (bulletIns: ApbEntryInterface[]) =>
-            this.onOpenApbScreen(bulletIns)
-        );
-        alt.on(
-            "firemdc:openpatientrecord",
-            (
-                character: CharacterInterface,
-                houses: HouseInterface[],
-                phoneNumbers: string[],
-                medicalHistory: MdcMedicalEntryInterface[],
-                allergies: MdcAllergyInterface[]
-            ) =>
-                this.onOpenPatientRecord(
-                    character,
-                    houses,
-                    phoneNumbers,
-                    medicalHistory,
-                    allergies
-                )
-        );
+        alt.on("firemdc:openapbscreen", (bulletIns: ApbEntryInterface[]) => this.onOpenApbScreen(bulletIns));
+        alt.on("firemdc:openpatientrecord", (character: CharacterInterface, houses: HouseInterface[], phoneNumbers: string[], medicalHistory: MdcMedicalEntryInterface[], allergies: MdcAllergyInterface[]) => this.onOpenPatientRecord(character, houses, phoneNumbers, medicalHistory, allergies));
 
         this.search.setup(FactionType.FIRE_DEPARTMENT);
     }
 
     public close(): void {
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
 
         alt.off("firemdc:openapbscreen");
         alt.off("firemdc:openpatientrecord");
@@ -120,27 +92,12 @@ export default class MdcFdBase extends Vue {
         this.apb.setup(FactionType.FIRE_DEPARTMENT, bulletIns);
     }
 
-    private onOpenPatientRecord(
-        character: CharacterInterface,
-        houses: HouseInterface[],
-        phoneNumbers: string[],
-        medicalHistory: MdcMedicalEntryInterface[],
-        allergies: MdcAllergyInterface[]
-    ): void {
+    private onOpenPatientRecord(character: CharacterInterface, houses: HouseInterface[], phoneNumbers: string[], medicalHistory: MdcMedicalEntryInterface[], allergies: MdcAllergyInterface[]): void {
         this.pageId = 1000;
-        this.patientRecord.setup(
-            character,
-            houses,
-            phoneNumbers,
-            medicalHistory,
-            allergies
-        );
+        this.patientRecord.setup(character, houses, phoneNumbers, medicalHistory, allergies);
     }
 
-    public updateCallSigns(
-        callSigns: CallSignInterface[],
-        hasCallSign: boolean
-    ): void {
+    public updateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
         this.home.updateCallSigns(callSigns, hasCallSign);
     }
 

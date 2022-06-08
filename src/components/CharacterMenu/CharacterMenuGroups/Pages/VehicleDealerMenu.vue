@@ -50,15 +50,9 @@ export default class VehicleDealerMenu extends Vue {
     private vehicleDisplayName = "";
 
     public mounted(): void {
-        alt.on("groupmenuvehicledealer:sendvehicles", (args: any[]) =>
-            this.setVehicles(args[0])
-        );
-        alt.on("groupmenuvehicledealer:showparkinbutton", (args: any[]) =>
-            this.setParkinVehicleButton(args[0])
-        );
-        alt.on("groupmenuvehicledealer:nopermissions", () =>
-            this.showNoPermissions()
-        );
+        alt.on("groupmenuvehicledealer:sendvehicles", (args: any[]) => this.setVehicles(args[0]));
+        alt.on("groupmenuvehicledealer:showparkinbutton", (args: any[]) => this.setParkinVehicleButton(args[0]));
+        alt.on("groupmenuvehicledealer:nopermissions", () => this.showNoPermissions());
     }
 
     public unmounted(): void {
@@ -96,19 +90,12 @@ export default class VehicleDealerMenu extends Vue {
     }
 
     private storeVehicle(): void {
-        alt.emitServer(
-            "groupmenuvehicledealer:requeststorevehicle",
-            this.companyId
-        );
+        alt.emitServer("groupmenuvehicledealer:requeststorevehicle", this.companyId);
         this.storeVehicleButtonVisible = false;
     }
 
     private chooseVehicle(vehicleId: number): void {
-        alt.emitServer(
-            "groupmenuvehicledealer:spawnvehicle",
-            vehicleId,
-            this.companyId
-        );
+        alt.emitServer("groupmenuvehicledealer:spawnvehicle", vehicleId, this.companyId);
     }
 }
 </script>

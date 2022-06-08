@@ -69,11 +69,7 @@ import {GroupPermission} from "@/scripts/enums/group.permission";
 
 @Options({
     components: {
-        BankHistory,
-        DepositWindow,
-        WithdrawWindow,
-        MoneyTransfer,
-        DeleteBankAccount,
+        BankHistory, DepositWindow, WithdrawWindow, MoneyTransfer, DeleteBankAccount,
     },
 })
 export default class ActiveBankAccount extends Vue {
@@ -106,38 +102,22 @@ export default class ActiveBankAccount extends Vue {
         this.canSeeHistory = false;
         this.canManage = false;
 
-        const characterAccess = bankAccount.characterAccesses.find(
-            (ca) => ca.characterId == character.getInstance().getCharacterId
-        );
+        const characterAccess = bankAccount.characterAccesses.find((ca) => ca.characterId == character.getInstance().getCharacterId);
         if (characterAccess !== undefined) {
-            this.canDeposit =
-                (characterAccess.permission & BankingPermission.DEPOSIT) ===
-                BankingPermission.DEPOSIT || characterAccess.owner;
-            this.canWithdraw =
-                (characterAccess.permission & BankingPermission.WITHDRAW) ===
-                BankingPermission.WITHDRAW || characterAccess.owner;
-            this.canTransfer =
-                (characterAccess.permission & BankingPermission.TRANSFER) ===
-                BankingPermission.TRANSFER || characterAccess.owner;
-            this.canSeeHistory =
-                (characterAccess.permission & BankingPermission.SEE_HISTORY) ===
-                BankingPermission.SEE_HISTORY || characterAccess.owner;
-            this.canManage =
-                (characterAccess.permission & BankingPermission.MANAGEMENT) ===
-                BankingPermission.MANAGEMENT || characterAccess.owner;
+            this.canDeposit = (characterAccess.permission & BankingPermission.DEPOSIT) === BankingPermission.DEPOSIT || characterAccess.owner;
+            this.canWithdraw = (characterAccess.permission & BankingPermission.WITHDRAW) === BankingPermission.WITHDRAW || characterAccess.owner;
+            this.canTransfer = (characterAccess.permission & BankingPermission.TRANSFER) === BankingPermission.TRANSFER || characterAccess.owner;
+            this.canSeeHistory = (characterAccess.permission & BankingPermission.SEE_HISTORY) === BankingPermission.SEE_HISTORY || characterAccess.owner;
+            this.canManage = (characterAccess.permission & BankingPermission.MANAGEMENT) === BankingPermission.MANAGEMENT || characterAccess.owner;
         }
 
         if (bankAccount.type === 1) {
             const group = groupService
                 .getInstance()
-                .AllGroups?.find((g) =>
-                    bankAccount.groupAccesses.some((ga) => ga.groupId === g.id)
-                );
+                .AllGroups?.find((g) => bankAccount.groupAccesses.some((ga) => ga.groupId === g.id));
 
             if (group !== undefined) {
-                const member = group.members.find(
-                    (m) => m.characterId === character.getInstance().getCharacterId
-                );
+                const member = group.members.find((m) => m.characterId === character.getInstance().getCharacterId);
                 if (member !== undefined) {
                     if (member.owner) {
                         this.canDeposit = true;
@@ -148,18 +128,10 @@ export default class ActiveBankAccount extends Vue {
                     } else {
                         const rank = group.ranks.find((r) => r.level === member.level);
                         if (rank !== undefined) {
-                            this.canDeposit =
-                                (rank.groupPermission & GroupPermission.BANKING_DEPOSIT) ===
-                                GroupPermission.BANKING_DEPOSIT;
-                            this.canWithdraw =
-                                (rank.groupPermission & GroupPermission.BANKING_WITHDRAW) ===
-                                GroupPermission.BANKING_WITHDRAW;
-                            this.canTransfer =
-                                (rank.groupPermission & GroupPermission.BANKING_TRANSFER) ===
-                                GroupPermission.BANKING_TRANSFER;
-                            this.canSeeHistory =
-                                (rank.groupPermission & GroupPermission.BANKING_SEE_HISTORY) ===
-                                GroupPermission.BANKING_SEE_HISTORY;
+                            this.canDeposit = (rank.groupPermission & GroupPermission.BANKING_DEPOSIT) === GroupPermission.BANKING_DEPOSIT;
+                            this.canWithdraw = (rank.groupPermission & GroupPermission.BANKING_WITHDRAW) === GroupPermission.BANKING_WITHDRAW;
+                            this.canTransfer = (rank.groupPermission & GroupPermission.BANKING_TRANSFER) === GroupPermission.BANKING_TRANSFER;
+                            this.canSeeHistory = (rank.groupPermission & GroupPermission.BANKING_SEE_HISTORY) === GroupPermission.BANKING_SEE_HISTORY;
                         }
                     }
                 }
@@ -199,11 +171,7 @@ export default class ActiveBankAccount extends Vue {
         alt.emitServer("bank:withdraw", this.id, amount);
     }
 
-    private transfer(
-        bankDetails: string,
-        amount: number,
-        useOfPurpose: string
-    ): void {
+    private transfer(bankDetails: string, amount: number, useOfPurpose: string): void {
         this.resetTab();
         alt.emitServer("bank:transfer", this.id, bankDetails, amount, useOfPurpose);
     }

@@ -43,8 +43,7 @@ export default class MdcSearch extends Vue {
 
         switch (factionType) {
             case FactionType.POLICE_DEPARTMENT:
-                this.placeHolderText =
-                    "Max Mustermann oder 55512345678 oder SA-123456789 oder 1ABC2345 oder maxmustermann@mail.sa";
+                this.placeHolderText = "Max Mustermann oder 55512345678 oder SA-123456789 oder 1ABC2345 oder maxmustermann@mail.sa";
                 break;
             case FactionType.FIRE_DEPARTMENT:
                 this.placeHolderText = "Max Mustermann";
@@ -68,11 +67,7 @@ export default class MdcSearch extends Vue {
     }
 
     private clickEntity(entity: MdcSearchEntityInterface): void {
-        alt.emitServer(
-            "mdc:openmdcsearchentity",
-            entity.id !== -1 ? entity.id : entity.stringId,
-            entity.type
-        );
+        alt.emitServer("mdc:openmdcsearchentity", entity.id !== -1 ? entity.id : entity.stringId, entity.type);
     }
 }
 </script>

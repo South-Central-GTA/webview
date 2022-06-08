@@ -68,9 +68,7 @@ export default class Tattoos extends Vue {
     }
 
     private setMaxComponents(tattoos?: TattoosInterface): void {
-        fetch(
-            "http://assets/southcentral-assets/dumps/pedOverlayCollections.json"
-        ).then(async (response) => {
+        fetch("http://assets/southcentral-assets/dumps/pedOverlayCollections.json").then(async (response) => {
             const data: PedOverlayCollectionInterface[] = await response.json();
             const genderString = this.gender === 0 ? "GENDER_MALE" : "GENDER_FEMALE";
 
@@ -88,8 +86,7 @@ export default class Tattoos extends Vue {
             const hats = overlays.filter((o) => o.ZoneName === "ZONE_HEAD");
             if (tattoos !== undefined) {
                 this.hatMenu?.setMax(hats, data, {
-                    hash: tattoos?.headHash,
-                    collection: tattoos?.headCollection,
+                    hash: tattoos?.headHash, collection: tattoos?.headCollection,
                 });
             } else {
                 this.hatMenu?.setMax(hats, data);
@@ -98,8 +95,7 @@ export default class Tattoos extends Vue {
             const torso = overlays.filter((o) => o.ZoneName === "ZONE_TORSO");
             if (tattoos !== undefined) {
                 this.torsoMenu?.setMax(torso, data, {
-                    hash: tattoos?.torsoHash,
-                    collection: tattoos?.torsoCollection,
+                    hash: tattoos?.torsoHash, collection: tattoos?.torsoCollection,
                 });
             } else {
                 this.torsoMenu?.setMax(torso, data);
@@ -108,8 +104,7 @@ export default class Tattoos extends Vue {
             const leftArm = overlays.filter((o) => o.ZoneName === "ZONE_LEFT_ARM");
             if (tattoos !== undefined) {
                 this.leftArmMenu?.setMax(leftArm, data, {
-                    hash: tattoos?.leftArmHash,
-                    collection: tattoos?.leftArmCollection,
+                    hash: tattoos?.leftArmHash, collection: tattoos?.leftArmCollection,
                 });
             } else {
                 this.leftArmMenu?.setMax(leftArm, data);
@@ -118,8 +113,7 @@ export default class Tattoos extends Vue {
             const rightArm = overlays.filter((o) => o.ZoneName === "ZONE_RIGHT_ARM");
             if (tattoos !== undefined) {
                 this.rightArmMenu?.setMax(rightArm, data, {
-                    hash: tattoos?.rightArmHash,
-                    collection: tattoos?.rightArmCollection,
+                    hash: tattoos?.rightArmHash, collection: tattoos?.rightArmCollection,
                 });
             } else {
                 this.rightArmMenu?.setMax(rightArm, data);
@@ -128,8 +122,7 @@ export default class Tattoos extends Vue {
             const leftLeg = overlays.filter((o) => o.ZoneName === "ZONE_LEFT_LEG");
             if (tattoos !== undefined) {
                 this.leftLegMenu?.setMax(leftLeg, data, {
-                    hash: tattoos?.leftLegHash,
-                    collection: tattoos?.leftLegCollection,
+                    hash: tattoos?.leftLegHash, collection: tattoos?.leftLegCollection,
                 });
             } else {
                 this.leftLegMenu?.setMax(leftLeg, data);
@@ -138,8 +131,7 @@ export default class Tattoos extends Vue {
             const rightLeg = overlays.filter((o) => o.ZoneName === "ZONE_RIGHT_LEG");
             if (tattoos !== undefined) {
                 this.rightLegMenu?.setMax(rightLeg, data, {
-                    hash: tattoos?.leftLegHash,
-                    collection: tattoos?.leftLegCollection,
+                    hash: tattoos?.leftLegHash, collection: tattoos?.leftLegCollection,
                 });
             } else {
                 this.rightLegMenu?.setMax(rightLeg, data);

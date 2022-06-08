@@ -51,8 +51,7 @@ import {PublicGarageVehicleInterface} from "@/scripts/interfaces/vehicles/public
 
 @Options({
     components: {
-        PublicGarageVehicleCard,
-        VehicleCard,
+        PublicGarageVehicleCard, VehicleCard,
     },
 })
 export default class PublicGarage extends Vue {
@@ -63,14 +62,8 @@ export default class PublicGarage extends Vue {
     private currentVehicleId = 0;
 
     public mounted(): void {
-        alt.on(
-            "publicgarage:setupunpark",
-            (vehicles: PublicGarageVehicleInterface[]) => this.setupUnpark(vehicles)
-        );
-        alt.on(
-            "publicgarage:showrespawnvehiclelist",
-            (vehicles: VehicleInterface[]) => this.setupRespawn(vehicles)
-        );
+        alt.on("publicgarage:setupunpark", (vehicles: PublicGarageVehicleInterface[]) => this.setupUnpark(vehicles));
+        alt.on("publicgarage:showrespawnvehiclelist", (vehicles: VehicleInterface[]) => this.setupRespawn(vehicles));
     }
 
     public unmounted(): void {

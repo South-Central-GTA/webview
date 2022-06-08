@@ -63,25 +63,15 @@ export default class TeamMenuAccountCatalog extends Vue {
         }
 
         this.accounts = this.chacheAccounts;
-        this.accounts = this.accounts.filter(
-            (c) =>
-                c.currentName
-                    .toLowerCase()
-                    .includes(this.accountSearch.toLowerCase()) ||
-                this.getNameHistory(c.nameHistoryJson).find((n) =>
-                    n.includes(this.accountSearch.toLowerCase())
-                )
-        );
+        this.accounts = this.accounts.filter((c) => c.currentName
+            .toLowerCase()
+            .includes(this.accountSearch.toLowerCase()) || this.getNameHistory(c.nameHistoryJson).find((n) => n.includes(this.accountSearch.toLowerCase())));
     }
 
     private getDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "long", day: "numeric",
         });
     }
 

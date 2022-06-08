@@ -44,14 +44,12 @@ export default class TwoDSlider extends Vue {
     private validPosition = true;
 
     private dotPos: TwoDValueInterface = {
-        x: this.WIDTH / 2 - this.MARKER_SIZE / 2,
-        y: this.HEIGHT / 2 - this.MARKER_SIZE / 2,
+        x: this.WIDTH / 2 - this.MARKER_SIZE / 2, y: this.HEIGHT / 2 - this.MARKER_SIZE / 2,
     };
 
     public setPosition(x: number, y: number): void {
         this.dotPos = {
-            x: ((x + 1) / 2) * this.WIDTH - this.MARKER_SIZE / 2,
-            y: ((y + 1) / 2) * this.HEIGHT - this.MARKER_SIZE / 2,
+            x: ((x + 1) / 2) * this.WIDTH - this.MARKER_SIZE / 2, y: ((y + 1) / 2) * this.HEIGHT - this.MARKER_SIZE / 2,
         };
 
         this.thump.style.left = this.dotPos.x + "px";
@@ -89,12 +87,7 @@ export default class TwoDSlider extends Vue {
     private checkBoundaries(pageX: number, pageY: number) {
         const parentRect = this.bounds.getBoundingClientRect();
 
-        this.validPosition = !(
-            parentRect.left >= pageX ||
-            parentRect.right <= pageX ||
-            parentRect.top >= pageY ||
-            parentRect.bottom <= pageY
-        );
+        this.validPosition = !(parentRect.left >= pageX || parentRect.right <= pageX || parentRect.top >= pageY || parentRect.bottom <= pageY);
     }
 
     private moveAt(pageX: number, pageY: number): void {

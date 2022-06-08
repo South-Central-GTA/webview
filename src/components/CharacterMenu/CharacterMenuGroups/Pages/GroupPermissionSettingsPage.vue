@@ -331,31 +331,20 @@ export default class GroupPermissionSettingsPage extends Vue {
     private rank?: GroupRankInterface;
     private rankName = "";
 
-    private manageMembersPermission: GroupPermission =
-        GroupPermission.MANAGER_MEMBERS;
+    private manageMembersPermission: GroupPermission = GroupPermission.MANAGER_MEMBERS;
     private invitePermission: GroupPermission = GroupPermission.INVITE;
     private uninvitePermission: GroupPermission = GroupPermission.UNINVITE;
-    private changeDeliveryVisibilityPermission: GroupPermission =
-        GroupPermission.CHANGE_DELIVERY_VISIBILITY;
-    private orderProductsPermission: GroupPermission =
-        GroupPermission.ORDER_PRODUCTS;
+    private changeDeliveryVisibilityPermission: GroupPermission = GroupPermission.CHANGE_DELIVERY_VISIBILITY;
+    private orderProductsPermission: GroupPermission = GroupPermission.ORDER_PRODUCTS;
     private buyLicensesPermission: GroupPermission = GroupPermission.BUY_LICENSES;
-    private sellLicensesPermission: GroupPermission =
-        GroupPermission.SELL_LICENSES;
-    private sellVehiclesPermission: GroupPermission =
-        GroupPermission.SELL_VEHICLES;
-    private orderVehiclesPermission: GroupPermission =
-        GroupPermission.ORDER_VEHICLES;
-    private storeVehiclesPermission: GroupPermission =
-        GroupPermission.STORE_VEHICLES;
-    private bankingDepositPermission: GroupPermission =
-        GroupPermission.BANKING_DEPOSIT;
-    private bankingWithdrawPermission: GroupPermission =
-        GroupPermission.BANKING_WITHDRAW;
-    private bankingTransferPermission: GroupPermission =
-        GroupPermission.BANKING_TRANSFER;
-    private bankingSeeTransactionsPermission: GroupPermission =
-        GroupPermission.BANKING_SEE_HISTORY;
+    private sellLicensesPermission: GroupPermission = GroupPermission.SELL_LICENSES;
+    private sellVehiclesPermission: GroupPermission = GroupPermission.SELL_VEHICLES;
+    private orderVehiclesPermission: GroupPermission = GroupPermission.ORDER_VEHICLES;
+    private storeVehiclesPermission: GroupPermission = GroupPermission.STORE_VEHICLES;
+    private bankingDepositPermission: GroupPermission = GroupPermission.BANKING_DEPOSIT;
+    private bankingWithdrawPermission: GroupPermission = GroupPermission.BANKING_WITHDRAW;
+    private bankingTransferPermission: GroupPermission = GroupPermission.BANKING_TRANSFER;
+    private bankingSeeTransactionsPermission: GroupPermission = GroupPermission.BANKING_SEE_HISTORY;
     private mailingSending: GroupPermission = GroupPermission.MAILING_SENDING;
     private mailingReading: GroupPermission = GroupPermission.MAILING_READING;
     private mailingDeleting: GroupPermission = GroupPermission.MAILING_DELETING;
@@ -388,78 +377,40 @@ export default class GroupPermissionSettingsPage extends Vue {
     public mounted(): void {
         groupService
             .getInstance()
-            .AllGroupsChanged.on((groups: GroupInterface[] | undefined) =>
-            this.updateGroups(groups)
-        );
+            .AllGroupsChanged.on((groups: GroupInterface[] | undefined) => this.updateGroups(groups));
     }
 
     public setup(rank: GroupRankInterface): void {
         this.rank = rank;
         this.rankName = rank.name;
 
-        this.canManageMembers =
-            (rank.groupPermission & GroupPermission.MANAGER_MEMBERS) ===
-            GroupPermission.MANAGER_MEMBERS;
-        this.canInvite =
-            (rank.groupPermission & GroupPermission.INVITE) ===
-            GroupPermission.INVITE;
-        this.canUninvite =
-            (rank.groupPermission & GroupPermission.UNINVITE) ===
-            GroupPermission.UNINVITE;
-        this.canSellVehicles =
-            (rank.groupPermission & GroupPermission.SELL_VEHICLES) ===
-            GroupPermission.SELL_VEHICLES;
-        this.canSendMails =
-            (rank.groupPermission & GroupPermission.MAILING_SENDING) ===
-            GroupPermission.MAILING_SENDING;
-        this.canReadMails =
-            (rank.groupPermission & GroupPermission.MAILING_READING) ===
-            GroupPermission.MAILING_READING;
-        this.canDeleteMails =
-            (rank.groupPermission & GroupPermission.MAILING_DELETING) ===
-            GroupPermission.MAILING_DELETING;
+        this.canManageMembers = (rank.groupPermission & GroupPermission.MANAGER_MEMBERS) === GroupPermission.MANAGER_MEMBERS;
+        this.canInvite = (rank.groupPermission & GroupPermission.INVITE) === GroupPermission.INVITE;
+        this.canUninvite = (rank.groupPermission & GroupPermission.UNINVITE) === GroupPermission.UNINVITE;
+        this.canSellVehicles = (rank.groupPermission & GroupPermission.SELL_VEHICLES) === GroupPermission.SELL_VEHICLES;
+        this.canSendMails = (rank.groupPermission & GroupPermission.MAILING_SENDING) === GroupPermission.MAILING_SENDING;
+        this.canReadMails = (rank.groupPermission & GroupPermission.MAILING_READING) === GroupPermission.MAILING_READING;
+        this.canDeleteMails = (rank.groupPermission & GroupPermission.MAILING_DELETING) === GroupPermission.MAILING_DELETING;
 
-        this.canBankDeposit =
-            (rank.groupPermission & GroupPermission.BANKING_DEPOSIT) ===
-            GroupPermission.BANKING_DEPOSIT;
-        this.canBankWithdraw =
-            (rank.groupPermission & GroupPermission.BANKING_WITHDRAW) ===
-            GroupPermission.BANKING_WITHDRAW;
-        this.canBankTransfer =
-            (rank.groupPermission & GroupPermission.BANKING_TRANSFER) ===
-            GroupPermission.BANKING_TRANSFER;
-        this.canBankSeeTransactions =
-            (rank.groupPermission & GroupPermission.BANKING_SEE_HISTORY) ===
-            GroupPermission.BANKING_SEE_HISTORY;
+        this.canBankDeposit = (rank.groupPermission & GroupPermission.BANKING_DEPOSIT) === GroupPermission.BANKING_DEPOSIT;
+        this.canBankWithdraw = (rank.groupPermission & GroupPermission.BANKING_WITHDRAW) === GroupPermission.BANKING_WITHDRAW;
+        this.canBankTransfer = (rank.groupPermission & GroupPermission.BANKING_TRANSFER) === GroupPermission.BANKING_TRANSFER;
+        this.canBankSeeTransactions = (rank.groupPermission & GroupPermission.BANKING_SEE_HISTORY) === GroupPermission.BANKING_SEE_HISTORY;
 
         const company = groupService.getInstance().Company;
 
         if (company !== null && company !== undefined) {
             this.isCompany = true;
-            this.isVehicleDealer =
-                (company.licenses & LicenseType.VEHICLE_DEALERSHIP) ===
-                LicenseType.VEHICLE_DEALERSHIP;
+            this.isVehicleDealer = (company.licenses & LicenseType.VEHICLE_DEALERSHIP) === LicenseType.VEHICLE_DEALERSHIP;
 
-            this.canChangeDeliveryVisibility =
-                (rank.groupPermission & GroupPermission.CHANGE_DELIVERY_VISIBILITY) ===
-                GroupPermission.CHANGE_DELIVERY_VISIBILITY;
-            this.canOrderProducts =
-                (rank.groupPermission & GroupPermission.ORDER_PRODUCTS) ===
-                GroupPermission.ORDER_PRODUCTS;
-            this.canBuyLicenses =
-                (rank.groupPermission & GroupPermission.BUY_LICENSES) ===
-                GroupPermission.BUY_LICENSES;
-            this.canSellLicenses =
-                (rank.groupPermission & GroupPermission.SELL_LICENSES) ===
-                GroupPermission.SELL_LICENSES;
+            this.canChangeDeliveryVisibility = (rank.groupPermission & GroupPermission.CHANGE_DELIVERY_VISIBILITY) === GroupPermission.CHANGE_DELIVERY_VISIBILITY;
+            this.canOrderProducts = (rank.groupPermission & GroupPermission.ORDER_PRODUCTS) === GroupPermission.ORDER_PRODUCTS;
+            this.canBuyLicenses = (rank.groupPermission & GroupPermission.BUY_LICENSES) === GroupPermission.BUY_LICENSES;
+            this.canSellLicenses = (rank.groupPermission & GroupPermission.SELL_LICENSES) === GroupPermission.SELL_LICENSES;
 
             if (this.isVehicleDealer) {
-                this.canOrderVehicles =
-                    (rank.groupPermission & GroupPermission.ORDER_VEHICLES) ===
-                    GroupPermission.ORDER_VEHICLES;
-                this.canStoreVehicles =
-                    (rank.groupPermission & GroupPermission.STORE_VEHICLES) ===
-                    GroupPermission.STORE_VEHICLES;
+                this.canOrderVehicles = (rank.groupPermission & GroupPermission.ORDER_VEHICLES) === GroupPermission.ORDER_VEHICLES;
+                this.canStoreVehicles = (rank.groupPermission & GroupPermission.STORE_VEHICLES) === GroupPermission.STORE_VEHICLES;
             }
         }
 
@@ -468,9 +419,7 @@ export default class GroupPermissionSettingsPage extends Vue {
         if (faction !== null && faction !== undefined) {
             this.isFaction = true;
 
-            this.hasMdcOperator =
-                (rank.groupPermission & GroupPermission.MDC_OPERATOR) ===
-                GroupPermission.MDC_OPERATOR;
+            this.hasMdcOperator = (rank.groupPermission & GroupPermission.MDC_OPERATOR) === GroupPermission.MDC_OPERATOR;
         }
     }
 
@@ -498,35 +447,19 @@ export default class GroupPermissionSettingsPage extends Vue {
     }
 
     private addPermission(groupPermission: GroupPermission): void {
-        if (
-            this.rank === undefined ||
-            (this.rank.groupPermission & groupPermission) === groupPermission
-        ) {
+        if (this.rank === undefined || (this.rank.groupPermission & groupPermission) === groupPermission) {
             return;
         }
 
-        alt.emitServer(
-            "groupmenu:addpermission",
-            this.rank.groupId,
-            this.rank.level,
-            groupPermission
-        );
+        alt.emitServer("groupmenu:addpermission", this.rank.groupId, this.rank.level, groupPermission);
     }
 
     private removePermission(groupPermission: GroupPermission): void {
-        if (
-            this.rank === undefined ||
-            (this.rank.groupPermission & groupPermission) !== groupPermission
-        ) {
+        if (this.rank === undefined || (this.rank.groupPermission & groupPermission) !== groupPermission) {
             return;
         }
 
-        alt.emitServer(
-            "groupmenu:removepermission",
-            this.rank.groupId,
-            this.rank.level,
-            groupPermission
-        );
+        alt.emitServer("groupmenu:removepermission", this.rank.groupId, this.rank.level, groupPermission);
     }
 
     private back(): void {

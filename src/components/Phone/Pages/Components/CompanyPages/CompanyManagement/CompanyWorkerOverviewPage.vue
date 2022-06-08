@@ -56,9 +56,7 @@ export default class CompanyWorkerOverviewPage extends Vue {
         this.company = company;
         this.members = company.members;
 
-        const member = this.company.members.find(
-            (w) => w.characterId == character.getInstance().getCharacterId
-        );
+        const member = this.company.members.find((w) => w.characterId == character.getInstance().getCharacterId);
         if (member !== undefined) {
             this.isOwner = member.owner;
         }

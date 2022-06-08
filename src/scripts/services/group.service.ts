@@ -64,24 +64,11 @@ export default class GroupService {
     private factionGroup?: FactionInterface = undefined;
 
     public listenToEvents(): void {
-        alt.on(
-            "group:setup",
-            (
-                allGroups: GroupInterface[],
-                groups: GroupInterface[],
-                companyGroup?: CompanyInterface,
-                factionGroup?: FactionInterface
-            ) => this.setup(allGroups, groups, companyGroup, factionGroup)
-        );
+        alt.on("group:setup", (allGroups: GroupInterface[], groups: GroupInterface[], companyGroup?: CompanyInterface, factionGroup?: FactionInterface) => this.setup(allGroups, groups, companyGroup, factionGroup));
         alt.on("group:reset", () => this.reset());
     }
 
-    private setup(
-        allGroups: GroupInterface[],
-        groups: GroupInterface[],
-        companyGroup?: CompanyInterface,
-        factionGroup?: FactionInterface
-    ): void {
+    private setup(allGroups: GroupInterface[], groups: GroupInterface[], companyGroup?: CompanyInterface, factionGroup?: FactionInterface): void {
         this.allGroups = allGroups;
 
         this.groups = groups;

@@ -45,9 +45,7 @@ export default class WithdrawWindow extends Vue {
     }
 
     private checkValue(): void {
-        this.isValuePositive =
-            isNumeric(this.withdrawInput.value) &&
-            Number.parseInt(this.withdrawInput.value) >= 1;
+        this.isValuePositive = isNumeric(this.withdrawInput.value) && Number.parseInt(this.withdrawInput.value) >= 1;
     }
 
     private allowOnlyNumbers(state: KeyboardEvent): void {

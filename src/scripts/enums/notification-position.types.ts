@@ -1,4 +1,3 @@
 ﻿export enum NotificationPositionTypes {
-    LEFT,
-    RIGHT
+    LEFT, RIGHT
 }

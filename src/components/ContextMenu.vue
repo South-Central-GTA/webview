@@ -19,18 +19,13 @@ export default class ContextMenu extends Vue {
     @Ref() private readonly actionMenu!: HTMLElement;
 
     private contextMenu: ContextMenuInterface = {
-        title: "",
-        x: 0,
-        y: 0,
-        actions: [],
+        title: "", x: 0, y: 0, actions: [],
     };
 
     private active = false;
 
     public mounted(): void {
-        alt.on("contextmenu:setup", (contextMenu: ContextMenuInterface) =>
-            this.setup(contextMenu)
-        );
+        alt.on("contextmenu:setup", (contextMenu: ContextMenuInterface) => this.setup(contextMenu));
         alt.on("contextmenu:close", () => this.close());
     }
 
@@ -42,14 +37,8 @@ export default class ContextMenu extends Vue {
     private setup(contextMenu: ContextMenuInterface): void {
         this.contextMenu = contextMenu;
 
-        document.documentElement.style.setProperty(
-            "--pos-x",
-            this.contextMenu.x + "px"
-        );
-        document.documentElement.style.setProperty(
-            "--pos-y",
-            this.contextMenu.y + "px"
-        );
+        document.documentElement.style.setProperty("--pos-x", this.contextMenu.x + "px");
+        document.documentElement.style.setProperty("--pos-y", this.contextMenu.y + "px");
 
         setTimeout(() => {
             this.setButtonPosition();
@@ -67,9 +56,7 @@ export default class ContextMenu extends Vue {
         }
 
         const frags = 360 / maxElements;
-        const mainHeight = parseInt(
-            window.getComputedStyle(this.actionMenu).height.slice(0, -2)
-        );
+        const mainHeight = parseInt(window.getComputedStyle(this.actionMenu).height.slice(0, -2));
 
         for (let index = 0; index <= this.actionMenu.children.length - 1; index++) {
             const element = this.actionMenu.children[index] as HTMLElement;

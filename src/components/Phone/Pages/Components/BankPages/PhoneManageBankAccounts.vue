@@ -38,9 +38,7 @@ export default class PhoneManageBankAccounts extends Vue {
     public mounted(): void {
         banking
             .getInstance()
-            .onChange.on((bankAccounts: BankAccountInterface[]) =>
-            this.setup(bankAccounts)
-        );
+            .onChange.on((bankAccounts: BankAccountInterface[]) => this.setup(bankAccounts));
     }
 
     private setup(bankAccounts: BankAccountInterface[]): void {

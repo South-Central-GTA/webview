@@ -52,9 +52,7 @@ export default class HairSalon extends Vue {
 
     public mounted(): void {
         alt.emit("hairsalon:getcharacter");
-        alt.on("hairsalon:setcharacter", (character: CharacterInterface) =>
-            this.setCharacter(character)
-        );
+        alt.on("hairsalon:setcharacter", (character: CharacterInterface) => this.setCharacter(character));
     }
 
     public unmounted(): void {
@@ -65,9 +63,7 @@ export default class HairSalon extends Vue {
         this.isSaving = false;
 
         this.characterAppearanceMenu?.setGender(character.gender);
-        this.characterAppearanceMenu?.setCharacterAppearances(
-            character.appearances
-        );
+        this.characterAppearanceMenu?.setCharacterAppearances(character.appearances);
     }
 
     private updateAppearances(appearances: AppearancesInterface): void {

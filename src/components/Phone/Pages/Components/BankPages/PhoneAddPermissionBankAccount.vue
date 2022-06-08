@@ -35,11 +35,7 @@ export default class PhoneAddPermissionBankAccount extends Vue {
     }
 
     private addPerson(): void {
-        alt.emit(
-            "phonebank:addcharacteraccess",
-            this.bankAccountId,
-            this.characterName
-        );
+        alt.emit("phonebank:addcharacteraccess", this.bankAccountId, this.characterName);
         this.back();
     }
 

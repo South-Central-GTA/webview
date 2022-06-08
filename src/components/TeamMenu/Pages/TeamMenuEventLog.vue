@@ -54,20 +54,13 @@ export default class TeamMenuEventLog extends Vue {
             return;
         }
 
-        this.commands = this.cachedCommands.filter((c) =>
-            c.accountName.toLowerCase().includes(this.searchInput.toLowerCase())
-        );
+        this.commands = this.cachedCommands.filter((c) => c.accountName.toLowerCase().includes(this.searchInput.toLowerCase()));
     }
 
     private getDate(jsonDate: string): string {
         const date = new Date(JSON.parse(jsonDate));
         return date.toLocaleDateString("de-DE", {
-            weekday: "long",
-            hour: "numeric",
-            minute: "numeric",
-            month: "long",
-            year: "numeric",
-            day: "numeric",
+            weekday: "long", hour: "numeric", minute: "numeric", month: "long", year: "numeric", day: "numeric",
         });
     }
 }

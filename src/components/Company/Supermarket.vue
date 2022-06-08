@@ -46,9 +46,7 @@ export default class Supermarket extends Vue {
     private buttonText = "";
 
     public mounted(): void {
-        alt.on("supermarket:openmenu", (buyableItems: CatalogItemInterface[]) =>
-            this.setup(buyableItems)
-        );
+        alt.on("supermarket:openmenu", (buyableItems: CatalogItemInterface[]) => this.setup(buyableItems));
     }
 
     public unmounted(): void {
@@ -80,11 +78,7 @@ export default class Supermarket extends Vue {
     }
 
     private takeItem(): void {
-        alt.emitServer(
-            "supermarket:buyitem",
-            this.currentItemId,
-            this.currentAmount
-        );
+        alt.emitServer("supermarket:buyitem", this.currentItemId, this.currentAmount);
         this.reset();
     }
 

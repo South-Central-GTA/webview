@@ -33,9 +33,7 @@ export default class BankingService {
     private bankAccounts: BankAccountInterface[] = [];
 
     public listenToEvents(): void {
-        alt.on("bank:updatebankaccounts", (args: any[]) =>
-            this.updateBankAccounts(args[0])
-        );
+        alt.on("bank:updatebankaccounts", (args: any[]) => this.updateBankAccounts(args[0]));
     }
 
     private updateBankAccounts(bankAccounts: BankAccountInterface[]): void {

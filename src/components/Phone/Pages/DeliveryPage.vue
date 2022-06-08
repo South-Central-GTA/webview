@@ -45,10 +45,7 @@ import {CompanyInterface} from "@/scripts/interfaces/group/company.interface";
 
 @Options({
     components: {
-        OrderProductsPage,
-        MyDeliveriesPage,
-        OpenDeliveriesPage,
-        MyCurrentDeliveryPage,
+        OrderProductsPage, MyDeliveriesPage, OpenDeliveriesPage, MyCurrentDeliveryPage,
     },
 })
 export default class DeliveryPage extends Vue {
@@ -75,16 +72,10 @@ export default class DeliveryPage extends Vue {
     public mounted(): void {
         group
             .getInstance()
-            .CompanyChanged.on((company?: CompanyInterface) =>
-            this.updateCompany(company)
-        );
+            .CompanyChanged.on((company?: CompanyInterface) => this.updateCompany(company));
 
-        alt.on("delivery:setup", (args: any[]) =>
-            this.setup(args[0], args[1], args[2], args[3], args[4])
-        );
-        alt.on("delivery:openmydelivery", (args: any[]) =>
-            this.openMyDelivery(args[0])
-        );
+        alt.on("delivery:setup", (args: any[]) => this.setup(args[0], args[1], args[2], args[3], args[4]));
+        alt.on("delivery:openmydelivery", (args: any[]) => this.openMyDelivery(args[0]));
         alt.on("delivery:stopmydelivery", () => this.stopMyDelivery());
     }
 
@@ -145,13 +136,7 @@ export default class DeliveryPage extends Vue {
         this.loadedOnce = false;
     }
 
-    private setup(
-        canUseThisApp: boolean,
-        canSeeOpenDeliveries: boolean,
-        hasOpenDelivery: boolean,
-        products: number,
-        maxProducts: number
-    ): void {
+    private setup(canUseThisApp: boolean, canSeeOpenDeliveries: boolean, hasOpenDelivery: boolean, products: number, maxProducts: number): void {
         if (!canUseThisApp) {
             this.errorMessage = "Dein Account hat nicht genügend Rechte.";
             return;

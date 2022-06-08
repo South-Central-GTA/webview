@@ -164,11 +164,7 @@ export default class DialogHolder extends Vue {
 
     private closeButtonClicked(): void {
         if (!this.firedEvent) {
-            alt.emit(
-                "dialog:closebuttonclicked",
-                this.closeButtonServerEvent,
-                this.closeButtonClientEvent
-            );
+            alt.emit("dialog:closebuttonclicked", this.closeButtonServerEvent, this.closeButtonClientEvent);
         }
 
         this.firedEvent = true;
@@ -176,13 +172,7 @@ export default class DialogHolder extends Vue {
 
     private primaryButtonClicked(): void {
         if (!this.firedEvent) {
-            alt.emit(
-                "dialog:primarybuttonclicked",
-                this.primaryButtonServerEvent,
-                this.primaryButtonClientEvent,
-                this.selectedBankAccount.id,
-                this.inputContent
-            );
+            alt.emit("dialog:primarybuttonclicked", this.primaryButtonServerEvent, this.primaryButtonClientEvent, this.selectedBankAccount.id, this.inputContent);
         }
 
         this.firedEvent = true;
@@ -190,13 +180,7 @@ export default class DialogHolder extends Vue {
 
     private secondaryButtonClicked(): void {
         if (!this.firedEvent) {
-            alt.emit(
-                "dialog:secondarybuttonclicked",
-                this.secondaryButtonServerEvent,
-                this.secondaryButtonClientEvent,
-                this.selectedBankAccount.id,
-                this.inputContent
-            );
+            alt.emit("dialog:secondarybuttonclicked", this.secondaryButtonServerEvent, this.secondaryButtonClientEvent, this.selectedBankAccount.id, this.inputContent);
         }
 
         this.firedEvent = true;

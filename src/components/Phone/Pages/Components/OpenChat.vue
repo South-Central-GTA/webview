@@ -56,11 +56,9 @@ export default class OpenChat extends Vue {
             this.updateReadedDotNotifier();
         }, 500);
 
-        this.chat.messages.sort(
-            (a: PhoneMessageInterface, b: PhoneMessageInterface) => {
-                return this.getTime(a.sendetAt) - this.getTime(b.sendetAt);
-            }
-        );
+        this.chat.messages.sort((a: PhoneMessageInterface, b: PhoneMessageInterface) => {
+            return this.getTime(a.sendetAt) - this.getTime(b.sendetAt);
+        });
 
         this.lastMessage = this.getLastMessage();
         this.dateFromLastMessage = this.getDateFromLastMessage();
@@ -91,11 +89,7 @@ export default class OpenChat extends Vue {
 
         const date = new Date(JSON.parse(message.sendetAt));
         return date.toLocaleDateString("de-DE", {
-            weekday: "long",
-            hour: "numeric",
-            minute: "numeric",
-            month: "long",
-            day: "numeric",
+            weekday: "long", hour: "numeric", minute: "numeric", month: "long", day: "numeric",
         });
     }
 
@@ -126,9 +120,7 @@ export default class OpenChat extends Vue {
     private updateReadedDotNotifier(): void {
         if (this.chat && this.chat.messages && this.chat.messages.length > 0) {
             const lastUsage = new Date(JSON.parse(this.chat.lastUsage));
-            const lastMessageDate = new Date(
-                JSON.parse(this.chat.messages[this.chat.messages.length - 1].sendetAt)
-            );
+            const lastMessageDate = new Date(JSON.parse(this.chat.messages[this.chat.messages.length - 1].sendetAt));
 
             this.unreadedMessages = lastUsage <= lastMessageDate;
         } else {

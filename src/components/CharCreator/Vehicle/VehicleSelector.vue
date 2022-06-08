@@ -42,11 +42,7 @@ export default class VehicleSelector extends Vue {
     private buttonBlocked = false;
 
     public mounted(): void {
-        alt.on(
-            "vehicleselector:setvehicleinfo",
-            (catalogVehicle: CatalogVehicleInterface) =>
-                this.setVehicleInfo(catalogVehicle)
-        );
+        alt.on("vehicleselector:setvehicleinfo", (catalogVehicle: CatalogVehicleInterface) => this.setVehicleInfo(catalogVehicle));
         alt.on("vehicleselector:unlocksetfree", () => {
             this.buttonBlocked = false;
         });

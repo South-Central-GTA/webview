@@ -42,25 +42,19 @@ import {BankAccountCharacterAccessInterface} from "@/scripts/interfaces/bank/ban
 
 @Options({
     components: {
-        PhoneManagePermissionBankAccount,
-        PhoneAddPermissionBankAccount,
+        PhoneManagePermissionBankAccount, PhoneAddPermissionBankAccount,
     },
 })
 export default class PhonePermissionBankAccount extends Vue {
-    @Ref()
-    private readonly phoneAddPermissionBankAccount!: PhoneAddPermissionBankAccount;
-    @Ref()
-    private readonly phoneManagePermissionBankAccount!: PhoneManagePermissionBankAccount;
+    @Ref() private readonly phoneAddPermissionBankAccount!: PhoneAddPermissionBankAccount;
+    @Ref() private readonly phoneManagePermissionBankAccount!: PhoneManagePermissionBankAccount;
 
     private characterAccesses: BankAccountCharacterAccessInterface[] = [];
     private bankAccountId = 0;
     private currentTab = 0;
     private characterId?: number | undefined;
 
-    public setup(
-        bankAccountId: number,
-        characterAccesses: BankAccountCharacterAccessInterface[]
-    ): void {
+    public setup(bankAccountId: number, characterAccesses: BankAccountCharacterAccessInterface[]): void {
         this.bankAccountId = bankAccountId;
         this.characterAccesses = characterAccesses.filter((ca) => !ca.owner);
 
@@ -69,13 +63,8 @@ export default class PhonePermissionBankAccount extends Vue {
         this.phoneAddPermissionBankAccount.setup(this.bankAccountId);
     }
 
-    private openCharacterAccessSettings(
-        characterAccess: BankAccountCharacterAccessInterface
-    ): void {
-        this.phoneManagePermissionBankAccount.setup(
-            this.bankAccountId,
-            characterAccess
-        );
+    private openCharacterAccessSettings(characterAccess: BankAccountCharacterAccessInterface): void {
+        this.phoneManagePermissionBankAccount.setup(this.bankAccountId, characterAccess);
         this.openTab(2);
     }
 

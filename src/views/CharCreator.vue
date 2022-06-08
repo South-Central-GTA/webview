@@ -193,20 +193,9 @@ export default class CharCreator extends Vue {
     public mounted(): void {
         alt.emit("charcreator:getcharacter");
 
-        alt.on(
-            "charcreator:setcharacter",
-            (
-                character: CharacterInterface,
-                maxDrawables: MaxDrawablesInterface,
-                isNewCharacter: boolean
-            ) => this.onSetCharacter(character, maxDrawables, isNewCharacter)
-        );
+        alt.on("charcreator:setcharacter", (character: CharacterInterface, maxDrawables: MaxDrawablesInterface, isNewCharacter: boolean) => this.onSetCharacter(character, maxDrawables, isNewCharacter));
 
-        alt.on(
-            "charcreator:setgender",
-            (gender: number, maxDrawables: MaxDrawablesInterface) =>
-                this.onSetGender(gender, maxDrawables)
-        );
+        alt.on("charcreator:setgender", (gender: number, maxDrawables: MaxDrawablesInterface) => this.onSetGender(gender, maxDrawables));
 
         alt.on("charcreator:resetissaving", () => {
             this.isSaving = false;
@@ -217,11 +206,7 @@ export default class CharCreator extends Vue {
             this.$forceUpdate();
         });
 
-        alt.on(
-            "charcreator:updatepurchaseorders",
-            (purchaseOrders: CharacterCreatorPurchaseInterface[]) =>
-                this.onUpdatePurchaseOrders(purchaseOrders)
-        );
+        alt.on("charcreator:updatepurchaseorders", (purchaseOrders: CharacterCreatorPurchaseInterface[]) => this.onUpdatePurchaseOrders(purchaseOrders));
     }
 
     public unmounted(): void {
@@ -232,11 +217,7 @@ export default class CharCreator extends Vue {
         alt.off("charcreator:updatepurchaseorders");
     }
 
-    private onSetCharacter(
-        character: CharacterInterface,
-        maxDrawables: MaxDrawablesInterface,
-        isNewCharacter: boolean
-    ): void {
+    private onSetCharacter(character: CharacterInterface, maxDrawables: MaxDrawablesInterface, isNewCharacter: boolean): void {
         this.isNewCharacter = isNewCharacter;
 
         // We have to reset the clothings here.
@@ -280,27 +261,20 @@ export default class CharCreator extends Vue {
         });
 
         this.faceFeaturesMenu?.setFaceFeatures(character.faceFeatures);
-        this.characterAppearanceMenu?.setCharacterAppearances(
-            character.appearances
-        );
+        this.characterAppearanceMenu?.setCharacterAppearances(character.appearances);
         this.clothesMenu?.setClothes(character.clothes);
 
         this.notificationsHolder.setPosition(NotificationPositionTypes.RIGHT);
     }
 
-    private onSetGender(
-        gender: number,
-        maxDrawables: MaxDrawablesInterface
-    ): void {
+    private onSetGender(gender: number, maxDrawables: MaxDrawablesInterface): void {
         this.characterAppearanceMenu?.setGender(gender);
         this.tattoosMenu?.setGender(gender);
         this.parentsMenu?.reset();
         this.clothesMenu?.setGender(maxDrawables, gender);
     }
 
-    private onUpdatePurchaseOrders(
-        purchaseOrders: CharacterCreatorPurchaseInterface[]
-    ): void {
+    private onUpdatePurchaseOrders(purchaseOrders: CharacterCreatorPurchaseInterface[]): void {
         this.purchaseOrders = purchaseOrders;
 
         this.characterCosts = this.purchaseOrders
@@ -308,9 +282,7 @@ export default class CharCreator extends Vue {
             .reduce((a, b) => a + b, 0);
     }
 
-    private removePurchaseOrder(
-        purchaseOrder: CharacterCreatorPurchaseInterface
-    ): void {
+    private removePurchaseOrder(purchaseOrder: CharacterCreatorPurchaseInterface): void {
         alt.emit("charcreator:removepurchaseorder", purchaseOrder);
 
         if (purchaseOrder.type === CharacterCreatorPurchaseType.MONEY) {
@@ -356,17 +328,7 @@ export default class CharCreator extends Vue {
             alt.emit("spawnselector:close");
         }
 
-        if (
-            this.tabIndex !== 0 &&
-            this.tabIndex !== 1 &&
-            this.tabIndex !== 2 &&
-            this.tabIndex !== 3 &&
-            this.tabIndex !== 4 &&
-            this.tabIndex !== 5 &&
-            index !== 6 &&
-            index !== 7 &&
-            index !== 6
-        ) {
+        if (this.tabIndex !== 0 && this.tabIndex !== 1 && this.tabIndex !== 2 && this.tabIndex !== 3 && this.tabIndex !== 4 && this.tabIndex !== 5 && index !== 6 && index !== 7 && index !== 6) {
             alt.emitServer("charcreator:resetcamera");
         }
 
@@ -458,31 +420,17 @@ export default class CharCreator extends Vue {
         }
 
         if (!this.clothesMenu.checkValidation()) {
-            alt.emit(
-                "notification:error",
-                "Der Abschnitt Kleidung benötigt deine Aufmerksamkeit."
-            );
+            alt.emit("notification:error", "Der Abschnitt Kleidung benötigt deine Aufmerksamkeit.");
             return;
         }
 
-        if (
-            this.formularMenu.firstNameValidation === "OKAY" &&
-            this.formularMenu.lastNameValidation === "OKAY" &&
-            this.formularMenu.originValidation === "OKAY" &&
-            this.formularMenu.ageValidation === "OKAY" &&
-            this.formularMenu.bodySizeValidation === "OKAY" &&
-            this.formularMenu.physiqueValidation === "OKAY" &&
-            this.formularMenu.storyValidation === "OKAY"
-        ) {
+        if (this.formularMenu.firstNameValidation === "OKAY" && this.formularMenu.lastNameValidation === "OKAY" && this.formularMenu.originValidation === "OKAY" && this.formularMenu.ageValidation === "OKAY" && this.formularMenu.bodySizeValidation === "OKAY" && this.formularMenu.physiqueValidation === "OKAY" && this.formularMenu.storyValidation === "OKAY") {
             alt.emit("charcreator:requestbuycharacter", this.character);
             this.isSaving = true;
             return;
         }
 
-        alt.emit(
-            "notification:error",
-            "Der Abschnitt Eckdaten benötigt deine Aufmerksamkeit."
-        );
+        alt.emit("notification:error", "Der Abschnitt Eckdaten benötigt deine Aufmerksamkeit.");
     }
 
     private changeCameraPos(posIndex: number): void {

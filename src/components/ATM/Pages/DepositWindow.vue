@@ -45,9 +45,7 @@ export default class DepositWindow extends Vue {
     }
 
     private checkValue(): void {
-        this.isValuePositive =
-            isNumeric(this.depositInput.value) &&
-            Number.parseInt(this.depositInput.value) >= 1;
+        this.isValuePositive = isNumeric(this.depositInput.value) && Number.parseInt(this.depositInput.value) >= 1;
     }
 
     private allowOnlyNumbers(state: KeyboardEvent): void {

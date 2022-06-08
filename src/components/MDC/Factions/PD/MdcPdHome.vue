@@ -98,40 +98,26 @@ export default class MdcPdHome extends Vue {
     private callSigns: CallSignInterface[] = [];
 
     public mounted(): void {
-        alt.on("policemdc:openhomescreen", (args: any[]) =>
-            this.onOpen(args[0], args[1], args[2])
-        );
-        alt.on("policemdc:updateemergencycalls", (args: any[]) =>
-            this.onUpdateEmergencyCalls(args[0])
-        );
+        alt.on("policemdc:openhomescreen", (args: any[]) => this.onOpen(args[0], args[1], args[2]));
+        alt.on("policemdc:updateemergencycalls", (args: any[]) => this.onUpdateEmergencyCalls(args[0]));
 
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
     }
 
     public unmounted(): void {
         alt.off("policemdc:openhomescreen");
         alt.off("policemdc:updateemergencycalls");
 
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
 
-    private onOpen(
-        emergencyCalls: EmergencyCallInterface[],
-        callSigns: CallSignInterface[],
-        hasCallSign: boolean
-    ): void {
+    private onOpen(emergencyCalls: EmergencyCallInterface[], callSigns: CallSignInterface[], hasCallSign: boolean): void {
         this.emergencyCalls = emergencyCalls;
         this.callSigns = callSigns;
         this.hasCallSign = hasCallSign;
     }
 
-    private onUpdateEmergencyCalls(
-        emergencyCalls: EmergencyCallInterface[]
-    ): void {
+    private onUpdateEmergencyCalls(emergencyCalls: EmergencyCallInterface[]): void {
         this.emergencyCalls = emergencyCalls;
     }
 
@@ -160,10 +146,7 @@ export default class MdcPdHome extends Vue {
         alt.emitServer("policemdc:deletecallsign", callSign);
     }
 
-    public updateCallSigns(
-        callSigns: CallSignInterface[],
-        hasCallSign: boolean
-    ): void {
+    public updateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
         this.callSigns = callSigns;
         this.hasCallSign = hasCallSign;
     }
@@ -171,12 +154,7 @@ export default class MdcPdHome extends Vue {
     private getDate(jsonDate: string): string {
         const date = new Date(JSON.parse(jsonDate));
         return date.toLocaleDateString("de-DE", {
-            weekday: "short",
-            hour: "numeric",
-            minute: "numeric",
-            month: "numeric",
-            year: "numeric",
-            day: "numeric",
+            weekday: "short", hour: "numeric", minute: "numeric", month: "numeric", year: "numeric", day: "numeric",
         });
     }
 }

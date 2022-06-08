@@ -66,10 +66,7 @@ export default class ClothingMenu extends Vue {
     private genderType = GenderType.MALE;
 
     private clothing: ClothingInterface = {
-        genderType: GenderType.MALE,
-        drawableId: -1,
-        textureId: 0,
-        title: "",
+        genderType: GenderType.MALE, drawableId: -1, textureId: 0, title: "",
     };
 
     public setup(maxDrawables: number, gender: GenderType): void {
@@ -127,10 +124,7 @@ export default class ClothingMenu extends Vue {
 
     private clear(): void {
         this.clothing = {
-            genderType: this.genderType,
-            drawableId: -1,
-            textureId: 0,
-            title: "",
+            genderType: this.genderType, drawableId: -1, textureId: 0, title: "",
         };
 
         this.clothValidation = "OKAY";
@@ -140,10 +134,7 @@ export default class ClothingMenu extends Vue {
 
     private getCloth(): ClothingInterface {
         return {
-            genderType: this.genderType,
-            drawableId: this.drawableId,
-            textureId: this.textureId,
-            title: this.itemName,
+            genderType: this.genderType, drawableId: this.drawableId, textureId: this.textureId, title: this.itemName,
         };
     }
 }

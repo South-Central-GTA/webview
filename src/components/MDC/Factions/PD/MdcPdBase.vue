@@ -96,67 +96,22 @@ export default class MdcPdBase extends Vue {
     public setup(): void {
         this.openPageId(0);
 
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
 
-        alt.on("policemdc:openapbscreen", (args: any[]) =>
-            this.onOpenApbScreen(args[0])
-        );
-        alt.on(
-            "policemdc:opencharacterrecord",
-            (
-                character: CharacterInterface,
-                records: CriminalRecordInterface[],
-                tickets: PoliceTicketInterface[],
-                nodes: MdcNoteInterface[],
-                vehicles: VehicleInterface[],
-                houses: HouseInterface[],
-                bankAccounts: BankAccountInterface[],
-                phoneNumbers: string[]
-            ) =>
-                this.onOpenCharacterRecord(
-                    character,
-                    records,
-                    tickets,
-                    nodes,
-                    vehicles,
-                    houses,
-                    bankAccounts,
-                    phoneNumbers
-                )
-        );
-        alt.on("policemdc:openphonerecord", (args: any[]) =>
-            this.onOpenPhoneRecord(args[0], args[1], args[2], args[3])
-        );
-        alt.on("policemdc:openvehiclerecord", (args: any[]) =>
-            this.onOpenVehicleRecord(
-                args[0],
-                args[1],
-                args[2],
-                args[3],
-                args[4],
-                args[5]
-            )
-        );
-        alt.on("policemdc:openbankaccountrecord", (args: any[]) =>
-            this.onOpenBankAccountRecord(args[0], args[1])
-        );
-        alt.on("policemdc:openmailaccountrecord", (args: any[]) =>
-            this.onOpenMailAccountRecord(args[0], args[1])
-        );
-        alt.on("policemdc:openweaponrecord", (args: any[]) =>
-            this.onOpenWeaponRecord(args[0], args[1], args[2], args[3], args[4])
-        );
+        alt.on("policemdc:openapbscreen", (args: any[]) => this.onOpenApbScreen(args[0]));
+        alt.on("policemdc:opencharacterrecord", (character: CharacterInterface, records: CriminalRecordInterface[], tickets: PoliceTicketInterface[], nodes: MdcNoteInterface[], vehicles: VehicleInterface[], houses: HouseInterface[], bankAccounts: BankAccountInterface[], phoneNumbers: string[]) => this.onOpenCharacterRecord(character, records, tickets, nodes, vehicles, houses, bankAccounts, phoneNumbers));
+        alt.on("policemdc:openphonerecord", (args: any[]) => this.onOpenPhoneRecord(args[0], args[1], args[2], args[3]));
+        alt.on("policemdc:openvehiclerecord", (args: any[]) => this.onOpenVehicleRecord(args[0], args[1], args[2], args[3], args[4], args[5]));
+        alt.on("policemdc:openbankaccountrecord", (args: any[]) => this.onOpenBankAccountRecord(args[0], args[1]));
+        alt.on("policemdc:openmailaccountrecord", (args: any[]) => this.onOpenMailAccountRecord(args[0], args[1]));
+        alt.on("policemdc:openweaponrecord", (args: any[]) => this.onOpenWeaponRecord(args[0], args[1], args[2], args[3], args[4]));
 
         this.search.setup(FactionType.POLICE_DEPARTMENT);
         this.files.setup();
     }
 
     public close(): void {
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
-            this.onIsOperatorChanged(value)
-        );
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
 
         alt.off("policemdc:openapbscreen");
         alt.off("policemdc:opencharacterrecord");
@@ -181,95 +136,37 @@ export default class MdcPdBase extends Vue {
         this.apb.setup(FactionType.POLICE_DEPARTMENT, bulletIns);
     }
 
-    private onOpenCharacterRecord(
-        character: CharacterInterface,
-        records: CriminalRecordInterface[],
-        tickets: PoliceTicketInterface[],
-        notes: MdcNoteInterface[],
-        vehicles: VehicleInterface[],
-        houses: HouseInterface[],
-        bankAccounts: BankAccountInterface[],
-        phoneNumbers: string[]
-    ): void {
+    private onOpenCharacterRecord(character: CharacterInterface, records: CriminalRecordInterface[], tickets: PoliceTicketInterface[], notes: MdcNoteInterface[], vehicles: VehicleInterface[], houses: HouseInterface[], bankAccounts: BankAccountInterface[], phoneNumbers: string[]): void {
         this.pageId = 1000;
-        this.characterRecord.setup(
-            character,
-            records,
-            tickets,
-            notes,
-            vehicles,
-            houses,
-            bankAccounts,
-            phoneNumbers
-        );
+        this.characterRecord.setup(character, records, tickets, notes, vehicles, houses, bankAccounts, phoneNumbers);
     }
 
-    private onOpenPhoneRecord(
-        phoneId: number,
-        phoneNumber: string,
-        ownerCharacterName: string,
-        notes: MdcNoteInterface[]
-    ): void {
+    private onOpenPhoneRecord(phoneId: number, phoneNumber: string, ownerCharacterName: string, notes: MdcNoteInterface[]): void {
         this.pageId = 1001;
         this.phoneRecord.setup(phoneId, phoneNumber, ownerCharacterName, notes);
     }
 
-    private onOpenVehicleRecord(
-        vehicleId: number,
-        displayName: string,
-        displayClass: string,
-        numberPlate: string,
-        ownerName: string,
-        notes: MdcNoteInterface[]
-    ): void {
+    private onOpenVehicleRecord(vehicleId: number, displayName: string, displayClass: string, numberPlate: string, ownerName: string, notes: MdcNoteInterface[]): void {
         this.pageId = 1002;
-        this.vehicleRecord.setup(
-            vehicleId,
-            displayName,
-            displayClass,
-            numberPlate,
-            ownerName,
-            notes
-        );
+        this.vehicleRecord.setup(vehicleId, displayName, displayClass, numberPlate, ownerName, notes);
     }
 
-    private onOpenBankAccountRecord(
-        bankAccount: BankAccountInterface,
-        notes: MdcNoteInterface[]
-    ): void {
+    private onOpenBankAccountRecord(bankAccount: BankAccountInterface, notes: MdcNoteInterface[]): void {
         this.pageId = 1003;
         this.bankAccountRecord.setup(bankAccount, notes);
     }
 
-    private onOpenMailAccountRecord(
-        mailAccount: MailAccountInterface,
-        notes: MdcNoteInterface[]
-    ): void {
+    private onOpenMailAccountRecord(mailAccount: MailAccountInterface, notes: MdcNoteInterface[]): void {
         this.pageId = 1004;
         this.mailAccountRecord.setup(mailAccount, notes);
     }
 
-    private onOpenWeaponRecord(
-        weaponId: number,
-        serialNumber: string,
-        ownerName: string,
-        weaponName: string,
-        notes: MdcNoteInterface[]
-    ): void {
+    private onOpenWeaponRecord(weaponId: number, serialNumber: string, ownerName: string, weaponName: string, notes: MdcNoteInterface[]): void {
         this.pageId = 1005;
-        this.weaponRecord.setup(
-            weaponId,
-            serialNumber,
-            ownerName,
-            weaponName,
-            notes
-        );
+        this.weaponRecord.setup(weaponId, serialNumber, ownerName, weaponName, notes);
     }
 
-    public updateCallSigns(
-        callSigns: CallSignInterface[],
-        hasCallSign: boolean
-    ): void {
+    public updateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
         this.home.updateCallSigns(callSigns, hasCallSign);
     }
 

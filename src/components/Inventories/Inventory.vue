@@ -49,18 +49,11 @@ export default class Inventory extends Vue {
     private dropZoneVisible = false;
 
     @Watch("inventory")
-    private onInventoryPropertyChanged(
-        value: InventoryInterface,
-    ): void {
+    private onInventoryPropertyChanged(value: InventoryInterface,): void {
         if (value) {
             value.items.forEach((item: ItemInterface) => {
-                if (
-                    item.attachedToWeaponItem !== null &&
-                    item.attachedToWeaponItem !== -1
-                ) {
-                    const weaponItem = value.items.find(
-                        (i) => i.id == item.attachedToWeaponItem
-                    );
+                if (item.attachedToWeaponItem !== null && item.attachedToWeaponItem !== -1) {
+                    const weaponItem = value.items.find((i) => i.id == item.attachedToWeaponItem);
                     if (weaponItem !== undefined) {
                         if (weaponItem.attachmentItems === undefined) {
                             weaponItem.attachmentItems = [];
@@ -104,11 +97,7 @@ export default class Inventory extends Vue {
         this.$emit("open-context-menu", mouseEvent, item);
     }
 
-    private startDragging(
-        event: MouseEvent,
-        element: Element,
-        item: ItemInterface
-    ): void {
+    private startDragging(event: MouseEvent, element: Element, item: ItemInterface): void {
         this.$emit("start-dragging", event, element, item);
     }
 
@@ -143,9 +132,7 @@ export default class Inventory extends Vue {
         }
 
         this.items = this.cachedItems;
-        this.items = this.items.filter((i) =>
-            this.getItemName(i).toLowerCase().includes(this.itemSearch.toLowerCase())
-        );
+        this.items = this.items.filter((i) => this.getItemName(i).toLowerCase().includes(this.itemSearch.toLowerCase()));
     }
 
     private getWeight(items: ItemInterface[]): number {

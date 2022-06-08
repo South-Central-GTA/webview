@@ -53,12 +53,7 @@ export default class MoneyTransfer extends Vue {
     private transfer(): void {
         if (!this.isValuePositive || !this.bankDetailsValid) return;
 
-        this.$emit(
-            "transfer",
-            this.receiverBankDetails.value,
-            Number.parseInt(this.transferValueInput.value),
-            this.purposeOfUse
-        );
+        this.$emit("transfer", this.receiverBankDetails.value, Number.parseInt(this.transferValueInput.value), this.purposeOfUse);
 
         this.transferValueInput.value = "";
         this.receiverBankDetails.value = "";
@@ -70,9 +65,7 @@ export default class MoneyTransfer extends Vue {
     }
 
     private checkValue(): void {
-        this.isValuePositive =
-            isNumeric(this.transferValueInput.value) &&
-            Number.parseInt(this.transferValueInput.value) >= 1;
+        this.isValuePositive = isNumeric(this.transferValueInput.value) && Number.parseInt(this.transferValueInput.value) >= 1;
     }
 
     private allowOnlyNumbers(state: KeyboardEvent): void {

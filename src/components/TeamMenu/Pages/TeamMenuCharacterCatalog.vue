@@ -174,9 +174,7 @@ export default class TeamMenuVehicleCatalog extends Vue {
 
     public mounted(): void {
         alt.on("charactercatalog:setup", (args: any) => this.setup(args[0]));
-        alt.on("charactercatalog:opendetails", (args: any) =>
-            this.openDetails(args[0], args[1], args[2], args[3], args[4])
-        );
+        alt.on("charactercatalog:opendetails", (args: any) => this.openDetails(args[0], args[1], args[2], args[3], args[4]));
     }
 
     public unmounted(): void {
@@ -194,13 +192,7 @@ export default class TeamMenuVehicleCatalog extends Vue {
         alt.emitServer("charactercatalog:requestdetails", character.id);
     }
 
-    private openDetails(
-        character: CharacterInterface,
-        vehicles: VehicleInterface[],
-        houses: HouseInterface[],
-        groups: GroupInterface[],
-        bankAccounts: BankAccountInterface[]
-    ): void {
+    private openDetails(character: CharacterInterface, vehicles: VehicleInterface[], houses: HouseInterface[], groups: GroupInterface[], bankAccounts: BankAccountInterface[]): void {
         this.openCharacter = character;
         this.vehicles = vehicles;
         this.houses = houses;
@@ -219,9 +211,7 @@ export default class TeamMenuVehicleCatalog extends Vue {
             return;
         }
 
-        this.characters = this.cachedCharacters.filter((c) =>
-            c.name.toLowerCase().includes(this.characterSearch.toLowerCase())
-        );
+        this.characters = this.cachedCharacters.filter((c) => c.name.toLowerCase().includes(this.characterSearch.toLowerCase()));
     }
 
     private getCharacterState(state: number): string {
@@ -242,11 +232,7 @@ export default class TeamMenuVehicleCatalog extends Vue {
     private getDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "long", day: "numeric",
         });
     }
 }

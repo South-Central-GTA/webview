@@ -60,9 +60,7 @@ export default class TeamMenuPlayerCatalog extends Vue {
             return;
         }
 
-        this.players = this.cachePlayers.filter((p) =>
-            p.accountName.toLowerCase().includes(this.searchInput.toLowerCase())
-        );
+        this.players = this.cachePlayers.filter((p) => p.accountName.toLowerCase().includes(this.searchInput.toLowerCase()));
     }
 }
 </script>

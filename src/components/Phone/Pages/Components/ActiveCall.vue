@@ -27,9 +27,7 @@ export default class ActiveCall extends Vue {
     private hanguped = false;
 
     public mounted(): void {
-        alt.on("phone:setupcall", (displayedName: string) =>
-            this.setup(displayedName, false)
-        );
+        alt.on("phone:setupcall", (displayedName: string) => this.setup(displayedName, false));
         alt.on("phone:connectcall", () => this.connectCall());
         alt.on("phone:numberisbusy", () => this.busy());
         alt.on("phone:connectionfailed", () => this.failed());

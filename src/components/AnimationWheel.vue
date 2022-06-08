@@ -31,12 +31,8 @@ export default class AnimationWheel extends Vue {
     private active = false;
 
     public mounted(): void {
-        alt.on("animationwheel:toggle", (visible: boolean) =>
-            this.onToggle(visible)
-        );
-        alt.on("animationwheel:setanimations", (animations: AnimationInterface[]) =>
-            this.onSetAnimations(animations)
-        );
+        alt.on("animationwheel:toggle", (visible: boolean) => this.onToggle(visible));
+        alt.on("animationwheel:setanimations", (animations: AnimationInterface[]) => this.onSetAnimations(animations));
     }
 
     public unmounted(): void {
@@ -65,9 +61,7 @@ export default class AnimationWheel extends Vue {
         }
 
         const frags = 360 / maxElements;
-        const mainHeight = parseInt(
-            window.getComputedStyle(this.actionMenu).height.slice(0, -2)
-        );
+        const mainHeight = parseInt(window.getComputedStyle(this.actionMenu).height.slice(0, -2));
 
         for (let index = 0; index <= this.actionMenu.children.length - 1; index++) {
             const element = this.actionMenu.children[index] as HTMLElement;

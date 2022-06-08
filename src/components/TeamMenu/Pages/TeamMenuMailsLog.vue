@@ -68,9 +68,7 @@ export default class TeamMenuMailsLog extends Vue {
         }
 
         this.mails = this.cachedMails;
-        this.mails = this.mails.filter((m) =>
-            m.senderMailAddress?.includes(this.mailSearch.toLowerCase())
-        );
+        this.mails = this.mails.filter((m) => m.senderMailAddress?.includes(this.mailSearch.toLowerCase()));
     }
 
     private openDetails(mail: MailInterface): void {
@@ -85,11 +83,7 @@ export default class TeamMenuMailsLog extends Vue {
     private getDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: "numeric",
-            minute: "numeric",
-            year: "numeric",
-            month: "numeric",
-            day: "numeric",
+            hour: "numeric", minute: "numeric", year: "numeric", month: "numeric", day: "numeric",
         });
     }
 }

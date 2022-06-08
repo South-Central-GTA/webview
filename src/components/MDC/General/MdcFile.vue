@@ -52,9 +52,7 @@ export default class MdcFile extends Vue {
     public mounted(): void {
         alt.on("filesystem:editfile", (args: any[]) => this.onEdit(args[0]));
         alt.on("filesystem:filesaved", () => this.onSaved());
-        alt.on("filesystem:fileblocked", (args: any[]) =>
-            this.onFileBlocked(args[0])
-        );
+        alt.on("filesystem:fileblocked", (args: any[]) => this.onFileBlocked(args[0]));
     }
 
     public unmounted(): void {
@@ -89,10 +87,7 @@ export default class MdcFile extends Vue {
     }
 
     private onFileBlocked(blockedByCharacterName: string): void {
-        this.$emit(
-            "show-notification",
-            `Die Datei wird aktuell von ${blockedByCharacterName} bearbeitet.`
-        );
+        this.$emit("show-notification", `Die Datei wird aktuell von ${blockedByCharacterName} bearbeitet.`);
     }
 
     private closeFile(): void {
@@ -107,11 +102,7 @@ export default class MdcFile extends Vue {
         this.isEditorVisible = false;
         this.customEditor.showToolbar(false);
 
-        alt.emitServer(
-            "filesystem:savefile",
-            this.id,
-            this.customEditor.getContent
-        );
+        alt.emitServer("filesystem:savefile", this.id, this.customEditor.getContent);
 
         this.$emit("show-notification", `Datei wird gespeichert...`);
     }

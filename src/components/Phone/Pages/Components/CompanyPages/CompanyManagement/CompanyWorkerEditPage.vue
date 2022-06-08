@@ -41,9 +41,7 @@ import character from "@/scripts/services/character.service";
 import alt from "@/scripts/services/alt.service";
 import group from "@/scripts/services/group.service";
 import {
-    allowOnlyNumbers,
-    isNumeric,
-    onFocus,
+    allowOnlyNumbers, isNumeric, onFocus,
 } from "@/scripts/helpers/helpers";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
@@ -55,13 +53,7 @@ export default class CompanyWorkerEditPage extends Vue {
     @Ref() private readonly salaryInput!: HTMLInputElement;
 
     private member: GroupMemberInterface = {
-        groupId: -1,
-        characterId: -1,
-        characterName: "",
-        level: -1,
-        salary: -1,
-        bankAccountId: -1,
-        owner: false,
+        groupId: -1, characterId: -1, characterName: "", level: -1, salary: -1, bankAccountId: -1, owner: false,
     };
 
     private ownProfile = false;
@@ -75,15 +67,12 @@ export default class CompanyWorkerEditPage extends Vue {
     public mounted(): void {
         group
             .getInstance()
-            .CompanyChanged.on((company?: CompanyInterface) =>
-            this.updateCompany(company)
-        );
+            .CompanyChanged.on((company?: CompanyInterface) => this.updateCompany(company));
     }
 
     public setup(member: GroupMemberInterface, company: GroupInterface): void {
         this.member = member;
-        this.ownProfile =
-            this.member.characterId === character.getInstance().getCharacterId;
+        this.ownProfile = this.member.characterId === character.getInstance().getCharacterId;
         this.owner = member.owner;
 
         const rank = company.ranks.find((r) => r.level === member.level);
@@ -107,9 +96,7 @@ export default class CompanyWorkerEditPage extends Vue {
         this.updateRankPossibilities();
         this.updateRankDisplay();
 
-        const maxRank = company?.ranks.reduce((prev, current) =>
-            prev.level > current.level ? prev : current
-        );
+        const maxRank = company?.ranks.reduce((prev, current) => prev.level > current.level ? prev : current);
         if (maxRank !== undefined && this.member.level > maxRank.level) {
             this.rankCharacterDown();
         }
@@ -127,13 +114,7 @@ export default class CompanyWorkerEditPage extends Vue {
 
         this.member.salary = salary;
 
-        alt.emitServer(
-            "group:savemember",
-            this.member.groupId,
-            this.member.characterId,
-            this.member.level,
-            this.member.salary
-        );
+        alt.emitServer("group:savemember", this.member.groupId, this.member.characterId, this.member.level, this.member.salary);
 
         this.$emit("back");
     }
@@ -153,11 +134,7 @@ export default class CompanyWorkerEditPage extends Vue {
     }
 
     private kickCharacter(): void {
-        alt.emitServer(
-            "group:kickmember",
-            this.member.groupId,
-            this.member.characterId
-        );
+        alt.emitServer("group:kickmember", this.member.groupId, this.member.characterId);
         this.$emit("back");
     }
 
@@ -166,12 +143,8 @@ export default class CompanyWorkerEditPage extends Vue {
             return;
         }
 
-        this.rankUpPossible =
-            this.company.ranks.find((r) => r.level === this.member.level + 1) !==
-            undefined;
-        this.rankDownPossible =
-            this.company.ranks.find((r) => r.level === this.member.level - 1) !==
-            undefined;
+        this.rankUpPossible = this.company.ranks.find((r) => r.level === this.member.level + 1) !== undefined;
+        this.rankDownPossible = this.company.ranks.find((r) => r.level === this.member.level - 1) !== undefined;
     }
 
     private updateRankDisplay(): void {

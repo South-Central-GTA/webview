@@ -53,8 +53,7 @@
                             </button>
                             <button type='button' class='btn' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 9,
-                  'btn-primary': activeTabId === 9,
-                }" @click='openTab(9)'>
+                  'btn-primary': activeTabId === 9 }" @click='openTab(9)'>
                                 Häuser Katalog
                             </button>
                             <button type='button' class='btn' v-bind:class="{
@@ -79,7 +78,7 @@
                             </button>
                             <button type='button' class='btn' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 14,
-                  'btn-primary': activeTabId === 14    }" @click='openTab(14)'>
+                  'btn-primary': activeTabId === 14 }" @click='openTab(14)'>
                                 Animationen
                             </button>
                             <button type='button' class='btn' v-bind:class="{
@@ -167,9 +166,7 @@ export default class TeamMenu extends Vue {
 
     public mounted(): void {
         alt.on("adminmenu:toggle", (state: boolean) => this.toggle(state));
-        alt.on("userrecord:setup", (args: any[]) =>
-            this.openUserRecord(args[0], args[1])
-        );
+        alt.on("userrecord:setup", (args: any[]) => this.openUserRecord(args[0], args[1]));
     }
 
     public unmounted(): void {
@@ -183,10 +180,7 @@ export default class TeamMenu extends Vue {
         this.openTab(this.activeTabId);
     }
 
-    private openUserRecord(
-        accountId: number,
-        userRecords: UserRecordInterface[]
-    ): void {
+    private openUserRecord(accountId: number, userRecords: UserRecordInterface[]): void {
         this.userRecordMenu.setup(accountId, userRecords);
         this.activeTabId = 1001;
     }
@@ -199,7 +193,6 @@ export default class TeamMenu extends Vue {
                 alt.emitServer("eventlog:open");
                 break;
             case 2:
-                alt.emitServer("itemcatalog:open");
                 break;
             case 3:
                 alt.emitServer("vehiclecatalog:open");

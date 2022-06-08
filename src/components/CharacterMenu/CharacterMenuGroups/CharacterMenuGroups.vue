@@ -99,10 +99,7 @@ import {LicenseType} from "@/scripts/enums/license.type";
 
 @Options({
     components: {
-        LeaveGroupPage,
-        VehicleDealerMenu,
-        GroupRanksSettingsPage,
-        CloseGroupPage,
+        LeaveGroupPage, VehicleDealerMenu, GroupRanksSettingsPage, CloseGroupPage,
     },
 })
 export default class CharacterMenuGroups extends Vue {
@@ -129,12 +126,8 @@ export default class CharacterMenuGroups extends Vue {
     public mounted(): void {
         group
             .getInstance()
-            .AllGroupsChanged.on((groups: GroupInterface[] | undefined) =>
-            this.setup(groups)
-        );
-        alt.on("groupmenu:senddetails", (args: any[]) =>
-            this.onSendDetails(args[0], args[1])
-        );
+            .AllGroupsChanged.on((groups: GroupInterface[] | undefined) => this.setup(groups));
+        alt.on("groupmenu:senddetails", (args: any[]) => this.onSendDetails(args[0], args[1]));
     }
 
     public unmounted(): void {
@@ -168,35 +161,24 @@ export default class CharacterMenuGroups extends Vue {
         }
     }
 
-    private onSendDetails(
-        atBase: boolean,
-        groupOnlinePlayers: PlayerInterface[]
-    ): void {
+    private onSendDetails(atBase: boolean, groupOnlinePlayers: PlayerInterface[]): void {
         this.vehicleDealerMenu?.setCloseToBase(atBase);
-        this.groupOnlinePlayersNames = groupOnlinePlayers.map(
-            (p) => p.characterName
-        );
+        this.groupOnlinePlayersNames = groupOnlinePlayers.map((p) => p.characterName);
     }
 
     private selectGroup(group: GroupInterface): void {
         this.groupSelected = true;
         this.groupName = group.name;
         this.groupId = group.id;
-        this.groupMembers = group.members.filter(
-            (m) => m.characterId !== character.getInstance().getCharacterId
-        );
+        this.groupMembers = group.members.filter((m) => m.characterId !== character.getInstance().getCharacterId);
         this.cachedGroupMembers = this.groupMembers;
 
         const company = group as CompanyInterface;
         if (company !== undefined) {
-            this.hasVehicleDealer =
-                (company.licenses & LicenseType.VEHICLE_DEALERSHIP) ===
-                LicenseType.VEHICLE_DEALERSHIP;
+            this.hasVehicleDealer = (company.licenses & LicenseType.VEHICLE_DEALERSHIP) === LicenseType.VEHICLE_DEALERSHIP;
         }
 
-        const member = group.members.find(
-            (m) => m.characterId === character.getInstance().getCharacterId
-        );
+        const member = group.members.find((m) => m.characterId === character.getInstance().getCharacterId);
         if (member) {
             this.isOwner = member.owner;
 
@@ -254,11 +236,9 @@ export default class CharacterMenuGroups extends Vue {
             return;
         }
 
-        this.groupMembers = this.cachedGroupMembers.filter((gm) =>
-            gm.characterName
-                .toLowerCase()
-                .includes(this.groupMemberSearch.toLowerCase())
-        );
+        this.groupMembers = this.cachedGroupMembers.filter((gm) => gm.characterName
+            .toLowerCase()
+            .includes(this.groupMemberSearch.toLowerCase()));
     }
 }
 </script>

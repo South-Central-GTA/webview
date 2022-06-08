@@ -46,8 +46,7 @@ import {ClothesInterface} from "@/scripts/interfaces/character/clothes.interface
 
 @Options({
     components: {
-        NotificationsHolder,
-        ClothesMenu,
+        NotificationsHolder, ClothesMenu,
     },
 })
 export default class ClothingStore extends Vue {
@@ -59,21 +58,14 @@ export default class ClothingStore extends Vue {
 
     public mounted(): void {
         alt.emit("clothingstore:getcharacter");
-        alt.on(
-            "clothingstore:setcharacter",
-            (maxDrawables: MaxDrawablesInterface, gender: GenderType) =>
-                this.onSetCharacter(maxDrawables, gender)
-        );
+        alt.on("clothingstore:setcharacter", (maxDrawables: MaxDrawablesInterface, gender: GenderType) => this.onSetCharacter(maxDrawables, gender));
     }
 
     public unmounted(): void {
         alt.off("clothingstore:setcharacter");
     }
 
-    private onSetCharacter(
-        maxDrawables: MaxDrawablesInterface,
-        gender: GenderType
-    ): void {
+    private onSetCharacter(maxDrawables: MaxDrawablesInterface, gender: GenderType): void {
         this.isSaving = false;
 
         this.clothesMenu?.setGender(maxDrawables, gender);
@@ -103,10 +95,7 @@ export default class ClothingStore extends Vue {
         this.isSaving = true;
 
         if (!this.clothesMenu?.checkValidation()) {
-            alt.emit(
-                "notification:error",
-                "Du musst jedem Kleidungsstück einen Namen geben."
-            );
+            alt.emit("notification:error", "Du musst jedem Kleidungsstück einen Namen geben.");
             this.isSaving = false;
             return;
         }

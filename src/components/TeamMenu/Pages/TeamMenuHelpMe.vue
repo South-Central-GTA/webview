@@ -69,9 +69,7 @@ export default class TeamMenuHelpMe extends Vue {
         }
 
         this.tickets = this.chacheTickets;
-        this.tickets = this.tickets.filter((t) =>
-            t.creatorName.toLowerCase().includes(this.playerNameSearch)
-        );
+        this.tickets = this.tickets.filter((t) => t.creatorName.toLowerCase().includes(this.playerNameSearch));
     }
 
     private takeTicket(playerDiscordId: string): void {

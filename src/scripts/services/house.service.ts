@@ -29,9 +29,7 @@ export default class HouseService {
     private houses: HouseInterface[] = [];
 
     public listenToEvents(): void {
-        alt.on("house:updatecharacterhouses", (houses: HouseInterface[]) =>
-            this.updateHouses(houses)
-        );
+        alt.on("house:updatecharacterhouses", (houses: HouseInterface[]) => this.updateHouses(houses));
     }
 
     private updateHouses(houses: HouseInterface[]): void {

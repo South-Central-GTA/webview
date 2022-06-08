@@ -33,20 +33,12 @@ export default class PhoneActiveBankAccount extends Vue {
     }
 
     private phoneMoneyTransfer(): void {
-        if (
-            !isNumeric(this.transferValueInput.value) ||
-            Number.parseInt(this.transferValueInput.value) < 1
-        )
-            return;
+        if (!isNumeric(this.transferValueInput.value) || Number.parseInt(this.transferValueInput.value) < 1) return;
 
         const nameRedexp = /([A-Z]{2})-([0-9]{9})/;
         if (!nameRedexp.test(this.receiverBankDetails.value)) return;
 
-        this.$emit(
-            "phonetransfer",
-            this.receiverBankDetails.value,
-            Number.parseInt(this.transferValueInput.value)
-        );
+        this.$emit("phonetransfer", this.receiverBankDetails.value, Number.parseInt(this.transferValueInput.value));
         this.transferValueInput.value = "";
         this.receiverBankDetails.value = "";
     }

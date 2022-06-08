@@ -48,9 +48,7 @@ export default class MyCurrentDeliveryPage extends Vue {
     private deliveryType = 0;
 
     public mounted(): void {
-        alt.on("delivery:sendmycurrentdelivery", (args: any[]) =>
-            this.setup(args[0])
-        );
+        alt.on("delivery:sendmycurrentdelivery", (args: any[]) => this.setup(args[0]));
     }
 
     public unmounted(): void {
@@ -103,11 +101,7 @@ export default class MyCurrentDeliveryPage extends Vue {
     private getDate(dateString: string): string {
         const date = new Date(dateString);
         return date.toLocaleDateString("de-DE", {
-            weekday: "long",
-            hour: "numeric",
-            minute: "numeric",
-            month: "long",
-            day: "numeric",
+            weekday: "long", hour: "numeric", minute: "numeric", month: "long", day: "numeric",
         });
     }
 
