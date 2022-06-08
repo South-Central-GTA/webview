@@ -1,33 +1,44 @@
 <template>
     <div class="vehicle-import-page">
         <div class="vehicle-import-page-header">
-            <img src="@/assets/images/phone/ssas-logo.png">
+            <img src="@/assets/images/phone/ssas-logo.png"/>
             <div class="px-2">
                 <p>Willkommen, {{ name }}!</p>
             </div>
         </div>
-        
+
         <div v-if="!hasAccess" class="no-access-box">
             <p>Keine Zugriffsrechte!</p>
         </div>
-        
-        
+
         <div class="row pt-2" :hidden="isBuyMenuOpen || isOrderMenuOpen">
             <div class="col-2">
                 <div class="btn-group-vertical p-2 w-100">
-                    <button class="btn btn-dark" @click="openOrderMenu()">Meine Bestellungen</button>
+                    <button class="btn btn-dark" @click="openOrderMenu()">
+                        Meine Bestellungen
+                    </button>
                 </div>
             </div>
             <div class="col-8">
-                <input class="form-control mt-1 mb-1"
-                       @focus="onFocus(true)" @blur="onFocus(false)"
-                       @input="search()" v-model="nameSearch" type="text" placeholder="Fahrzeugnamen suchen...">
+                <input
+                    class="form-control mt-1 mb-1"
+                    @focus="onFocus(true)"
+                    @blur="onFocus(false)"
+                    @input="search()"
+                    v-model="nameSearch"
+                    type="text"
+                    placeholder="Fahrzeugnamen suchen..."
+                />
 
                 <div class="vehicles-list">
-                    <button class="icon-button col-4 p-2" v-for="vehicle in vehicles" v-bind:key="vehicle.model"
-                            @click="openBuyMenu(vehicle)">
+                    <button
+                        class="icon-button col-4 p-2"
+                        v-for="vehicle in vehicles"
+                        v-bind:key="vehicle.model"
+                        @click="openBuyMenu(vehicle)"
+                    >
                         <div class="vehicle-entry">
-                            <img :src=getVehicleImage(vehicle.model)>
+                            <img :src="getVehicleImage(vehicle.model)"/>
 
                             <div class="row">
                                 <div class="col-6">
@@ -38,11 +49,19 @@
                                     <h1>{{ vehicle.displayClass }}</h1>
                                 </div>
                                 <div class="col-12">
-                                    <h1>Verfügbare Anzahl: {{ vehicle.amountOfOrderableVehicles }}</h1>
+                                    <h1>
+                                        Verfügbare Anzahl: {{ vehicle.amountOfOrderableVehicles }}
+                                    </h1>
                                 </div>
 
                                 <div class="col price-box">
-                                    <h2>${{ vehicle.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</h2>
+                                    <h2>
+                                        ${{
+                                            vehicle.price
+                                                .toString()
+                                                .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                                        }}
+                                    </h2>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +71,12 @@
             <div class="col-2">
                 <div class="m-2">
                     <label>Kategorien:</label>
-                    <select name="class" ref="classSelection" id="class-select" @change="onChangeClass()">
+                    <select
+                        name="class"
+                        ref="classSelection"
+                        id="class-select"
+                        @change="onChangeClass()"
+                    >
                         <option value="ALL">Alle</option>
                         <option value="COMPACT">Compact</option>
                         <option value="SEDAN">Sedan</option>
@@ -80,20 +104,40 @@
             <div class="col-9 p-3 showcase-entry">
                 <div class="row">
                     <div class="col-6">
-                        <img class="showcase-image" :src=getVehicleImage(buyMenuVehicleModel)>
-                        <p class="text-muted pt-1" style="font-style: italic">Dies ist nur ein Vorschaubild.</p>
+                        <img
+                            class="showcase-image"
+                            :src="getVehicleImage(buyMenuVehicleModel)"
+                        />
+                        <p class="text-muted pt-1" style="font-style: italic">
+                            Dies ist nur ein Vorschaubild.
+                        </p>
                     </div>
                     <div class="col">
                         <h1>{{ buyMenuVehicleName }} {{ buyMenuVehicleClass }}</h1>
-                        <h2>{{ buyMenuVehiclePrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</h2>
-                        <p>Nach dem erfolgreichen Kauf dauert es einen (1) bis vier (4) Tage bis das Fahrzeug nach
-                            Los Santos verschifft wurde. Jede Bestellung wird einzelnd abgearbeitet.</p>
-                        <button class="btn btn-buy w-100 text-white" @click="requestOrder()">Fahrzeug
-                            kostenpflichtig bestellen
+                        <h2>
+                            {{
+                                buyMenuVehiclePrice
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                            }}
+                        </h2>
+                        <p>
+                            Nach dem erfolgreichen Kauf dauert es einen (1) bis vier (4) Tage
+                            bis das Fahrzeug nach Los Santos verschifft wurde. Jede Bestellung
+                            wird einzelnd abgearbeitet.
+                        </p>
+                        <button
+                            class="btn btn-buy w-100 text-white"
+                            @click="requestOrder()"
+                        >
+                            Fahrzeug kostenpflichtig bestellen
                         </button>
-                        <h3 v-if="warningMessage !== ''" class="text-danger p-2">{{ warningMessage }}</h3>
-                        <h3 v-if="successMessageVisible" class="text-success p-2">Fahrzeug wurde erfolgreich
-                            bestellt!</h3>
+                        <h3 v-if="warningMessage !== ''" class="text-danger p-2">
+                            {{ warningMessage }}
+                        </h3>
+                        <h3 v-if="successMessageVisible" class="text-success p-2">
+                            Fahrzeug wurde erfolgreich bestellt!
+                        </h3>
                     </div>
                 </div>
             </div>
@@ -105,16 +149,28 @@
                 </div>
             </div>
             <div class="col-9">
-                <input class="form-control mt-1 mb-1"
-                       @focus="onFocus(true)" @blur="onFocus(false)"
-                       @input="search()" v-model="nameSearch" type="text" placeholder="Fahrzeugnamen suchen...">
+                <input
+                    class="form-control mt-1 mb-1"
+                    @focus="onFocus(true)"
+                    @blur="onFocus(false)"
+                    @input="search()"
+                    v-model="nameSearch"
+                    type="text"
+                    placeholder="Fahrzeugnamen suchen..."
+                />
 
                 <div class="vehicles-list row">
-                    <div class="icon-button col-4 p-2" v-for="vehicle in orderedVehicles" v-bind:key="vehicle.id">
+                    <div
+                        class="icon-button col-4 p-2"
+                        v-for="vehicle in orderedVehicles"
+                        v-bind:key="vehicle.id"
+                    >
                         <div class="vehicle-entry">
-                            <h1>Bestellnummer: #{{ vehicle.id.toString().padStart(6, 0) }}</h1>
+                            <h1>
+                                Bestellnummer: #{{ vehicle.id.toString().padStart(6, 0) }}
+                            </h1>
 
-                            <img :src=getVehicleImage(vehicle.model)>
+                            <img :src="getVehicleImage(vehicle.model)"/>
 
                             <div class="row">
                                 <div class="col-6">
@@ -126,16 +182,20 @@
                                 </div>
                             </div>
 
-
                             <p>Bestellt von: {{ vehicle.orderedBy }}.</p>
-                            <p v-if="vehicle.deliveryRequestedBy">Lieferauftrag erstellt von:
-                                {{ vehicle.deliveryRequestedBy }} am {{ getDate(vehicle.deliveryRequestedAt) }}.</p>
+                            <p v-if="vehicle.deliveryRequestedBy">
+                                Lieferauftrag erstellt von: {{ vehicle.deliveryRequestedBy }} am
+                                {{ getDate(vehicle.deliveryRequestedAt) }}.
+                            </p>
 
                             <div class="m-2">
-                                <button class="btn btn-primary w-100"
-                                        v-if="!vehicle.deliveryRequestedBy"
-                                        @click="requestDeliveryTask(vehicle.id)"
-                                        :disabled="!getButtonState(vehicle)">{{ getButtonString(vehicle) }}
+                                <button
+                                    class="btn btn-primary w-100"
+                                    v-if="!vehicle.deliveryRequestedBy"
+                                    @click="requestDeliveryTask(vehicle.id)"
+                                    :disabled="!getButtonState(vehicle)"
+                                >
+                                    {{ getButtonString(vehicle) }}
                                 </button>
                             </div>
                         </div>
@@ -152,11 +212,11 @@
 
 <script lang="ts">
 import alt from "@/scripts/services/alt.service";
-import {OrderedVehiclesInterface} from "@/scripts/interfaces/ordered-vehicles.interface";
-import {CatalogVehicleInterface} from "@/scripts/interfaces/catalog-vehicle.interface";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
 import {onFocus} from "@/scripts/helpers/helpers";
+import {CatalogVehicleInterface} from "@/scripts/interfaces/vehicles/catalog-vehicle.interface";
+import {OrderedVehicleInterface} from "@/scripts/interfaces/vehicles/ordered-vehicle.interface";
 
 export default class VehicleImportPage extends Vue {
     @Ref() private readonly classSelection!: HTMLSelectElement;
@@ -172,7 +232,7 @@ export default class VehicleImportPage extends Vue {
 
     private isOrderMenuOpen = false;
     private orderMenuInterval: number | undefined;
-    private orderedVehicles: OrderedVehiclesInterface[] = [];
+    private orderedVehicles: OrderedVehicleInterface[] = [];
 
     private warningMessage = "";
     private successMessageVisible = false;
@@ -183,13 +243,16 @@ export default class VehicleImportPage extends Vue {
     private cachedVehicles: CatalogVehicleInterface[] = this.vehicles;
 
     public mounted(): void {
-        alt.on("vehicledealer:setup", (args: any[]) => this.setup(args[0], args[1], args[2]));
-        alt.on("vehicledealer:setwarning", (args: any[]) => this.setWarningMessage(args[0]));
+        alt.on("vehicledealer:setup", (args: any[]) =>
+            this.setup(args[0], args[1], args[2])
+        );
+        alt.on("vehicledealer:setwarning", (args: any[]) =>
+            this.setWarningMessage(args[0])
+        );
         alt.on("vehicledealer:setorders", (args: any[]) => this.setOrders(args[0]));
         alt.on("vehicledealer:ordersuccessfull", () => this.orderSuccessfull());
         alt.on("vehicledealer:update", (args: any[]) => this.update(args[0]));
     }
-
 
     public unmounted(): void {
         alt.off("vehicledealer:setup");
@@ -199,7 +262,6 @@ export default class VehicleImportPage extends Vue {
         alt.off("vehicledealer:update");
     }
 
-
     public resetPage(): void {
         this.isBuyMenuOpen = false;
         this.isOrderMenuOpen = false;
@@ -207,7 +269,11 @@ export default class VehicleImportPage extends Vue {
         this.warningMessage = "";
     }
 
-    private setup(name: string, hasAcccess: boolean, vehicles: CatalogVehicleInterface[]): void {
+    private setup(
+        name: string,
+        hasAcccess: boolean,
+        vehicles: CatalogVehicleInterface[]
+    ): void {
         this.name = name;
         this.hasAccess = hasAcccess;
         this.vehicles = vehicles;
@@ -220,7 +286,7 @@ export default class VehicleImportPage extends Vue {
         this.warningMessage = message;
     }
 
-    private setOrders(orderedVehicles: OrderedVehiclesInterface[]): void {
+    private setOrders(orderedVehicles: OrderedVehicleInterface[]): void {
         this.orderedVehicles = orderedVehicles.sort((a, b) => {
             return a.id - b.id;
         });
@@ -236,10 +302,12 @@ export default class VehicleImportPage extends Vue {
     }
 
     private update(vehicle: CatalogVehicleInterface): void {
-        const cachedIndex = this.cachedVehicles.findIndex(v => v.model === vehicle.model);
+        const cachedIndex = this.cachedVehicles.findIndex(
+            (v) => v.model === vehicle.model
+        );
         this.cachedVehicles[cachedIndex] = vehicle;
 
-        const index = this.vehicles.findIndex(v => v.model === vehicle.model);
+        const index = this.vehicles.findIndex((v) => v.model === vehicle.model);
         if (index !== -1) {
             this.vehicles[index] = vehicle;
         }
@@ -294,7 +362,9 @@ export default class VehicleImportPage extends Vue {
     }
 
     private getVehicleImage(vehicleModel: string): string {
-        return "http://assets/southcentral-assets/vehicles/" + vehicleModel + ".jpg";
+        return (
+            "http://assets/southcentral-assets/vehicles/" + vehicleModel + ".jpg"
+        );
     }
 
     private search(): void {
@@ -310,10 +380,15 @@ export default class VehicleImportPage extends Vue {
         }
 
         if (this.classSelection.value === "ALL") {
-            this.vehicles = this.vehicles.filter(v => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()));
+            this.vehicles = this.vehicles.filter((v) =>
+                v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase())
+            );
         } else {
-            this.vehicles = this.vehicles.filter(v => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase())
-                && v.classId.toLowerCase() == this.classSelection.value.toLowerCase());
+            this.vehicles = this.vehicles.filter(
+                (v) =>
+                    v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()) &&
+                    v.classId.toLowerCase() == this.classSelection.value.toLowerCase()
+            );
         }
     }
 
@@ -324,20 +399,28 @@ export default class VehicleImportPage extends Vue {
             if (this.nameSearch === "") {
                 this.vehicles = this.cachedVehicles;
             } else {
-                this.vehicles = this.vehicles.filter(v => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()));
+                this.vehicles = this.vehicles.filter((v) =>
+                    v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase())
+                );
             }
             return;
         }
 
         if (this.nameSearch === "") {
-            this.vehicles = this.vehicles.filter(v => v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
+            this.vehicles = this.vehicles.filter(
+                (v) =>
+                    v.classId.toLowerCase() === this.classSelection.value.toLowerCase()
+            );
         } else {
-            this.vehicles = this.vehicles.filter(v => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase())
-                && v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
+            this.vehicles = this.vehicles.filter(
+                (v) =>
+                    v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()) &&
+                    v.classId.toLowerCase() === this.classSelection.value.toLowerCase()
+            );
         }
     }
 
-    private getButtonString(vehicle: OrderedVehiclesInterface): string {
+    private getButtonString(vehicle: OrderedVehicleInterface): string {
         if (this.isDatePast(vehicle.deliverdAt)) {
             return "Lieferauftrag erstellen";
         } else {
@@ -345,7 +428,7 @@ export default class VehicleImportPage extends Vue {
         }
     }
 
-    private getButtonState(vehicle: OrderedVehiclesInterface): boolean {
+    private getButtonState(vehicle: OrderedVehicleInterface): boolean {
         if (this.isDatePast(vehicle.deliverdAt)) {
             return !this.isDatePast(vehicle.deliveryRequestedAt);
         } else {
@@ -356,11 +439,11 @@ export default class VehicleImportPage extends Vue {
     private getDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            weekday: 'short',
-            hour: 'numeric',
-            minute: 'numeric',
-            month: 'long',
-            day: 'numeric'
+            weekday: "short",
+            hour: "numeric",
+            minute: "numeric",
+            month: "long",
+            day: "numeric",
         });
     }
 

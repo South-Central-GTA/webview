@@ -1,7 +1,7 @@
-import {PersonalLicenseType} from "@/scripts/enums/personal-license.type";
+import {PersonalLicenseType} from "../../enums/personal-license.type";
 
 export interface PersonalLicenseInterface {
     id: number;
-    type: PersonalLicenseType
+    type: PersonalLicenseType;
     warnings: number;
 }

@@ -8,9 +8,9 @@
 </template>
 
 <script lang="ts">
-import {PhoneContactInterface} from '@/scripts/interfaces/phone/phone-contact.interface';
 import {Vue} from "vue-class-component";
 import {Prop, Ref} from "vue-property-decorator";
+import {PhoneContactInterface} from "@/scripts/interfaces/phone/phone-contact.interface";
 
 export default class PhoneContact extends Vue {
     @Prop() private readonly contact!: PhoneContactInterface;
@@ -18,13 +18,16 @@ export default class PhoneContact extends Vue {
     @Ref() private readonly numberInput!: HTMLInputElement;
     @Ref() private readonly nameInput!: HTMLInputElement;
 
-
     private openActionsPopup(): void {
         this.$emit("clicked-contact", this.contact);
     }
 
     private getCorrectFormat(): string {
-        return this.contact.phoneNumber.substring(0, 3) + " - " + this.contact.phoneNumber.substring(3, this.contact.phoneNumber.length);
+        return (
+            this.contact.phoneNumber.substring(0, 3) +
+            " - " +
+            this.contact.phoneNumber.substring(3, this.contact.phoneNumber.length)
+        );
     }
 }
 </script>

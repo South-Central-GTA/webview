@@ -11,9 +11,10 @@
             legendary: this.item.catalogItem.rarity === 5}">
         <div class="col-1">
             <img class="item-icon" :src="getImage(item)"/>
-            <img v-if="!this.item.isBought" class="unbought-icon" src="../../assets/images/coupon.png"/>
-            <img v-if="this.item.itemState === 2" class="equipp-icon" src="../../assets/images/equipped-icon.png"/>
-            <img v-if="this.item.itemState === 3" class="equipp-icon" src="../../assets/images/force-equipped-icon.png"/>
+            <img v-if="!this.item.isBought" class="unbought-icon" src="@/assets/images/coupon.png"/>
+            <img v-if="this.item.itemState === 2" class="equipp-icon" src="@/assets/images/equipped-icon.png"/>
+            <img v-if="this.item.itemState === 3" class="equipp-icon"
+                 src="@/assets/images/force-equipped-icon.png"/>
         </div>
         <div class="col-9">
             <div class="row">

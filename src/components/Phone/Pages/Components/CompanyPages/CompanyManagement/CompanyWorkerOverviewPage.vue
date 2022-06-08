@@ -7,35 +7,48 @@
             </button>
         </div>
 
-        <company-worker-edit ref="workerEdit" :hidden="!isEditingWindowOpen" v-on:back="closeEditWorker()"/>
+        <company-worker-edit
+            ref="workerEdit"
+            :hidden="!isEditingWindowOpen"
+            v-on:back="closeEditWorker()"
+        />
 
         <div class="workers-block" v-if="members.length !== 0">
-            <button v-for="member in members" v-bind:key="member.characterName" class="workers-card"
-                    :disabled="member.owner && !isOwner" @click="openEditWorker(member)">
-                <h1>{{ member.characterName }}<span class="salary-text">$ {{ member.salary }}</span></h1>
+            <button
+                v-for="member in members"
+                v-bind:key="member.characterName"
+                class="workers-card"
+                :disabled="member.owner && !isOwner"
+                @click="openEditWorker(member)"
+            >
+                <h1>
+                    {{
+                        member.characterName
+                    }}<span class="salary-text">$ {{ member.salary }}</span>
+                </h1>
             </button>
         </div>
 
         <div class="company-stats">
-            <hr>
+            <hr/>
             <h2>{{ members.length }} Mitarbeiter</h2>
-            <hr>
+            <hr/>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import {GroupInterface} from '@/scripts/interfaces/group/group.interface';
-import {GroupMemberInterface} from '@/scripts/interfaces/group/group-member.interface';
-import CompanyWorkerEdit from './CompanyWorkerEditPage.vue';
+import CompanyWorkerEdit from "./CompanyWorkerEditPage.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
 import character from "@/scripts/services/character.service";
+import {GroupMemberInterface} from "@/scripts/interfaces/group/group-member.interface";
+import {GroupInterface} from "@/scripts/interfaces/group/group.interface";
 
 @Options({
     components: {
         CompanyWorkerEdit,
-    }
+    },
 })
 export default class CompanyWorkerOverviewPage extends Vue {
     get getIsEditingWindowOpen() {
@@ -53,7 +66,9 @@ export default class CompanyWorkerOverviewPage extends Vue {
         this.company = company;
         this.members = company.members;
 
-        const member = this.company.members.find(w => w.characterId == character.getInstance().getCharacterId);
+        const member = this.company.members.find(
+            (w) => w.characterId == character.getInstance().getCharacterId
+        );
         if (member !== undefined) {
             this.isOwner = member.owner;
         }
@@ -148,7 +163,6 @@ export default class CompanyWorkerOverviewPage extends Vue {
     width: 80%;
     border: none;
 }
-
 
 .workers-card h1 {
     font-size: 0.6vw;

@@ -1,8 +1,9 @@
 export enum InventoryType {
-    Player,
-    Vehicle,
-    House,
-    GroupMember,
-    Clothing,
-    Frisk
+    INVALID = -1,
+    PLAYER,
+    VEHICLE,
+    HOUSE,
+    GROUP_MEMBER,
+    CLOTHING,
+    FRISK
 }

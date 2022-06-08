@@ -2,8 +2,13 @@
     <div class="team-menu-character-catalog">
         <div v-if="!isPopupOpen">
             <h2>Charaktere</h2>
-            <input @input="search()" v-model="characterSearch" type="text" class="form-control-dark mb-2"
-                   placeholder="Suche nach Namen (Bsp. Max Mustermann)"/>
+            <input
+                @input="search()"
+                v-model="characterSearch"
+                type="text"
+                class="form-control-dark mb-2"
+                placeholder="Suche nach Namen (Bsp. Max Mustermann)"
+            />
             <div class="table-holder">
                 <table class="table table-striped table-hover">
                     <thead>
@@ -17,7 +22,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="character in characters" v-bind:key="character.id" class="entry" @click="requestDetails(character)">
+                    <tr
+                        v-for="character in characters"
+                        v-bind:key="character.id"
+                        class="entry"
+                        @click="requestDetails(character)"
+                    >
                         <td>{{ character.id }}</td>
                         <td>{{ character.currentAccountName }}</td>
                         <td>{{ character.name }}</td>
@@ -29,40 +39,56 @@
                 </table>
             </div>
         </div>
-    
+
         <div v-else class="details">
             <button class="icon-button text-white" @click="closeDetails()">
                 <font-awesome-icon class="mx-2" icon="chevron-left"/>
                 <span>{{ this.openCharacter.name }}</span>
             </button>
-            
+
             <div class="modal-body">
                 <div class="row">
                     <div class="col-6">
-                        <p><b>OOC Account:</b> [{{this.openCharacter.accountId}}] {{this.openCharacter.currentAccountName}}</p>
+                        <p>
+                            <b>OOC Account:</b> [{{ this.openCharacter.accountId }}]
+                            {{ this.openCharacter.currentAccountName }}
+                        </p>
                     </div>
                     <div class="col-6">
-                        <p><b>Geschlecht:</b> {{this.openCharacter.gender === 0 ? "Männlich" : "Weiblich"}}</p>
+                        <p>
+                            <b>Geschlecht:</b>
+                            {{ this.openCharacter.gender === 0 ? "Männlich" : "Weiblich" }}
+                        </p>
                     </div>
-    
+
                     <div class="col-6">
-                        <p><b>Status:</b> {{ getCharacterState(this.openCharacter.characterState) }}</p>
+                        <p>
+                            <b>Status:</b>
+                            {{ getCharacterState(this.openCharacter.characterState) }}
+                        </p>
                     </div>
                     <div class="col-6">
                         <p><b>Alter:</b> {{ this.openCharacter.age }} Jahre</p>
                     </div>
-    
+
                     <div class="col-6">
                         <p><b>Herkunft:</b> {{ this.openCharacter.origin }}</p>
                     </div>
                     <div class="col-6">
                         <p><b>Körperbau:</b> {{ this.openCharacter.physique }}</p>
                     </div>
-    
+
                     <div class="col-6">
-                        <p><b>Berufsfeld Id:</b> {{ this.openCharacter.definedJob === undefined ? "Kein Berufsfeld" : this.openCharacter.definedJob.id }}</p>
+                        <p>
+                            <b>Berufsfeld Id:</b>
+                            {{
+                                this.openCharacter.definedJob === undefined
+                                    ? "Kein Berufsfeld"
+                                    : this.openCharacter.definedJob.id
+                            }}
+                        </p>
                     </div>
-    
+
                     <div class="col-12">
                         <p><b>Vorgeschichte:</b> {{ this.openCharacter.story }}</p>
                     </div>
@@ -77,7 +103,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="vehicle in this.vehicles" v-bind:key="vehicle.id" class="entry">
+                        <tr
+                            v-for="vehicle in this.vehicles"
+                            v-bind:key="vehicle.id"
+                            class="entry"
+                        >
                             <td>{{ vehicle.id }}</td>
                             <td>{{ vehicle.displayName }}</td>
                         </tr>
@@ -94,7 +124,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="house in this.houses" v-bind:key="house.id" class="entry">
+                        <tr
+                            v-for="house in this.houses"
+                            v-bind:key="house.id"
+                            class="entry"
+                        >
                             <td>{{ house.id }}</td>
                         </tr>
                         </tbody>
@@ -110,7 +144,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="group in this.groups" v-bind:key="group.id" class="entry">
+                        <tr
+                            v-for="group in this.groups"
+                            v-bind:key="group.id"
+                            class="entry"
+                        >
                             <td>{{ group.id }}</td>
                             <td>{{ group.name }}</td>
                         </tr>
@@ -128,10 +166,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="bankAccount in this.bankAccounts" v-bind:key="bankAccount.id" class="entry">
+                        <tr
+                            v-for="bankAccount in this.bankAccounts"
+                            v-bind:key="bankAccount.id"
+                            class="entry"
+                        >
                             <td>{{ bankAccount.id }}</td>
                             <td>{{ bankAccount.amount }}$</td>
-                            <td>{{ bankAccount.type === 0 ? "Privatkonto" : "Gruppenkonto" }}</td>
+                            <td>
+                                {{ bankAccount.type === 0 ? "Privatkonto" : "Gruppenkonto" }}
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -142,19 +186,19 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
-import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
-import {HouseInterface} from "@/scripts/interfaces/house.interface";
 import {GroupInterface} from "@/scripts/interfaces/group/group.interface";
-import {VehicleInterface} from "@/scripts/interfaces/vehicle.interface";
+import {HouseInterface} from "@/scripts/interfaces/house.interface";
+import {VehicleInterface} from "@/scripts/interfaces/vehicles/vehicle.interface";
+import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
+import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
 
 export default class TeamMenuVehicleCatalog extends Vue {
-    private characters: CharacterInterface[] = []
-    private cachedCharacters: CharacterInterface[] = []
+    private characters: CharacterInterface[] = [];
+    private cachedCharacters: CharacterInterface[] = [];
     private characterSearch = "";
-    
+
     private isPopupOpen = false;
     private openCharacter!: CharacterInterface;
     private vehicles: VehicleInterface[] = [];
@@ -164,7 +208,9 @@ export default class TeamMenuVehicleCatalog extends Vue {
 
     public mounted(): void {
         alt.on("charactercatalog:setup", (args: any) => this.setup(args[0]));
-        alt.on("charactercatalog:opendetails", (args: any) => this.openDetails(args[0], args[1], args[2], args[3], args[4]));
+        alt.on("charactercatalog:opendetails", (args: any) =>
+            this.openDetails(args[0], args[1], args[2], args[3], args[4])
+        );
     }
 
     public unmounted(): void {
@@ -177,12 +223,18 @@ export default class TeamMenuVehicleCatalog extends Vue {
         this.cachedCharacters = this.characters;
         this.isPopupOpen = false;
     }
-    
+
     private requestDetails(character: CharacterInterface): void {
         alt.emitServer("charactercatalog:requestdetails", character.id);
     }
-    
-    private openDetails(character: CharacterInterface, vehicles: VehicleInterface[], houses: HouseInterface[], groups: GroupInterface[], bankAccounts: BankAccountInterface[]): void {
+
+    private openDetails(
+        character: CharacterInterface,
+        vehicles: VehicleInterface[],
+        houses: HouseInterface[],
+        groups: GroupInterface[],
+        bankAccounts: BankAccountInterface[]
+    ): void {
         this.openCharacter = character;
         this.vehicles = vehicles;
         this.houses = houses;
@@ -190,18 +242,20 @@ export default class TeamMenuVehicleCatalog extends Vue {
         this.bankAccounts = bankAccounts;
         this.isPopupOpen = true;
     }
-    
+
     private closeDetails(): void {
         this.isPopupOpen = false;
     }
-    
+
     private search(): void {
         if (this.characterSearch === "") {
             this.characters = this.cachedCharacters;
             return;
         }
 
-        this.characters = this.cachedCharacters.filter(c => c.name.toLowerCase().includes(this.characterSearch.toLowerCase()));
+        this.characters = this.cachedCharacters.filter((c) =>
+            c.name.toLowerCase().includes(this.characterSearch.toLowerCase())
+        );
     }
 
     private getCharacterState(state: number): string {
@@ -215,18 +269,18 @@ export default class TeamMenuVehicleCatalog extends Vue {
             case 3:
                 return "administrative Änderungen erzwungen";
         }
-        
+
         return "";
     }
-    
+
     private getDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: 'numeric',
-            minute: 'numeric',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
+            hour: "numeric",
+            minute: "numeric",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
         });
     }
 }

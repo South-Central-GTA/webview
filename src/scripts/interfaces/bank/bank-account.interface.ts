@@ -1,6 +1,6 @@
-import {BankAccountCharacterAccessInterface} from "./bank-account-character-access.interface";
 import {BankAccountGroupAccessInterface} from "./bank-account-group-access.interface";
-import {BankHistoryEntryInterface} from "@/scripts/interfaces/bank/bank-history-entry.interface";
+import {BankAccountCharacterAccessInterface} from "./bank-account-character-access.interface";
+import {BankHistoryEntryInterface} from "./bank-history-entry.interface";
 
 export interface BankAccountInterface {
     id: number;

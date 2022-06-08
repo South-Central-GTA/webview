@@ -1,15 +1,27 @@
 <template>
     <div class="hairsalon">
         <div class="sc-card text-white character-appearance-block">
-            <character-appearance ref="characterAppearanceMenu" v-on:update-appearances="updateAppearances($event)"/>
+            <character-appearance
+                ref="characterAppearanceMenu"
+                v-on:update-appearances="updateAppearances($event)"
+            />
 
             <div class="save-box">
-                <button type="button" class="btn btn-secondary" @click="closeHairSalon()" :disabled="isSaving">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    @click="closeHairSalon()"
+                    :disabled="isSaving"
+                >
                     Abbrechen
                 </button>
 
-                <button type="button" class="btn btn-primary m-2" @click="requestBuy()"
-                        :disabled="isSaving || !hasChanges">
+                <button
+                    type="button"
+                    class="btn btn-primary m-2"
+                    @click="requestBuy()"
+                    :disabled="isSaving || !hasChanges"
+                >
                     Änderungen kaufen
                 </button>
             </div>
@@ -18,14 +30,22 @@
         <div class="rotate-box">
             <div class="row">
                 <div class="col-5">
-                    <button @mousedown="rotateCharacter(-1)" @mouseup="stopRotateCharacter()" type="button"
-                            class="btn rotate-icon btn-secondary">
+                    <button
+                        @mousedown="rotateCharacter(-1)"
+                        @mouseup="stopRotateCharacter()"
+                        type="button"
+                        class="btn rotate-icon btn-secondary"
+                    >
                         <font-awesome-icon icon="redo"/>
                     </button>
                 </div>
                 <div class="col-5">
-                    <button @mousedown="rotateCharacter(1)" @mouseup="stopRotateCharacter()" type="button"
-                            class="btn rotate-icon btn-secondary">
+                    <button
+                        @mousedown="rotateCharacter(1)"
+                        @mouseup="stopRotateCharacter()"
+                        type="button"
+                        class="btn rotate-icon btn-secondary"
+                    >
                         <font-awesome-icon icon="undo"/>
                     </button>
                 </div>
@@ -37,15 +57,15 @@
 <script lang="ts">
 import alt from "@/scripts/services/alt.service";
 import CharacterAppearance from "@/components/CharCreator/CharacterAppearance.vue";
-import {AppearancesInterface} from "@/scripts/interfaces/character/appearances.interface";
-import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
+import {AppearancesInterface} from "@/scripts/interfaces/character/appearances.interface";
 
 @Options({
     components: {
-        CharacterAppearance
-    }
+        CharacterAppearance,
+    },
 })
 export default class HairSalon extends Vue {
     @Ref() private readonly characterAppearanceMenu!: CharacterAppearance;
@@ -55,7 +75,9 @@ export default class HairSalon extends Vue {
 
     public mounted(): void {
         alt.emit("hairsalon:getcharacter");
-        alt.on("hairsalon:setcharacter", (character: CharacterInterface) => this.setCharacter(character));
+        alt.on("hairsalon:setcharacter", (character: CharacterInterface) =>
+            this.setCharacter(character)
+        );
     }
 
     public unmounted(): void {
@@ -66,7 +88,9 @@ export default class HairSalon extends Vue {
         this.isSaving = false;
 
         this.characterAppearanceMenu?.setGender(character.gender);
-        this.characterAppearanceMenu?.setCharacterAppearances(character.appearances);
+        this.characterAppearanceMenu?.setCharacterAppearances(
+            character.appearances
+        );
     }
 
     private updateAppearances(appearances: AppearancesInterface): void {

@@ -1,4 +1,4 @@
-import {AdminPermission} from "@/scripts/enums/admin.permission";
+import {AdminPermission} from "../enums/admin.permission";
 
 export interface AccountInterface {
     id: number;
@@ -6,6 +6,7 @@ export interface AccountInterface {
     currentName: string;
     nameHistoryJson: string
     southCentralPoints: number;
+    permission: AdminPermission;
     avatarUrl: string;
     lastUsage: string;
     createdAt: string;

@@ -7,12 +7,19 @@
             </button>
         </div>
 
-        <img class="phone-bank-logo" src="@/assets/images/phone/maze-bank-logo.png">
+        <img
+            class="phone-bank-logo"
+            src="@/assets/images/phone/maze-bank-logo.png"
+        />
 
-        <p class="alert-text">Sind Sie sicher, dass Sie ihr Bankkonto unwiederruflich löschen wollen?</p>
+        <p class="alert-text">
+            Sind Sie sicher, dass Sie ihr Bankkonto unwiederruflich löschen wollen?
+        </p>
 
         <div class="phone-bank-button-group">
-            <button type="button" class="btn" @click="deleteBankAccount()">Ja, Konto löschen</button>
+            <button type="button" class="btn" @click="deleteBankAccount()">
+                Ja, Konto löschen
+            </button>
         </div>
     </div>
 </template>
@@ -21,7 +28,6 @@
 import {Vue} from "vue-class-component";
 
 export default class PhoneActiveBankAccount extends Vue {
-
     private back(): void {
         this.$emit("back");
     }
@@ -49,6 +55,6 @@ export default class PhoneActiveBankAccount extends Vue {
     color: black;
     font-style: italic;
     font-size: 0.7vw;
-    text-align: center
+    text-align: center;
 }
 </style>

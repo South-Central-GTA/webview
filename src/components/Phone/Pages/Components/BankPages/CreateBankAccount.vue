@@ -7,44 +7,67 @@
             </button>
         </div>
 
-        <img class="phone-bank-logo" src="@/assets/images/phone/maze-bank-logo.png">
+        <img
+            class="phone-bank-logo"
+            src="@/assets/images/phone/maze-bank-logo.png"
+        />
 
         <div v-if="willBeProcessed" class="processed">
-            <img class="phone-bank-logo mt-5" src="@/assets/images/phone/maze-bank-logo.png">
-            <p>Ihre Anfrage wird bearbeitet, dies kann einen Moment dauern. Wir melden uns mit einer Benachrichtigung
-                bei Ihnen.</p>
+            <img
+                class="phone-bank-logo mt-5"
+                src="@/assets/images/phone/maze-bank-logo.png"
+            />
+            <p>
+                Ihre Anfrage wird bearbeitet, dies kann einen Moment dauern. Wir melden
+                uns mit einer Benachrichtigung bei Ihnen.
+            </p>
         </div>
 
         <div :hidden="!isFirstAccount || willBeProcessed">
             <div class="phone-bank-button-group">
-                <p class="pb-4">Das erste Konto ist bei der Maze Bank komplett kostenfrei.</p>
-                <button type="button" class="btn" @click="createAccountFree()">Konto eröffnen</button>
-                <p class="subtitle">Mit dem Erstellen eines Bankkontos akzeptieren Sie unsere Nutzungsbedingungen.</p>
+                <p class="pb-4">
+                    Das erste Konto ist bei der Maze Bank komplett kostenfrei.
+                </p>
+                <button type="button" class="btn" @click="createAccountFree()">
+                    Konto eröffnen
+                </button>
+                <p class="subtitle">
+                    Mit dem Erstellen eines Bankkontos akzeptieren Sie unsere
+                    Nutzungsbedingungen.
+                </p>
             </div>
         </div>
         <div :hidden="isFirstAccount || willBeProcessed">
             <div class="phone-bank-button-group">
                 <p class="pb-4">Ein Bankkonto kostet Sie einmalig $500.</p>
-                <select-bank-account class="select-bank" v-on:change-bank-account="setBankAccount($event)"
-                                     v-on:setup="setBankAccount($event)"/>
-                <button type="button" class="btn" @click="buyNewAccount()">Konto eröffnen</button>
-                <p class="subtitle">Mit dem Erstellen eines Bankkontos akzeptieren Sie unsere Nutzungsbedingungen.</p>
+                <select-bank-account
+                    class="select-bank"
+                    v-on:change-bank-account="setBankAccount($event)"
+                    v-on:setup="setBankAccount($event)"
+                />
+                <button type="button" class="btn" @click="buyNewAccount()">
+                    Konto eröffnen
+                </button>
+                <p class="subtitle">
+                    Mit dem Erstellen eines Bankkontos akzeptieren Sie unsere
+                    Nutzungsbedingungen.
+                </p>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import SelectBankAccount from '@/components/General/Banking/SelectBankAccount.vue';
-import {BankAccountInterface} from '@/scripts/interfaces/bank/bank-account.interface';
+import alt from "@/scripts/services/alt.service";
+import SelectBankAccount from "@/components/General/Banking/SelectBankAccount.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
 
 @Options({
     components: {
         SelectBankAccount,
-    }
+    },
 })
 export default class CreateBankAccount extends Vue {
     get isCreatingAccount() {
@@ -81,8 +104,7 @@ export default class CreateBankAccount extends Vue {
     }
 
     private buyNewAccount(): void {
-        if (this.selectedBankAccount === undefined)
-            return;
+        if (this.selectedBankAccount === undefined) return;
 
         this.willBeProcessed = true;
 

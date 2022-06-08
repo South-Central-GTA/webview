@@ -1,7 +1,7 @@
 <template>
     <div class="active-call">
-        <h1 class="call-with"> {{ displayedName }} </h1>
-        <h1 class="call-time"> {{ callTime }} </h1>
+        <h1 class="call-with">{{ displayedName }}</h1>
+        <h1 class="call-time">{{ callTime }}</h1>
         <div class="actions-block">
             <div class="rows">
                 <button type="button" class="btn hangup-button" @click="hangupClicked">
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
 
@@ -27,7 +27,9 @@ export default class ActiveCall extends Vue {
     private hanguped = false;
 
     public mounted(): void {
-        alt.on("phone:setupcall", (displayedName: string) => this.setup(displayedName, false));
+        alt.on("phone:setupcall", (displayedName: string) =>
+            this.setup(displayedName, false)
+        );
         alt.on("phone:connectcall", () => this.connectCall());
         alt.on("phone:numberisbusy", () => this.busy());
         alt.on("phone:connectionfailed", () => this.failed());
@@ -55,19 +57,17 @@ export default class ActiveCall extends Vue {
         }
     }
 
-
-
     public hangupCall(): void {
         if (this.hanguped) {
             return;
         }
-    
+
         if (this.int) {
             clearInterval(this.int);
             this.int = undefined;
         }
-    
-        this.callTime = "Aufgelegt!"
+
+        this.callTime = "Aufgelegt!";
         this.seconds = 0;
         this.hanguped = true;
 
@@ -91,8 +91,8 @@ export default class ActiveCall extends Vue {
             const secd = mind % 60;
             const seconds = Math.ceil(secd);
 
-            const correctMinutes = (minutes <= 9) ? "0" + minutes : minutes.toString();
-            const correctSeconds = (seconds <= 9) ? "0" + seconds : seconds.toString();
+            const correctMinutes = minutes <= 9 ? "0" + minutes : minutes.toString();
+            const correctSeconds = seconds <= 9 ? "0" + seconds : seconds.toString();
 
             this.callTime = correctMinutes + ":" + correctSeconds;
         }, 1000);
@@ -116,7 +116,7 @@ export default class ActiveCall extends Vue {
             this.$emit("hangup", false);
         }, 1000);
     }
-    
+
     private hangupClicked(): void {
         this.hangupCall();
 

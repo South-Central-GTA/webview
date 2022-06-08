@@ -1,13 +1,21 @@
 <template>
-    <div class="atm center" :hidden="!active" v-bind:class="{ enable: active, disable: !active }">
+    <div
+        class="atm center"
+        :hidden="!active"
+        v-bind:class="{ enable: active, disable: !active }"
+    >
         <button type="button" class="atm-close-button float-end" @click="close()">
             <font-awesome-icon class="center" icon="sign-out-alt"/>
         </button>
 
-        <active-bank-account ref="activeBankAccount" :hidden="currentTab !== 1" v-on:close="close()"
-                             v-on:back="resetTab()"/>
+        <active-bank-account
+            ref="activeBankAccount"
+            :hidden="currentTab !== 1"
+            v-on:close="close()"
+            v-on:back="resetTab()"
+        />
 
-        <img class="logo" src="../../assets/images/phone/maze-bank-logo.png">
+        <img class="logo" src="@/assets/images/phone/maze-bank-logo.png"/>
 
         <div class="bank-accounts-block">
             <div v-for="bankAccount in bankAccounts" v-bind:key="bankAccount.id">
@@ -19,7 +27,6 @@
                     <h2 v-if="bankAccount.type === 1">Gruppenkonto</h2>
                 </div>
             </div>
-
         </div>
         <div class="no-bank-accounts-block" v-if="bankAccounts.length === 0">
             <h2>Keine Konten verfügbar...</h2>
@@ -28,17 +35,17 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import banking from '@/scripts/services/banking.service';
-import {BankAccountInterface} from '@/scripts/interfaces/bank/bank-account.interface';
-import ActiveBankAccount from './Pages/ActiveBankAccount.vue';
+import alt from "@/scripts/services/alt.service";
+import banking from "@/scripts/services/banking.service";
+import ActiveBankAccount from "./Pages/ActiveBankAccount.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
 
 @Options({
     components: {
-        ActiveBankAccount
-    }
+        ActiveBankAccount,
+    },
 })
 export default class ATM extends Vue {
     @Ref() private readonly activeBankAccount!: ActiveBankAccount;
@@ -49,7 +56,11 @@ export default class ATM extends Vue {
     private currentBankAccount!: BankAccountInterface;
 
     public mounted(): void {
-        banking.getInstance().onChange.on((bankAccounts: BankAccountInterface[]) => this.update(bankAccounts));
+        banking
+            .getInstance()
+            .onChange.on((bankAccounts: BankAccountInterface[]) =>
+            this.update(bankAccounts)
+        );
 
         alt.on("atm:openmenu", () => this.open());
     }
@@ -57,7 +68,7 @@ export default class ATM extends Vue {
     public unmounted(): void {
         alt.off("atm:openmenu");
     }
-    
+
     private open(): void {
         this.active = true;
     }
@@ -66,7 +77,9 @@ export default class ATM extends Vue {
         this.bankAccounts = bankAccounts;
 
         if (this.currentTab === 1) {
-            const bankAccount = this.bankAccounts.find(b => b.id === this.currentBankAccount.id);
+            const bankAccount = this.bankAccounts.find(
+                (b) => b.id === this.currentBankAccount.id
+            );
 
             if (bankAccount) {
                 this.activeBankAccount.setup(bankAccount);
@@ -89,8 +102,7 @@ export default class ATM extends Vue {
     }
 
     private openBankAccount(bankAccount: BankAccountInterface): void {
-        if (bankAccount === undefined || bankAccount.status === 0)
-            return;
+        if (bankAccount === undefined || bankAccount.status === 0) return;
 
         this.currentBankAccount = bankAccount;
         this.activeBankAccount.setup(bankAccount);

@@ -1,5 +1,4 @@
-export enum PersonalLicenseType
-{
+export enum PersonalLicenseType {
     DRIVING,
     BOATS,
     FLYING,

@@ -3,11 +3,21 @@
         <h2>Fahrzeug Katalog</h2>
         <div class="row">
             <div class="col-4">
-                <input @input="search()" v-model="vehicleSearch" type="text" class="form-control-dark mb-2"
-                       placeholder="Suche nach Model (Bsp. dilettante)"/>
+                <input
+                    @input="search()"
+                    v-model="vehicleSearch"
+                    type="text"
+                    class="form-control-dark mb-2"
+                    placeholder="Suche nach Model (Bsp. dilettante)"
+                />
             </div>
             <div class="col-3">
-                <select name="class" ref="classSelection" class="form-control-dark" @change="onChangeClass()">
+                <select
+                    name="class"
+                    ref="classSelection"
+                    class="form-control-dark"
+                    @change="onChangeClass()"
+                >
                     <option value="ALL">Alle</option>
                     <option value="BOAT">Boot</option>
                     <option value="COMMERCIAL">Commercial</option>
@@ -32,7 +42,9 @@
                 </select>
             </div>
             <div class="col-4">
-                <p v-if="warningMessage.length !== 0" class="text-danger">{{ warningMessage }}</p>
+                <p v-if="warningMessage.length !== 0" class="text-danger">
+                    {{ warningMessage }}
+                </p>
             </div>
         </div>
         <div class="table-holder">
@@ -56,12 +68,24 @@
                     <td>{{ vehicle.displayClass }}</td>
                     <td>{{ vehicle.maxTank }}</td>
                     <td>{{ getFuelTypeLabel(vehicle.fuelType) }}</td>
-                    <td>${{ vehicle.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
+                    <td>
+                        ${{
+                            vehicle.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                        }}
+                    </td>
                     <td>{{ vehicle.southCentralPoints }}</td>
                     <td>
                         <div class="input-group">
-                            <input v-model="vehicle.amountOfOrderableVehicles" type="number" class="form-control-dark">
-                            <span @click="updateOrderableVehicles(vehicle)" class="btn btn-primary input-group-text">Stück</span>
+                            <input
+                                v-model="vehicle.amountOfOrderableVehicles"
+                                type="number"
+                                class="form-control-dark"
+                            />
+                            <span
+                                @click="updateOrderableVehicles(vehicle)"
+                                class="btn btn-primary input-group-text"
+                            >Stück</span
+                            >
                         </div>
                     </td>
                 </tr>
@@ -72,16 +96,16 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {CatalogVehicleInterface} from "@/scripts/interfaces/catalog-vehicle.interface";
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {CatalogVehicleInterface} from "@/scripts/interfaces/vehicles/catalog-vehicle.interface";
 
 export default class TeamMenuVehicleCatalog extends Vue {
     @Ref() private readonly classSelection!: HTMLSelectElement;
 
-    private vehicles: CatalogVehicleInterface[] = []
-    private cachedVehicles: CatalogVehicleInterface[] = []
+    private vehicles: CatalogVehicleInterface[] = [];
+    private cachedVehicles: CatalogVehicleInterface[] = [];
     private vehicleSearch = "";
     private warningMessage = "";
 
@@ -102,10 +126,12 @@ export default class TeamMenuVehicleCatalog extends Vue {
     }
 
     private update(vehicle: CatalogVehicleInterface): void {
-        const cachedIndex = this.cachedVehicles.findIndex(v => v.model === vehicle.model);
+        const cachedIndex = this.cachedVehicles.findIndex(
+            (v) => v.model === vehicle.model
+        );
         this.cachedVehicles[cachedIndex] = vehicle;
 
-        const index = this.vehicles.findIndex(v => v.model === vehicle.model);
+        const index = this.vehicles.findIndex((v) => v.model === vehicle.model);
         if (index !== -1) {
             this.vehicles[index] = vehicle;
         }
@@ -130,11 +156,17 @@ export default class TeamMenuVehicleCatalog extends Vue {
 
     private updateOrderableVehicles(vehicle: CatalogVehicleInterface): void {
         if (vehicle.amountOfOrderableVehicles < 0) {
-            this.showWarningMessage("Die Zahl an bestellbaren Fahrzeugen darf nicht negativ sein.");
+            this.showWarningMessage(
+                "Die Zahl an bestellbaren Fahrzeugen darf nicht negativ sein."
+            );
             return;
         }
 
-        alt.emitServer("vehiclecatalog:requestsetorderablevehiclesamount", vehicle.model, vehicle.amountOfOrderableVehicles);
+        alt.emitServer(
+            "vehiclecatalog:requestsetorderablevehiclesamount",
+            vehicle.model,
+            vehicle.amountOfOrderableVehicles
+        );
     }
 
     private showWarningMessage(message: string): void {
@@ -157,10 +189,17 @@ export default class TeamMenuVehicleCatalog extends Vue {
         }
 
         if (this.classSelection.value === "ALL") {
-            this.vehicles = this.vehicles.filter(v => v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase()));
+            this.vehicles = this.vehicles.filter((v) =>
+                v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase())
+            );
         } else {
-            this.vehicles = this.vehicles.filter(v => v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase())
-                && v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
+            this.vehicles = this.vehicles.filter(
+                (v) =>
+                    v.displayName
+                        .toLowerCase()
+                        .includes(this.vehicleSearch.toLowerCase()) &&
+                    v.classId.toLowerCase() === this.classSelection.value.toLowerCase()
+            );
         }
     }
 
@@ -171,16 +210,26 @@ export default class TeamMenuVehicleCatalog extends Vue {
             if (this.vehicleSearch === "") {
                 this.vehicles = this.cachedVehicles;
             } else {
-                this.vehicles = this.vehicles.filter(v => v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase()));
+                this.vehicles = this.vehicles.filter((v) =>
+                    v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase())
+                );
             }
             return;
         }
 
         if (this.vehicleSearch === "") {
-            this.vehicles = this.vehicles.filter(v => v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
+            this.vehicles = this.vehicles.filter(
+                (v) =>
+                    v.classId.toLowerCase() === this.classSelection.value.toLowerCase()
+            );
         } else {
-            this.vehicles = this.vehicles.filter(v => v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase())
-                && v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
+            this.vehicles = this.vehicles.filter(
+                (v) =>
+                    v.displayName
+                        .toLowerCase()
+                        .includes(this.vehicleSearch.toLowerCase()) &&
+                    v.classId.toLowerCase() === this.classSelection.value.toLowerCase()
+            );
         }
     }
 }

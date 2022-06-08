@@ -18,22 +18,44 @@
                     <div class="col" style="padding: 0 0.8vw 0 0.2vw">
                         <div class="input-group">
                             <span class="input-group-text">$</span>
-                            <input ref="salaryInput" class="form-control"
-                                   :value="member.salary" :readonly="ownProfile && !owner"
-                                   oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                   type="number"
-                                   @keypress="allowOnlyNumbers($event)" @focus="onFocus(true)"
-                                   @blur="onFocus(false)" maxlength="5">
+                            <input
+                                ref="salaryInput"
+                                class="form-control"
+                                :value="member.salary"
+                                :readonly="ownProfile && !owner"
+                                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                type="number"
+                                @keypress="allowOnlyNumbers($event)"
+                                @focus="onFocus(true)"
+                                @blur="onFocus(false)"
+                                maxlength="5"
+                            />
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn" :disabled="ownProfile || !rankUpPossible || owner"
-                        @click="rankCharacterUp()">Befördern
+                <button
+                    type="button"
+                    class="btn"
+                    :disabled="ownProfile || !rankUpPossible || owner"
+                    @click="rankCharacterUp()"
+                >
+                    Befördern
                 </button>
-                <button type="button" class="btn" :disabled="ownProfile || !rankDownPossible || owner"
-                        @click="rankCharacterDown()">Degradieren
+                <button
+                    type="button"
+                    class="btn"
+                    :disabled="ownProfile || !rankDownPossible || owner"
+                    @click="rankCharacterDown()"
+                >
+                    Degradieren
                 </button>
-                <button type="button" class="btn" :disabled="ownProfile || owner" @click="kickCharacter()">Kündigen
+                <button
+                    type="button"
+                    class="btn"
+                    :disabled="ownProfile || owner"
+                    @click="kickCharacter()"
+                >
+                    Kündigen
                 </button>
             </div>
         </div>
@@ -41,15 +63,19 @@
 </template>
 
 <script lang="ts">
-import character from '@/scripts/services/character.service';
-import alt from '@/scripts/services/alt.service';
-import group from '@/scripts/services/group.service';
-import {allowOnlyNumbers, isNumeric, onFocus} from '@/scripts/helpers/helpers';
-import {GroupInterface} from '@/scripts/interfaces/group/group.interface';
-import {GroupMemberInterface} from '@/scripts/interfaces/group/group-member.interface';
-import {CompanyInterface} from "@/scripts/interfaces/company/company.interface";
+import character from "@/scripts/services/character.service";
+import alt from "@/scripts/services/alt.service";
+import group from "@/scripts/services/group.service";
+import {
+    allowOnlyNumbers,
+    isNumeric,
+    onFocus,
+} from "@/scripts/helpers/helpers";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {GroupMemberInterface} from "@/scripts/interfaces/group/group-member.interface";
+import {GroupInterface} from "@/scripts/interfaces/group/group.interface";
+import {CompanyInterface} from "@/scripts/interfaces/group/company.interface";
 
 export default class CompanyWorkerEditPage extends Vue {
     @Ref() private readonly salaryInput!: HTMLInputElement;
@@ -61,7 +87,7 @@ export default class CompanyWorkerEditPage extends Vue {
         level: -1,
         salary: -1,
         bankAccountId: -1,
-        owner: false
+        owner: false,
     };
 
     private ownProfile = false;
@@ -73,15 +99,20 @@ export default class CompanyWorkerEditPage extends Vue {
     private company?: GroupInterface;
 
     public mounted(): void {
-        group.getInstance().CompanyChanged.on((company?: CompanyInterface) => this.updateCompany(company));
+        group
+            .getInstance()
+            .CompanyChanged.on((company?: CompanyInterface) =>
+            this.updateCompany(company)
+        );
     }
 
     public setup(member: GroupMemberInterface, company: GroupInterface): void {
         this.member = member;
-        this.ownProfile = this.member.characterId === character.getInstance().getCharacterId;
+        this.ownProfile =
+            this.member.characterId === character.getInstance().getCharacterId;
         this.owner = member.owner;
 
-        const rank = company.ranks.find(r => r.level === member.level);
+        const rank = company.ranks.find((r) => r.level === member.level);
         if (rank !== undefined) {
             this.currentRankName = rank.name;
         }
@@ -102,7 +133,9 @@ export default class CompanyWorkerEditPage extends Vue {
         this.updateRankPossibilities();
         this.updateRankDisplay();
 
-        const maxRank = company?.ranks.reduce((prev, current) => (prev.level > current.level) ? prev : current)
+        const maxRank = company?.ranks.reduce((prev, current) =>
+            prev.level > current.level ? prev : current
+        );
         if (maxRank !== undefined && this.member.level > maxRank.level) {
             this.rankCharacterDown();
         }
@@ -120,7 +153,13 @@ export default class CompanyWorkerEditPage extends Vue {
 
         this.member.salary = salary;
 
-        alt.emitServer("group:savemember", this.member.groupId, this.member.characterId, this.member.level, this.member.salary);
+        alt.emitServer(
+            "group:savemember",
+            this.member.groupId,
+            this.member.characterId,
+            this.member.level,
+            this.member.salary
+        );
 
         this.$emit("back");
     }
@@ -140,7 +179,11 @@ export default class CompanyWorkerEditPage extends Vue {
     }
 
     private kickCharacter(): void {
-        alt.emitServer("group:kickmember", this.member.groupId, this.member.characterId);
+        alt.emitServer(
+            "group:kickmember",
+            this.member.groupId,
+            this.member.characterId
+        );
         this.$emit("back");
     }
 
@@ -149,8 +192,12 @@ export default class CompanyWorkerEditPage extends Vue {
             return;
         }
 
-        this.rankUpPossible = this.company.ranks.find(r => r.level === this.member.level + 1) !== undefined;
-        this.rankDownPossible = this.company.ranks.find(r => r.level === this.member.level - 1) !== undefined;
+        this.rankUpPossible =
+            this.company.ranks.find((r) => r.level === this.member.level + 1) !==
+            undefined;
+        this.rankDownPossible =
+            this.company.ranks.find((r) => r.level === this.member.level - 1) !==
+            undefined;
     }
 
     private updateRankDisplay(): void {
@@ -158,7 +205,7 @@ export default class CompanyWorkerEditPage extends Vue {
             return;
         }
 
-        const rank = this.company.ranks.find(r => r.level === this.member.level);
+        const rank = this.company.ranks.find((r) => r.level === this.member.level);
         if (rank !== undefined) {
             this.currentRankName = rank.name;
         }

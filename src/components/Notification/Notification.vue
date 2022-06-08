@@ -1,14 +1,21 @@
 <template>
-    <div class="card notification"
-         v-bind:class="{ 'info' : notification.type == 0, 'warning': notification.type == 1, 'danger': notification.type == 2, 'success': notification.type == 3 }">
+    <div
+        class="card notification"
+        v-bind:class="{
+      info: notification.type == 0,
+      warning: notification.type == 1,
+      danger: notification.type == 2,
+      success: notification.type == 3,
+    }"
+    >
         <p class="text-white">{{ notification.text }}</p>
     </div>
 </template>
 
 <script lang="ts">
-import {NotificationInterface} from '@/scripts/interfaces/notification.interface';
 import {Vue} from "vue-class-component";
 import {Prop} from "vue-property-decorator";
+import {NotificationInterface} from "@/scripts/interfaces/notification.interface";
 
 export default class Notification extends Vue {
     @Prop() private readonly notification!: NotificationInterface;
@@ -47,7 +54,7 @@ export default class Notification extends Vue {
 }
 
 .success {
-    background-color: rgba(46, 204, 113, 0.8)
+    background-color: rgba(46, 204, 113, 0.8);
 }
 
 .fade-out {

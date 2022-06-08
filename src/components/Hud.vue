@@ -8,8 +8,11 @@
                 </div>
             </div>
         </div>
-        <div class="bottom-left" v-if="streetName && active"
-             v-bind:class="{ 'slide-down': isDown, 'slide-up': !isDown }">
+        <div
+            class="bottom-left"
+            v-if="streetName && active"
+            v-bind:class="{ 'slide-down': isDown, 'slide-up': !isDown }"
+        >
             <div class="row">
                 <div class="col-12">
                     <h5>{{ streetName }}</h5>
@@ -22,19 +25,28 @@
                 </div>
 
                 <div class="col-12" v-if="armor == 0">
-                    <div class="progress mt-2" style="height: 0.4vw;">
-                        <div class="progress-bar bg-success" v-bind:style="{ width: health + '%' }"></div>
+                    <div class="progress mt-2" style="height: 0.4vw">
+                        <div
+                            class="progress-bar bg-success"
+                            v-bind:style="{ width: health + '%' }"
+                        ></div>
                     </div>
                 </div>
                 <div class="col-6" v-if="armor != 0">
-                    <div class="progress mt-2" style="height: 0.4vw;">
-                        <div class="progress-bar bg-success" v-bind:style="{ width: health + '%' }"></div>
+                    <div class="progress mt-2" style="height: 0.4vw">
+                        <div
+                            class="progress-bar bg-success"
+                            v-bind:style="{ width: health + '%' }"
+                        ></div>
                     </div>
                 </div>
 
                 <div class="col-6" v-if="armor != 0">
-                    <div class="progress mt-2" style="height: 0.4vw;">
-                        <div class="progress-bar bg-blue" v-bind:style="{ width: armor + '%' }"></div>
+                    <div class="progress mt-2" style="height: 0.4vw">
+                        <div
+                            class="progress-bar bg-blue"
+                            v-bind:style="{ width: armor + '%' }"
+                        ></div>
                     </div>
                 </div>
             </div>
@@ -42,14 +54,14 @@
 
         <div v-if="isFreecam">
             <div class="center">
-                <img src="@/assets/images/crosshair.png" class="crosshair">
+                <img src="@/assets/images/crosshair.png" class="crosshair"/>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 
 export default class Hud extends Vue {
@@ -71,13 +83,23 @@ export default class Hud extends Vue {
     public mounted(): void {
         alt.emit("hud:ready");
 
-        alt.on("hud:updatehealth", (health: number, armor: number) => this.updateHealth(health, armor));
-        alt.on("hud:sendposition", (zone: string, direction: string, streetName: string, crossingStreetName: string) => this.updatePosition(zone, direction, streetName, crossingStreetName));
+        alt.on("hud:updatehealth", (health: number, armor: number) =>
+            this.updateHealth(health, armor)
+        );
+        alt.on(
+            "hud:sendposition",
+            (
+                zone: string,
+                direction: string,
+                streetName: string,
+                crossingStreetName: string
+            ) => this.updatePosition(zone, direction, streetName, crossingStreetName)
+        );
         alt.on("hud:setmoney", (amount: number) => this.setMoneyUI(amount));
         alt.on("hud:toggleui", (state: boolean) => this.toggleUI(state));
         alt.on("hud:moveup", () => this.moveUp());
         alt.on("hud:movedown", () => this.moveDown());
-        alt.on("hud:setfreecam", (state: boolean) => this.isFreecam = state);
+        alt.on("hud:setfreecam", (state: boolean) => (this.isFreecam = state));
 
         this.updateDate();
         this.timeInterval = setInterval(() => {
@@ -94,7 +116,7 @@ export default class Hud extends Vue {
         alt.off("hud:movedown");
         alt.off("hud:setfreecam");
     }
-    
+
     private destroyed(): void {
         clearInterval(this.timeInterval);
     }
@@ -137,10 +159,20 @@ export default class Hud extends Vue {
                 break;
         }
 
-        this.date = day + " | " + (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
+        this.date =
+            day +
+            " | " +
+            ("0" + dt.getHours()).slice(-2) +
+            ":" +
+            ("0" + dt.getMinutes()).slice(-2);
     }
 
-    private updatePosition(zone: string, direction: string, streetName: string, crossingStreetName: string): void {
+    private updatePosition(
+        zone: string,
+        direction: string,
+        streetName: string,
+        crossingStreetName: string
+    ): void {
         this.zone = zone;
         this.direction = direction;
 

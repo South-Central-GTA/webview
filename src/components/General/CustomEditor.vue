@@ -1,54 +1,138 @@
 ﻿<template>
     <div>
         <div v-if="editor && isToolbarVisible">
-            <button @click="editor.chain().focus().toggleBold().run()" class="icon-button">
-                <font-awesome-icon :class="{ 'is-active': editor.isActive('bold') }" icon="bold"/>
+            <button
+                @click="editor.chain().focus().toggleBold().run()"
+                class="icon-button"
+            >
+                <font-awesome-icon
+                    :class="{ 'is-active': editor.isActive('bold') }"
+                    icon="bold"
+                />
             </button>
-            <button @click="editor.chain().focus().toggleItalic().run()" class="icon-button">
-                <font-awesome-icon :class="{ 'is-active': editor.isActive('italic') }" icon="italic"/>
+            <button
+                @click="editor.chain().focus().toggleItalic().run()"
+                class="icon-button"
+            >
+                <font-awesome-icon
+                    :class="{ 'is-active': editor.isActive('italic') }"
+                    icon="italic"
+                />
             </button>
-            <button @click="editor.chain().focus().toggleStrike().run()" class="icon-button">
-                <font-awesome-icon :class="{ 'is-active': editor.isActive('strike') }" icon="strikethrough"/>
+            <button
+                @click="editor.chain().focus().toggleStrike().run()"
+                class="icon-button"
+            >
+                <font-awesome-icon
+                    :class="{ 'is-active': editor.isActive('strike') }"
+                    icon="strikethrough"
+                />
             </button>
-            <button @click="editor.chain().focus().toggleCode().run()" class="icon-button">
-                <font-awesome-icon :class="{ 'is-active': editor.isActive('code') }" icon="code"/>
+            <button
+                @click="editor.chain().focus().toggleCode().run()"
+                class="icon-button"
+            >
+                <font-awesome-icon
+                    :class="{ 'is-active': editor.isActive('code') }"
+                    icon="code"
+                />
             </button>
-            <button @click="() => {
-                    editor.chain().focus().unsetAllMarks().run();
-                    editor.chain().focus().clearNodes().run();
-                }" class="icon-button">
+            <button
+                @click="
+          () => {
+            editor.chain().focus().unsetAllMarks().run();
+            editor.chain().focus().clearNodes().run();
+          }
+        "
+                class="icon-button"
+            >
                 <font-awesome-icon icon="eraser"/>
             </button>
 
-            <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" class="icon-button">
-                <font-awesome-icon :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }" icon="heading"/> 1
+            <button
+                @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+                class="icon-button"
+            >
+                <font-awesome-icon
+                    :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+                    icon="heading"
+                />
+                1
             </button>
-            <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" class="icon-button">
-                <font-awesome-icon :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }" icon="heading"/> 2
+            <button
+                @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+                class="icon-button"
+            >
+                <font-awesome-icon
+                    :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+                    icon="heading"
+                />
+                2
             </button>
-            <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" class="icon-button">
-                <font-awesome-icon :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }" icon="heading"/> 3
+            <button
+                @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+                class="icon-button"
+            >
+                <font-awesome-icon
+                    :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
+                    icon="heading"
+                />
+                3
             </button>
-            <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" class="icon-button">
-                <font-awesome-icon :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }" icon="heading"/> 4
+            <button
+                @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
+                class="icon-button"
+            >
+                <font-awesome-icon
+                    :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
+                    icon="heading"
+                />
+                4
             </button>
 
-            <button @click="editor.chain().focus().toggleBulletList().run()" class="icon-button">
-                <font-awesome-icon :class="{ 'is-active': editor.isActive('bulletList') }" icon="list-ul"/>
+            <button
+                @click="editor.chain().focus().toggleBulletList().run()"
+                class="icon-button"
+            >
+                <font-awesome-icon
+                    :class="{ 'is-active': editor.isActive('bulletList') }"
+                    icon="list-ul"
+                />
             </button>
 
-            <button @click="editor.chain().focus().toggleOrderedList().run()" class="icon-button">
-                <font-awesome-icon :class="{ 'is-active': editor.isActive('orderedList') }" icon="list-ol"/>
+            <button
+                @click="editor.chain().focus().toggleOrderedList().run()"
+                class="icon-button"
+            >
+                <font-awesome-icon
+                    :class="{ 'is-active': editor.isActive('orderedList') }"
+                    icon="list-ol"
+                />
             </button>
 
-            <button @click="editor.chain().focus().toggleCodeBlock().run()" class="icon-button">
-                <font-awesome-icon :class="{ 'is-active': editor.isActive('codeBlock') }" icon="file-code"/>
+            <button
+                @click="editor.chain().focus().toggleCodeBlock().run()"
+                class="icon-button"
+            >
+                <font-awesome-icon
+                    :class="{ 'is-active': editor.isActive('codeBlock') }"
+                    icon="file-code"
+                />
             </button>
-            
-            <button @click="editor.chain().focus().toggleBlockquote().run()" class="icon-button">
-                <font-awesome-icon :class="{ 'is-active': editor.isActive('blockquote') }" icon="quote-left"/>
+
+            <button
+                @click="editor.chain().focus().toggleBlockquote().run()"
+                class="icon-button"
+            >
+                <font-awesome-icon
+                    :class="{ 'is-active': editor.isActive('blockquote') }"
+                    icon="quote-left"
+                />
             </button>
-            <button @click="editor.chain().focus().setHorizontalRule().run()" class="icon-button">
+            <button
+                @click="editor.chain().focus().setHorizontalRule().run()"
+                class="icon-button"
+            >
                 <font-awesome-icon icon="grip-lines"/>
             </button>
 
@@ -59,21 +143,21 @@
                 <font-awesome-icon icon="redo"/>
             </button>
         </div>
-        
-        <editor-content :editor="editor" />
+
+        <editor-content :editor="editor"/>
     </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import { Editor, EditorContent } from '@tiptap/vue-3'
+import {Editor, EditorContent} from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import {CharacterCount} from "@tiptap/extension-character-count";
 
 @Options({
     components: {
-        EditorContent
-    }
+        EditorContent,
+    },
 })
 export default class CustomEditor extends Vue {
     private editor: Editor = new Editor({
@@ -81,22 +165,22 @@ export default class CustomEditor extends Vue {
             StarterKit,
             CharacterCount.configure({
                 limit: 2000000,
-            })
+            }),
         ],
-        editable: false
+        editable: false,
     });
-    
+
     private isToolbarVisible: boolean = false;
 
     get getContent(): string {
         return this.editor.getHTML();
     }
-    
-    public showToolbar(state :boolean): void {
+
+    public showToolbar(state: boolean): void {
         this.isToolbarVisible = state;
         this.editor.setOptions({editable: state});
     }
-    
+
     public setContent(content: string): void {
         this.editor.commands.setContent(content);
     }
@@ -104,20 +188,19 @@ export default class CustomEditor extends Vue {
 </script>
 
 <style lang="scss">
-
 ::-webkit-scrollbar-thumb {
     background: rgb(122, 123, 124);
 }
+
 .ProseMirror {
     padding: 0.5vw;
-    
+
     &:focus {
         outline: none;
     }
 
     height: 46vh;
     overflow: auto;
-    
 
     ul,
     ol {
@@ -139,9 +222,9 @@ export default class CustomEditor extends Vue {
     }
 
     pre {
-        background: #0D0D0D;
-        color: #FFF;
-        font-family: 'JetBrainsMono', monospace;
+        background: #0d0d0d;
+        color: #fff;
+        font-family: "JetBrainsMono", monospace;
         padding: 0.75rem 1rem;
         border-radius: 0.5rem;
 
@@ -160,12 +243,12 @@ export default class CustomEditor extends Vue {
 
     blockquote {
         padding-left: 1rem;
-        border-left: 2px solid rgba(#0D0D0D, 0.1);
+        border-left: 2px solid rgba(#0d0d0d, 0.1);
     }
 
     hr {
         border: none;
-        border-top: 2px solid rgba(#0D0D0D, 0.1);
+        border-top: 2px solid rgba(#0d0d0d, 0.1);
         margin: 2rem 0;
     }
 }

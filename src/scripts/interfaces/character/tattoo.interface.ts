@@ -1,4 +1,4 @@
-export interface TattooInterface {
+﻿export interface TattooInterface {
     collection: string;
     hash: string;
 }

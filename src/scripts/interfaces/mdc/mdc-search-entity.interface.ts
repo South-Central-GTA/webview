@@ -1,4 +1,4 @@
-import {MdcSearchType} from "@/scripts/enums/mdc-search.type";
+import {MdcSearchType} from "../../enums/mdc-search.type";
 
 export interface MdcSearchEntityInterface {
     id: number;

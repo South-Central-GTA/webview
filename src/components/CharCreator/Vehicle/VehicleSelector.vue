@@ -3,20 +3,35 @@
         <div class="select-box sc-card text-white bottom-center">
             <div class="menu">
                 <div class="left">
-                    <button type="button" class="btn btn-secondary" :disabled="buttonBlocked"
-                            @click="changeVehicle(-1)">
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        :disabled="buttonBlocked"
+                        @click="changeVehicle(-1)"
+                    >
                         <font-awesome-icon icon="caret-left"/>
                     </button>
                 </div>
 
-                <div style="width:100%">
-                    <h5 class="text-center">{{ name }} <span class="fw-lighter">{{ className }}</span></h5>
-                    <h6 class="text-center">{{ characterPoints }} South Central Points</h6>
-                    <button type="button" class="btn btn-primary" @click="orderVehicle()">Auswählen</button>
+                <div style="width: 100%">
+                    <h5 class="text-center">
+                        {{ name }} <span class="fw-lighter">{{ className }}</span>
+                    </h5>
+                    <h6 class="text-center">
+                        {{ characterPoints }} South Central Points
+                    </h6>
+                    <button type="button" class="btn btn-primary" @click="orderVehicle()">
+                        Auswählen
+                    </button>
                 </div>
 
                 <div class="right">
-                    <button type="button" class="btn btn-secondary" :disabled="buttonBlocked" @click="changeVehicle(1)">
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        :disabled="buttonBlocked"
+                        @click="changeVehicle(1)"
+                    >
                         <font-awesome-icon icon="caret-right"/>
                     </button>
                 </div>
@@ -26,9 +41,9 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {CatalogVehicleInterface} from "@/scripts/interfaces/catalog-vehicle.interface";
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
+import {CatalogVehicleInterface} from "@/scripts/interfaces/vehicles/catalog-vehicle.interface";
 
 export default class VehicleSelector extends Vue {
     private model = "";
@@ -38,7 +53,11 @@ export default class VehicleSelector extends Vue {
     private buttonBlocked = false;
 
     public mounted(): void {
-        alt.on("vehicleselector:setvehicleinfo", (catalogVehicle: CatalogVehicleInterface) => this.setVehicleInfo(catalogVehicle));
+        alt.on(
+            "vehicleselector:setvehicleinfo",
+            (catalogVehicle: CatalogVehicleInterface) =>
+                this.setVehicleInfo(catalogVehicle)
+        );
         alt.on("vehicleselector:unlocksetfree", () => {
             this.buttonBlocked = false;
         });

@@ -3,7 +3,9 @@
         <div class="selected-box sc-card text-white" v-if="selectedSpawn.id !== -1">
             <h4>Ausgewählter Spawn</h4>
             <h6>{{ selectedSpawn.name }}</h6>
-            <button type="button" class="btn btn-secondary" @click="show()">Anschauen</button>
+            <button type="button" class="btn btn-secondary" @click="show()">
+                Anschauen
+            </button>
         </div>
 
         <div class="select-box sc-card text-white bottom-center">
@@ -15,9 +17,16 @@
                 </div>
 
                 <div class="w-100">
-                    <h5 class="text-center" style="height:2vw">{{ currentSpawn.name }}</h5>
-                    <button type="button" class="btn btn-primary" @click="select()"
-                            :disabled="selectedSpawn.name === currentSpawn.name">Auswählen
+                    <h5 class="text-center" style="height: 2vw">
+                        {{ currentSpawn.name }}
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click="select()"
+                        :disabled="selectedSpawn.name === currentSpawn.name"
+                    >
+                        Auswählen
                     </button>
                 </div>
 
@@ -32,29 +41,26 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {SpawnInterface} from '@/scripts/interfaces/spawn.interface'
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
+import {SpawnInterface} from "@/scripts/interfaces/spawn.interface";
 
 export default class SpawnSelector extends Vue {
     private buttonDisabled = false;
     private selectButtonDisabled = false;
 
-    private currentSpawn: SpawnInterface = {
-        id: -1,
-        name: ""
-    };
-
-    private selectedSpawn: SpawnInterface = {
-        id: -1,
-        name: ""
-    };
+    private currentSpawn?: SpawnInterface;
+    private selectedSpawn?: SpawnInterface;
 
     public mounted(): void {
-        alt.on("spawnselector:setinfo", (spawn: SpawnInterface) => this.setInfo(spawn));
-        alt.on("spawnselector:defaultselect", (spawn: SpawnInterface) => this.defaultSelect(spawn));
+        alt.on("spawnselector:setinfo", (spawn: SpawnInterface) =>
+            this.setInfo(spawn)
+        );
+        alt.on("spawnselector:defaultselect", (spawn: SpawnInterface) =>
+            this.defaultSelect(spawn)
+        );
     }
-    
+
     public unmounted(): void {
         alt.off("spawnselector:setinfo");
         alt.off("spawnselector:defaultselect");
@@ -65,7 +71,10 @@ export default class SpawnSelector extends Vue {
 
         this.buttonDisabled = false;
 
-        if (this.currentSpawn.id === this.selectedSpawn.id) {
+        if (
+            this.selectedSpawn !== undefined &&
+            this.currentSpawn.id === this.selectedSpawn.id
+        ) {
             this.selectButtonDisabled = true;
         }
     }
@@ -82,12 +91,19 @@ export default class SpawnSelector extends Vue {
         this.selectedSpawn = spawn;
 
         this.selectButtonDisabled = false;
-        if (this.currentSpawn.id === this.selectedSpawn.id) {
+        if (
+            this.currentSpawn !== undefined &&
+            this.currentSpawn.id === this.selectedSpawn.id
+        ) {
             this.selectButtonDisabled = true;
         }
     }
 
     private select(): void {
+        if (this.currentSpawn === undefined) {
+            return;
+        }
+
         alt.emit("spawnselector:select", this.currentSpawn.id);
 
         this.selectedSpawn = this.currentSpawn;

@@ -6,46 +6,81 @@
             <h2 v-else>{{ errorMessage }}</h2>
         </div>
 
-        <order-products-page ref="orderProducts" :hidden="currentTab != 1" v-on:back="resetTab()"/>
-        <open-deliveries-page ref="openDeliveries" :hidden="currentTab != 2" v-on:back="resetTab()"/>
-        <my-deliveries-page ref="myDeliveries" :hidden="currentTab != 3" v-on:back="resetTab()"/>
-        <my-current-delivery-page ref="myCurrentDelivery" :hidden="currentTab != 4" v-on:back="resetTab()"/>
+        <order-products-page
+            ref="orderProducts"
+            :hidden="currentTab != 1"
+            v-on:back="resetTab()"
+        />
+        <open-deliveries-page
+            ref="openDeliveries"
+            :hidden="currentTab != 2"
+            v-on:back="resetTab()"
+        />
+        <my-deliveries-page
+            ref="myDeliveries"
+            :hidden="currentTab != 3"
+            v-on:back="resetTab()"
+        />
+        <my-current-delivery-page
+            ref="myCurrentDelivery"
+            :hidden="currentTab != 4"
+            v-on:back="resetTab()"
+        />
 
         <div class="header-image">
-            <h1>Los Santos<br>Shipping Service</h1>
+            <h1>Los Santos<br/>Shipping Service</h1>
         </div>
         <div class="phone-delivery-button-group">
-            <button type="button" class="btn order-products-button" @click="openTab(1)">
+            <button
+                type="button"
+                class="btn order-products-button"
+                @click="openTab(1)"
+            >
                 <font-awesome-icon class="order-products-icon" icon="shipping-fast"/>
                 <h1>Produkte bestellen</h1>
             </button>
-            <button type="button" class="btn" @click="openTab(3)">Meine Bestellungen</button>
-            <button type="button" class="btn" @click="openTab(2)" v-if="!hasOpenDelivery"
-                    :disabled="!canSeeOpenDeliveries">Offene Aufträge
+            <button type="button" class="btn" @click="openTab(3)">
+                Meine Bestellungen
             </button>
-            <button type="button" class="btn" @click="openTab(4)" v-if="hasOpenDelivery">Mein Auftrag</button>
+            <button
+                type="button"
+                class="btn"
+                @click="openTab(2)"
+                v-if="!hasOpenDelivery"
+                :disabled="!canSeeOpenDeliveries"
+            >
+                Offene Aufträge
+            </button>
+            <button
+                type="button"
+                class="btn"
+                @click="openTab(4)"
+                v-if="hasOpenDelivery"
+            >
+                Mein Auftrag
+            </button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import group from '@/scripts/services/group.service';
-import OrderProductsPage from '@/components/Phone/Pages/Components/DeliveryPages/OrderProductsPage.vue';
-import MyDeliveriesPage from '@/components/Phone/Pages/Components/DeliveryPages/MyDeliveriesPage.vue';
-import OpenDeliveriesPage from '@/components/Phone/Pages/Components/DeliveryPages/OpenDeliveriesPage.vue';
-import MyCurrentDeliveryPage from '@/components/Phone/Pages/Components/DeliveryPages/MyCurrentDelivery.vue';
-import {CompanyInterface} from "@/scripts/interfaces/company/company.interface";
+import alt from "@/scripts/services/alt.service";
+import group from "@/scripts/services/group.service";
+import OrderProductsPage from "@/components/Phone/Pages/Components/DeliveryPages/OrderProductsPage.vue";
+import MyDeliveriesPage from "@/components/Phone/Pages/Components/DeliveryPages/MyDeliveriesPage.vue";
+import OpenDeliveriesPage from "@/components/Phone/Pages/Components/DeliveryPages/OpenDeliveriesPage.vue";
+import MyCurrentDeliveryPage from "@/components/Phone/Pages/Components/DeliveryPages/MyCurrentDelivery.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {CompanyInterface} from "@/scripts/interfaces/group/company.interface";
 
 @Options({
     components: {
         OrderProductsPage,
         MyDeliveriesPage,
         OpenDeliveriesPage,
-        MyCurrentDeliveryPage
-    }
+        MyCurrentDeliveryPage,
+    },
 })
 export default class DeliveryPage extends Vue {
     @Ref() private readonly orderProducts!: OrderProductsPage;
@@ -69,13 +104,21 @@ export default class DeliveryPage extends Vue {
     private hasOpenDelivery = false;
 
     public mounted(): void {
-        group.getInstance().CompanyChanged.on((company?: CompanyInterface) => this.updateCompany(company));
+        group
+            .getInstance()
+            .CompanyChanged.on((company?: CompanyInterface) =>
+            this.updateCompany(company)
+        );
 
-        alt.on("delivery:setup", (args: any[]) => this.setup(args[0], args[1], args[2], args[3], args[4]));
-        alt.on("delivery:openmydelivery", (args: any[]) => this.openMyDelivery(args[0]));
+        alt.on("delivery:setup", (args: any[]) =>
+            this.setup(args[0], args[1], args[2], args[3], args[4])
+        );
+        alt.on("delivery:openmydelivery", (args: any[]) =>
+            this.openMyDelivery(args[0])
+        );
         alt.on("delivery:stopmydelivery", () => this.stopMyDelivery());
     }
-    
+
     public unmounted(): void {
         alt.off("delivery:setup");
         alt.off("delivery:openmydelivery");
@@ -94,19 +137,19 @@ export default class DeliveryPage extends Vue {
         this.isLoading = true;
 
         let step = 0;
-        this.loadingText = "Anmeldung läuft ..."
+        this.loadingText = "Anmeldung läuft ...";
         if (this.loadingInt !== undefined) {
             clearInterval(this.loadingInt);
         }
         this.loadingInt = setInterval(() => {
             if (step === 0) {
-                this.loadingText = "Anmeldung läuft ."
+                this.loadingText = "Anmeldung läuft .";
             }
             if (step === 1) {
-                this.loadingText = "Anmeldung läuft .."
+                this.loadingText = "Anmeldung läuft ..";
             }
             if (step === 2) {
-                this.loadingText = "Anmeldung läuft ..."
+                this.loadingText = "Anmeldung läuft ...";
             }
 
             step++;
@@ -133,7 +176,13 @@ export default class DeliveryPage extends Vue {
         this.loadedOnce = false;
     }
 
-    private setup(canUseThisApp: boolean, canSeeOpenDeliveries: boolean, hasOpenDelivery: boolean, products: number, maxProducts: number): void {
+    private setup(
+        canUseThisApp: boolean,
+        canSeeOpenDeliveries: boolean,
+        hasOpenDelivery: boolean,
+        products: number,
+        maxProducts: number
+    ): void {
         if (!canUseThisApp) {
             this.errorMessage = "Dein Account hat nicht genügend Rechte.";
             return;
@@ -191,9 +240,10 @@ export default class DeliveryPage extends Vue {
     text-align: center;
 
     background: linear-gradient(
-                    rgba(100, 237, 255, 0.7),
-                    rgba(100, 237, 255, 0.7)
-    ), url("../../../assets/images/patterns/shipping.png");
+            rgba(100, 237, 255, 0.7),
+            rgba(100, 237, 255, 0.7)
+    ),
+    url("../../../assets/images/patterns/shipping.png");
 
     background-position: center center;
     background-size: 15vw;
@@ -207,9 +257,10 @@ export default class DeliveryPage extends Vue {
     text-align: center;
 
     background: linear-gradient(
-                    rgba(100, 237, 255, 0.7),
-                    rgba(100, 237, 255, 0.7)
-    ), url("../../../assets/images/patterns/shipping.png");
+            rgba(100, 237, 255, 0.7),
+            rgba(100, 237, 255, 0.7)
+    ),
+    url("../../../assets/images/patterns/shipping.png");
 
     background-position: center center;
     background-size: 15vw;
@@ -246,10 +297,8 @@ export default class DeliveryPage extends Vue {
 }
 
 .header-image {
-    background: linear-gradient(
-                    rgba(0, 0, 0, 0),
-                    rgba(0, 0, 0, 0.8)
-    ), url("../../../assets/images/phone/shipping-banner.jpg") center center;
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)),
+    url("../../../assets/images/phone/shipping-banner.jpg") center center;
     background-size: cover;
     height: 6vw;
 }

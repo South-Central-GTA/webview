@@ -1,8 +1,8 @@
-import {GroupInterface} from '@/scripts/interfaces/group/group.interface';
-import alt from '@/scripts/services/alt.service';
-import LiteEvent from '@/scripts/systems/lite-event'
-import {CompanyInterface} from "@/scripts/interfaces/company/company.interface";
-import {FactionInterface} from "@/scripts/interfaces/company/faction.interface";
+import alt from "@/scripts/services/alt.service";
+import LiteEvent from "@/scripts/systems/lite-event";
+import {GroupInterface} from "@/scripts/interfaces/group/group.interface";
+import {CompanyInterface} from "@/scripts/interfaces/group/company.interface";
+import {FactionInterface} from "@/scripts/interfaces/group/faction.interface";
 
 export default class GroupService {
     private static instance: GroupService;
@@ -64,11 +64,24 @@ export default class GroupService {
     private factionGroup?: FactionInterface = undefined;
 
     public listenToEvents(): void {
-        alt.on("group:setup", (allGroups: GroupInterface[], groups: GroupInterface[], companyGroup?: CompanyInterface, factionGroup?: FactionInterface) => this.setup(allGroups, groups, companyGroup, factionGroup));
+        alt.on(
+            "group:setup",
+            (
+                allGroups: GroupInterface[],
+                groups: GroupInterface[],
+                companyGroup?: CompanyInterface,
+                factionGroup?: FactionInterface
+            ) => this.setup(allGroups, groups, companyGroup, factionGroup)
+        );
         alt.on("group:reset", () => this.reset());
     }
 
-    private setup(allGroups: GroupInterface[], groups: GroupInterface[], companyGroup?: CompanyInterface, factionGroup?: FactionInterface): void {
+    private setup(
+        allGroups: GroupInterface[],
+        groups: GroupInterface[],
+        companyGroup?: CompanyInterface,
+        factionGroup?: FactionInterface
+    ): void {
         this.allGroups = allGroups;
 
         this.groups = groups;

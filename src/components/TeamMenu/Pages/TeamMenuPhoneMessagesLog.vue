@@ -1,8 +1,13 @@
 <template>
     <div class="team-menu-phone-messages-log">
-        <h2>SMS Nachrichten</h2>
-        <input @input="search()" v-model="phoneNumberSearch"
-               type="text" class="form-control-dark mb-2" placeholder="Suche nach der Sender Nummer."/>
+        <h2>SMS</h2>
+        <input
+            @input="search()"
+            v-model="phoneNumberSearch"
+            type="text"
+            class="form-control-dark mb-2"
+            placeholder="Suche nach der Sender Nummer."
+        />
         <div class="table-holder">
             <table class="table table-striped table-hover">
                 <thead>
@@ -29,22 +34,19 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {CatalogVehicleInterface} from "@/scripts/interfaces/catalog-vehicle.interface";
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
-import {Ref} from "vue-property-decorator";
 import {PhoneMessageInterface} from "@/scripts/interfaces/phone/phone-message.interface";
-import {MailInterface} from "@/scripts/interfaces/mail/mail.interface";
 
 export default class TeamMenuPhoneMessagesLog extends Vue {
-    private messages: PhoneMessageInterface[] = []
-    private cachedMessages: PhoneMessageInterface[] = []
+    private messages: PhoneMessageInterface[] = [];
+    private cachedMessages: PhoneMessageInterface[] = [];
     private phoneNumberSearch = "";
 
     public mounted(): void {
         alt.on("phonemessageslog:setup", (args: any[]) => this.setup(args[0]));
     }
-    
+
     public unmounted(): void {
         alt.off("phonemessageslog:setup");
     }
@@ -61,17 +63,19 @@ export default class TeamMenuPhoneMessagesLog extends Vue {
         }
 
         this.messages = this.cachedMessages;
-        this.messages = this.messages.filter(m => m.senderPhoneNumber?.includes(this.phoneNumberSearch.toLowerCase()));
+        this.messages = this.messages.filter((m) =>
+            m.senderPhoneNumber?.includes(this.phoneNumberSearch.toLowerCase())
+        );
     }
 
     private getDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: 'numeric',
-            minute: 'numeric',
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric'
+            hour: "numeric",
+            minute: "numeric",
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
         });
     }
 }

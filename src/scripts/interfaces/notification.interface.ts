@@ -1,14 +1,4 @@
-export enum NotificationTypes {
-    INFO,
-    WARNING,
-    ERROR,
-    SUCCESS
-}
-
-export enum NotificationPositionTypes {
-    LEFT,
-    RIGHT
-}
+import {NotificationTypes} from "../enums/notification.types";
 
 export interface NotificationInterface {
     type: NotificationTypes;

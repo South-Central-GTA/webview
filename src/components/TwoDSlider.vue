@@ -1,6 +1,10 @@
 <template>
     <div ref="slider" class="two-d-slider">
-        <div ref="bounds" class="drag-box" v-bind:style="{ height: HEIGHT + 'px', width: WIDTH + 'px' }">
+        <div
+            ref="bounds"
+            class="drag-box"
+            v-bind:style="{ height: HEIGHT + 'px', width: WIDTH + 'px' }"
+        >
             <div class="top-text">
                 <p class="text-white">{{ topText }}</p>
             </div>
@@ -8,8 +12,11 @@
                 <p class="text-white">{{ leftText }}</p>
             </div>
             <!-- Dot -->
-            <div class="drag-thump" ref="thump"
-                 v-bind:style="{ height: MARKER_SIZE + 'px', width: MARKER_SIZE + 'px' }"></div>
+            <div
+                class="drag-thump"
+                ref="thump"
+                v-bind:style="{ height: MARKER_SIZE + 'px', width: MARKER_SIZE + 'px' }"
+            ></div>
             <div class="right-text">
                 <p class="text-white">{{ rightText }}</p>
             </div>
@@ -21,12 +28,11 @@
 </template>
 
 <script lang="ts">
-import {PositionInterface} from '@/scripts/interfaces/position.interface'
 import {Vue} from "vue-class-component";
 import {Prop, Ref} from "vue-property-decorator";
+import {TwoDValueInterface} from "@/scripts/interfaces/two-d-value.interface";
 
 export default class TwoDSlider extends Vue {
-
     private MARKER_SIZE = 18;
     private WIDTH = 220;
     private HEIGHT = 220;
@@ -45,15 +51,15 @@ export default class TwoDSlider extends Vue {
 
     private validPosition = true;
 
-    private dotPos: PositionInterface = {
-        x: this.WIDTH / 2 - (this.MARKER_SIZE / 2),
-        y: this.HEIGHT / 2 - (this.MARKER_SIZE / 2),
+    private dotPos: TwoDValueInterface = {
+        x: this.WIDTH / 2 - this.MARKER_SIZE / 2,
+        y: this.HEIGHT / 2 - this.MARKER_SIZE / 2,
     };
 
     public setPosition(x: number, y: number): void {
         this.dotPos = {
-            x: ((x + 1) / 2 * this.WIDTH) - (this.MARKER_SIZE / 2),
-            y: ((y + 1) / 2 * this.HEIGHT) - (this.MARKER_SIZE / 2)
+            x: ((x + 1) / 2) * this.WIDTH - this.MARKER_SIZE / 2,
+            y: ((y + 1) / 2) * this.HEIGHT - this.MARKER_SIZE / 2,
         };
 
         this.thump.style.left = this.dotPos.x + "px";
@@ -64,11 +70,11 @@ export default class TwoDSlider extends Vue {
         this.thump.style.left = this.dotPos.x + "px";
         this.thump.style.top = this.dotPos.y + "px";
 
-        this.thump.onmousedown = (event: MouseEvent) => {
+        this.thump.onmousedown = () => {
             document.addEventListener("mousemove", this.onMouseMove);
         };
 
-        this.thump.onmouseup = (event: MouseEvent) => {
+        this.thump.onmouseup = () => {
             document.removeEventListener("mousemove", this.onMouseMove);
         };
     }
@@ -80,8 +86,8 @@ export default class TwoDSlider extends Vue {
     private onMouseMove(event: MouseEvent) {
         const parentRect = this.bounds.getBoundingClientRect();
 
-        const relX = (event.pageX - parentRect.left);
-        const relY = (event.pageY - parentRect.top);
+        const relX = event.pageX - parentRect.left;
+        const relY = event.pageY - parentRect.top;
 
         this.checkBoundaries(event.pageX, event.pageY);
         this.moveAt(relX, relY);
@@ -91,7 +97,12 @@ export default class TwoDSlider extends Vue {
     private checkBoundaries(pageX: number, pageY: number) {
         const parentRect = this.bounds.getBoundingClientRect();
 
-        this.validPosition = !(parentRect.left >= pageX || parentRect.right <= pageX || parentRect.top >= pageY || parentRect.bottom <= pageY);
+        this.validPosition = !(
+            parentRect.left >= pageX ||
+            parentRect.right <= pageX ||
+            parentRect.top >= pageY ||
+            parentRect.bottom <= pageY
+        );
     }
 
     private moveAt(pageX: number, pageY: number): void {
@@ -121,7 +132,7 @@ export default class TwoDSlider extends Vue {
 
         this.dotPos = {
             x: Math.min(Math.max(x, -this.XMAX + 1), this.XMAX - 1),
-            y: Math.min(Math.max(y, -this.YMAX + 1), this.YMAX - 1)
+            y: Math.min(Math.max(y, -this.YMAX + 1), this.YMAX - 1),
         };
 
         this.$emit("change-position", this.dotPos);

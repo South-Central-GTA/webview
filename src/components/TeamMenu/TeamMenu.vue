@@ -1,74 +1,190 @@
 <template>
     <div class="team-menu">
-        <div class="sc-card text-white center" :hidden="!active" v-bind:class="{ enable: active, disable: !active }">
+        <div
+            class="sc-card text-white center"
+            :hidden="!active"
+            v-bind:class="{ enable: active, disable: !active }"
+        >
             <div class="card-body">
                 <h5 class="card-title">Team Menu</h5>
                 <div class="row">
                     <div class="col-2">
                         <div class="btn-group-vertical">
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 0, 'btn-primary': activeTabId === 0 }"
-                                    @click="openTab(0)">Dashboard
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 0,
+                  'btn-primary': activeTabId === 0,
+                }"
+                                @click="openTab(0)"
+                            >
+                                Dashboard
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 1, 'btn-primary': activeTabId === 1 }"
-                                    @click="openTab(1)">Eventlog
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 1,
+                  'btn-primary': activeTabId === 1,
+                }"
+                                @click="openTab(1)"
+                            >
+                                Eventlog
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 2, 'btn-primary': activeTabId === 2 }"
-                                    @click="openTab(2)">Item Katalog
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 2,
+                  'btn-primary': activeTabId === 2,
+                }"
+                                @click="openTab(2)"
+                            >
+                                Item Katalog
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 3, 'btn-primary': activeTabId === 3 }"
-                                    @click="openTab(3)">Fahrzeug Katalog
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 3,
+                  'btn-primary': activeTabId === 3,
+                }"
+                                @click="openTab(3)"
+                            >
+                                Fahrzeug Katalog
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 4, 'btn-primary': activeTabId === 4 }"
-                                    @click="openTab(4)">Online Spielerliste
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 4,
+                  'btn-primary': activeTabId === 4,
+                }"
+                                @click="openTab(4)"
+                            >
+                                Online Spielerliste
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 5, 'btn-primary': activeTabId === 5 }"
-                                    @click="openTab(5)">Gruppen
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 5,
+                  'btn-primary': activeTabId === 5,
+                }"
+                                @click="openTab(5)"
+                            >
+                                Gruppen
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 6, 'btn-primary': activeTabId === 6 }"
-                                    @click="openTab(6)">Charaktere
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 6,
+                  'btn-primary': activeTabId === 6,
+                }"
+                                @click="openTab(6)"
+                            >
+                                Charaktere
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 7, 'btn-primary': activeTabId === 7 }"
-                                    @click="openTab(7)">Accounts
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 7,
+                  'btn-primary': activeTabId === 7,
+                }"
+                                @click="openTab(7)"
+                            >
+                                Accounts
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 8, 'btn-primary': activeTabId === 8 }"
-                                    @click="openTab(8)">Fahrzeuge
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 8,
+                  'btn-primary': activeTabId === 8,
+                }"
+                                @click="openTab(8)"
+                            >
+                                Fahrzeuge
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 9, 'btn-primary': activeTabId === 9 }"
-                                    @click="openTab(9)">Häuser Katalog
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 9,
+                  'btn-primary': activeTabId === 9,
+                }"
+                                @click="openTab(9)"
+                            >
+                                Häuser Katalog
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 10, 'btn-primary': activeTabId === 10 }"
-                                    @click="openTab(10)">Offene Help Me's
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 10,
+                  'btn-primary': activeTabId === 10,
+                }"
+                                @click="openTab(10)"
+                            >
+                                Offene Help Me's
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 11, 'btn-primary': activeTabId === 11 }"
-                                    @click="openTab(11)">SMS Log
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 11,
+                  'btn-primary': activeTabId === 11,
+                }"
+                                @click="openTab(11)"
+                            >
+                                SMS Log
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 12, 'btn-primary': activeTabId === 12 }"
-                                    @click="openTab(12)">E-Mail Accounts
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 12,
+                  'btn-primary': activeTabId === 12,
+                }"
+                                @click="openTab(12)"
+                            >
+                                E-Mail Accounts
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 13, 'btn-primary': activeTabId === 13 }"
-                                    @click="openTab(13)">Mails Log
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 13,
+                  'btn-primary': activeTabId === 13,
+                }"
+                                @click="openTab(13)"
+                            >
+                                Mails Log
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 14, 'btn-primary': activeTabId === 14 }"
-                                    @click="openTab(14)">Animationen
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 14,
+                  'btn-primary': activeTabId === 14,
+                }"
+                                @click="openTab(14)"
+                            >
+                                Animationen
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 15, 'btn-primary': activeTabId === 15 }"
-                                    @click="openTab(15)">Bankkonten
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 15,
+                  'btn-primary': activeTabId === 15,
+                }"
+                                @click="openTab(15)"
+                            >
+                                Bankkonten
                             </button>
                         </div>
                     </div>
@@ -80,17 +196,20 @@
                         <team-menu-player-catalog :hidden="activeTabId !== 4"/>
                         <team-menu-group-catalog :hidden="activeTabId !== 5"/>
                         <team-menu-character-catalog :hidden="activeTabId !== 6"/>
-                        <team-menu-account-catalog :hidden="activeTabId !== 7"/> 
-                        <team-menu-player-vehicle-catalog :hidden="activeTabId !==8" />
+                        <team-menu-account-catalog :hidden="activeTabId !== 7"/>
+                        <team-menu-player-vehicle-catalog :hidden="activeTabId !== 8"/>
                         <team-menu-housing-catalog :hidden="activeTabId !== 9"/>
                         <team-menu-help-me :hidden="activeTabId !== 10"/>
                         <team-menu-phone-messages-log :hidden="activeTabId !== 11"/>
                         <team-menu-mail-accounts-log :hidden="activeTabId !== 12"/>
                         <team-menu-mails-log :hidden="activeTabId !== 13"/>
                         <team-menu-animations :hidden="activeTabId !== 14"/>
-                        <team-menu-bank-accounts :hidden="activeTabId !== 15" />
+                        <team-menu-bank-accounts :hidden="activeTabId !== 15"/>
 
-                        <team-menu-user-record ref="userRecordMenu" :hidden="activeTabId !== 1001"/>
+                        <team-menu-user-record
+                            ref="userRecordMenu"
+                            :hidden="activeTabId !== 1001"
+                        />
                     </div>
                 </div>
             </div>
@@ -99,9 +218,9 @@
 </template>
 
 <script lang="ts">
-import TeamMenuDashboard from './Pages/TeamMenuDashboard.vue';
-import TeamMenuItemCatalog from './Pages/TeamMenuItemCatalog.vue';
-import alt from '@/scripts/services/alt.service';
+import TeamMenuDashboard from "./Pages/TeamMenuDashboard.vue";
+import TeamMenuItemCatalog from "./Pages/TeamMenuItemCatalog.vue";
+import alt from "@/scripts/services/alt.service";
 import TeamMenuVehicleCatalog from "@/components/TeamMenu/Pages/TeamMenuVehicleCatalog.vue";
 import TeamMenuCharacterCatalog from "@/components/TeamMenu/Pages/TeamMenuCharacterCatalog.vue";
 import TeamMenuGroupCatalog from "@/components/TeamMenu/Pages/TeamMenuGroupCatalog.vue";
@@ -111,7 +230,6 @@ import TeamMenuHelpMe from "@/components/TeamMenu/Pages/TeamMenuHelpMe.vue";
 import TeamMenuAccountCatalog from "@/components/TeamMenu/Pages/TeamMenuAccountCatalog.vue";
 import TeamMenuUserRecord from "@/components/TeamMenu/Pages/TeamMenuUserRecord.vue";
 import {Options, Vue} from "vue-class-component";
-import {UserRecordInterface} from "@/scripts/interfaces/user-record.interface";
 import {Ref} from "vue-property-decorator";
 import TeamMenuPhoneMessagesLog from "@/components/TeamMenu/Pages/TeamMenuPhoneMessagesLog.vue";
 import TeamMenuMailAccountsLog from "@/components/TeamMenu/Pages/TeamMenuMailAccountsLog.vue";
@@ -120,6 +238,7 @@ import TeamMenuAnimations from "@/components/TeamMenu/Pages/TeamMenuAnimations.v
 import TeamMenuBankAccounts from "@/components/TeamMenu/Pages/TeamMenuBankAccounts.vue";
 import TeamMenuPlayerVehicleCatalog from "@/components/TeamMenu/Pages/TeamMenuPlayerVehicleCatalog.vue";
 import TeamMenuEventLog from "@/components/TeamMenu/Pages/TeamMenuEventLog.vue";
+import {UserRecordInterface} from "@/scripts/interfaces/team-menu/user-record.interface";
 
 @Options({
     components: {
@@ -140,7 +259,7 @@ import TeamMenuEventLog from "@/components/TeamMenu/Pages/TeamMenuEventLog.vue";
         TeamMenuDashboard,
         TeamMenuItemCatalog,
         TeamMenuVehicleCatalog,
-    }
+    },
 })
 export default class TeamMenu extends Vue {
     @Ref() private readonly userRecordMenu!: TeamMenuUserRecord;
@@ -150,7 +269,9 @@ export default class TeamMenu extends Vue {
 
     public mounted(): void {
         alt.on("adminmenu:toggle", (state: boolean) => this.toggle(state));
-        alt.on("userrecord:setup", (args: any[]) => this.openUserRecord(args[0], args[1]));
+        alt.on("userrecord:setup", (args: any[]) =>
+            this.openUserRecord(args[0], args[1])
+        );
     }
 
     public unmounted(): void {
@@ -164,7 +285,10 @@ export default class TeamMenu extends Vue {
         this.openTab(this.activeTabId);
     }
 
-    private openUserRecord(accountId: number, userRecords: UserRecordInterface[]): void {
+    private openUserRecord(
+        accountId: number,
+        userRecords: UserRecordInterface[]
+    ): void {
         this.userRecordMenu.setup(accountId, userRecords);
         this.activeTabId = 1001;
     }

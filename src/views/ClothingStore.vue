@@ -1,17 +1,29 @@
 <template>
     <div class="clothing-store">
         <notifications-holder ref="notificationsHolder" class="unselectable"/>
-    
+
         <div class="sc-card text-white character-clothes-block">
-            <clothes-menu ref="clothesMenu" v-on:update-clothes="updateClothes($event)"/>
+            <clothes-menu
+                ref="clothesMenu"
+                v-on:update-clothes="updateClothes($event)"
+            />
 
             <div class="save-box">
-                <button type="button" class="btn btn-secondary" @click="closeHairSalon()" :disabled="isSaving">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    @click="closeHairSalon()"
+                    :disabled="isSaving"
+                >
                     Abbrechen
                 </button>
 
-                <button type="button" class="btn btn-primary m-2" @click="requestBuy()"
-                        :disabled="isSaving || !hasChanges">
+                <button
+                    type="button"
+                    class="btn btn-primary m-2"
+                    @click="requestBuy()"
+                    :disabled="isSaving || !hasChanges"
+                >
                     Kleidung in den Warenkorb packen
                 </button>
             </div>
@@ -20,14 +32,22 @@
         <div class="rotate-box">
             <div class="row">
                 <div class="col-5">
-                    <button type="button" @mousedown="rotateCharacter(-1)" @mouseup="stopRotateCharacter()"
-                            class="btn rotate-icon btn-secondary">
+                    <button
+                        type="button"
+                        @mousedown="rotateCharacter(-1)"
+                        @mouseup="stopRotateCharacter()"
+                        class="btn rotate-icon btn-secondary"
+                    >
                         <font-awesome-icon icon="redo"/>
                     </button>
                 </div>
                 <div class="col-5">
-                    <button type="button" @mousedown="rotateCharacter(1)" @mouseup="stopRotateCharacter()"
-                            class="btn rotate-icon btn-secondary">
+                    <button
+                        type="button"
+                        @mousedown="rotateCharacter(1)"
+                        @mouseup="stopRotateCharacter()"
+                        class="btn rotate-icon btn-secondary"
+                    >
                         <font-awesome-icon icon="undo"/>
                     </button>
                 </div>
@@ -40,18 +60,18 @@
 import alt from "@/scripts/services/alt.service";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
-import {MaxDrawablesInterface} from "@/scripts/interfaces/character/max-drawables.interface";
 import ClothesMenu from "@/components/CharCreator/ClothesMenu.vue";
-import {ClothesInterface} from "@/scripts/interfaces/character/clothes.interface";
-import {GenderType} from "@/scripts/enums/gender.type";
 import NotificationsHolder from "@/components/Notification/NotificationsHolder.vue";
-import {NotificationPositionTypes} from "@/scripts/interfaces/notification.interface";
+import {MaxDrawablesInterface} from "@/scripts/interfaces/character/max-drawables.interface";
+import {GenderType} from "@/scripts/enums/gender.type";
+import {NotificationPositionTypes} from "@/scripts/enums/notification-position.types";
+import {ClothesInterface} from "@/scripts/interfaces/character/clothes.interface";
 
 @Options({
     components: {
         NotificationsHolder,
-        ClothesMenu
-    }
+        ClothesMenu,
+    },
 })
 export default class ClothingStore extends Vue {
     @Ref() private readonly notificationsHolder!: NotificationsHolder;
@@ -62,18 +82,25 @@ export default class ClothingStore extends Vue {
 
     public mounted(): void {
         alt.emit("clothingstore:getcharacter");
-        alt.on("clothingstore:setcharacter", (maxDrawables: MaxDrawablesInterface, gender: GenderType) => this.onSetCharacter(maxDrawables, gender));
+        alt.on(
+            "clothingstore:setcharacter",
+            (maxDrawables: MaxDrawablesInterface, gender: GenderType) =>
+                this.onSetCharacter(maxDrawables, gender)
+        );
     }
 
     public unmounted(): void {
         alt.off("clothingstore:setcharacter");
     }
 
-    private onSetCharacter(maxDrawables: MaxDrawablesInterface, gender: GenderType): void {
+    private onSetCharacter(
+        maxDrawables: MaxDrawablesInterface,
+        gender: GenderType
+    ): void {
         this.isSaving = false;
 
         this.clothesMenu?.setGender(maxDrawables, gender);
-    
+
         this.notificationsHolder.setPosition(NotificationPositionTypes.RIGHT);
     }
 
@@ -97,13 +124,16 @@ export default class ClothingStore extends Vue {
 
     private requestBuy(): void {
         this.isSaving = true;
-        
+
         if (!this.clothesMenu?.checkValidation()) {
-            alt.emit("notification:error", "Du musst jedem Kleidungsstück einen Namen geben.");
+            alt.emit(
+                "notification:error",
+                "Du musst jedem Kleidungsstück einen Namen geben."
+            );
             this.isSaving = false;
             return;
         }
-        
+
         alt.emit("clothingstore:requestbuy");
     }
 }

@@ -1,25 +1,50 @@
 <template>
-    <div class="public-garage" v-bind:class="{ enable: active, disable: !active }">
+    <div
+        class="public-garage"
+        v-bind:class="{ enable: active, disable: !active }"
+    >
         <div class="sc-card w-25 center" :hidden="!active">
             <div class="card-body" :hidden="tabIndex !== 1">
-                <button type="button" class="btn-close-white icon-button float-end" @click="close()">
+                <button
+                    type="button"
+                    class="btn-close-white icon-button float-end"
+                    @click="close()"
+                >
                     <font-awesome-icon class="center" icon="times"/>
                 </button>
 
                 <h5 class="card-title">Öffentliche Garage</h5>
-                <p class="card-text">Welches Fahrzeug möchtest du aus der Garage holen?</p>
+                <p class="card-text">
+                    Welches Fahrzeug möchtest du aus der Garage holen?
+                </p>
 
                 <div class="list">
                     <div v-for="vehicle in parkedVehicles" v-bind:key="vehicle.id">
-                        <public-garage-vehicle-card v-bind:vehicle="vehicle" @click="chooseVehicle(vehicle.id)"
-                                                    v-bind:class="{ selected: vehicle.id === currentVehicleId, unselected: vehicle.id !== currentVehicleId }"/>
+                        <public-garage-vehicle-card
+                            v-bind:vehicle="vehicle"
+                            @click="chooseVehicle(vehicle.id)"
+                            v-bind:class="{
+                selected: vehicle.id === currentVehicleId,
+                unselected: vehicle.id !== currentVehicleId,
+              }"
+                        />
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-primary w-100 mt-2" @click="unparkVehicle()">Ausparken</button>
+                <button
+                    type="button"
+                    class="btn btn-primary w-100 mt-2"
+                    @click="unparkVehicle()"
+                >
+                    Ausparken
+                </button>
             </div>
             <div class="card-body" :hidden="tabIndex !== 2">
-                <button type="button" class="btn-close-white icon-button float-end" @click="close()">
+                <button
+                    type="button"
+                    class="btn-close-white icon-button float-end"
+                    @click="close()"
+                >
                     <font-awesome-icon class="center" icon="times"/>
                 </button>
 
@@ -28,7 +53,11 @@
 
                 <div class="list">
                     <div v-for="vehicle in destroyedVehicles" v-bind:key="vehicle.id">
-                        <vehicle-card class="unselected" v-bind:vehicle="vehicle" @click="respawnVehicle(vehicle.id)"/>
+                        <vehicle-card
+                            class="unselected"
+                            v-bind:vehicle="vehicle"
+                            @click="respawnVehicle(vehicle.id)"
+                        />
                     </div>
                 </div>
             </div>
@@ -37,18 +66,18 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {PublicGarageVehicleInterface} from '@/scripts/interfaces/public-garage-vehicle.interface';
-import PublicGarageVehicleCard from './PublicGarageVehicleCard.vue';
-import VehicleCard from '@/components/Vehicle/VehicleCard.vue';
-import {VehicleInterface} from "@/scripts/interfaces/vehicle.interface";
+import alt from "@/scripts/services/alt.service";
+import PublicGarageVehicleCard from "./PublicGarageVehicleCard.vue";
+import VehicleCard from "@/components/Vehicle/VehicleCard.vue";
 import {Options, Vue} from "vue-class-component";
+import {VehicleInterface} from "@/scripts/interfaces/vehicles/vehicle.interface";
+import {PublicGarageVehicleInterface} from "@/scripts/interfaces/vehicles/public-garage-vehicle.interface";
 
 @Options({
     components: {
         PublicGarageVehicleCard,
-        VehicleCard
-    }
+        VehicleCard,
+    },
 })
 export default class PublicGarage extends Vue {
     private active = false;
@@ -58,8 +87,14 @@ export default class PublicGarage extends Vue {
     private currentVehicleId = 0;
 
     public mounted(): void {
-        alt.on("publicgarage:setupunpark", (vehicles: PublicGarageVehicleInterface[]) => this.setupUnpark(vehicles));
-        alt.on("publicgarage:showrespawnvehiclelist", (vehicles: VehicleInterface[]) => this.setupRespawn(vehicles));
+        alt.on(
+            "publicgarage:setupunpark",
+            (vehicles: PublicGarageVehicleInterface[]) => this.setupUnpark(vehicles)
+        );
+        alt.on(
+            "publicgarage:showrespawnvehiclelist",
+            (vehicles: VehicleInterface[]) => this.setupRespawn(vehicles)
+        );
     }
 
     public unmounted(): void {

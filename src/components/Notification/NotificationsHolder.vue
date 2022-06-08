@@ -1,13 +1,19 @@
 <template>
     <div class="notifications-holder">
         <div class="notifications-list left">
-            <div v-for="(notification, index) in leftNotifications" v-bind:key="index">
+            <div
+                v-for="(notification, index) in leftNotifications"
+                v-bind:key="index"
+            >
                 <notification v-bind:notification="notification"/>
             </div>
         </div>
 
         <div class="notifications-list right">
-            <div v-for="(notification, index) in rightNotifications" v-bind:key="index">
+            <div
+                v-for="(notification, index) in rightNotifications"
+                v-bind:key="index"
+            >
                 <notification v-bind:notification="notification"/>
             </div>
         </div>
@@ -15,27 +21,31 @@
 </template>
 
 <script lang="ts">
-import {NotificationInterface, NotificationPositionTypes} from '@/scripts/interfaces/notification.interface';
-import alt from '@/scripts/services/alt.service';
-import Notification from './Notification.vue';
+import alt from "@/scripts/services/alt.service";
+import Notification from "./Notification.vue";
 import {Options, Vue} from "vue-class-component";
+import {NotificationInterface} from "@/scripts/interfaces/notification.interface";
+import {NotificationPositionTypes} from "@/scripts/enums/notification-position.types";
 
 @Options({
     components: {
-        Notification
-    }
+        Notification,
+    },
 })
 export default class NotificationsHolder extends Vue {
     private MAX_NOTIFICATIONS = 5;
 
     private leftNotifications: NotificationInterface[] = [];
     private rightNotifications: NotificationInterface[] = [];
-    private notificationPosition: NotificationPositionTypes = NotificationPositionTypes.LEFT;
+    private notificationPosition: NotificationPositionTypes =
+        NotificationPositionTypes.LEFT;
 
     public mounted(): void {
-        alt.on("notification:push", (notification: NotificationInterface) => this.push(notification));
+        alt.on("notification:push", (notification: NotificationInterface) =>
+            this.push(notification)
+        );
     }
-    
+
     public unmounted(): void {
         alt.off("notification:push");
     }

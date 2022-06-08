@@ -2,14 +2,15 @@
     <div class="vehicle-card">
         <h1>
             <div class="veh-name">{{ vehicle.displayName }}</div>
-            <span class="veh-class">{{ vehicle.displayClass }}</span></h1>
+            <span class="veh-class">{{ vehicle.displayClass }}</span>
+        </h1>
     </div>
 </template>
 
 <script lang="ts">
-import {VehicleInterface} from "@/scripts/interfaces/vehicle.interface";
 import {Vue} from "vue-class-component";
 import {Prop} from "vue-property-decorator";
+import {VehicleInterface} from "@/scripts/interfaces/vehicles/vehicle.interface";
 
 export default class VehicleCard extends Vue {
     @Prop() private readonly vehicle!: VehicleInterface;

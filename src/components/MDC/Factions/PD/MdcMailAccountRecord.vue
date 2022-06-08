@@ -4,7 +4,9 @@
             <div class="col-4">
                 <h3>{{ mailAddress }}</h3>
                 <h4>Informationen:</h4>
-                <p v-if="accesses.length === 0"><b>Zugriff:</b> Keine Suchergebnisse!</p>
+                <p v-if="accesses.length === 0">
+                    <b>Zugriff:</b> Keine Suchergebnisse!
+                </p>
                 <p v-if="accesses.length !== 0"><b>Zugriff:</b></p>
                 <ul v-if="accesses.length !== 0" class="list-holder">
                     <li v-for="access in accesses" v-bind:key="access.name">
@@ -17,17 +19,26 @@
 
                 <div v-if="notes.length !== 0" class="big-list-holder">
                     <p v-for="note in notes" v-bind:key="note.id">
-                        <button type="button" v-if="isOperator" @click="deleteNote(note.id)">X</button>
-                        {{ note.note }}<br><span class="date-text">{{ note.creatorCharacterName }} - {{ getDate(note.createdAtJson) }}</span>
+                        <button
+                            type="button"
+                            v-if="isOperator"
+                            @click="deleteNote(note.id)"
+                        >
+                            X
+                        </button>
+                        {{ note.note }}<br/><span class="date-text"
+                    >{{ note.creatorCharacterName }} -
+              {{ getDate(note.createdAtJson) }}</span
+                    >
                     </p>
                 </div>
 
                 <div class="position-absolute mb-5 bottom-0">
-                    <input class="w-100" v-model="noteInput" type="text">
+                    <input class="w-100" v-model="noteInput" type="text"/>
 
                     <button type="button" class="float-end mt-1" @click="createNote()">
                         Notiz erstellen
-                    </button> 
+                    </button>
                 </div>
             </div>
         </div>
@@ -36,12 +47,12 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import {MdcNoteInterface} from "@/scripts/interfaces/mdc/mdc-note.interface";
 import alt from "@/scripts/services/alt.service";
 import MdcService from "@/scripts/services/mdc.service";
-import {MdcSearchType} from "@/scripts/enums/mdc-search.type";
+import {MdcNoteInterface} from "@/scripts/interfaces/mdc/mdc-note.interface";
 import {MailAccountInterface} from "@/scripts/interfaces/mail/mail-account.interface";
 import {MailAccountCharacterAccessInterface} from "@/scripts/interfaces/mail/mail-account-character-access.interface";
+import {MdcSearchType} from "@/scripts/enums/mdc-search.type";
 import {MailAccountGroupAccessInterface} from "@/scripts/interfaces/mail/mail-account-group-access.interface";
 
 interface AccessInterface {
@@ -50,8 +61,7 @@ interface AccessInterface {
 }
 
 @Options({
-    components: {
-    }
+    components: {},
 })
 export default class MdcMailAccountRecord extends Vue {
     private isOperator: boolean = false;
@@ -60,50 +70,68 @@ export default class MdcMailAccountRecord extends Vue {
     private notes: MdcNoteInterface[] = [];
 
     private accesses: AccessInterface[] = [];
-    
+
     private noteInput: string = "";
 
     public mounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
+            this.onIsOperatorChanged(value)
+        );
     }
 
     public unmounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
+            this.onIsOperatorChanged(value)
+        );
     }
-    
-    public setup(mailAccount: MailAccountInterface, notes: MdcNoteInterface[]): void {
+
+    public setup(
+        mailAccount: MailAccountInterface,
+        notes: MdcNoteInterface[]
+    ): void {
         this.mailAddress = mailAccount.mailAddress;
         this.notes = notes;
-        
+
         this.accesses = [];
 
-        mailAccount.characterAccesses.forEach((access: MailAccountCharacterAccessInterface) => {
-           this.accesses.push({
-               name: access.name,
-               owner: access.owner
-           }) 
-        });
+        mailAccount.characterAccesses.forEach(
+            (access: MailAccountCharacterAccessInterface) => {
+                this.accesses.push({
+                    name: access.name,
+                    owner: access.owner,
+                });
+            }
+        );
 
-        console.log("mailAccount.groupAccesses: " + JSON.stringify(mailAccount.groupAccesses));
-        
-        mailAccount.groupAccesses.forEach((access: MailAccountGroupAccessInterface) => {
-           this.accesses.push({
-               name: access.groupName,
-               owner: access.owner
-           }) 
-        });
+        console.log(
+            "mailAccount.groupAccesses: " + JSON.stringify(mailAccount.groupAccesses)
+        );
+
+        mailAccount.groupAccesses.forEach(
+            (access: MailAccountGroupAccessInterface) => {
+                this.accesses.push({
+                    name: access.groupName,
+                    owner: access.owner,
+                });
+            }
+        );
     }
 
     private onIsOperatorChanged(value: boolean): void {
         this.isOperator = value;
     }
-    
+
     private createNote(): void {
         if (this.noteInput.length === 0) {
             return;
         }
 
-        alt.emitServer("policemdc:createnote", this.mailAddress, MdcSearchType.MAIL, this.noteInput);
+        alt.emitServer(
+            "policemdc:createnote",
+            this.mailAddress,
+            MdcSearchType.MAIL,
+            this.noteInput
+        );
 
         this.noteInput = "";
     }
@@ -111,26 +139,26 @@ export default class MdcMailAccountRecord extends Vue {
     private deleteNote(id: number): void {
         alt.emitServer("policemdc:deletenote", id);
     }
-    
+
     private getDate(dateJson: string): string {
         if (dateJson.length === 0) {
             return "";
         }
-        
+
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: 'numeric',
-            minute: 'numeric',
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric'
+            hour: "numeric",
+            minute: "numeric",
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
         });
     }
 }
 </script>
 
 <style scoped lang="scss">
-.mdc-mail-account-record {  
+.mdc-mail-account-record {
     background-color: #cecece;
     height: 100%;
 }

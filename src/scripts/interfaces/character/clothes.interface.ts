@@ -8,9 +8,9 @@ export interface ClothesInterface {
     bracelets?: ClothingInterface;
     mask?: ClothingInterface;
     top?: ClothingInterface;
+    torso?: ClothingInterface;
     bodyArmor?: ClothingInterface;
     backPack?: ClothingInterface;
-    torso?: ClothingInterface;
     underShirt?: ClothingInterface;
     accessories?: ClothingInterface;
     pants?: ClothingInterface;

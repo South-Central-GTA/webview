@@ -4,17 +4,33 @@
             <div class="topbar-internet">
                 <div class="row p-2" v-if="pageId !== 0">
                     <div class="col-md-1">
-                        <button type="button" class="btn w-100 btn-secondary" @click="reset()">
+                        <button
+                            type="button"
+                            class="btn w-100 btn-secondary"
+                            @click="reset()"
+                        >
                             Home
                         </button>
                     </div>
                     <div class="col-md-11">
-                        <input type="text" class="form-control" v-model="internetAddress" readonly disabled>
+                        <input
+                            type="text"
+                            class="form-control"
+                            v-model="internetAddress"
+                            readonly
+                            disabled
+                        />
                     </div>
                 </div>
                 <div class="row p-2" v-else>
                     <div class="col-md-12">
-                        <input type="text" class="form-control" v-model="internetAddress" readonly disabled>
+                        <input
+                            type="text"
+                            class="form-control"
+                            v-model="internetAddress"
+                            readonly
+                            disabled
+                        />
                     </div>
                 </div>
             </div>
@@ -40,16 +56,15 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
+import alt from "@/scripts/services/alt.service";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
 import VehicleImportPage from "@/components/Phone/Pages/InternetPages/VehicleImportPage.vue";
 
 @Options({
     components: {
-        VehicleImportPage
-        
-    }
+        VehicleImportPage,
+    },
 })
 export default class InternetApp extends Vue {
     @Ref() private readonly vehicleImportPage!: VehicleImportPage;
@@ -60,7 +75,7 @@ export default class InternetApp extends Vue {
     public open(): void {
         this.openPageId(0);
     }
-    
+
     public reset(): void {
         this.vehicleImportPage.resetPage();
 
@@ -97,7 +112,7 @@ export default class InternetApp extends Vue {
 .internet-app {
     width: 100%;
     height: 100%;
-    background-color: rgb(223, 230, 233)
+    background-color: rgb(223, 230, 233);
 }
 
 .topbar-internet {
@@ -123,14 +138,14 @@ export default class InternetApp extends Vue {
 
     outline: none;
     border: none;
-    background: #C4C4C4;
+    background: #c4c4c4;
     border-radius: 0.2vw;
     font-size: 1.5vw;
     color: white !important;
 }
 
 .vehicle-dealership {
-    background-color: #EA2027;
+    background-color: #ea2027;
 
     &:hover {
         background-color: #cb1c22 !important;

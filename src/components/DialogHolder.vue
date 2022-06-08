@@ -1,5 +1,8 @@
 <template>
-    <div class="dialog-holder" v-bind:class="{ enable: isVisible, disable: !isVisible }">
+    <div
+        class="dialog-holder"
+        v-bind:class="{ enable: isVisible, disable: !isVisible }"
+    >
         <div ref="dialog">
             <div :hidden="!isVisible">
                 <div class="background"></div>
@@ -8,32 +11,55 @@
                         <div class="modal-content sc-dark text-white">
                             <div class="modal-header">
                                 <h5 class="modal-title">{{ title }}</h5>
-                                <button type="button" class="icon-button float-end p-3" @click="closeButtonClicked()">
+                                <button
+                                    type="button"
+                                    class="icon-button float-end p-3"
+                                    @click="closeButtonClicked()"
+                                >
                                     <font-awesome-icon class="center text-white" icon="times"/>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <span v-html="description"></span>
                                 <div :hidden="!hasBankAccountSelection" class="pt-3">
-                                    <select-bank-account  v-on:change-bank-account="setBankAccount($event)"
-                                                         v-on:setup="setBankAccount($event)"/>
+                                    <select-bank-account
+                                        v-on:change-bank-account="setBankAccount($event)"
+                                        v-on:setup="setBankAccount($event)"
+                                    />
                                 </div>
                                 <div :hidden="!hasInputField" class="pt-3">
-                                    <input class="form-control-dark" 
-                                           type="text"
-                                           v-model="inputContent">
+                                    <input
+                                        class="form-control-dark"
+                                        type="text"
+                                        v-model="inputContent"
+                                    />
                                 </div>
                             </div>
                             <div class="modal-footer" v-if="type === 0">
-                                <button type="button" class="btn btn-primary w-50" @click="primaryButtonClicked()">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary w-50"
+                                    @click="primaryButtonClicked()"
+                                >
                                     {{ primaryButton }}
                                 </button>
                             </div>
-                            <div class="modal-footer justify-content-evenly row" v-if="type === 1">
-                                <button type="button" class="btn btn-secondary col-5" @click="secondaryButtonClicked()">
+                            <div
+                                class="modal-footer justify-content-evenly row"
+                                v-if="type === 1"
+                            >
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary col-5"
+                                    @click="secondaryButtonClicked()"
+                                >
                                     {{ secondaryButton }}
                                 </button>
-                                <button type="button" class="btn btn-primary col-5" @click="primaryButtonClicked()">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary col-5"
+                                    @click="primaryButtonClicked()"
+                                >
                                     {{ primaryButton }}
                                 </button>
                             </div>
@@ -46,18 +72,18 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import SelectBankAccount from '@/components/General/Banking/SelectBankAccount.vue';
-import {BankAccountInterface} from '@/scripts/interfaces/bank/bank-account.interface';
-import {DialogInterface} from '@/scripts/interfaces/dialog.interface';
-import {DialogType} from '@/scripts/enums/dialog.type';
+import alt from "@/scripts/services/alt.service";
+import SelectBankAccount from "@/components/General/Banking/SelectBankAccount.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {DialogType} from "@/scripts/enums/dialog.type";
+import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
+import {DialogInterface} from "@/scripts/interfaces/dialog.interface";
 
 @Options({
     components: {
-        SelectBankAccount
-    }
+        SelectBankAccount,
+    },
 })
 export default class DialogHolder extends Vue {
     @Ref() private readonly dialog!: HTMLElement;
@@ -84,7 +110,7 @@ export default class DialogHolder extends Vue {
         bankDetails: "",
         characterAccesses: [],
         groupAccesses: [],
-        history: []
+        history: [],
     };
     private inputContent = "";
     private firedEvent = false;
@@ -93,13 +119,13 @@ export default class DialogHolder extends Vue {
         alt.on("dialog:create", (dialog: DialogInterface) => this.create(dialog));
         alt.on("dialog:destroy", () => this.destroyDialog());
     }
-    
+
     public unmounted(): void {
         alt.off("dialog:destroy");
     }
 
     private create(dialog: DialogInterface): void {
-        this.type = dialog.type
+        this.type = dialog.type;
         this.title = dialog.title;
         this.hasBankAccountSelection = dialog.hasBankAccountSelection;
         this.hasInputField = dialog.hasInputField;
@@ -167,7 +193,11 @@ export default class DialogHolder extends Vue {
 
     private closeButtonClicked(): void {
         if (!this.firedEvent) {
-            alt.emit("dialog:closebuttonclicked", this.closeButtonServerEvent, this.closeButtonClientEvent);
+            alt.emit(
+                "dialog:closebuttonclicked",
+                this.closeButtonServerEvent,
+                this.closeButtonClientEvent
+            );
         }
 
         this.firedEvent = true;
@@ -175,7 +205,13 @@ export default class DialogHolder extends Vue {
 
     private primaryButtonClicked(): void {
         if (!this.firedEvent) {
-            alt.emit("dialog:primarybuttonclicked", this.primaryButtonServerEvent, this.primaryButtonClientEvent, this.selectedBankAccount.id, this.inputContent);
+            alt.emit(
+                "dialog:primarybuttonclicked",
+                this.primaryButtonServerEvent,
+                this.primaryButtonClientEvent,
+                this.selectedBankAccount.id,
+                this.inputContent
+            );
         }
 
         this.firedEvent = true;
@@ -183,7 +219,13 @@ export default class DialogHolder extends Vue {
 
     private secondaryButtonClicked(): void {
         if (!this.firedEvent) {
-            alt.emit("dialog:secondarybuttonclicked", this.secondaryButtonServerEvent, this.secondaryButtonClientEvent, this.selectedBankAccount.id, this.inputContent);
+            alt.emit(
+                "dialog:secondarybuttonclicked",
+                this.secondaryButtonServerEvent,
+                this.secondaryButtonClientEvent,
+                this.selectedBankAccount.id,
+                this.inputContent
+            );
         }
 
         this.firedEvent = true;

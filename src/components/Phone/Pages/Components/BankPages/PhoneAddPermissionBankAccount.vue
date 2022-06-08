@@ -7,15 +7,32 @@
             </button>
         </div>
 
-        <img class="phone-bank-logo" src="@/assets/images/phone/maze-bank-logo.png">
+        <img
+            class="phone-bank-logo"
+            src="@/assets/images/phone/maze-bank-logo.png"
+        />
 
-        <p class="alert-text">Gebe den Namen der Person an, welche Sie Zugriffsrechte auf Ihr Bankkonto geben
-            wollen.</p>
+        <p class="alert-text">
+            Gebe den Namen der Person an, welche Sie Zugriffsrechte auf Ihr Bankkonto
+            geben wollen.
+        </p>
 
         <div class="phone-bank-button-group">
-            <input v-model="characterName" class="form-control" type="text" @focus="onFocus(true)"
-                   @blur="onFocus(false)" placeholder="Max Mustermann">
-            <button type="button" class="btn" @click="addPerson()" :disabled="characterName === ''">Person hinzufügen
+            <input
+                v-model="characterName"
+                class="form-control"
+                type="text"
+                @focus="onFocus(true)"
+                @blur="onFocus(false)"
+                placeholder="Max Mustermann"
+            />
+            <button
+                type="button"
+                class="btn"
+                @click="addPerson()"
+                :disabled="characterName === ''"
+            >
+                Person hinzufügen
             </button>
         </div>
     </div>
@@ -35,7 +52,11 @@ export default class PhoneAddPermissionBankAccount extends Vue {
     }
 
     private addPerson(): void {
-        alt.emit("phonebank:addcharacteraccess", this.bankAccountId, this.characterName);
+        alt.emit(
+            "phonebank:addcharacteraccess",
+            this.bankAccountId,
+            this.characterName
+        );
         this.back();
     }
 

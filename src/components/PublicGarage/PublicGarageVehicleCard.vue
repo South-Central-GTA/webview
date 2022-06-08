@@ -2,15 +2,16 @@
     <div class="public-garage-vehicle-card">
         <h1>
             <div class="veh-name">{{ vehicle.displayName }}</div>
-            <span class="veh-class">{{ vehicle.displayClass }}</span><span class="costs"> ${{ vehicle.costs }} pro Stunde</span>
+            <span class="veh-class">{{ vehicle.displayClass }}</span
+            ><span class="costs"> ${{ vehicle.costs }} pro Stunde</span>
         </h1>
     </div>
 </template>
 
 <script lang="ts">
-import {PublicGarageVehicleInterface} from '@/scripts/interfaces/public-garage-vehicle.interface';
 import {Prop} from "vue-property-decorator";
 import {Vue} from "vue-class-component";
+import {PublicGarageVehicleInterface} from "@/scripts/interfaces/vehicles/public-garage-vehicle.interface";
 
 export default class PublicGarageVehicleCard extends Vue {
     @Prop() private readonly vehicle!: PublicGarageVehicleInterface;
@@ -56,5 +57,4 @@ export default class PublicGarageVehicleCard extends Vue {
     padding-top: 0.2vw;
     pointer-events: none !important;
 }
-
 </style>

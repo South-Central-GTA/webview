@@ -7,16 +7,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Offline.vue')
     },
     {
-        path: '/signup/:name',
-        name: 'SignUp',
-        component: () => import('../views/SignUp.vue')
-    },
-    {
-        path: '/signin/:name',
-        name: 'SignIn',
-        component: () => import('../views/SignIn.vue')
-    },
-    {
         path: '/charselector',
         name: 'CharSelector',
         component: () => import('../views/CharSelector.vue')

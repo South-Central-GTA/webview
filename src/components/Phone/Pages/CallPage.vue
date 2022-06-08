@@ -1,9 +1,16 @@
 <template>
     <div class="call-page">
-        <input ref="numberInput" class="form-control mt-3" @keypress="allowOnlyNumbers($event)" @input="validate()"
-               oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-               type="number" maxlength="11"
-               @focus="onFocus(true)" @blur="onFocus(false)">
+        <input
+            ref="numberInput"
+            class="form-control mt-3"
+            @keypress="allowOnlyNumbers($event)"
+            @input="validate()"
+            oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            type="number"
+            maxlength="11"
+            @focus="onFocus(true)"
+            @blur="onFocus(false)"
+        />
 
         <div v-if="addContactButtonVisible">
             <a class="contact-button" @click="addAsContact()">Kontakt hinzufügen</a>
@@ -39,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import ActiveCall from './Components/ActiveCall.vue';
+import ActiveCall from "./Components/ActiveCall.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
 import {allowOnlyNumbers, onFocus} from "@/scripts/helpers/helpers";
@@ -47,7 +54,7 @@ import {allowOnlyNumbers, onFocus} from "@/scripts/helpers/helpers";
 @Options({
     components: {
         ActiveCall,
-    }
+    },
 })
 export default class CallPage extends Vue {
     @Ref() private readonly numberInput!: HTMLInputElement;
@@ -72,16 +79,16 @@ export default class CallPage extends Vue {
     }
 
     private addNumber(number: number): void {
-        if (this.numberInput.value.length > 11)
-            return;
+        if (this.numberInput.value.length > 11) return;
 
         if (this.numberInput.selectionStart && this.numberInput.selectionEnd) {
             const startPos = this.numberInput.selectionStart;
             const endPos = this.numberInput.selectionEnd;
 
-            this.numberInput.value = this.numberInput.value.substring(0, startPos)
-                + number
-                + this.numberInput.value.substring(endPos, this.numberInput.value.length);
+            this.numberInput.value =
+                this.numberInput.value.substring(0, startPos) +
+                number +
+                this.numberInput.value.substring(endPos, this.numberInput.value.length);
         } else {
             this.numberInput.value += number;
         }
@@ -90,13 +97,15 @@ export default class CallPage extends Vue {
     }
 
     private removeNumber(): void {
-        this.numberInput.value = this.numberInput.value.substring(0, this.numberInput.value.length - 1);
+        this.numberInput.value = this.numberInput.value.substring(
+            0,
+            this.numberInput.value.length - 1
+        );
         this.validate();
     }
 
     private requestCall(): void {
-        if (this.numberInput.value.length === 0)
-            return;
+        if (this.numberInput.value.length === 0) return;
 
         this.$emit("call-number", this.numberInput.value);
         this.reset();
@@ -146,7 +155,7 @@ export default class CallPage extends Vue {
     left: 50%;
     transform: translate(-50%, -75%);
     text-align: center;
-    
+
     .btn {
         background-color: #676767;
         font-weight: 500 !important;

@@ -1,4 +1,4 @@
-import {MailingPermission} from "@/scripts/enums/mailing.permission";
+import {MailingPermission} from "../../enums/mailing.permission";
 
 export interface MailAccountCharacterAccessInterface {
     bankAccountId: number;

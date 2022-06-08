@@ -9,21 +9,30 @@
 
         <div v-if="loadedData">
             <div class="delivery-block" v-if="deliveries.length !== 0">
-                <div v-for="delivery in deliveries" v-bind:key="delivery.id" class="delivery-card">
+                <div
+                    v-for="delivery in deliveries"
+                    v-bind:key="delivery.id"
+                    class="delivery-card"
+                >
                     <div v-if="delivery.status === 0 || delivery.status === 3">
-                        <button type="button" class="remove-button icon-button" @click="remove(delivery.id)">
+                        <button
+                            type="button"
+                            class="remove-button icon-button"
+                            @click="remove(delivery.id)"
+                        >
                             <font-awesome-icon class="delete-icon" icon="trash"/>
                         </button>
                     </div>
 
                     <h1>{{ getHeaderString(delivery.deliveryType) }}</h1>
 
-                    <hr>
+                    <hr/>
 
                     <div v-if="delivery.deliveryType === 1">
                         <h2>Anzahl an Produkte: {{ delivery.orderedProducts }} Stück</h2>
-                        <h2 v-if="delivery.status !== 3">Produkte noch am Hafen: {{ delivery.productsRemaining }}
-                            Stück</h2>
+                        <h2 v-if="delivery.status !== 3">
+                            Produkte noch am Hafen: {{ delivery.productsRemaining }} Stück
+                        </h2>
                     </div>
 
                     <div v-if="delivery.deliveryType === 3">
@@ -34,10 +43,12 @@
 
                     <div v-if="delivery.status !== 0">
                         <h2>Fahrer: {{ delivery.supplierFullName }}</h2>
-                        <h2>Handynummer: {{ getCorrectFormat(delivery.supplierPhoneNumber) }}</h2>
+                        <h2>
+                            Handynummer: {{ getCorrectFormat(delivery.supplierPhoneNumber) }}
+                        </h2>
                     </div>
 
-                    <hr>
+                    <hr/>
                     <h3>{{ getCorrectDate(delivery.createdAt) }}</h3>
                 </div>
             </div>
@@ -49,16 +60,18 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {DeliveryInterface} from "@/scripts/interfaces/delivery/delivery.interface";
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
+import {DeliveryInterface} from "@/scripts/interfaces/delivery/delivery.interface";
 
 export default class MyDeliveriesPage extends Vue {
     private deliveries: DeliveryInterface[] = [];
     private loadedData = false;
 
     public mounted(): void {
-        alt.on("delivery:sendgroupdeliveries", (args: any[]) => this.setup(args[0]));
+        alt.on("delivery:sendgroupdeliveries", (args: any[]) =>
+            this.setup(args[0])
+        );
     }
 
     public unmounted(): void {
@@ -109,17 +122,21 @@ export default class MyDeliveriesPage extends Vue {
     }
 
     private getCorrectFormat(numberString: string): string {
-        return numberString.substring(0, 3) + " - " + numberString.substring(3, numberString.length);
+        return (
+            numberString.substring(0, 3) +
+            " - " +
+            numberString.substring(3, numberString.length)
+        );
     }
 
     private getCorrectDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            weekday: 'long',
-            hour: 'numeric',
-            minute: 'numeric',
-            month: 'long',
-            day: 'numeric'
+            weekday: "long",
+            hour: "numeric",
+            minute: "numeric",
+            month: "long",
+            day: "numeric",
         });
     }
 
@@ -143,9 +160,10 @@ export default class MyDeliveriesPage extends Vue {
     text-align: center;
 
     background: linear-gradient(
-                    rgba(100, 237, 255, 0.7),
-                    rgba(100, 237, 255, 0.7)
-    ), url("../../../../../assets/images/patterns/shipping.png");
+            rgba(100, 237, 255, 0.7),
+            rgba(100, 237, 255, 0.7)
+    ),
+    url("../../../../../assets/images/patterns/shipping.png");
 
     background-position: center center;
     background-size: 15vw;

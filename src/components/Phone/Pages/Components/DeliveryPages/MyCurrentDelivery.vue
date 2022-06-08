@@ -23,17 +23,21 @@
         </div>
 
         <div class="phone-delivery-button-group">
-            <button type="button" class="btn" @click="stop()">Auftrag abbrechen</button>
-            <button type="button" class="btn" @click="requestMarker()">Markierung erneuern</button>
+            <button type="button" class="btn" @click="stop()">
+                Auftrag abbrechen
+            </button>
+            <button type="button" class="btn" @click="requestMarker()">
+                Markierung erneuern
+            </button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {ProductsDeliveryInterface} from '@/scripts/interfaces/delivery/products-delivery.interface';
-import {VehicleDeliveryInterface} from "@/scripts/interfaces/delivery/vehicle-delivery.interface";
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
+import {ProductsDeliveryInterface} from "@/scripts/interfaces/delivery/products-delivery.interface";
+import {VehicleDeliveryInterface} from "@/scripts/interfaces/delivery/vehicle-delivery.interface";
 
 export default class MyCurrentDeliveryPage extends Vue {
     private companyName = "";
@@ -43,14 +47,16 @@ export default class MyCurrentDeliveryPage extends Vue {
     private displayName = "";
     private deliveryType = 0;
 
-    public mounted(): void {  
-       alt.on("delivery:sendmycurrentdelivery", (args: any[]) => this.setup(args[0]));
+    public mounted(): void {
+        alt.on("delivery:sendmycurrentdelivery", (args: any[]) =>
+            this.setup(args[0])
+        );
     }
-    
-    public unmounted(): void {  
-       alt.off("delivery:sendmycurrentdelivery");
+
+    public unmounted(): void {
+        alt.off("delivery:sendmycurrentdelivery");
     }
-    
+
     public open(delivery: any = null): void {
         if (delivery === null) {
             alt.emitServer("delivery:getmycurrentdelivery");
@@ -62,7 +68,7 @@ export default class MyCurrentDeliveryPage extends Vue {
 
     private setup(delivery: any): void {
         this.companyName = delivery.orderGroupName;
-        this.deliveryType = delivery.deliveryType
+        this.deliveryType = delivery.deliveryType;
         this.status = delivery.status;
 
         if (delivery as ProductsDeliveryInterface) {
@@ -97,11 +103,11 @@ export default class MyCurrentDeliveryPage extends Vue {
     private getDate(dateString: string): string {
         const date = new Date(dateString);
         return date.toLocaleDateString("de-DE", {
-            weekday: 'long',
-            hour: 'numeric',
-            minute: 'numeric',
-            month: 'long',
-            day: 'numeric'
+            weekday: "long",
+            hour: "numeric",
+            minute: "numeric",
+            month: "long",
+            day: "numeric",
         });
     }
 
@@ -130,9 +136,10 @@ export default class MyCurrentDeliveryPage extends Vue {
     text-align: center;
 
     background: linear-gradient(
-                    rgba(100, 237, 255, 0.7),
-                    rgba(100, 237, 255, 0.7)
-    ), url("../../../../../assets/images/patterns/shipping.png");
+            rgba(100, 237, 255, 0.7),
+            rgba(100, 237, 255, 0.7)
+    ),
+    url("../../../../../assets/images/patterns/shipping.png");
 
     background-position: center center;
     background-size: 15vw;

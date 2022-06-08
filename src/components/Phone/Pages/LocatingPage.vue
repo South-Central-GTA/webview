@@ -7,7 +7,7 @@
             </div>
             <p class="subtitle">Wir wissen, wo Sie nachts parken.</p>
         </div>
-        
+
         <div class="loading" v-if="isLoading && !loadedOnce">
             <h1>{{ loadingText }}</h1>
         </div>
@@ -18,7 +18,11 @@
                     <h6>Privatfahrzeuge</h6>
                     <div class="list">
                         <div v-for="vehicle in characterVehicles" v-bind:key="vehicle.id">
-                            <vehicle-card v-bind:vehicle="vehicle" class="vehicle-entry" @click="chooseVehicle(vehicle.id)" />
+                            <vehicle-card
+                                v-bind:vehicle="vehicle"
+                                class="vehicle-entry"
+                                @click="chooseVehicle(vehicle.id)"
+                            />
                         </div>
                     </div>
                 </div>
@@ -26,31 +30,45 @@
                     <h6>Gruppen Fahrzeuge</h6>
                     <div class="list">
                         <div v-for="vehicle in groupVehicles" v-bind:key="vehicle.id">
-                            <vehicle-card v-bind:vehicle="vehicle" class="vehicle-entry" @click="chooseVehicle(vehicle.id)" />
+                            <vehicle-card
+                                v-bind:vehicle="vehicle"
+                                class="vehicle-entry"
+                                @click="chooseVehicle(vehicle.id)"
+                            />
                         </div>
                     </div>
                 </div>
-                <div v-if="groupVehicles.length === 0 && this.characterVehicles.length === 0">
+                <div
+                    v-if="
+            groupVehicles.length === 0 && this.characterVehicles.length === 0
+          "
+                >
                     Sie besitzen keine Fahrzeuge.
                 </div>
             </div>
             <div v-else>
-                <button type="button" class="mt-5 btn stop-tracking-button" @click="stopTracking()">Tracking beenden</button>
+                <button
+                    type="button"
+                    class="mt-5 btn stop-tracking-button"
+                    @click="stopTracking()"
+                >
+                    Tracking beenden
+                </button>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
+import alt from "@/scripts/services/alt.service";
 import {Options, Vue} from "vue-class-component";
-import {VehicleInterface} from "@/scripts/interfaces/vehicle.interface";
 import VehicleCard from "@/components/Vehicle/VehicleCard.vue";
+import {VehicleInterface} from "@/scripts/interfaces/vehicles/vehicle.interface";
 
 @Options({
     components: {
-        VehicleCard
-    }
+        VehicleCard,
+    },
 })
 export default class LocatingPage extends Vue {
     private hasData = false;
@@ -65,7 +83,7 @@ export default class LocatingPage extends Vue {
     public mounted(): void {
         alt.on("locating:setvehicles", (args: any[]) => this.setVehicles(args[0]));
     }
-    
+
     public unmounted(): void {
         alt.off("locating:setvehicles");
     }
@@ -77,7 +95,6 @@ export default class LocatingPage extends Vue {
             alt.emitServer("locating:requestapp");
 
             setTimeout(() => {
-
                 this.isLoading = false;
                 this.loadedOnce = true;
             }, 2000);
@@ -86,20 +103,20 @@ export default class LocatingPage extends Vue {
         this.isLoading = true;
 
         let step = 0;
-        this.loadingText = "Anmeldung läuft ..."
+        this.loadingText = "Anmeldung läuft ...";
 
         if (this.loadingInt !== undefined) {
             clearInterval(this.loadingInt);
         }
         this.loadingInt = setInterval(() => {
             if (step === 0) {
-                this.loadingText = "Anmeldung läuft ."
+                this.loadingText = "Anmeldung läuft .";
             }
             if (step === 1) {
-                this.loadingText = "Anmeldung läuft .."
+                this.loadingText = "Anmeldung läuft ..";
             }
             if (step === 2) {
-                this.loadingText = "Anmeldung läuft ..."
+                this.loadingText = "Anmeldung läuft ...";
             }
 
             step++;
@@ -111,7 +128,7 @@ export default class LocatingPage extends Vue {
             }
         }, 500);
     }
-    
+
     public reset(): void {
         this.hasData = false;
         this.resetLoading();
@@ -121,19 +138,19 @@ export default class LocatingPage extends Vue {
         this.isLoading = false;
         this.loadedOnce = false;
     }
-    
+
     private setVehicles(vehicles: VehicleInterface[]): void {
-        this.characterVehicles = vehicles.filter(v => !v.isGroupVehicle);
-        this.groupVehicles = vehicles.filter(v => v.isGroupVehicle);
-        
+        this.characterVehicles = vehicles.filter((v) => !v.isGroupVehicle);
+        this.groupVehicles = vehicles.filter((v) => v.isGroupVehicle);
+
         this.hasData = true;
     }
-    
+
     private chooseVehicle(vehicleDbId: number): void {
         this.isTracking = true;
         alt.emitServer("locating:trackvehicle", vehicleDbId);
     }
-    
+
     private stopTracking(): void {
         this.isTracking = false;
         alt.emitServer("locating:stop");
@@ -149,11 +166,12 @@ export default class LocatingPage extends Vue {
     height: 100%;
     position: absolute;
     text-align: center;
-    
+
     background: linear-gradient(
             rgba(255, 255, 255, 0.8),
             rgba(255, 255, 255, 0.8)
-    ), url("../../../assets/images/patterns/locatingappbackground.png");
+    ),
+    url("../../../assets/images/patterns/locatingappbackground.png");
 
     background-position: center center;
     background-size: 25vw;
@@ -165,7 +183,7 @@ export default class LocatingPage extends Vue {
     height: 100%;
     position: absolute;
     text-align: center;
-    
+
     background-position: center center;
     background-size: 25vw;
     z-index: 100;
@@ -193,11 +211,11 @@ export default class LocatingPage extends Vue {
     position: absolute;
     top: 0;
     right: 5%;
-    color: #89CE3FFF;
+    color: #89ce3fff;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #89CE3FFF;
+    background: #89ce3fff;
 }
 
 .subtitle {
@@ -223,7 +241,7 @@ export default class LocatingPage extends Vue {
 .vehicle-entry {
     border-radius: 0vw;
     background-color: rgba(80, 131, 55, 1);
-    
+
     &:hover {
         background-color: rgb(63, 105, 43);
     }

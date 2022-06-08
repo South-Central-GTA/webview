@@ -1,42 +1,58 @@
 <template>
     <div class="bank-page">
         <div class="loading" v-if="isLoading && !loadedOnce">
-            <img class="logo" src="@/assets/images/phone/maze-bank-logo.png">
+            <img class="logo" src="@/assets/images/phone/maze-bank-logo.png"/>
             <h1>{{ loadingText }}</h1>
         </div>
 
-        <create-bank-account ref="createBankAccount" :hidden="currentTab !== 1" v-on:back="resetTab()"/>
-        <phone-manage-bank-accounts ref="manageBankAccounts" :hidden="currentTab !== 2" v-on:back="resetTab()"
-                                    v-on:openbankaccount="openBankAccount"/>
-        <phone-active-bank-account ref="activeBankAccount" :hidden="currentTab !== 3" v-on:back="openTab(2)"
-                                   v-on:close="openTab(0)"/>
+        <create-bank-account
+            ref="createBankAccount"
+            :hidden="currentTab !== 1"
+            v-on:back="resetTab()"
+        />
+        <phone-manage-bank-accounts
+            ref="manageBankAccounts"
+            :hidden="currentTab !== 2"
+            v-on:back="resetTab()"
+            v-on:openbankaccount="openBankAccount"
+        />
+        <phone-active-bank-account
+            ref="activeBankAccount"
+            :hidden="currentTab !== 3"
+            v-on:back="openTab(2)"
+            v-on:close="openTab(0)"
+        />
 
-        <img class="logo" src="@/assets/images/phone/maze-bank-logo.png">
+        <img class="logo" src="@/assets/images/phone/maze-bank-logo.png"/>
 
         <div class="phone-bank-button-group">
-            <button type="button" class="btn" @click="openTab(1)">Konto eröffnen</button>
-            <button type="button" class="btn" @click="openTab(2)">Konten verwalten</button>
+            <button type="button" class="btn" @click="openTab(1)">
+                Konto eröffnen
+            </button>
+            <button type="button" class="btn" @click="openTab(2)">
+                Konten verwalten
+            </button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import banking from '@/scripts/services/banking.service';
-import character from '@/scripts/services/character.service';
-import CreateBankAccount from '@/components/Phone/Pages/Components/BankPages/CreateBankAccount.vue';
-import PhoneManageBankAccounts from '@/components/Phone/Pages/Components/BankPages/PhoneManageBankAccounts.vue';
-import PhoneActiveBankAccount from '@/components/Phone/Pages/Components/BankPages/PhoneActiveBankAccount.vue';
-import {BankAccountInterface} from '@/scripts/interfaces/bank/bank-account.interface';
+import alt from "@/scripts/services/alt.service";
+import banking from "@/scripts/services/banking.service";
+import character from "@/scripts/services/character.service";
+import CreateBankAccount from "@/components/Phone/Pages/Components/BankPages/CreateBankAccount.vue";
+import PhoneManageBankAccounts from "@/components/Phone/Pages/Components/BankPages/PhoneManageBankAccounts.vue";
+import PhoneActiveBankAccount from "@/components/Phone/Pages/Components/BankPages/PhoneActiveBankAccount.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
 
 @Options({
     components: {
         CreateBankAccount,
         PhoneManageBankAccounts,
-        PhoneActiveBankAccount
-    }
+        PhoneActiveBankAccount,
+    },
 })
 export default class BankPage extends Vue {
     @Ref() private readonly createBankAccount!: CreateBankAccount;
@@ -60,11 +76,19 @@ export default class BankPage extends Vue {
     private loadingInt = 0;
 
     public mounted(): void {
-        banking.getInstance().onChange.on((bankAccounts: BankAccountInterface[]) => this.setup(bankAccounts));
+        banking
+            .getInstance()
+            .onChange.on((bankAccounts: BankAccountInterface[]) =>
+            this.setup(bankAccounts)
+        );
     }
 
     public unmounted(): void {
-        banking.getInstance().onChange.off((bankAccounts: BankAccountInterface[]) => this.setup(bankAccounts));
+        banking
+            .getInstance()
+            .onChange.off((bankAccounts: BankAccountInterface[]) =>
+            this.setup(bankAccounts)
+        );
     }
 
     public open(): void {
@@ -82,20 +106,20 @@ export default class BankPage extends Vue {
         this.isLoading = true;
 
         let step = 0;
-        this.loadingText = "Anmeldung läuft ..."
+        this.loadingText = "Anmeldung läuft ...";
 
         if (this.loadingInt !== undefined) {
             clearInterval(this.loadingInt);
         }
         this.loadingInt = setInterval(() => {
             if (step === 0) {
-                this.loadingText = "Anmeldung läuft ."
+                this.loadingText = "Anmeldung läuft .";
             }
             if (step === 1) {
-                this.loadingText = "Anmeldung läuft .."
+                this.loadingText = "Anmeldung läuft ..";
             }
             if (step === 2) {
-                this.loadingText = "Anmeldung läuft ..."
+                this.loadingText = "Anmeldung läuft ...";
             }
 
             step++;
@@ -116,11 +140,18 @@ export default class BankPage extends Vue {
     private setup(bankAccounts: BankAccountInterface[]): void {
         this.bankAccounts = bankAccounts;
 
-        const ownedBankAccounts = this.bankAccounts.filter(b => b.characterAccesses.find(ca => ca.characterId == character.getInstance().getCharacterId)?.owner);
+        const ownedBankAccounts = this.bankAccounts.filter(
+            (b) =>
+                b.characterAccesses.find(
+                    (ca) => ca.characterId == character.getInstance().getCharacterId
+                )?.owner
+        );
         this.createBankAccount?.setup(ownedBankAccounts.length === 0);
 
         if (this.currentTab === 3) {
-            const bankAccount = this.bankAccounts.find(b => b.id === this.currentBankAccount.id);
+            const bankAccount = this.bankAccounts.find(
+                (b) => b.id === this.currentBankAccount.id
+            );
             if (bankAccount) {
                 this.activeBankAccount.setup(bankAccount);
             }
@@ -128,7 +159,7 @@ export default class BankPage extends Vue {
     }
 
     private openBankAccount(id: number): void {
-        const bankAccount = this.bankAccounts.find(b => b.id === id);
+        const bankAccount = this.bankAccounts.find((b) => b.id === id);
         if (bankAccount === undefined || bankAccount.status !== 1) {
             return;
         }

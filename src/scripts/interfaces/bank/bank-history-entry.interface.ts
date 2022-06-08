@@ -1,4 +1,4 @@
-import {BankHistoryType} from "@/scripts/enums/bank-history.type";
+﻿import {BankHistoryType} from "../../enums/bank-history.type";
 
 export interface BankHistoryEntryInterface {
     id: number;

@@ -1,5 +1,5 @@
-import alt from '@/scripts/services/alt.service';
-import LiteEvent from '@/scripts/systems/lite-event'
+import alt from "@/scripts/services/alt.service";
+import LiteEvent from "@/scripts/systems/lite-event";
 import {MailAccountInterface} from "@/scripts/interfaces/mail/mail-account.interface";
 
 export default class MailingService {
@@ -30,7 +30,7 @@ export default class MailingService {
     }
 
     private readonly onMailAccountsChanged = new LiteEvent<MailAccountInterface[]>();
-    private mailAccounts: MailAccountInterface [] = [];
+    private mailAccounts: MailAccountInterface[] = [];
 
     public listenToEvents(): void {
         alt.on("mailing:updatemailaccounts", (args: any[]) => this.update(args[0]));

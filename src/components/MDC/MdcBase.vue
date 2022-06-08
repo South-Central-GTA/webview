@@ -8,12 +8,20 @@
             </div>
 
             <span v-if="infoMessage.length !== 0" class="info-message">
-                {{ infoMessage }}
-            </span>
+        {{ infoMessage }}
+      </span>
 
             <div class="content-screen" :hidden="isLoading">
-                <mdc-pd-base ref="pdBase" v-on:show-notification="onShowNotification" :hidden="factionType !== 1"></mdc-pd-base>
-                <mdc-fd-base ref="fdBase" v-on:show-notification="onShowNotification" :hidden="factionType !== 2"></mdc-fd-base>
+                <mdc-pd-base
+                    ref="pdBase"
+                    v-on:show-notification="onShowNotification"
+                    :hidden="factionType !== 1"
+                ></mdc-pd-base>
+                <mdc-fd-base
+                    ref="fdBase"
+                    v-on:show-notification="onShowNotification"
+                    :hidden="factionType !== 2"
+                ></mdc-fd-base>
             </div>
 
             <mdc-footer-bar :hidden="isLoading" ref="footer"></mdc-footer-bar>
@@ -24,23 +32,22 @@
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
-import {FactionType} from "@/scripts/enums/faction.type";
 import MdcFooterBar from "@/components/MDC/General/MdcFooterBar.vue";
 import {Ref} from "vue-property-decorator";
 import MdcHeaderBar from "@/components/MDC/General/MdcHeaderBar.vue";
 import MdcPdBase from "@/components/MDC/Factions/PD/MdcPdBase.vue";
 import MdcFdBase from "@/components/MDC/Factions/FD/MdcFdBase.vue";
+import {FactionType} from "@/scripts/enums/faction.type";
+import {MdcSearchEntityInterface} from "@/scripts/interfaces/mdc/mdc-search-entity.interface";
 import {CallSignInterface} from "@/scripts/interfaces/mdc/call-sign.interface";
-import {MdcSearchEntityInterface} from "@/scripts/interfaces/mdc-search-entity.interface";
-import {FileInterface} from "@/scripts/interfaces/file.interface";
 
 @Options({
     components: {
         MdcFdBase,
         MdcPdBase,
         MdcHeaderBar,
-        MdcFooterBar
-    }
+        MdcFooterBar,
+    },
 })
 export default class MdcBase extends Vue {
     @Ref() private readonly header!: MdcHeaderBar;
@@ -55,13 +62,23 @@ export default class MdcBase extends Vue {
     private rankName?: string = undefined;
     private characterName: string = "";
     private factionType: FactionType = FactionType.CITIZEN;
-    
+
     private infoMessage: string = "";
     private infoTimeout: number | undefined;
 
     public mounted(): void {
-        alt.on("mdc:open", (factionType: FactionType, canLogin: boolean, characterName: string, rankName?: string) => this.onOpen(factionType, canLogin, characterName, rankName));
-        alt.on("mdc:updatecallsigns", (args: any[]) => this.onUpdateCallSigns(args[0], args[1]));
+        alt.on(
+            "mdc:open",
+            (
+                factionType: FactionType,
+                canLogin: boolean,
+                characterName: string,
+                rankName?: string
+            ) => this.onOpen(factionType, canLogin, characterName, rankName)
+        );
+        alt.on("mdc:updatecallsigns", (args: any[]) =>
+            this.onUpdateCallSigns(args[0], args[1])
+        );
         alt.on("mdc:sendentities", (args: any[]) => this.onSetEntities(args[0]));
         alt.on("mdc:close", () => this.onClose());
     }
@@ -76,21 +93,29 @@ export default class MdcBase extends Vue {
     private onShowNotification(message: string): void {
         this.showInfoMessage(message);
     }
-    
-    private onOpen(factionType: FactionType, canLogin: boolean, characterName: string, rankName?: string): void {
+
+    private onOpen(
+        factionType: FactionType,
+        canLogin: boolean,
+        characterName: string,
+        rankName?: string
+    ): void {
         this.active = true;
         this.rankName = rankName;
         this.characterName = characterName;
         this.factionType = factionType;
-        
-        this.fakeLogin(canLogin);        
+
+        this.fakeLogin(canLogin);
 
         if (this.rankName !== undefined) {
             this.footer.setup(this.characterName, this.rankName);
         }
     }
 
-    private onUpdateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
+    private onUpdateCallSigns(
+        callSigns: CallSignInterface[],
+        hasCallSign: boolean
+    ): void {
         switch (this.factionType) {
             case FactionType.POLICE_DEPARTMENT:
                 this.pdBase.updateCallSigns(callSigns, hasCallSign);
@@ -100,7 +125,7 @@ export default class MdcBase extends Vue {
                 break;
         }
     }
-    
+
     private onSetEntities(entities: MdcSearchEntityInterface[]): void {
         switch (this.factionType) {
             case FactionType.POLICE_DEPARTMENT:
@@ -111,7 +136,7 @@ export default class MdcBase extends Vue {
                 break;
         }
     }
-    
+
     private onClose(): void {
         this.active = false;
 
@@ -141,28 +166,28 @@ export default class MdcBase extends Vue {
         this.isLoading = true;
 
         let step = 0;
-        this.loadingText = "Anmeldung ."
+        this.loadingText = "Anmeldung .";
 
         if (this.loadingInterval !== undefined) {
             clearInterval(this.loadingInterval);
         }
-        
+
         this.loadingInterval = setInterval(() => {
             if (step === 0) {
-                this.loadingText = "Anmeldung .."
+                this.loadingText = "Anmeldung ..";
             }
             if (step === 1) {
-                this.loadingText = "Anmeldung ..."
+                this.loadingText = "Anmeldung ...";
             }
             if (step === 2) {
-                this.loadingText = "Anmeldung ."
+                this.loadingText = "Anmeldung .";
             }
 
             step++;
             if (step === 3) {
                 step = 0;
             }
-            
+
             if (!this.isLoading) {
                 clearInterval(this.loadingInterval);
             }
@@ -174,11 +199,11 @@ export default class MdcBase extends Vue {
                 this.login();
             } else {
                 clearInterval(this.loadingInterval);
-                this.loadingText = "Bio-Scan verweigert!"
+                this.loadingText = "Bio-Scan verweigert!";
             }
         }, 1500);
     }
-    
+
     private login(): void {
         this.header.setup();
 
@@ -198,7 +223,7 @@ export default class MdcBase extends Vue {
 .mdc-base {
     z-index: 9999;
     position: absolute;
-    background: #2C2C2C;
+    background: #2c2c2c;
     border-radius: 0.2vw;
     border: 3px solid rgb(36, 36, 36);
     pointer-events: all;

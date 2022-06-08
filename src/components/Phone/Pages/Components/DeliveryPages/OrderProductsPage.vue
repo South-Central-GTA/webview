@@ -7,8 +7,7 @@
             </button>
         </div>
 
-        <div class="header-image">
-        </div>
+        <div class="header-image"></div>
 
         <div class="pt-5">
             <h6>Deine Lagerbestände</h6>
@@ -17,19 +16,31 @@
         </div>
 
         <div class="phone-delivery-button-group">
-            <input class="form-control border-3" v-model="amount"
-                   oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                   type="number"
-                   @keypress="allowOnlyNumbers($event)" @focus="onFocus(true)" @blur="onFocus(false)"
-                   maxlength="3">
-            <button type="button" class="btn" @click="order()" :disabled="amount === ''">Produkte bestellen</button>
+            <input
+                class="form-control border-3"
+                v-model="amount"
+                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                type="number"
+                @keypress="allowOnlyNumbers($event)"
+                @focus="onFocus(true)"
+                @blur="onFocus(false)"
+                maxlength="3"
+            />
+            <button
+                type="button"
+                class="btn"
+                @click="order()"
+                :disabled="amount === ''"
+            >
+                Produkte bestellen
+            </button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {allowOnlyNumbers, onFocus} from '@/scripts/helpers/helpers';
+import alt from "@/scripts/services/alt.service";
+import {allowOnlyNumbers, onFocus} from "@/scripts/helpers/helpers";
 import {Vue} from "vue-class-component";
 
 export default class OrderProductsPage extends Vue {
@@ -82,10 +93,8 @@ export default class OrderProductsPage extends Vue {
 }
 
 .header-image {
-    background: linear-gradient(
-                    rgba(0, 0, 0, 0),
-                    rgba(0, 0, 0, 0.8)
-    ), url("../../../../../assets/images/phone/shipping-banner.jpg") center center;
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)),
+    url("../../../../../assets/images/phone/shipping-banner.jpg") center center;
     background-size: cover;
     height: 6vw;
 }

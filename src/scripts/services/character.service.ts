@@ -1,5 +1,5 @@
-import alt from '@/scripts/services/alt.service';
-import LiteEvent from '@/scripts/systems/lite-event'
+import alt from "@/scripts/services/alt.service";
+import LiteEvent from "@/scripts/systems/lite-event";
 
 export default class CharacterService {
     private static instance: CharacterService;

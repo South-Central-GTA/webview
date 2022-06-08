@@ -7,12 +7,18 @@
             </button>
         </div>
 
-        <img class="phone-bank-logo pb-3" src="@/assets/images/phone/maze-bank-logo.png">
+        <img
+            class="phone-bank-logo pb-3"
+            src="@/assets/images/phone/maze-bank-logo.png"
+        />
 
         <div class="bank-accounts-block">
             <div v-for="bankAccount in bankAccounts" v-bind:key="bankAccount.id">
-                <div class="bank-account text-center" @click="openBankAccount(bankAccount.id)">
-                    <h1> {{ bankAccount.bankDetails }}</h1>
+                <div
+                    class="bank-account text-center"
+                    @click="openBankAccount(bankAccount.id)"
+                >
+                    <h1>{{ bankAccount.bankDetails }}</h1>
                     <h2 v-if="bankAccount.status === 0">Wird noch eingerichtet ...</h2>
                     <h2 v-if="bankAccount.status === 1">${{ bankAccount.amount }}</h2>
                     <h2 class="fst-italic" v-if="bankAccount.type === 0">Privatkonto</h2>
@@ -28,15 +34,19 @@
 </template>
 
 <script lang="ts">
-import banking from '@/scripts/services/banking.service';
-import {BankAccountInterface} from '@/scripts/interfaces/bank/bank-account.interface';
+import banking from "@/scripts/services/banking.service";
 import {Vue} from "vue-class-component";
+import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
 
 export default class PhoneManageBankAccounts extends Vue {
     private bankAccounts: BankAccountInterface[] = [];
 
     public mounted(): void {
-        banking.getInstance().onChange.on((bankAccounts: BankAccountInterface[]) => this.setup(bankAccounts));
+        banking
+            .getInstance()
+            .onChange.on((bankAccounts: BankAccountInterface[]) =>
+            this.setup(bankAccounts)
+        );
     }
 
     private setup(bankAccounts: BankAccountInterface[]): void {

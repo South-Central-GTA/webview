@@ -4,7 +4,9 @@
             <div class="col-4">
                 <h3>{{ characterName }}</h3>
                 <h4>Informationen:</h4>
-                <p v-if="phoneNumbers.length === 0"><b>Handynummern:</b> Keine Suchergebnisse!</p>
+                <p v-if="phoneNumbers.length === 0">
+                    <b>Handynummern:</b> Keine Suchergebnisse!
+                </p>
                 <p v-if="phoneNumbers.length !== 0"><b>Handynummern:</b></p>
                 <ul v-if="phoneNumbers.length !== 0" class="list-holder">
                     <li v-for="phoneNumber in phoneNumbers" v-bind:key="phoneNumber">
@@ -16,7 +18,8 @@
                 <p v-if="houses.length !== 0"><b>Adressen:</b></p>
                 <ul v-if="houses.length !== 0" class="list-holder">
                     <li v-for="house in houses" v-bind:key="house.id">
-                        {{ house.streetName }} {{ house.subName }} Nr. {{ house.houseNumber }}
+                        {{ house.streetName }} {{ house.subName }} Nr.
+                        {{ house.houseNumber }}
                     </li>
                 </ul>
             </div>
@@ -25,15 +28,29 @@
 
                 <div v-if="medicalHistory.length !== 0" class="big-list-holder">
                     <p v-for="entry in medicalHistory" v-bind:key="entry.id">
-                        <button type="button" v-if="isOperator" @click="deleteMedicalHistory(entry.id)">X</button>
-                        {{ entry.content }}<br> <span class="date-text">{{ entry.creatorCharacterName }} - {{ getDate(entry.createdAtJson) }}</span>
+                        <button
+                            type="button"
+                            v-if="isOperator"
+                            @click="deleteMedicalHistory(entry.id)"
+                        >
+                            X
+                        </button>
+                        {{ entry.content }}<br/>
+                        <span class="date-text"
+                        >{{ entry.creatorCharacterName }} -
+              {{ getDate(entry.createdAtJson) }}</span
+                        >
                     </p>
                 </div>
 
                 <div class="position-absolute mb-5 bottom-0">
-                    <input class="w-100" v-model="medicalHistoryInput" type="text">
+                    <input class="w-100" v-model="medicalHistoryInput" type="text"/>
 
-                    <button type="button" class="float-end mt-1" @click="createMedicalHistory()">
+                    <button
+                        type="button"
+                        class="float-end mt-1"
+                        @click="createMedicalHistory()"
+                    >
                         Medical History hinzufügen
                     </button>
                 </div>
@@ -43,13 +60,23 @@
 
                 <div v-if="allergies.length !== 0" class="big-list-holder">
                     <p v-for="entry in allergies" v-bind:key="entry.id">
-                        <button type="button" v-if="isOperator" @click="deleteAllergy(entry.id)">X</button>
-                        {{ entry.content }}<br> <span class="date-text">{{ entry.creatorCharacterName }} - {{ getDate(entry.createdAtJson) }}</span>
+                        <button
+                            type="button"
+                            v-if="isOperator"
+                            @click="deleteAllergy(entry.id)"
+                        >
+                            X
+                        </button>
+                        {{ entry.content }}<br/>
+                        <span class="date-text"
+                        >{{ entry.creatorCharacterName }} -
+              {{ getDate(entry.createdAtJson) }}</span
+                        >
                     </p>
                 </div>
 
                 <div class="position-absolute mb-5 bottom-0">
-                    <input class="w-100" v-model="allergyInput" type="text">
+                    <input class="w-100" v-model="allergyInput" type="text"/>
 
                     <button type="button" class="float-end mt-1" @click="createAllergy()">
                         Neue Allergie hinzufügen
@@ -63,22 +90,14 @@
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
-import {FactionType} from "@/scripts/enums/faction.type";
-import {MdcSearchEntityInterface} from "@/scripts/interfaces/mdc-search-entity.interface";
-import {MdcSearchType} from "@/scripts/enums/mdc-search.type";
 import MdcService from "@/scripts/services/mdc.service";
-import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
-import {CriminalRecordInterface} from "@/scripts/interfaces/mdc/criminal-record.interface";
-import {MdcNoteInterface} from "@/scripts/interfaces/mdc/mdc-note.interface";
-import {VehicleInterface} from "@/scripts/interfaces/vehicle.interface";
-import {HouseInterface} from "@/scripts/interfaces/house.interface";
-import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
 import {MdcMedicalEntryInterface} from "@/scripts/interfaces/mdc/mdc-medical-entry.interface";
+import {HouseInterface} from "@/scripts/interfaces/house.interface";
 import {MdcAllergyInterface} from "@/scripts/interfaces/mdc/mdc-allergy.interface";
+import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
 
 @Options({
-    components: {
-    }
+    components: {},
 })
 export default class MdcPatientRecord extends Vue {
     private isOperator: boolean = false;
@@ -92,20 +111,30 @@ export default class MdcPatientRecord extends Vue {
 
     private medicalHistoryInput: string = "";
     private allergyInput: string = "";
-    
+
     public mounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
+        MdcService.getInstance().onIsOperatorChanged.on((value: boolean) =>
+            this.onIsOperatorChanged(value)
+        );
     }
 
     public unmounted(): void {
-        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
+        MdcService.getInstance().onIsOperatorChanged.off((value: boolean) =>
+            this.onIsOperatorChanged(value)
+        );
     }
 
     private onIsOperatorChanged(value: boolean): void {
         this.isOperator = value;
     }
 
-    public setup(character: CharacterInterface, houses: HouseInterface[], phoneNumbers: string[], medicalHistory: MdcMedicalEntryInterface[], allergies: MdcAllergyInterface[]): void {
+    public setup(
+        character: CharacterInterface,
+        houses: HouseInterface[],
+        phoneNumbers: string[],
+        medicalHistory: MdcMedicalEntryInterface[],
+        allergies: MdcAllergyInterface[]
+    ): void {
         this.characterId = character.id;
         this.characterName = character.name;
         this.houses = houses;
@@ -119,7 +148,11 @@ export default class MdcPatientRecord extends Vue {
             return;
         }
 
-        alt.emitServer("firemdc:createmedicalhistory", this.characterId, this.medicalHistoryInput);
+        alt.emitServer(
+            "firemdc:createmedicalhistory",
+            this.characterId,
+            this.medicalHistoryInput
+        );
 
         this.medicalHistoryInput = "";
     }
@@ -127,13 +160,17 @@ export default class MdcPatientRecord extends Vue {
     private deleteMedicalHistory(id: number): void {
         alt.emitServer("firemdc:deletemedicalhistory", id);
     }
-    
+
     private createAllergy(): void {
         if (this.allergyInput.length === 0) {
             return;
         }
 
-        alt.emitServer("firemdc:createallergy", this.characterId, this.allergyInput);
+        alt.emitServer(
+            "firemdc:createallergy",
+            this.characterId,
+            this.allergyInput
+        );
 
         this.allergyInput = "";
     }
@@ -141,7 +178,7 @@ export default class MdcPatientRecord extends Vue {
     private deleteAllergy(id: number): void {
         alt.emitServer("firemdc:deleteallergy", id);
     }
-    
+
     private getDate(dateJson: string): string {
         if (dateJson.length === 0) {
             return "";
@@ -149,18 +186,18 @@ export default class MdcPatientRecord extends Vue {
 
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: 'numeric',
-            minute: 'numeric',
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric'
+            hour: "numeric",
+            minute: "numeric",
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
         });
     }
 }
 </script>
 
 <style scoped lang="scss">
-.mdc-patient-record {  
+.mdc-patient-record {
     background-color: #cecece;
     height: 100%;
 }

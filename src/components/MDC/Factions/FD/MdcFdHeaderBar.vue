@@ -5,7 +5,7 @@
                 <p class="">Los Santos Fire Department</p>
             </div>
             <div class="col-1">
-                <img class="logo" src="@/assets/images/lsfd.png">
+                <img class="logo" src="@/assets/images/lsfd.png"/>
             </div>
         </div>
     </div>
@@ -13,15 +13,12 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import alt from "@/scripts/services/alt.service";
 
 @Options({
-    components: {
-    }
+    components: {},
 })
 export default class MdcFdHeaderBar extends Vue {
     public setup(): void {
-        
     }
 }
 </script>
@@ -34,7 +31,7 @@ export default class MdcFdHeaderBar extends Vue {
 
 .content {
     padding: 0.5vw;
-    
+
     p {
         font-size: 1.25vw;
         font-weight: 700;

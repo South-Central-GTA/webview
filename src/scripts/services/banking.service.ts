@@ -1,6 +1,6 @@
-import {BankAccountInterface} from '@/scripts/interfaces/bank/bank-account.interface';
-import alt from '@/scripts/services/alt.service';
-import LiteEvent from '@/scripts/systems/lite-event'
+import alt from "@/scripts/services/alt.service";
+import LiteEvent from "@/scripts/systems/lite-event";
+import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
 
 export default class BankingService {
     private static instance: BankingService;
@@ -30,10 +30,12 @@ export default class BankingService {
     }
 
     private readonly onBankAccountsChanged = new LiteEvent<BankAccountInterface[]>();
-    private bankAccounts: BankAccountInterface [] = [];
+    private bankAccounts: BankAccountInterface[] = [];
 
     public listenToEvents(): void {
-        alt.on("bank:updatebankaccounts", (args: any[]) => this.updateBankAccounts(args[0]));
+        alt.on("bank:updatebankaccounts", (args: any[]) =>
+            this.updateBankAccounts(args[0])
+        );
     }
 
     private updateBankAccounts(bankAccounts: BankAccountInterface[]): void {

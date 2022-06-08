@@ -13,24 +13,24 @@
         <Supermarket/>
         <GasStation/>
         <team-menu/>
-        <character-menu />
+        <character-menu/>
         <Inventories></Inventories>
         <context-menu/>
-        <animation-wheel />
+        <animation-wheel/>
         <chat/>
         <phone/>
     </div>
 </template>
 
 <script lang="ts">
-import Chat from '@/components/Chat.vue';
-import Speedo from '@/components/Speedo.vue';
-import Hud from '@/components/Hud.vue';
-import ContextMenu from '@/components/ContextMenu.vue';
-import Phone from '@/components/Phone/Phone.vue';
-import TeamMenu from '@/components/TeamMenu/TeamMenu.vue';
-import ATM from '@/components/ATM/ATM.vue';
-import PublicGarage from '@/components/PublicGarage/PublicGarage.vue';
+import Chat from "@/components/Chat.vue";
+import Speedo from "@/components/Speedo.vue";
+import Hud from "@/components/Hud.vue";
+import ContextMenu from "@/components/ContextMenu.vue";
+import Phone from "@/components/Phone/Phone.vue";
+import TeamMenu from "@/components/TeamMenu/TeamMenu.vue";
+import ATM from "@/components/ATM/ATM.vue";
+import PublicGarage from "@/components/PublicGarage/PublicGarage.vue";
 import NotificationsHolder from "@/components/Notification/NotificationsHolder.vue";
 import VehicleSellMenu from "@/components/Vehicle/VehicleSellMenu.vue";
 import {Options, Vue} from "vue-class-component";
@@ -65,10 +65,9 @@ import MdcBase from "@/components/MDC/MdcBase.vue";
         Phone,
         TeamMenu,
         PublicGarage,
-    }
+    },
 })
 export default class Game extends Vue {
-
 }
 </script>
 

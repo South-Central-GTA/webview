@@ -1,5 +1,5 @@
 import {CharacterCreatorPurchaseType} from "@/scripts/enums/character-creator-purchase.type";
-import {VehicleInterface} from "../vehicle.interface";
+import {CatalogVehicleInterface} from "@/scripts/interfaces/vehicles/catalog-vehicle.interface";
 
 export interface CharacterCreatorPurchaseInterface {
     id: number;
@@ -8,5 +8,5 @@ export interface CharacterCreatorPurchaseInterface {
     description: string;
     southCentralPoints: number;
     removeable: boolean;
-    orderedVehicle: VehicleInterface;
+    orderedVehicle: CatalogVehicleInterface;
 }

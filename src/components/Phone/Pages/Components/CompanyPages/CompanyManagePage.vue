@@ -7,10 +7,18 @@
             </button>
         </div>
 
-        <company-worker-overview ref="companyWorkerOverview" :hidden="currentTab !== 1" v-on:back="resetTab()" />
-        <company-settings ref="companySettings" :hidden="currentTab !== 2" v-on:back="resetTab()"/>
+        <company-worker-overview
+            ref="companyWorkerOverview"
+            :hidden="currentTab !== 1"
+            v-on:back="resetTab()"
+        />
+        <company-settings
+            ref="companySettings"
+            :hidden="currentTab !== 2"
+            v-on:back="resetTab()"
+        />
 
-        <img class="gov-logo" src="@/assets/images/phone/gov-seal.png">
+        <img class="gov-logo" src="@/assets/images/phone/gov-seal.png"/>
 
         <div class="company-stats">
             <h1>{{ companyName }}</h1>
@@ -23,29 +31,36 @@
         </div>
 
         <div class="phone-gov-button-group">
-            <button type="button" class="btn" @click="openTab(1)" :disabled="!canManageMembers">Mitarbeiter</button>
+            <button
+                type="button"
+                class="btn"
+                @click="openTab(1)"
+                :disabled="!canManageMembers"
+            >
+                Mitarbeiter
+            </button>
             <button type="button" class="btn" @click="openTab(2)">Verwalten</button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import character from '@/scripts/services/character.service';
-import banking from '@/scripts/services/banking.service';
-import houseing from '@/scripts/services/house.service';
-import {CompanyInterface} from '@/scripts/interfaces/company/company.interface';
-import CompanyWorkerOverview from './CompanyManagement/CompanyWorkerOverviewPage.vue';
-import CompanySettings from './CompanyManagement/CompanySettingsPage.vue';
-import {GroupPermission} from "@/scripts/enums/group.permission";
-import {LicenseInterface} from "@/scripts/interfaces/company/license.interface";
+import character from "@/scripts/services/character.service";
+import banking from "@/scripts/services/banking.service";
+import houseing from "@/scripts/services/house.service";
+import CompanyWorkerOverview from "./CompanyManagement/CompanyWorkerOverviewPage.vue";
+import CompanySettings from "./CompanyManagement/CompanySettingsPage.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {CompanyInterface} from "@/scripts/interfaces/group/company.interface";
+import {GroupPermission} from "@/scripts/enums/group.permission";
+import {LicenseInterface} from "@/scripts/interfaces/group/license.interface";
 
 @Options({
     components: {
         CompanyWorkerOverview,
-        CompanySettings
-    }
+        CompanySettings,
+    },
 })
 export default class CompanyManagePage extends Vue {
     @Ref() private readonly companyWorkerOverview!: CompanyWorkerOverview;
@@ -71,13 +86,14 @@ export default class CompanyManagePage extends Vue {
 
     private licenses: LicenseInterface[] = [];
 
-
     public setup(company: CompanyInterface, licenses: LicenseInterface[]): void {
         this.company = company;
 
         this.companyName = this.company.name;
 
-        const member = this.company.members.find(w => w.characterId == character.getInstance().getCharacterId);
+        const member = this.company.members.find(
+            (w) => w.characterId == character.getInstance().getCharacterId
+        );
         if (member !== undefined) {
             if (member.owner) {
                 // Check if the player is owner, if not check if he has the rank with permissions to manage.
@@ -86,26 +102,44 @@ export default class CompanyManagePage extends Vue {
                 this.canBuyLics = true;
                 this.canSellLics = true;
             } else {
-                const rank = this.company.ranks.find(r => r.level === member.level);
+                const rank = this.company.ranks.find((r) => r.level === member.level);
                 if (rank !== undefined) {
-                    this.canManageMembers = (rank.groupPermission & GroupPermission.MANAGER_MEMBERS) === GroupPermission.MANAGER_MEMBERS;
-                    this.canBuyLics = (rank.groupPermission & GroupPermission.BUY_LICENSES) === GroupPermission.BUY_LICENSES;
-                    this.canSellLics = (rank.groupPermission & GroupPermission.SELL_LICENSES) === GroupPermission.SELL_LICENSES;
-                    this.canChangeDeliveryVisibility = (rank.groupPermission & GroupPermission.CHANGE_DELIVERY_VISIBILITY) === GroupPermission.CHANGE_DELIVERY_VISIBILITY;
+                    this.canManageMembers =
+                        (rank.groupPermission & GroupPermission.MANAGER_MEMBERS) ===
+                        GroupPermission.MANAGER_MEMBERS;
+                    this.canBuyLics =
+                        (rank.groupPermission & GroupPermission.BUY_LICENSES) ===
+                        GroupPermission.BUY_LICENSES;
+                    this.canSellLics =
+                        (rank.groupPermission & GroupPermission.SELL_LICENSES) ===
+                        GroupPermission.SELL_LICENSES;
+                    this.canChangeDeliveryVisibility =
+                        (rank.groupPermission &
+                            GroupPermission.CHANGE_DELIVERY_VISIBILITY) ===
+                        GroupPermission.CHANGE_DELIVERY_VISIBILITY;
                 }
             }
         }
 
-        const bankAccount = banking.getInstance().getBankAccounts.find(b => b.groupAccesses.some(ga => ga.groupId === this.company?.id));
+        const bankAccount = banking
+            .getInstance()
+            .getBankAccounts.find((b) =>
+                b.groupAccesses.some((ga) => ga.groupId === this.company?.id)
+            );
         if (bankAccount !== undefined) {
             this.bankAccountAmout = bankAccount.amount;
         }
 
         this.licenses = licenses;
 
-        const house = houseing.getInstance().getHouses.find(h => h.groupOwnerId === company.id && h.houseType === 0);
+        const house = houseing
+            .getInstance()
+            .getHouses.find(
+                (h) => h.groupOwnerId === company.id && h.houseType === 0
+            );
         if (house !== undefined) {
-            this.officeHouseText = house.streetName + " " + house.subName + " " + house.houseNumber;
+            this.officeHouseText =
+                house.streetName + " " + house.subName + " " + house.houseNumber;
         }
 
         if (this.currentTab === 1) {
@@ -117,12 +151,22 @@ export default class CompanyManagePage extends Vue {
         }
 
         if (this.currentTab === 2) {
-            this.companySettings.setup(this.company, this.licenses, this.isOwner, this.canSellLics, this.canBuyLics, this.canChangeDeliveryVisibility);
+            this.companySettings.setup(
+                this.company,
+                this.licenses,
+                this.isOwner,
+                this.canSellLics,
+                this.canBuyLics,
+                this.canChangeDeliveryVisibility
+            );
         }
     }
 
     public resetTab(): void {
-        if (this.currentTab === 1 && this.companyWorkerOverview.getIsEditingWindowOpen) {
+        if (
+            this.currentTab === 1 &&
+            this.companyWorkerOverview.getIsEditingWindowOpen
+        ) {
             this.companyWorkerOverview.closeWindow();
             return;
         }
@@ -140,7 +184,14 @@ export default class CompanyManagePage extends Vue {
         }
 
         if (id === 2) {
-            this.companySettings.setup(this.company, this.licenses, this.isOwner, this.canSellLics, this.canBuyLics, this.canChangeDeliveryVisibility);
+            this.companySettings.setup(
+                this.company,
+                this.licenses,
+                this.isOwner,
+                this.canSellLics,
+                this.canBuyLics,
+                this.canChangeDeliveryVisibility
+            );
         }
 
         this.currentTab = id;
@@ -161,9 +212,10 @@ export default class CompanyManagePage extends Vue {
     height: 100%;
 
     background: linear-gradient(
-                    rgba(255, 234, 176, 0.5),
-                    rgba(255, 234, 176, 0.5)
-    ), url("../../../../../assets/images/patterns/double-bubble.png");
+            rgba(255, 234, 176, 0.5),
+            rgba(255, 234, 176, 0.5)
+    ),
+    url("../../../../../assets/images/patterns/double-bubble.png");
 
     background-position: center center;
     background-size: 25vw;
@@ -211,5 +263,4 @@ export default class CompanyManagePage extends Vue {
     width: 100%;
     font-size: 0.6vw;
 }
-
 </style>

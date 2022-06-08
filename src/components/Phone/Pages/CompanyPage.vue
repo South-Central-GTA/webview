@@ -1,30 +1,46 @@
 <template>
     <div class="company-page">
         <div class="loading" v-if="isLoading && !loadedOnce">
-            <img class="logo" src="@/assets/images/phone/gov-seal.png">
+            <img class="logo" src="@/assets/images/phone/gov-seal.png"/>
             <h1>{{ loadingText }}</h1>
         </div>
 
-        <company-manage ref="companyManage" :hidden="currentTab !== 1" v-on:back="resetTab()"/>
-        <company-create ref="companyCreate" :hidden="currentTab !== 2" v-on:back="resetTab()"/>
+        <company-manage
+            ref="companyManage"
+            :hidden="currentTab !== 1"
+            v-on:back="resetTab()"
+        />
+        <company-create
+            ref="companyCreate"
+            :hidden="currentTab !== 2"
+            v-on:back="resetTab()"
+        />
 
         <div class="label">
             <h1>Unternehmensgründung einfach gestaltet.</h1>
             <h2>Government San Andreas</h2>
         </div>
 
-        <img class="logo" src="@/assets/images/phone/gov-seal.png">
+        <img class="logo" src="@/assets/images/phone/gov-seal.png"/>
 
         <div v-if="hasData">
             <div v-if="isPlayerInCompany">
                 <div class="phone-gov-button-group">
-                    <button type="button" class="btn" @click="openTab(1)" :disabled="!companyReady">Mein Unternehmen
+                    <button
+                        type="button"
+                        class="btn"
+                        @click="openTab(1)"
+                        :disabled="!companyReady"
+                    >
+                        Mein Unternehmen
                     </button>
                 </div>
             </div>
             <div v-else>
                 <div class="phone-gov-button-group">
-                    <button type="button" class="btn" @click="openTab(2)">Unternehmen eröffnen</button>
+                    <button type="button" class="btn" @click="openTab(2)">
+                        Unternehmen eröffnen
+                    </button>
                 </div>
             </div>
         </div>
@@ -32,20 +48,20 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import group from '@/scripts/services/group.service';
-import CompanyManage from './Components/CompanyPages/CompanyManagePage.vue';
-import CompanyCreate from './Components/CompanyPages/CompanyCreatePage.vue';
-import {CompanyInterface} from "@/scripts/interfaces/company/company.interface";
-import {LicenseInterface} from "@/scripts/interfaces/company/license.interface";
+import alt from "@/scripts/services/alt.service";
+import group from "@/scripts/services/group.service";
+import CompanyManage from "./Components/CompanyPages/CompanyManagePage.vue";
+import CompanyCreate from "./Components/CompanyPages/CompanyCreatePage.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {LicenseInterface} from "@/scripts/interfaces/group/license.interface";
+import {CompanyInterface} from "@/scripts/interfaces/group/company.interface";
 
 @Options({
     components: {
         CompanyManage,
-        CompanyCreate
-    }
+        CompanyCreate,
+    },
 })
 export default class CompanyPage extends Vue {
     @Ref() private readonly companyManage!: CompanyManage;
@@ -74,13 +90,17 @@ export default class CompanyPage extends Vue {
     }
 
     public mounted(): void {
-        group.getInstance().CompanyChanged.on((company?: CompanyInterface) => this.setup(company));
+        group
+            .getInstance()
+            .CompanyChanged.on((company?: CompanyInterface) => this.setup(company));
         this.setup(group.getInstance().Company);
 
-        alt.on("company:setlicensetable", (args: any[]) => this.setLicenseTable(args[0]));
+        alt.on("company:setlicensetable", (args: any[]) =>
+            this.setLicenseTable(args[0])
+        );
         alt.on("company:resetphoneapp", () => this.resetPhoneApp());
     }
-    
+
     public unmounted(): void {
         alt.off("company:setlicensetable");
         alt.off("company:resetphoneapp");
@@ -101,20 +121,20 @@ export default class CompanyPage extends Vue {
         this.isLoading = true;
 
         let step = 0;
-        this.loadingText = "Anmeldung läuft ..."
+        this.loadingText = "Anmeldung läuft ...";
 
         if (this.loadingInt !== undefined) {
             clearInterval(this.loadingInt);
         }
         this.loadingInt = setInterval(() => {
             if (step === 0) {
-                this.loadingText = "Anmeldung läuft ."
+                this.loadingText = "Anmeldung läuft .";
             }
             if (step === 1) {
-                this.loadingText = "Anmeldung läuft .."
+                this.loadingText = "Anmeldung läuft ..";
             }
             if (step === 2) {
-                this.loadingText = "Anmeldung läuft ..."
+                this.loadingText = "Anmeldung läuft ...";
             }
 
             step++;
@@ -189,14 +209,14 @@ export default class CompanyPage extends Vue {
     text-align: center;
 
     background: linear-gradient(
-                    rgba(255, 234, 176, 0.5),
-                    rgba(255, 234, 176, 0.5)
-    ), url("../../../assets/images/patterns/double-bubble.png");
+            rgba(255, 234, 176, 0.5),
+            rgba(255, 234, 176, 0.5)
+    ),
+    url("../../../assets/images/patterns/double-bubble.png");
 
     background-position: center center;
     background-size: 25vw;
 }
-
 
 .loading {
     top: 0;
@@ -206,9 +226,10 @@ export default class CompanyPage extends Vue {
     text-align: center;
 
     background: linear-gradient(
-                    rgba(255, 234, 176, 0.5),
-                    rgba(255, 234, 176, 0.5)
-    ), url("../../../assets/images/patterns/double-bubble.png");
+            rgba(255, 234, 176, 0.5),
+            rgba(255, 234, 176, 0.5)
+    ),
+    url("../../../assets/images/patterns/double-bubble.png");
 
     background-position: center center;
     background-size: 25vw;

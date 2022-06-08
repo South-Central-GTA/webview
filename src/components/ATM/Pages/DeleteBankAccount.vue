@@ -4,12 +4,18 @@
             <font-awesome-icon class="center" icon="caret-left"/>
         </button>
 
-        <img class="atm-logo" src="../../../assets/images/phone/maze-bank-logo.png">
+        <img class="atm-logo" src="@/assets/images/phone/maze-bank-logo.png"/>
 
         <div class="bottom-center py-5">
-            <p>Sind Sie sicher, dass Sie ihr Bankkonto unwiederruflich löschen wollen?</p>
-            <button type="button" class="btn w-100 atm-menu-button" @click="deleteBankAccount()">Ja, Konto
-                unwiederruflich löschen
+            <p>
+                Sind Sie sicher, dass Sie ihr Bankkonto unwiederruflich löschen wollen?
+            </p>
+            <button
+                type="button"
+                class="btn w-100 atm-menu-button"
+                @click="deleteBankAccount()"
+            >
+                Ja, Konto unwiederruflich löschen
             </button>
         </div>
     </div>
@@ -19,7 +25,6 @@
 import {Vue} from "vue-class-component";
 
 export default class DeleteBankAccount extends Vue {
-
     private back(): void {
         this.$emit("back");
     }

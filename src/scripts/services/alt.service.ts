@@ -1,8 +1,8 @@
 type eventFn = (...args: any[]) => any;
 
 export default new class AltService implements Alt {
-    private _map: Map<string, any> = new Map<string, eventFn>(); 
-    
+    private _map: Map<string, any> = new Map<string, eventFn>();
+
     private altVExists: boolean = window["alt"] !== undefined;
 
     public emit(eventName: string, ...args: any[]): void {
@@ -40,7 +40,7 @@ export default new class AltService implements Alt {
             if (!listener) {
                 return;
             }
-            
+
             alt.off(eventName, listener);
             this._map.delete(eventName);
         }

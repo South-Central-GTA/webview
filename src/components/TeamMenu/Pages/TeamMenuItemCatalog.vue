@@ -41,9 +41,9 @@
 </template>
 
 <script lang="ts">
-import {CatalogItemInterface} from '@/scripts/interfaces/catalog-item.interface';
 import alt from '@/scripts/services/alt.service';
 import {Vue} from "vue-class-component";
+import {CatalogItemInterface} from "@/scripts/interfaces/inventory/catalog-item.interface";
 
 export default class TeamMenuItemCatalog extends Vue {
     private catalogItems: CatalogItemInterface[] = [];
@@ -53,13 +53,13 @@ export default class TeamMenuItemCatalog extends Vue {
     public mounted(): void {
         alt.on("itemcatalog:setup", (args: any) => this.setup(args[0]));
     }
-    
+
     public unmounted(): void {
         alt.off("itemcatalog:setup");
     }
 
     private setup(catalogItems: CatalogItemInterface[]): void {
-        catalogItems.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
+        catalogItems.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
         this.catalogItems = catalogItems;
         this.cachedCatalogItems = this.catalogItems;
     }

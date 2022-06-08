@@ -1,4 +1,4 @@
-export interface ColorInterface {
+﻿export interface ColorInterface {
     r: number;
     g: number;
     b: number;

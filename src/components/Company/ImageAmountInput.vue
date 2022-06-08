@@ -1,40 +1,37 @@
 <template>
     <div class="image-amount-input sc-card" @click="choose()">
-        <img :src="getImage(item.image)">
+        <img :src="getImage(item.image)"/>
         <div class="input-group">
             <span class="input-group-text-dark">x</span>
             <input
-                    v-model.number="amount"
-                    oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                    type="number"
-                    class="form-control-dark"
-                    @keypress="allowOnlyNumbers($event)"
-                    @input="sendAmount()"
-                    @focus="choose()"
-                    maxlength="2">
+                v-model.number="amount"
+                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                type="number"
+                class="form-control-dark"
+                @keypress="allowOnlyNumbers($event)"
+                @input="sendAmount()"
+                @focus="choose()"
+                maxlength="2"
+            />
         </div>
-        <p class="name"> {{ item.name }} </p>
-        <p class="price money-color"> ${{ item.price }} </p>
+        <p class="name">{{ item.name }}</p>
+        <p class="price money-color">${{ item.price }}</p>
     </div>
 </template>
 
 <script lang="ts">
-import {CatalogItemInterface} from '@/scripts/interfaces/catalog-item.interface';
 import {Vue} from "vue-class-component";
 import {Prop} from "vue-property-decorator";
 import {allowOnlyNumbers} from "@/scripts/helpers/helpers";
+import {CatalogItemInterface} from "@/scripts/interfaces/inventory/catalog-item.interface";
 
 export default class ImageAmountInput extends Vue {
     @Prop() private readonly item!: CatalogItemInterface;
 
     private amount = 1;
-    
-    private getImage(image: string): string {
-        if (!image)
-            return "";
 
-        const images = require.context('@/assets/images/item_icons/', false, /\.png$/);
-        return images("./" + image + ".png");
+    private getImage(image: string): string {
+        return "@/assets/images/item_icons/" + image + ".png";
     }
 
     private sendAmount(): void {
@@ -76,9 +73,7 @@ p {
     font-size: 0.7vw;
     font-weight: 600;
     color: white;
-    text-shadow: -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
     padding: unset;
     margin: unset;

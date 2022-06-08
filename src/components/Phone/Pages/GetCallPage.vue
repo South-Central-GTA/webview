@@ -1,6 +1,6 @@
 <template>
     <div class="get-call-page">
-        <h1 class="call-with"> {{ displayedName }} </h1>
+        <h1 class="call-with">{{ displayedName }}</h1>
         <div class="actions-block">
             <div class="rows">
                 <button type="button" class="btn hangup-button" @click="deny()">
@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {isNumeric} from '@/scripts/helpers/helpers';
+import alt from "@/scripts/services/alt.service";
+import {isNumeric} from "@/scripts/helpers/helpers";
 import {Vue} from "vue-class-component";
 
 export default class GetCallPage extends Vue {
@@ -24,12 +24,14 @@ export default class GetCallPage extends Vue {
 
     public setup(displayedName: string): void {
         if (isNumeric(displayedName)) {
-            displayedName = this.getCorrectFormat(Number.parseInt(displayedName).toString());
+            displayedName = this.getCorrectFormat(
+                Number.parseInt(displayedName).toString()
+            );
         }
 
         this.displayedName = displayedName;
     }
-    
+
     private deny(): void {
         alt.emit("phone:denycall");
         this.$emit("deny");
@@ -40,7 +42,11 @@ export default class GetCallPage extends Vue {
     }
 
     private getCorrectFormat(numberString: string): string {
-        return numberString.substring(0, 3) + " - " + numberString.substring(3, numberString.length);
+        return (
+            numberString.substring(0, 3) +
+            " - " +
+            numberString.substring(3, numberString.length)
+        );
     }
 }
 </script>

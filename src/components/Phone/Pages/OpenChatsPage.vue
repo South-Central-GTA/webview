@@ -13,9 +13,10 @@
         <div class="chats-block">
             <div v-for="chat in chats" v-bind:key="chat.id">
                 <open-chat
-                        v-bind:chat="chat"
-                        v-on:open-chat="openChat($event)"
-                        v-on:delete-chat="deleteChat($event)"/>
+                    v-bind:chat="chat"
+                    v-on:open-chat="openChat($event)"
+                    v-on:delete-chat="deleteChat($event)"
+                />
             </div>
         </div>
 
@@ -26,20 +27,20 @@
 </template>
 
 <script lang="ts">
-import ActiveChat from './Components/ActiveChat.vue';
-import OpenChat from './Components/OpenChat.vue';
-import {PhoneContactInterface} from '@/scripts/interfaces/phone/phone-contact.interface';
-import {PhoneChatInterface} from '@/scripts/interfaces/phone/phone-chat.interface';
-import {UID} from '@/scripts/helpers/helpers';
-import alt from '@/scripts/services/alt.service';
+import ActiveChat from "./Components/ActiveChat.vue";
+import OpenChat from "./Components/OpenChat.vue";
+import {UID} from "@/scripts/helpers/helpers";
+import alt from "@/scripts/services/alt.service";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {PhoneChatInterface} from "@/scripts/interfaces/phone/phone-chat.interface";
+import {PhoneContactInterface} from "@/scripts/interfaces/phone/phone-contact.interface";
 
 @Options({
     components: {
         ActiveChat,
-        OpenChat
-    }
+        OpenChat,
+    },
 })
 export default class OpenChatsPage extends Vue {
     @Ref() private readonly activeChat!: ActiveChat;
@@ -56,7 +57,9 @@ export default class OpenChatsPage extends Vue {
     private chats: PhoneChatInterface[] = [];
 
     public mounted(): void {
-        alt.on("phone:opennewchat", (oldId: number, chat: PhoneChatInterface) => this.openNewChat(oldId, chat));
+        alt.on("phone:opennewchat", (oldId: number, chat: PhoneChatInterface) =>
+            this.openNewChat(oldId, chat)
+        );
     }
 
     public unmounted(): void {
@@ -71,7 +74,7 @@ export default class OpenChatsPage extends Vue {
         this.orderChats();
 
         if (this.isChatOpen) {
-            const updatedChat = this.chats.find(c => c.id === this.activeChatId);
+            const updatedChat = this.chats.find((c) => c.id === this.activeChatId);
             if (!updatedChat) {
                 return;
             }
@@ -108,7 +111,7 @@ export default class OpenChatsPage extends Vue {
     }
 
     public openChatWithContact(contact: PhoneContactInterface): void {
-        const chat = this.chats.find(o => o.phoneNumber === contact.phoneNumber);
+        const chat = this.chats.find((o) => o.phoneNumber === contact.phoneNumber);
         if (chat !== undefined) {
             this.openChat(chat);
         } else {
@@ -117,8 +120,8 @@ export default class OpenChatsPage extends Vue {
                 name: contact.name,
                 phoneNumber: contact.phoneNumber,
                 lastUsage: "",
-                messages: []
-            }
+                messages: [],
+            };
             this.chats.push(newChat);
 
             this.$emit("add-chat", newChat);
@@ -143,7 +146,7 @@ export default class OpenChatsPage extends Vue {
     }
 
     private openNewChat(oldId: number, newChat: PhoneChatInterface): void {
-        const chat = this.chats.find(c => c.id === oldId);
+        const chat = this.chats.find((c) => c.id === oldId);
         if (!chat) {
             return;
         }
@@ -163,7 +166,7 @@ export default class OpenChatsPage extends Vue {
     }
 
     private deleteChat(chat: PhoneChatInterface): void {
-        this.chats = this.chats.filter(c => c.id !== chat.id);
+        this.chats = this.chats.filter((c) => c.id !== chat.id);
 
         this.$emit("delete-chat", chat.id);
     }

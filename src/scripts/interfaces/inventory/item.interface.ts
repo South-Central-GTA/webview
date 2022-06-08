@@ -1,16 +1,24 @@
-import {ItemState} from "@/scripts/enums/item.state";
-import {CatalogItemInterface} from "@/scripts/interfaces/catalog-item.interface";
+import {CatalogItemInterface} from "./catalog-item.interface";
+import {ItemState} from "../../enums/item.state";
 
 export interface ItemInterface {
     id: number;
-    catalogItem?: CatalogItemInterface;
-    slot: number;
+    catalogItemName: string;
+    catalogItem: CatalogItemInterface;
+    slot?: number;
+    droppedByCharacter?: string;
     customData: string;
     note: string;
     amount: number;
     condition: number;
     isBought: boolean;
     itemState: ItemState;
+    positionX?: number;
+    positionY?: number;
+    positionZ?: number;
+    lastUsage?: string;
+
+    entity?: number; // only clientside
 
     // only for weapon attachments
     attachedToWeaponItem?: number;

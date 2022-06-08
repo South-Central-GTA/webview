@@ -1,6 +1,6 @@
-import {AccountInterface} from '@/scripts/interfaces/account.interface';
-import alt from '@/scripts/services/alt.service';
-import LiteEvent from '@/scripts/systems/lite-event'
+import alt from "@/scripts/services/alt.service";
+import LiteEvent from "@/scripts/systems/lite-event";
+import {AccountInterface} from "@/scripts/interfaces/account.interface";
 
 export default class AccountService {
     private static instance: AccountService;

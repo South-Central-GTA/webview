@@ -7,66 +7,97 @@
             </button>
         </div>
 
-        <phone-add-permission-bank-account ref="phoneAddPermissionBankAccount" :hidden="currentTab !== 1"
-                                           v-on:back="resetTab()"/>
-        <phone-manage-permission-bank-account ref="phoneManagePermissionBankAccount" :hidden="currentTab !== 2"
-                                              v-on:back="resetTab()"/>
+        <phone-add-permission-bank-account
+            ref="phoneAddPermissionBankAccount"
+            :hidden="currentTab !== 1"
+            v-on:back="resetTab()"
+        />
+        <phone-manage-permission-bank-account
+            ref="phoneManagePermissionBankAccount"
+            :hidden="currentTab !== 2"
+            v-on:back="resetTab()"
+        />
 
-        <img class="phone-bank-logo" src="@/assets/images/phone/maze-bank-logo.png">
+        <img
+            class="phone-bank-logo"
+            src="@/assets/images/phone/maze-bank-logo.png"
+        />
 
         <div class="character-access-block">
-            <div v-for="characterAccess in characterAccesses" v-bind:key="characterAccess.name">
-                <button type="button" class="btn character-access-btn"
-                        @click="openCharacterAccessSettings(characterAccess)"
-                        :disabled="characterAccess.characterId === characterId"> {{ characterAccess.name }}
+            <div
+                v-for="characterAccess in characterAccesses"
+                v-bind:key="characterAccess.name"
+            >
+                <button
+                    type="button"
+                    class="btn character-access-btn"
+                    @click="openCharacterAccessSettings(characterAccess)"
+                    :disabled="characterAccess.characterId === characterId"
+                >
+                    {{ characterAccess.name }}
                 </button>
             </div>
 
-            <div class="no-character-access-block" v-if="characterAccesses.length === 0">
+            <div
+                class="no-character-access-block"
+                v-if="characterAccesses.length === 0"
+            >
                 <h2>Keine Zugriffsrechte vergeben...</h2>
             </div>
         </div>
 
         <div class="phone-bank-button-group">
-            <button type="button" class="btn" @click="openTab(1)">Person hinzufügen</button>
+            <button type="button" class="btn" @click="openTab(1)">
+                Person hinzufügen
+            </button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import character from "@/scripts/services/character.service";
-import PhoneAddPermissionBankAccount from './PhoneAddPermissionBankAccount.vue';
+import PhoneAddPermissionBankAccount from "./PhoneAddPermissionBankAccount.vue";
 import PhoneManagePermissionBankAccount from "./PhoneManagePermissionBankAccount.vue";
-import {BankAccountCharacterAccessInterface} from "@/scripts/interfaces/bank/bank-account-character-access.interface";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {BankAccountCharacterAccessInterface} from "@/scripts/interfaces/bank/bank-account-character-access.interface";
 
 @Options({
     components: {
         PhoneManagePermissionBankAccount,
-        PhoneAddPermissionBankAccount
-    }
+        PhoneAddPermissionBankAccount,
+    },
 })
 export default class PhonePermissionBankAccount extends Vue {
-    @Ref() private readonly phoneAddPermissionBankAccount!: PhoneAddPermissionBankAccount;
-    @Ref() private readonly phoneManagePermissionBankAccount!: PhoneManagePermissionBankAccount;
+    @Ref()
+    private readonly phoneAddPermissionBankAccount!: PhoneAddPermissionBankAccount;
+    @Ref()
+    private readonly phoneManagePermissionBankAccount!: PhoneManagePermissionBankAccount;
 
     private characterAccesses: BankAccountCharacterAccessInterface[] = [];
     private bankAccountId = 0;
     private currentTab = 0;
     private characterId?: number | undefined;
 
-    public setup(bankAccountId: number, characterAccesses: BankAccountCharacterAccessInterface[]): void {
+    public setup(
+        bankAccountId: number,
+        characterAccesses: BankAccountCharacterAccessInterface[]
+    ): void {
         this.bankAccountId = bankAccountId;
-        this.characterAccesses = characterAccesses.filter(ca => !ca.owner);
+        this.characterAccesses = characterAccesses.filter((ca) => !ca.owner);
 
         this.characterId = character.getInstance().getCharacterId;
 
         this.phoneAddPermissionBankAccount.setup(this.bankAccountId);
     }
 
-    private openCharacterAccessSettings(characterAccess: BankAccountCharacterAccessInterface): void {
-        this.phoneManagePermissionBankAccount.setup(this.bankAccountId, characterAccess);
+    private openCharacterAccessSettings(
+        characterAccess: BankAccountCharacterAccessInterface
+    ): void {
+        this.phoneManagePermissionBankAccount.setup(
+            this.bankAccountId,
+            characterAccess
+        );
         this.openTab(2);
     }
 
@@ -106,7 +137,7 @@ export default class PhonePermissionBankAccount extends Vue {
 }
 
 .no-character-access-block h2 {
-    position: absolute;      
+    position: absolute;
     text-align: center;
     top: 50%;
     color: rgba(59, 59, 59, 0.7);

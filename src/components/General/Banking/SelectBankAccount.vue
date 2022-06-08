@@ -1,15 +1,18 @@
 <template>
     <div class="select-bank-account">
-        <select class="form-select" @change="onChange($event)" :disabled="bankAccounts.length <= 1">
-            <option :hidden="bankAccounts.length != 0">
-                Bankkonto benötigt
-            </option>
+        <select
+            class="form-select"
+            @change="onChange($event)"
+            :disabled="bankAccounts.length <= 1"
+        >
+            <option :hidden="bankAccounts.length != 0">Bankkonto benötigt</option>
             <option
-                    v-for="(bankAccount, i) in bankAccounts"
-                    v-bind:key="bankAccount.id"
-                    :hidden="bankAccounts.length == 0"
-                    :value="bankAccount.id"
-                    :selected="selectedIndex == i">
+                v-for="(bankAccount, i) in bankAccounts"
+                v-bind:key="bankAccount.id"
+                :hidden="bankAccounts.length == 0"
+                :value="bankAccount.id"
+                :selected="selectedIndex == i"
+            >
                 {{ bankAccount.bankDetails }}
             </option>
         </select>
@@ -17,9 +20,9 @@
 </template>
 
 <script lang="ts">
-import banking from '@/scripts/services/banking.service';
-import {BankAccountInterface} from '@/scripts/interfaces/bank/bank-account.interface';
+import banking from "@/scripts/services/banking.service";
 import {Vue} from "vue-class-component";
+import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
 
 export default class SelectBankAccount extends Vue {
     get hasBank() {
@@ -30,13 +33,21 @@ export default class SelectBankAccount extends Vue {
     private selectedIndex = 0;
 
     public mounted(): void {
-        banking.getInstance().onChange.on((bankAccounts: BankAccountInterface[]) => this.update(bankAccounts));
+        banking
+            .getInstance()
+            .onChange.on((bankAccounts: BankAccountInterface[]) =>
+            this.update(bankAccounts)
+        );
 
         this.setup(banking.getInstance().getBankAccounts, false);
     }
 
     public unmounted(): void {
-        banking.getInstance().onChange.off((bankAccounts: BankAccountInterface[]) => this.update(bankAccounts));
+        banking
+            .getInstance()
+            .onChange.off((bankAccounts: BankAccountInterface[]) =>
+            this.update(bankAccounts)
+        );
     }
 
     private update(bankAccounts: BankAccountInterface[]): void {
@@ -57,7 +68,7 @@ export default class SelectBankAccount extends Vue {
             return;
         }
 
-        const bankAccount = this.bankAccounts.find(ba => ba.id === id);
+        const bankAccount = this.bankAccounts.find((ba) => ba.id === id);
         if (bankAccount === undefined) {
             return;
         }

@@ -4,7 +4,7 @@
             <font-awesome-icon class="mx-2" icon="chevron-left"/>
             <span>Gruppe verlassen</span>
         </button>
-    
+
         <p class="card-text">Hier kannst du mit deinem Charakter eigenständig die Gruppe verlassen,
             bedenke jedoch das du dies dennoch ausspielen musst. Einige Gruppierungen kann man IC nicht so einfach
             verlassen.</p>

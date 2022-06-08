@@ -1,4 +1,4 @@
-// Ids are representing the item catalog ids on server-side 
+﻿// Ids are representing the item catalog ids on server-side 
 export enum ClothingItemTypes {
     HAT = 4,
     GLASSES,

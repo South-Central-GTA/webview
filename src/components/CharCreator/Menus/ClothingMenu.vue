@@ -3,45 +3,71 @@
         <h5>{{ title }}</h5>
         <div class="row">
             <div class="col-12">
-                <input type="range" 
-                       class="form-range-dark" 
-                       min="-1" :max="maxDrawables" 
-                       v-model.number="drawableId"
-                       @input="updateClothing()" />
+                <input
+                    type="range"
+                    class="form-range-dark"
+                    min="-1"
+                    :max="maxDrawables"
+                    v-model.number="drawableId"
+                    @input="updateClothing()"
+                />
                 <div style="margin: unset">
-                    <p class="float-end">{{ this.clothing.drawableId  === -1 ? "Nichts" : this.clothing.drawableId }}</p>
+                    <p class="float-end">
+                        {{
+                            this.clothing.drawableId === -1
+                                ? "Nichts"
+                                : this.clothing.drawableId
+                        }}
+                    </p>
                 </div>
             </div>
             <div class="col-12" v-if="this.clothing.drawableId !== -1">
                 Variationen
-                <input type="range" 
-                       :disabled="maxTextures < 1"
-                       class="form-range-dark"
-                       min="0" :max="maxTextures" 
-                       v-model.number="textureId"
-                       @input="updateClothing()" />
+                <input
+                    type="range"
+                    :disabled="maxTextures < 1"
+                    class="form-range-dark"
+                    min="0"
+                    :max="maxTextures"
+                    v-model.number="textureId"
+                    @input="updateClothing()"
+                />
                 <div style="margin: unset">
                     <p class="float-end">{{ textureId }}</p>
                 </div>
             </div>
-            <div class="col-12" v-if="this.clothing.drawableId !== -1 && this.title !== 'Torso'">
-                <input v-model="itemName" type="text" class="form-control-dark"
-                       @input="updateClothing()"
-                       placeholder="Item Name" maxlength="32" 
-                       v-bind:class="{ 'is-invalid': clothValidation !== 'OKAY', 'is-valid': clothValidation === 'OKAY' }">
-    
+            <div
+                class="col-12"
+                v-if="this.clothing.drawableId !== -1 && this.title !== 'Torso'"
+            >
+                <input
+                    v-model="itemName"
+                    type="text"
+                    class="form-control-dark"
+                    @input="updateClothing()"
+                    placeholder="Item Name"
+                    maxlength="32"
+                    v-bind:class="{
+            'is-invalid': clothValidation !== 'OKAY',
+            'is-valid': clothValidation === 'OKAY',
+          }"
+                />
+
                 <div v-if="clothValidation === 'EMPTY'" class="invalid-feedback">
                     Bitte definiere einen Namen für dieses Kleidungsitem.
                 </div>
-                
+
                 <div v-if="clothValidation === 'TO_SHORT'" class="invalid-feedback">
                     Der Name ist zu kurz.
                 </div>
-    
-                <div v-if="clothValidation === 'SPECIAL_CHARACTERS'" class="invalid-feedback">
+
+                <div
+                    v-if="clothValidation === 'SPECIAL_CHARACTERS'"
+                    class="invalid-feedback"
+                >
                     Diese Art von Sonderzeichen ist nicht erlaubt.
                 </div>
-    
+
                 <div v-if="clothValidation === 'INVALID'" class="invalid-feedback">
                     xxx
                 </div>
@@ -51,29 +77,29 @@
 </template>
 
 <script lang="ts">
-import {GenderType} from '@/scripts/enums/gender.type';
 import {Vue} from "vue-class-component";
-import {Prop, Ref} from "vue-property-decorator";
+import {Prop} from "vue-property-decorator";
 import {ClothingInterface} from "@/scripts/interfaces/character/clothing.interface";
+import {GenderType} from "@/scripts/enums/gender.type";
 
 export default class ClothingMenu extends Vue {
     @Prop() private readonly title!: string;
-    
+
     public clothValidation = "OKAY";
-    
+
     private maxDrawables = -1;
     private maxTextures = 0;
-    
+
     private drawableId = -1;
     private textureId = 0;
     private itemName = "";
-    private genderType = GenderType.Male;
+    private genderType = GenderType.MALE;
 
     private clothing: ClothingInterface = {
-        genderType: GenderType.Male,
+        genderType: GenderType.MALE,
         drawableId: -1,
         textureId: 0,
-        title: ""
+        title: "",
     };
 
     public setup(maxDrawables: number, gender: GenderType): void {
@@ -82,29 +108,29 @@ export default class ClothingMenu extends Vue {
         if (this.maxDrawables === 0) {
             this.$el.remove();
         }
-    
+
         this.genderType = gender;
-        
+
         this.updateClothing();
     }
 
     public setMaxTextures(maxTextures: number): void {
         this.maxTextures = maxTextures;
     }
-    
+
     public isValid(): boolean {
         return this.clothValidation === "OKAY";
     }
 
     private updateClothing() {
         const newCloth = this.getCloth();
-        
+
         if (this.clothing.drawableId !== newCloth.drawableId) {
             this.textureId = 0;
         }
-        
+
         this.clothing = newCloth;
-        
+
         if (this.clothing.drawableId !== -1) {
             this.validate();
             this.$emit("update-clothing", this.clothing);
@@ -112,15 +138,15 @@ export default class ClothingMenu extends Vue {
             this.clear();
         }
     }
-    
-    private validate(): void {  
-        if (this.title === 'Torso') {
+
+    private validate(): void {
+        if (this.title === "Torso") {
             return;
         }
-        
+
         if (this.itemName.length === 0) {
             this.clothValidation = "EMPTY";
-        } else if(this.itemName.length <= 5) {
+        } else if (this.itemName.length <= 5) {
             this.clothValidation = "TO_SHORT";
         } else if (!/^[1-9a-zA-ZÀ-ž, ]*$/.test(this.itemName)) {
             this.clothValidation = "SPECIAL_CHARACTERS";
@@ -134,11 +160,11 @@ export default class ClothingMenu extends Vue {
             genderType: this.genderType,
             drawableId: -1,
             textureId: 0,
-            title: ""
+            title: "",
         };
-    
+
         this.clothValidation = "OKAY";
-    
+
         this.$emit("update-clothing", null);
     }
 
@@ -148,7 +174,7 @@ export default class ClothingMenu extends Vue {
             drawableId: this.drawableId,
             textureId: this.textureId,
             title: this.itemName,
-        }
+        };
     }
 }
 </script>

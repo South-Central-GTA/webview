@@ -1,6 +1,10 @@
 <template>
     <div class="mdc-header-bar">
-        <button type="button" class="icon-button float-end p-3" @click="closeButtonClicked()">
+        <button
+            type="button"
+            class="icon-button float-end p-3"
+            @click="closeButtonClicked()"
+        >
             <font-awesome-icon class="center text-white" icon="times"/>
         </button>
     </div>
@@ -9,17 +13,14 @@
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
 import alt from "@/scripts/services/alt.service";
-import {FactionType} from "@/scripts/enums/faction.type";
 
 @Options({
-    components: {
-    }
+    components: {},
 })
 export default class MdcHeaderBar extends Vue {
     public setup(): void {
-        
     }
-    
+
     private closeButtonClicked(): void {
         alt.emit("mdc:close");
     }

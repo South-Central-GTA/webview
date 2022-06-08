@@ -1,4 +1,4 @@
-export interface AppearanceInterface {
+﻿export interface AppearanceInterface {
     value: number;
     opacity: number;
     primaryColor: number;

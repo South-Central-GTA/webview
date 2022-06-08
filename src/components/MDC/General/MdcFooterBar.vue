@@ -1,22 +1,19 @@
 <template>
     <div class="mdc-footer-bar">
-        <p>Angemeldet als {{this.rankName}} {{this.characterName}}.</p>
+        <p>Angemeldet als {{ this.rankName }} {{ this.characterName }}.</p>
     </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import alt from "@/scripts/services/alt.service";
-import {FactionType} from "@/scripts/enums/faction.type";
 
 @Options({
-    components: {
-    }
+    components: {},
 })
 export default class MdcFooterBar extends Vue {
     private rankName: string = "";
     private characterName: string = "";
-    
+
     public setup(characterName: string, rankName: string): void {
         this.characterName = characterName;
         this.rankName = rankName;

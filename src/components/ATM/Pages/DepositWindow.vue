@@ -4,56 +4,67 @@
             <font-awesome-icon class="center" icon="caret-left"/>
         </button>
 
-        <img class="atm-logo" src="../../../assets/images/phone/maze-bank-logo.png">
+        <img class="atm-logo" src="@/assets/images/phone/maze-bank-logo.png"/>
 
         <div class="button-group">
             <div class="input-group w-100 mb-3">
                 <span class="input-group-text">$</span>
-                <input ref="depositInput" class="form-control"
-                       oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                       type="number"
-                       placeholder="Wieviel möchtest du einzahlen?" maxlength="7"
-                       @keydown.enter="deposit"
-                       @input="checkValue"
-                       @keypress="allowOnlyNumbers($event)">
+                <input
+                    ref="depositInput"
+                    class="form-control"
+                    oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    type="number"
+                    placeholder="Wieviel möchtest du einzahlen?"
+                    maxlength="7"
+                    @keydown.enter="deposit"
+                    @input="checkValue"
+                    @keypress="allowOnlyNumbers($event)"
+                />
             </div>
 
-            <button type="button" class="btn atm-menu-button w-100" 
-                    @click="deposit()" :disabled="!isValuePositive">Einzahlen</button>
+            <button
+                type="button"
+                class="btn atm-menu-button w-100"
+                @click="deposit()"
+                :disabled="!isValuePositive"
+            >
+                Einzahlen
+            </button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import {allowOnlyNumbers, isNumeric} from '@/scripts/helpers/helpers';
+import {allowOnlyNumbers, isNumeric} from "@/scripts/helpers/helpers";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
 
 export default class DepositWindow extends Vue {
     @Ref() private readonly depositInput!: HTMLInputElement;
-    
+
     private isValuePositive = false;
-    
+
     public open(): void {
-        this.checkValue()
+        this.checkValue();
     }
-    
+
     private back(): void {
         this.$emit("back");
     }
 
     private deposit(): void {
-        if (!this.isValuePositive)
-            return;
+        if (!this.isValuePositive) return;
 
         this.$emit("deposit", Number.parseInt(this.depositInput.value));
         this.depositInput.value = "";
     }
-    
+
     private checkValue(): void {
-        this.isValuePositive = isNumeric(this.depositInput.value) && Number.parseInt(this.depositInput.value) >= 1;
+        this.isValuePositive =
+            isNumeric(this.depositInput.value) &&
+            Number.parseInt(this.depositInput.value) >= 1;
     }
-    
+
     private allowOnlyNumbers(state: KeyboardEvent): void {
         allowOnlyNumbers(state);
     }

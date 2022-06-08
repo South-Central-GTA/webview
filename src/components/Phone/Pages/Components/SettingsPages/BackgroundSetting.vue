@@ -9,10 +9,17 @@
 
         <div class="thumbnail-block">
             <div v-for="index in maxBackgrounds" :key="index">
-                <button type="button" class="thumbnail" @click="selectBackground(index-1)">
-                    <font-awesome-icon v-if="currentBackgroundId === index-1" icon="hand-pointer"
-                                       class="selected-icon"/>
-                    <img :src="getImage(index-1)" v-bind:alt="index">
+                <button
+                    type="button"
+                    class="thumbnail"
+                    @click="selectBackground(index - 1)"
+                >
+                    <font-awesome-icon
+                        v-if="currentBackgroundId === index - 1"
+                        icon="hand-pointer"
+                        class="selected-icon"
+                    />
+                    <img :src="getImage(index - 1)" v-bind:alt="index"/>
                 </button>
             </div>
         </div>
@@ -20,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
 
 export default class BackgroundSetting extends Vue {
@@ -36,13 +43,11 @@ export default class BackgroundSetting extends Vue {
     }
 
     private getImage(id: number): string {
-        const images = require.context('@/assets/images/phone/backgrounds/', false, /\.jpg$/);
-        return images("./background" + id + ".jpg");
+        return "@/assets/images/phone/backgrounds/background" + id + ".png";
     }
 
     private selectBackground(id: number): void {
-        if (this.currentBackgroundId === id)
-            return;
+        if (this.currentBackgroundId === id) return;
 
         alt.emit("phone:selectbackground", id);
     }

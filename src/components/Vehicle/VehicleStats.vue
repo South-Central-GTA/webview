@@ -4,31 +4,37 @@
         <div>
             <h6>Geschwindigkeit</h6>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark"
-                     v-bind:style="{ width: vehicleStats.speed + '%' }"></div>
+                <div
+                    class="progress-bar progress-bar-striped progress-bar-animated bg-dark"
+                    v-bind:style="{ width: vehicleStats.speed + '%' }"
+                ></div>
             </div>
         </div>
         <div>
             <h6>Beschleunigung</h6>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark"
-                     v-bind:style="{ width: vehicleStats.acceleration + '%' }"></div>
+                <div
+                    class="progress-bar progress-bar-striped progress-bar-animated bg-dark"
+                    v-bind:style="{ width: vehicleStats.acceleration + '%' }"
+                ></div>
             </div>
         </div>
         <div>
             <h6>Bremskraft</h6>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark"
-                     v-bind:style="{ width: vehicleStats.breaks + '%' }"></div>
+                <div
+                    class="progress-bar progress-bar-striped progress-bar-animated bg-dark"
+                    v-bind:style="{ width: vehicleStats.breaks + '%' }"
+                ></div>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {VehicleStatsInterface} from '@/scripts/interfaces/vehicle-stats.interface'
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
+import {VehicleStatsInterface} from "@/scripts/interfaces/vehicles/vehicle-stats.interface";
 
 export default class VehicleStats extends Vue {
     private name = "test";
@@ -39,9 +45,13 @@ export default class VehicleStats extends Vue {
     };
 
     public mounted(): void {
-        alt.on("vehicle:updatestats", (vehicleStats: VehicleStatsInterface, name: string) => this.update(vehicleStats, name));
+        alt.on(
+            "vehicle:updatestats",
+            (vehicleStats: VehicleStatsInterface, name: string) =>
+                this.update(vehicleStats, name)
+        );
     }
-    
+
     public unmounted(): void {
         alt.off("vehicle:updatestats");
     }

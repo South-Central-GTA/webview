@@ -13,10 +13,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="player in players" v-bind:key="player.id" class="entry">
-                                <td>{{ player.id }}</td>
-                                <td>{{ player.characterName }}</td>
-                            </tr>
+                        <tr
+                            v-for="player in players"
+                            v-bind:key="player.id"
+                            class="entry"
+                        >
+                            <td>{{ player.id }}</td>
+                            <td>{{ player.characterName }}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -26,22 +30,25 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
+import alt from "@/scripts/services/alt.service";
 import {Options, Vue} from "vue-class-component";
 import {PlayerInterface} from "@/scripts/interfaces/player.interface";
 
 @Options({
-    components: {
-    }
+    components: {},
 })
 export default class PlayersList extends Vue {
     private active = false;
-    private players: PlayerInterface[] = []
-    
+    private players: PlayerInterface[] = [];
+
     public mounted(): void {
-        alt.on("playerslist:toggle", (visible: boolean, players: PlayerInterface[]) => this.toggle(visible, players));
+        alt.on(
+            "playerslist:toggle",
+            (visible: boolean, players: PlayerInterface[]) =>
+                this.toggle(visible, players)
+        );
     }
-    
+
     public unmounted(): void {
         alt.off("playerslist:toggle");
     }

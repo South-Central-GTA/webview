@@ -1,10 +1,9 @@
-import {PhoneContactInterface} from './phone-contact.interface';
-import {PhoneChatInterface} from './phone-chat.interface';
-import {PhoneNotificationInterface} from './phone-notification';
+import {PhoneContactInterface} from "./phone-contact.interface";
+import {PhoneChatInterface} from "./phone-chat.interface";
+import {PhoneNotificationInterface} from "./phone-notification";
 
 export interface PhoneInterface {
     id: number;
-    itemId: number;
     phoneNumber: string;
     active: boolean;
     backgroundImageId: number;

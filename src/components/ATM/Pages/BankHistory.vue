@@ -6,43 +6,63 @@
                 <span>Umsätze</span>
             </button>
         </div>
-    
+
         <div class="m-4" v-if="mobileVersion">
-            <input type="text"
-                   @input="search()" v-model="entrySearch"
-                   class="form-control w-100"
-                   placeholder="Umsätze durchsuchen..."/>
+            <input
+                type="text"
+                @input="search()"
+                v-model="entrySearch"
+                class="form-control w-100"
+                placeholder="Umsätze durchsuchen..."
+            />
         </div>
         <div class="row" v-else>
             <div class="col-10">
-                <input type="text"
-                       @input="search()" v-model="entrySearch"
-                       class="form-control m-4"
-                       placeholder="Umsätze durchsuchen..."/>
+                <input
+                    type="text"
+                    @input="search()"
+                    v-model="entrySearch"
+                    class="form-control m-4"
+                    placeholder="Umsätze durchsuchen..."
+                />
             </div>
-            
+
             <div class="col-2">
-                <button type="button" class="atm-close-button float-end" @click="back()">
+                <button
+                    type="button"
+                    class="atm-close-button float-end"
+                    @click="back()"
+                >
                     <font-awesome-icon class="center" icon="caret-left"/>
                 </button>
             </div>
         </div>
-        
+
         <div class="history-block pb-5">
-    
-            <button type="button" class="btn btn-secondary p-2" v-if="currentSelectionIndex !== 0" @click="getNewerEntries()">
+            <button
+                type="button"
+                class="btn btn-secondary p-2"
+                v-if="currentSelectionIndex !== 0"
+                @click="getNewerEntries()"
+            >
                 Neuer ...
             </button>
-            <div class="row entry"
-                 v-bind:class="{ 'entry-atm': !mobileVersion }"
-                 v-for="entry in history" v-bind:key="entry.id">
+            <div
+                class="row entry"
+                v-bind:class="{ 'entry-atm': !mobileVersion }"
+                v-for="entry in history"
+                v-bind:key="entry.id"
+            >
                 <div class="col-12">
                     <p class="text-start float-start">
                         {{ entry.purposeOfUse }}
                     </p>
-                    <span class="money float-end" v-bind:class="{ positive: entry.income, negative: !entry.income }">
-                        <span v-if="!entry.income">-</span>{{ entry.amount }}$
-                    </span>
+                    <span
+                        class="money float-end"
+                        v-bind:class="{ positive: entry.income, negative: !entry.income }"
+                    >
+            <span v-if="!entry.income">-</span>{{ entry.amount }}$
+          </span>
                 </div>
                 <div class="col-12" v-if="mobileVersion">
                     <p class="text-start text-muted">
@@ -60,7 +80,14 @@
                     </p>
                 </div>
             </div>
-            <button type="button" class="btn btn-secondary p-2" v-if="this.STEPS * currentSelectionIndex + this.STEPS < allHistory.length" @click="getOlderEntries()">
+            <button
+                type="button"
+                class="btn btn-secondary p-2"
+                v-if="
+          this.STEPS * currentSelectionIndex + this.STEPS < allHistory.length
+        "
+                @click="getOlderEntries()"
+            >
                 Ältere ...
             </button>
         </div>
@@ -74,99 +101,106 @@ import {BankHistoryType} from "@/scripts/enums/bank-history.type";
 
 export default class BankHistory extends Vue {
     private STEPS: number = 100;
-    
+
     private allHistory: BankHistoryEntryInterface[] = [];
     private history: BankHistoryEntryInterface[] = [];
     private cachedHistory: BankHistoryEntryInterface[] = [];
-    
+
     private entrySearch: string = "";
     private mobileVersion: boolean = false;
     private currentSelectionIndex: number = 0;
-    
-    public setup(allHistory: BankHistoryEntryInterface[], mobileVersion: boolean): void {
-        allHistory.sort((a: BankHistoryEntryInterface, b: BankHistoryEntryInterface) => {
-            return this.getTime(b.sendetAtJson) - this.getTime(a.sendetAtJson);
-        });
-        
+
+    public setup(
+        allHistory: BankHistoryEntryInterface[],
+        mobileVersion: boolean
+    ): void {
+        allHistory.sort(
+            (a: BankHistoryEntryInterface, b: BankHistoryEntryInterface) => {
+                return this.getTime(b.sendetAtJson) - this.getTime(a.sendetAtJson);
+            }
+        );
+
         this.allHistory = allHistory;
-        
+
         this.mobileVersion = mobileVersion;
-        
+
         this.getHistorySection(0);
     }
-    
+
     private back(): void {
         this.$emit("back");
     }
-    
+
     private getNewerEntries(): void {
-        this.currentSelectionIndex --;
+        this.currentSelectionIndex--;
         this.getHistorySection(this.currentSelectionIndex);
     }
-    
+
     private getOlderEntries(): void {
-        this.currentSelectionIndex ++;
+        this.currentSelectionIndex++;
         this.getHistorySection(this.currentSelectionIndex);
     }
-    
+
     private getHistorySection(section: number): void {
         this.currentSelectionIndex = section;
-    
+
         let start = this.STEPS * this.currentSelectionIndex;
         let end = start + this.STEPS;
-        
+
         if (end > this.allHistory.length) {
             end = this.allHistory.length;
         }
-        
+
         this.history = this.allHistory.slice(start, end);
         this.cachedHistory = this.history;
-    
+
         this.entrySearch = "";
     }
-    
+
     private getDate(jsonDate: string): string {
         const date = new Date(JSON.parse(jsonDate));
         if (this.mobileVersion) {
             return date.toLocaleDateString("de-DE", {
-                hour: 'numeric',
-                minute: 'numeric',
-                month: 'numeric',
-                year: 'numeric',
-                day: 'numeric'
+                hour: "numeric",
+                minute: "numeric",
+                month: "numeric",
+                year: "numeric",
+                day: "numeric",
             });
         } else {
             return date.toLocaleDateString("de-DE", {
-                weekday: 'long',
-                hour: 'numeric',
-                minute: 'numeric',
-                month: 'long',
-                year: 'numeric',
-                day: 'numeric'
+                weekday: "long",
+                hour: "numeric",
+                minute: "numeric",
+                month: "long",
+                year: "numeric",
+                day: "numeric",
             });
         }
     }
-    
+
     private getType(type: BankHistoryType): string {
         switch (type) {
             case BankHistoryType.WITHDRAW:
-                return "Auszahlung"
+                return "Auszahlung";
             case BankHistoryType.DEPOSIT:
-                return "Einzahlung"
+                return "Einzahlung";
             case BankHistoryType.TRANSFER:
-                return "Überweisung"
+                return "Überweisung";
         }
     }
-    
+
     private search(): void {
         if (this.entrySearch === "") {
             this.history = this.cachedHistory;
             return;
         }
-        
-        this.history = this.cachedHistory.filter(h => h.purposeOfUse.toLowerCase().includes(this.entrySearch.toLowerCase()));
+
+        this.history = this.cachedHistory.filter((h) =>
+            h.purposeOfUse.toLowerCase().includes(this.entrySearch.toLowerCase())
+        );
     }
-    
+
     private getTime(dateJson: string) {
         const date = new Date(JSON.parse(dateJson));
         return date !== null ? date.getTime() : 0;
@@ -175,13 +209,13 @@ export default class BankHistory extends Vue {
 </script>
 
 <style scoped lang="scss">
-.bank-history{
+.bank-history {
     position: absolute;
     top: 0;
     width: 100%;
     height: 100%;
     z-index: 100;
-    
+
     background-image: url("../../../assets/images/patterns/checks.png");
     background-position: center center;
     background-size: 20vw;
@@ -219,5 +253,4 @@ export default class BankHistory extends Vue {
 .negative {
     color: red;
 }
-
 </style>

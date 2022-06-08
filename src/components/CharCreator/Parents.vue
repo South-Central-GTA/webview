@@ -2,22 +2,50 @@
     <div class="parents">
         <h4>Eltern</h4>
         <h5>Mütterlicher Stammbaum</h5>
-        <input type="range" class="form-range-dark" min="0" :max="parentList.length - 1" v-model="blendOneIndex" @input="onFatherChanged()">
+        <input
+            type="range"
+            class="form-range-dark"
+            min="0"
+            :max="parentList.length - 1"
+            v-model="blendOneIndex"
+            @input="onFatherChanged()"
+        />
         <p>{{ parentList[blendOneIndex].name }}</p>
 
         <h5>Väterlicher Stammbaum</h5>
-        <input type="range" class="form-range-dark" min="0" :max="parentList.length - 1" v-model="blendTwoIndex" @input="onMotherChanged()"/>
+        <input
+            type="range"
+            class="form-range-dark"
+            min="0"
+            :max="parentList.length - 1"
+            v-model="blendTwoIndex"
+            @input="onMotherChanged()"
+        />
         <p>{{ parentList[blendTwoIndex].name }}</p>
 
         <h5>Ähnlichkeit</h5>
-        <input type="range" class="form-range-dark" min="0" max="100" v-model="similarity" @input="onsimilarityChanged()"/>
+        <input
+            type="range"
+            class="form-range-dark"
+            min="0"
+            max="100"
+            v-model="similarity"
+            @input="onsimilarityChanged()"
+        />
         <div>
             <p class="float-start">Väterlicher Stammbaum</p>
             <p class="float-end">Mütterlicher Stammbaum</p>
         </div>
 
         <h5>Haut Ähnlichkeit</h5>
-        <input type="range" class="form-range-dark" min="0" max="100" v-model="skinSimilarity" @input="onSkinsimilarityChanged()"/>
+        <input
+            type="range"
+            class="form-range-dark"
+            min="0"
+            max="100"
+            v-model="skinSimilarity"
+            @input="onSkinsimilarityChanged()"
+        />
         <div>
             <p class="float-start">Väterlicher Stammbaum</p>
             <p class="float-end">Mütterlicher Stammbaum</p>
@@ -26,8 +54,8 @@
 </template>
 
 <script lang="ts">
-import {ParentsInterface} from '@/scripts/interfaces/character/parents.interface';
 import {Vue} from "vue-class-component";
+import {ParentsInterface} from "@/scripts/interfaces/character/parents.interface";
 
 export default class Parents extends Vue {
     private parentList = [
@@ -76,7 +104,7 @@ export default class Parents extends Vue {
         {id: 42, name: "John"},
         {id: 43, name: "Niko"},
         {id: 44, name: "Claude"},
-        {id: 45, name: "Misty"}
+        {id: 45, name: "Misty"},
     ];
 
     private blendOneIndex = 0;
@@ -88,14 +116,18 @@ export default class Parents extends Vue {
         father: 0,
         mother: 21,
         similarity: 0,
-        skinSimilarity: 0
+        skinSimilarity: 0,
     };
 
     public setParents(parents: ParentsInterface): void {
         this.parents = parents;
 
-        this.blendOneIndex = this.parentList.findIndex(f => f.id === this.parents.father);
-        this.blendTwoIndex = this.parentList.findIndex(f => f.id === this.parents.mother);
+        this.blendOneIndex = this.parentList.findIndex(
+            (f) => f.id === this.parents.father
+        );
+        this.blendTwoIndex = this.parentList.findIndex(
+            (f) => f.id === this.parents.mother
+        );
         this.similarity = this.parents.similarity * 100;
         this.skinSimilarity = this.parents.skinSimilarity * 100;
     }
@@ -105,7 +137,7 @@ export default class Parents extends Vue {
             father: 0,
             mother: 21,
             similarity: 0,
-            skinSimilarity: 0
+            skinSimilarity: 0,
         };
 
         this.setParents(this.parents);
@@ -140,7 +172,7 @@ export default class Parents extends Vue {
 }
 
 h5 {
-    padding-top: 3vw
+    padding-top: 3vw;
 }
 
 p {

@@ -1,4 +1,3 @@
-
 export interface LogCommandInterface {
     name: string;
     arguments: string;

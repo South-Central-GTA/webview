@@ -1,4 +1,4 @@
-export enum LicensesType {
+export enum LicenseType {
     NONE = 0,
     VEHICLE_WORKSHOP = 1 << 0,
     GOODS_TRANSPORT = 1 << 1,

@@ -1,15 +1,18 @@
 <template>
     <div class="select-house">
-        <select class="form-select" @change="onChange($event)" :disabled="houses.length <= 1">
-            <option :hidden="houses.length != 0">
-                Immobilie benötigt
-            </option>
+        <select
+            class="form-select"
+            @change="onChange($event)"
+            :disabled="houses.length <= 1"
+        >
+            <option :hidden="houses.length != 0">Immobilie benötigt</option>
             <option
-                    v-for="(house, i) in houses"
-                    v-bind:key="house.Id"
-                    :hidden="houses.length == 0"
-                    :value="house.id"
-                    :selected="selectedIndex == i">
+                v-for="(house, i) in houses"
+                v-bind:key="house.Id"
+                :hidden="houses.length == 0"
+                :value="house.id"
+                :selected="selectedIndex == i"
+            >
                 {{ house.streetName + " " + house.subName + " " + house.houseNumber }}
             </option>
         </select>
@@ -17,9 +20,9 @@
 </template>
 
 <script lang="ts">
-import house from '@/scripts/services/house.service';
-import {HouseInterface} from '@/scripts/interfaces/house.interface';
+import house from "@/scripts/services/house.service";
 import {Vue} from "vue-class-component";
+import {HouseInterface} from "@/scripts/interfaces/house.interface";
 
 export default class SelectHouse extends Vue {
     get hasHouse() {
@@ -30,13 +33,24 @@ export default class SelectHouse extends Vue {
     private selectedIndex = 0;
 
     public mounted(): void {
-        house.getInstance().onChange.on((houses: HouseInterface[]) => this.update(houses.filter(h => h.houseType === 0)));
+        house
+            .getInstance()
+            .onChange.on((houses: HouseInterface[]) =>
+            this.update(houses.filter((h) => h.houseType === 0))
+        );
 
-        this.setup(house.getInstance().getHouses.filter(h => h.houseType === 0), false);
+        this.setup(
+            house.getInstance().getHouses.filter((h) => h.houseType === 0),
+            false
+        );
     }
 
     public unmounted(): void {
-        house.getInstance().onChange.off((houses: HouseInterface[]) => this.update(houses.filter(h => h.houseType === 0)));
+        house
+            .getInstance()
+            .onChange.off((houses: HouseInterface[]) =>
+            this.update(houses.filter((h) => h.houseType === 0))
+        );
     }
 
     private update(houses: HouseInterface[]): void {
@@ -57,7 +71,7 @@ export default class SelectHouse extends Vue {
             return;
         }
 
-        const house = this.houses.find(h => h.id === id);
+        const house = this.houses.find((h) => h.id === id);
         if (house === undefined) {
             return;
         }

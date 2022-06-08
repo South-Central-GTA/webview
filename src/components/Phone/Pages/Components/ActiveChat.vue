@@ -8,8 +8,13 @@
 
         <div ref="chatList" class="message-block">
             <div v-for="message in chat.messages" v-bind:key="message.id">
-                <div class="chat-box"
-                     v-bind:class="{'your-text': message.local, 'other-text': !message.local }">
+                <div
+                    class="chat-box"
+                    v-bind:class="{
+            'your-text': message.local,
+            'other-text': !message.local,
+          }"
+                >
                     <p class="chat">{{ message.context }}</p>
                     <p class="date-label float-end">{{ getDate(message) }}</p>
                 </div>
@@ -17,26 +22,28 @@
         </div>
 
         <div class="text-box">
-            <input ref="textInput"
-                   @focus="onFocus(true)"
-                   @blur="onFocus(false)"
-                   type="text"
-                   class="form-control"
-                   placeholder="Nachricht"
-                   maxlength="500"
-                   v-on:keydown.enter="send">
+            <input
+                ref="textInput"
+                @focus="onFocus(true)"
+                @blur="onFocus(false)"
+                type="text"
+                class="form-control"
+                placeholder="Nachricht"
+                maxlength="500"
+                v-on:keydown.enter="send"
+            />
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {PhoneMessageInterface} from '@/scripts/interfaces/phone/phone-message.interface';
-import {PhoneChatInterface} from '@/scripts/interfaces/phone/phone-chat.interface';
-import {UID, onFocus} from '@/scripts/helpers/helpers';
+import alt from "@/scripts/services/alt.service";
+import {UID, onFocus} from "@/scripts/helpers/helpers";
 import character from "@/scripts/services/character.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {PhoneChatInterface} from "@/scripts/interfaces/phone/phone-chat.interface";
+import {PhoneMessageInterface} from "@/scripts/interfaces/phone/phone-message.interface";
 
 export default class ActiveChat extends Vue {
     @Ref() private readonly chatList!: HTMLElement;
@@ -63,11 +70,16 @@ export default class ActiveChat extends Vue {
         this.textInput.value = "";
     }
 
-    public updateChat(updatedChat: PhoneChatInterface, forceScrollToBottom = false): void {
+    public updateChat(
+        updatedChat: PhoneChatInterface,
+        forceScrollToBottom = false
+    ): void {
         this.chat = updatedChat;
-        this.chat.messages = this.chat.messages.sort((a: PhoneMessageInterface, b: PhoneMessageInterface) => {
-            return this.getTime(a.sendetAt) - this.getTime(b.sendetAt);
-        });
+        this.chat.messages = this.chat.messages.sort(
+            (a: PhoneMessageInterface, b: PhoneMessageInterface) => {
+                return this.getTime(a.sendetAt) - this.getTime(b.sendetAt);
+            }
+        );
 
         if (this.getScrolledUpMessagesAmount() <= 600 || forceScrollToBottom) {
             setTimeout(() => {
@@ -95,7 +107,11 @@ export default class ActiveChat extends Vue {
             return;
         }
 
-        if (!/^(?!\s*$)[-a-zA-Z0-9À-žÄÜÖäüö$€_:;?§%!?/[++|#=,.' \]&<²³>{~*^@}°''"'()]{1,100}$/gm.test(this.textInput.value)) {
+        if (
+            !/^(?!\s*$)[-a-zA-Z0-9À-žÄÜÖäüö$€_:;?§%!?/[++|#=,.' \]&<²³>{~*^@}°''"'()]{1,100}$/gm.test(
+                this.textInput.value
+            )
+        ) {
             return;
         }
 
@@ -105,7 +121,7 @@ export default class ActiveChat extends Vue {
             sendetAt: Date.now.toString(),
             ownerId: this.characterId,
             context: this.textInput.value,
-            local: true
+            local: true,
         };
 
         alt.emit("phone:pushmessage", newMessage);
@@ -114,25 +130,28 @@ export default class ActiveChat extends Vue {
     }
 
     private getScrolledUpMessagesAmount(): number {
-        const amount = Math.round(this.chatList?.scrollHeight - this.chatList?.scrollTop);
+        const amount = Math.round(
+            this.chatList?.scrollHeight - this.chatList?.scrollTop
+        );
         return amount > 0 ? amount : 0;
     }
 
     private scrollToBottom(): void {
-        this.chatList.scrollTop = this.chatList.scrollHeight - this.chatList.clientHeight;
+        this.chatList.scrollTop =
+            this.chatList.scrollHeight - this.chatList.clientHeight;
     }
 
     private getDate(message: PhoneMessageInterface): string {
         const date = new Date(JSON.parse(message.sendetAt));
         return date.toLocaleDateString("de-DE", {
-            weekday: 'short',
-            hour: 'numeric',
-            minute: 'numeric',
-            month: 'long',
-            day: 'numeric'
+            weekday: "short",
+            hour: "numeric",
+            minute: "numeric",
+            month: "long",
+            day: "numeric",
         });
     }
-    
+
     private onFocus(state: boolean): void {
         onFocus(state);
     }

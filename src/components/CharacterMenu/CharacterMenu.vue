@@ -1,48 +1,107 @@
 <template>
     <div class="character-menu">
-        <div class="sc-card text-white center" :hidden="!active" v-bind:class="{ enable: active, disable: !active }">
+        <div
+            class="sc-card text-white center"
+            :hidden="!active"
+            v-bind:class="{ enable: active, disable: !active }"
+        >
             <div class="card-body">
                 <h5 class="card-title">Charakter Menu</h5>
                 <div class="row">
                     <div class="col-2">
                         <div class="btn-group-vertical">
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 0, 'btn-primary': activeTabId === 0 }"
-                                    @click="openTab(0)">Start
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 0,
+                  'btn-primary': activeTabId === 0,
+                }"
+                                @click="openTab(0)"
+                            >
+                                Start
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 1, 'btn-primary': activeTabId === 1 }"
-                                    @click="openTab(1)">Definierter Job
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 1,
+                  'btn-primary': activeTabId === 1,
+                }"
+                                @click="openTab(1)"
+                            >
+                                Definierter Job
                             </button>
-                            <button type="button" class="btn" 
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 2, 'btn-primary': activeTabId === 2 }"
-                                    @click="openTab(2)">Gruppen
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 2,
+                  'btn-primary': activeTabId === 2,
+                }"
+                                @click="openTab(2)"
+                            >
+                                Gruppen
                             </button>
-                            <button type="button" class="btn"
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 3, 'btn-primary': activeTabId === 3 }"
-                                    @click="openTab(3)">Animationen
+                            <button
+                                type="button"
+                                class="btn"
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 3,
+                  'btn-primary': activeTabId === 3,
+                }"
+                                @click="openTab(3)"
+                            >
+                                Animationen
                             </button>
-                            <button type="button" class="btn" disabled
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 4, 'btn-primary': activeTabId === 4 }"
-                                    @click="openTab(4)">Charakter Geschichte
+                            <button
+                                type="button"
+                                class="btn"
+                                disabled
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 4,
+                  'btn-primary': activeTabId === 4,
+                }"
+                                @click="openTab(4)"
+                            >
+                                Charakter Geschichte
                             </button>
-                            <button type="button" class="btn" disabled
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 5, 'btn-primary': activeTabId === 5 }"
-                                    @click="openTab(5)">Fahrzeuge
+                            <button
+                                type="button"
+                                class="btn"
+                                disabled
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 5,
+                  'btn-primary': activeTabId === 5,
+                }"
+                                @click="openTab(5)"
+                            >
+                                Fahrzeuge
                             </button>
-                            <button type="button" class="btn" disabled
-                                    v-bind:class="{ 'btn-outline-primary': activeTabId !== 6, 'btn-primary': activeTabId === 6 }"
-                                    @click="openTab(6)">Immobilien
+                            <button
+                                type="button"
+                                class="btn"
+                                disabled
+                                v-bind:class="{
+                  'btn-outline-primary': activeTabId !== 6,
+                  'btn-primary': activeTabId === 6,
+                }"
+                                @click="openTab(6)"
+                            >
+                                Immobilien
                             </button>
                         </div>
                     </div>
                     <div class="col-10">
-                        <character-menu-job :hidden="activeTabId !== 1" />
-                        
-                        <character-menu-groups ref="characterMenuGroups" :hidden="activeTabId !== 2" 
-                        @close="requestCloseMenu"/>
-                        
-                        <character-menu-animations :hidden="activeTabId !== 3" />
+                        <character-menu-job :hidden="activeTabId !== 1"/>
+
+                        <character-menu-groups
+                            ref="characterMenuGroups"
+                            :hidden="activeTabId !== 2"
+                            @close="requestCloseMenu"
+                        />
+
+                        <character-menu-animations :hidden="activeTabId !== 3"/>
                     </div>
                 </div>
             </div>
@@ -51,7 +110,7 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
+import alt from "@/scripts/services/alt.service";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
 import CharacterMenuAnimations from "@/components/CharacterMenu/Pages/CharacterMenuAnimations.vue";
@@ -62,8 +121,8 @@ import CharacterMenuGroups from "@/components/CharacterMenu/CharacterMenuGroups/
     components: {
         CharacterMenuGroups,
         CharacterMenuJob,
-        CharacterMenuAnimations
-    }
+        CharacterMenuAnimations,
+    },
 })
 export default class CharacterMenu extends Vue {
     @Ref() private readonly characterMenuGroups!: CharacterMenuGroups;
@@ -78,7 +137,7 @@ export default class CharacterMenu extends Vue {
     public unmounted(): void {
         alt.off("charactermenu:toggle");
     }
-    
+
     private toggle(state: boolean): void {
         this.active = state;
 
@@ -87,7 +146,7 @@ export default class CharacterMenu extends Vue {
 
     private openTab(tabId: number): void {
         this.activeTabId = tabId;
-        
+
         if (tabId === 1) {
             alt.emitServer("definedjob:requestmenu");
         } else if (tabId === 2) {
@@ -96,7 +155,7 @@ export default class CharacterMenu extends Vue {
             alt.emitServer("animationcatalog:useropen");
         }
     }
-    
+
     private requestCloseMenu(): void {
         alt.emit("charactermenu:requestclose");
     }

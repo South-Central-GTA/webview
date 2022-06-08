@@ -3,20 +3,18 @@
         <notifications-holder ref="notificationsHolder" class="unselectable"/>
 
         <nav class="navbar navbar-expand-lg navbar-dark sc-dark">
-            <a class="navbar-brand px-4">
-                South Central Roleplay
-            </a>
+            <a class="navbar-brand px-4"> South Central Roleplay </a>
             <ul class="navbar-nav">
-                <li class="nav-item" v-bind:class="{ 'active': tabIndex === 0 }">
+                <li class="nav-item" v-bind:class="{ active: tabIndex === 0 }">
                     <a class="nav-link" @click="openMenu(0)">Charaktere</a>
                 </li>
-                <li class="nav-item" v-bind:class="{ 'active': tabIndex === 1 }">
+                <li class="nav-item" v-bind:class="{ active: tabIndex === 1 }">
                     <a class="nav-link disabled" @click="openMenu(1)">Regelwerke</a>
                 </li>
-                <li class="nav-item" v-bind:class="{ 'active': tabIndex === 2 }">
+                <li class="nav-item" v-bind:class="{ active: tabIndex === 2 }">
                     <a class="nav-link disabled" @click="openMenu(2)">Community</a>
                 </li>
-                <li class="nav-item" v-bind:class="{ 'active': tabIndex === 3 }">
+                <li class="nav-item" v-bind:class="{ active: tabIndex === 3 }">
                     <a class="nav-link disabled" @click="openMenu(3)">Premium</a>
                 </li>
             </ul>
@@ -27,18 +25,33 @@
                 <div class="card character-list transparent-card text-white">
                     <h3>Deine Charaktere</h3>
                     <div class="character-block" v-if="characters.length !== 0">
-                        <div v-for="character in characters" v-bind:key="character.id" class="character-card">
+                        <div
+                            v-for="character in characters"
+                            v-bind:key="character.id"
+                            class="character-card"
+                        >
                             <char-card
-                                    @click.right="openCharacterContextMenu($event, character)"
-                                    v-bind:character="character"
-                                    v-on:select-character="selectCharacter($event)"
-                                    v-bind:class="{ selected: character.id === currentCharacterId, unselected: character.id !== currentCharacterId }"/>
+                                @click.right="openCharacterContextMenu($event, character)"
+                                v-bind:character="character"
+                                v-on:select-character="selectCharacter($event)"
+                                v-bind:class="{
+                  selected: character.id === currentCharacterId,
+                  unselected: character.id !== currentCharacterId,
+                }"
+                            />
                         </div>
                     </div>
 
                     <div class="create-character-button">
-                        <button type="button" class="btn btn-secondary" @click="createCharacter()">
-                            <span>Neuen Charakter erstellen <font-awesome-icon icon="sign-in-alt"/></span>
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            @click="createCharacter()"
+                        >
+              <span
+              >Neuen Charakter erstellen
+                <font-awesome-icon icon="sign-in-alt"
+                /></span>
                         </button>
                     </div>
                 </div>
@@ -51,8 +64,12 @@
         </div>
 
         <div class="bottom-center">
-            <button type="button" class="btn btn-primary play-button"
-                    :disabled="currentCharacterId === -1 || characterSpawned" @click="play()">
+            <button
+                type="button"
+                class="btn btn-primary play-button"
+                :disabled="currentCharacterId === -1 || characterSpawned"
+                @click="play()"
+            >
                 <span>Spielen <font-awesome-icon icon="play"/></span>
             </button>
         </div>
@@ -60,21 +77,21 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import CharCard from '@/components/CharCard.vue';
-import AccountCard from '@/components/AccountCard.vue';
-import {CharacterInterface} from '@/scripts/interfaces/character/character.interface';
+import alt from "@/scripts/services/alt.service";
+import CharCard from "@/components/CharCard.vue";
+import AccountCard from "@/components/AccountCard.vue";
 import NotificationsHolder from "@/components/Notification/NotificationsHolder.vue";
-import {NotificationPositionTypes} from "@/scripts/interfaces/notification.interface";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
+import {NotificationPositionTypes} from "@/scripts/enums/notification-position.types";
 
 @Options({
     components: {
         NotificationsHolder,
         CharCard,
         AccountCard,
-    }
+    },
 })
 export default class CharSelector extends Vue {
     @Ref() private readonly notificationsHolder!: NotificationsHolder;
@@ -87,20 +104,30 @@ export default class CharSelector extends Vue {
     public mounted(): void {
         alt.emit("charselector:ready");
 
-        alt.on("charselector:setup", (characters: CharacterInterface[], lastCharacterId: number) => this.setup(characters, lastCharacterId));
+        alt.on(
+            "charselector:setup",
+            (characters: CharacterInterface[], lastCharacterId: number) =>
+                this.setup(characters, lastCharacterId)
+        );
     }
-    
+
     public unmounted(): void {
         alt.off("charselector:setup");
     }
 
-    private setup(characters: CharacterInterface[], lastCharacterId: number): void {
+    private setup(
+        characters: CharacterInterface[],
+        lastCharacterId: number
+    ): void {
         this.characters = characters;
         this.currentCharacterId = lastCharacterId;
         this.notificationsHolder?.setPosition(NotificationPositionTypes.RIGHT);
     }
 
-    private openCharacterContextMenu(mouseEvent: MouseEvent, character: CharacterInterface): void {
+    private openCharacterContextMenu(
+        mouseEvent: MouseEvent,
+        character: CharacterInterface
+    ): void {
         mouseEvent.preventDefault();
         this.$contextmenu({
             x: mouseEvent.pageX,
@@ -109,9 +136,9 @@ export default class CharSelector extends Vue {
                 {
                     label: character.name + " löschen",
                     onClick: () => {
-                        this.deleteCharacter(character)
-                    }
-                }
+                        this.deleteCharacter(character);
+                    },
+                },
             ],
         });
     }
@@ -142,9 +169,10 @@ export default class CharSelector extends Vue {
     }
 
     private play(): void {
-        if (this.currentCharacterId === -1) {
+        if (this.currentCharacterId === -1 || this.characterSpawned) {
             return;
         }
+
         this.characterSpawned = true;
 
         alt.emit("charselector:play", this.currentCharacterId);

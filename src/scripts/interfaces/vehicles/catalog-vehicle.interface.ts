@@ -1,4 +1,4 @@
-import {VehicleInterface} from "@/scripts/interfaces/vehicle.interface";
+import {VehicleInterface} from "./vehicle.interface";
 
 export interface CatalogVehicleInterface extends VehicleInterface {
     classId: string;
@@ -6,6 +6,7 @@ export interface CatalogVehicleInterface extends VehicleInterface {
     fuelType: number;
     price: number;
     southCentralPoints: number;
-    dlcName: string;
     amountOfOrderableVehicles: number;
+    dlcName: string;
+    isOrderable: boolean;
 }

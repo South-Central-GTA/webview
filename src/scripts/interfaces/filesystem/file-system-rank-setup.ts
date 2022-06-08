@@ -1,4 +1,4 @@
-import {GroupRankInterface} from "@/scripts/interfaces/group/group-rank.interface";
+import {GroupRankInterface} from "../group/group-rank.interface";
 
 export interface FileSystemRankSetup {
     canReadLevel: number;

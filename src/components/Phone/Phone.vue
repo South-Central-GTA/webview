@@ -1,76 +1,118 @@
 <template>
-    <div class="phone" v-bind:class="{ 'slide-down': isPhoneDown, 'slide-up': !isPhoneDown, 
-    'vertical-phone': isPhoneVertical, 'horizontal-phone': !isPhoneVertical }" :hidden="!active">
-        <button type="button" v-bind:class="{ 'vertical-home-button': isPhoneVertical, 'horizontal-home-button': !isPhoneVertical }" @click="backToHome"></button>
-        <div v-bind:class="{ 'vertical-background': isPhoneVertical, 'horizontal-background': !isPhoneVertical }" :style="{ backgroundImage: 'url(\'' + getImage(backgroundId) + '\')' }">
+    <div
+        class="phone"
+        v-bind:class="{
+      'slide-down': isPhoneDown,
+      'slide-up': !isPhoneDown,
+      'vertical-phone': isPhoneVertical,
+      'horizontal-phone': !isPhoneVertical,
+    }"
+        :hidden="!active"
+    >
+        <button
+            type="button"
+            v-bind:class="{
+        'vertical-home-button': isPhoneVertical,
+        'horizontal-home-button': !isPhoneVertical,
+      }"
+            @click="backToHome"
+        ></button>
+        <div
+            v-bind:class="{
+        'vertical-background': isPhoneVertical,
+        'horizontal-background': !isPhoneVertical,
+      }"
+            :style="{ backgroundImage: 'url(\'' + getImage(backgroundId) + '\')' }"
+        >
             <status-bar ref="statusBar"/>
 
             <home-page :hidden="pageId !== 0" v-on:open-pageid="openPageId($event)"/>
 
-            <call-page ref="callPage" :hidden="pageId !== 1"
-                       v-on:add-contact="addContractFromCallField($event)"
-                       v-on:call-number="callNumber($event)"/>
+            <call-page
+                ref="callPage"
+                :hidden="pageId !== 1"
+                v-on:add-contact="addContractFromCallField($event)"
+                v-on:call-number="callNumber($event)"
+            />
 
-            <open-chats-page ref="openChatsPage" :hidden="pageId !== 2"
-                             v-on:add-chat="addChat($event)"
-                             v-on:delete-chat="deleteChat($event)"/>
+            <open-chats-page
+                ref="openChatsPage"
+                :hidden="pageId !== 2"
+                v-on:add-chat="addChat($event)"
+                v-on:delete-chat="deleteChat($event)"
+            />
 
-            <contacts-page ref="contactsPage" :hidden="pageId !== 3"
-                           v-on:call-contact="callContact($event)"
-                           v-on:text-contact="textContact($event)"
-                           v-on:add-contact="addContact($event)"
-                           v-on:edit-contact="editContact($event)"
-                           v-on:remove-contact="removeContact($event)"/>
+            <contacts-page
+                ref="contactsPage"
+                :hidden="pageId !== 3"
+                v-on:call-contact="callContact($event)"
+                v-on:text-contact="textContact($event)"
+                v-on:add-contact="addContact($event)"
+                v-on:edit-contact="editContact($event)"
+                v-on:remove-contact="removeContact($event)"
+            />
 
             <settings-page ref="settings" :hidden="pageId !== 4"/>
-            
-            <mail-app ref="mailApp" :hidden="pageId !== 5" 
-                          v-on:close-app="backToHome"/>
-            
-            <internet-app ref="internetApp" :hidden="pageId !== 6" 
-                          v-on:close-app="backToHome"/>
 
-            <bank-page ref="banking" :hidden="pageId !== 8" />
+            <mail-app
+                ref="mailApp"
+                :hidden="pageId !== 5"
+                v-on:close-app="backToHome"
+            />
+
+            <internet-app
+                ref="internetApp"
+                :hidden="pageId !== 6"
+                v-on:close-app="backToHome"
+            />
+
+            <bank-page ref="banking" :hidden="pageId !== 8"/>
 
             <delivery-page ref="delivery" :hidden="pageId !== 10"/>
-            
+
             <company-page ref="company" :hidden="pageId !== 11"/>
-            
+
             <locating-page ref="locating" :hidden="pageId !== 12"/>
 
-            <get-call-page ref="getCallPage" :hidden="pageId !== 1000"
-                           v-on:deny="onHangup(true)"/>
+            <get-call-page
+                ref="getCallPage"
+                :hidden="pageId !== 1000"
+                v-on:deny="onHangup(true)"
+            />
 
-            <active-call ref="activeCall" :hidden="pageId !== 1001"
-                         v-on:close="onAfterCall()"
-                         v-on:hangup="onHangup(true)"
-                         v-on:connect-call="onConnectCall($event)"/>
+            <active-call
+                ref="activeCall"
+                :hidden="pageId !== 1001"
+                v-on:close="onAfterCall()"
+                v-on:hangup="onHangup(true)"
+                v-on:connect-call="onConnectCall($event)"
+            />
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {PhoneInterface} from '@/scripts/interfaces/phone/phone.interface';
-import {PhoneContactInterface} from '@/scripts/interfaces/phone/phone-contact.interface';
-import {PhoneChatInterface} from '@/scripts/interfaces/phone/phone-chat.interface';
-import StatusBar from './Pages/Components/StatusBar.vue';
-import HomePage from './Pages/HomePage.vue';
-import CallPage from './Pages/CallPage.vue';
-import OpenChatsPage from './Pages/OpenChatsPage.vue';
-import ContactsPage from './Pages/ContactsPage.vue';
-import GetCallPage from './Pages/GetCallPage.vue';
-import BankPage from './Pages/BankPage.vue';
-import SettingsPage from './Pages/SettingsPage.vue';
-import ActiveCall from './Pages/Components/ActiveCall.vue';
-import CompanyPage from './Pages/CompanyPage.vue';
-import DeliveryPage from './Pages/DeliveryPage.vue';
+import alt from "@/scripts/services/alt.service";
+import StatusBar from "./Pages/Components/StatusBar.vue";
+import HomePage from "./Pages/HomePage.vue";
+import CallPage from "./Pages/CallPage.vue";
+import OpenChatsPage from "./Pages/OpenChatsPage.vue";
+import ContactsPage from "./Pages/ContactsPage.vue";
+import GetCallPage from "./Pages/GetCallPage.vue";
+import BankPage from "./Pages/BankPage.vue";
+import SettingsPage from "./Pages/SettingsPage.vue";
+import ActiveCall from "./Pages/Components/ActiveCall.vue";
+import CompanyPage from "./Pages/CompanyPage.vue";
+import DeliveryPage from "./Pages/DeliveryPage.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
 import MailApp from "@/components/Phone/Pages/MailApp.vue";
 import InternetApp from "@/components/Phone/Pages/InternetApp.vue";
 import LocatingPage from "@/components/Phone/Pages/LocatingPage.vue";
-import { onFocus } from '@/scripts/helpers/helpers';
+import {onFocus} from "@/scripts/helpers/helpers";
+import {PhoneInterface} from "@/scripts/interfaces/phone/phone.interface";
+import {PhoneChatInterface} from "@/scripts/interfaces/phone/phone-chat.interface";
+import {PhoneContactInterface} from "@/scripts/interfaces/phone/phone-contact.interface";
 
 @Options({
     components: {
@@ -87,8 +129,8 @@ import { onFocus } from '@/scripts/helpers/helpers';
         BankPage,
         SettingsPage,
         CompanyPage,
-        DeliveryPage
-    }
+        DeliveryPage,
+    },
 })
 export default class Phone extends Vue {
     @Ref() private readonly statusBar!: StatusBar;
@@ -122,8 +164,12 @@ export default class Phone extends Vue {
         alt.on("phone:setup", (phone: PhoneInterface) => this.setup(phone));
         alt.on("phone:reset", () => this.reset());
         alt.on("phone:toggle", (state: boolean) => this.toggle(state));
-        alt.on("phone:openactivecall", (displayedName: string) => this.openActiveCall(displayedName));
-        alt.on("phone:getcallfrom", (displayedName: string) => this.getCall(displayedName));
+        alt.on("phone:openactivecall", (displayedName: string) =>
+            this.openActiveCall(displayedName)
+        );
+        alt.on("phone:getcallfrom", (displayedName: string) =>
+            this.getCall(displayedName)
+        );
         alt.on("phone:setphonedown", (state: boolean) => this.setPhoneDown(state));
         alt.on("phone:callgothungup", () => this.onHangup(false));
     }
@@ -146,7 +192,10 @@ export default class Phone extends Vue {
         this.phone = phone;
         this.backgroundId = phone.backgroundImageId;
 
-        this.statusBar?.setNotifications(this.phone.notifications, this.phone.lastTimeOpendNotifications);
+        this.statusBar?.setNotifications(
+            this.phone.notifications,
+            this.phone.lastTimeOpendNotifications
+        );
         this.openChatsPage?.setup(this.phone.ownerId, this.phone.chats);
         this.contactsPage?.setup(this.phone.phoneNumber, this.phone.contacts);
         this.settings?.setup(this.backgroundId);
@@ -173,12 +222,12 @@ export default class Phone extends Vue {
         } else {
             if (this.pageId === 5) {
                 this.mailApp.open();
-            }   
-            
+            }
+
             if (this.pageId === 6) {
                 this.internetApp.open();
-            }   
-            
+            }
+
             if (this.pageId === 8) {
                 this.banking.open();
             }
@@ -246,7 +295,7 @@ export default class Phone extends Vue {
         if (this.pageId === 5) {
             this.mailApp.reset();
         }
-        
+
         if (this.pageId === 6) {
             this.mailApp.reset();
         }
@@ -258,13 +307,13 @@ export default class Phone extends Vue {
         // Player gets an call
         if (this.pageId === 1000) {
             return;
-        }         
+        }
 
         // Player gets an call
         if (this.pageId === 1001) {
             return;
         }
-        
+
         this.isPhoneVertical = true;
         this.openPageId(0);
     }
@@ -295,7 +344,7 @@ export default class Phone extends Vue {
         if (id === 12) {
             this.locating.open();
         }
-        
+
         this.onFocus(!this.isPhoneVertical);
 
         this.pageId = id;
@@ -350,7 +399,7 @@ export default class Phone extends Vue {
     private onAfterCall(): void {
         this.openPageId(this.pageBeforeCall);
     }
-    
+
     private onHangup(didPlayerHangup: boolean): void {
         this.statusBar.inCall = false;
         this.inCall = false;
@@ -385,7 +434,11 @@ export default class Phone extends Vue {
     }
 
     private getImage(id: number): string {
-        const images = require.context('@/assets/images/phone/backgrounds/', false, /\.jpg$/);
+        const images = require.context(
+            "@/assets/images/phone/backgrounds/",
+            false,
+            /\.jpg$/
+        );
         return images("./background" + id + ".jpg");
     }
 
@@ -398,7 +451,7 @@ export default class Phone extends Vue {
 <style scoped lang="scss">
 .phone {
     position: absolute;
-    background: #2C2C2C;
+    background: #2c2c2c;
     border-radius: 0.2vw;
     border: 3px solid rgb(36, 36, 36);
     pointer-events: all;
@@ -437,12 +490,11 @@ export default class Phone extends Vue {
     left: 50%;
     transform: translateX(-50%);
 
-    background: #C4C4C4;
+    background: #c4c4c4;
     border-radius: 50vw;
     border: none;
     outline: none;
 }
-
 
 .horizontal-home-button {
     position: absolute;
@@ -454,7 +506,7 @@ export default class Phone extends Vue {
     right: 0.5%;
     transform: translateY(-50%);
 
-    background: #C4C4C4;
+    background: #c4c4c4;
     border-radius: 50vw;
     border: none;
     outline: none;
@@ -472,7 +524,7 @@ export default class Phone extends Vue {
     background-repeat: no-repeat;
     background-size: auto;
     background-position: center center;
-    background-color: #C4C4C4;
+    background-color: #c4c4c4;
 }
 
 .vertical-background {
@@ -482,12 +534,12 @@ export default class Phone extends Vue {
     top: 0.8vw;
     bottom: 2vw;
     z-index: 1;
-    
+
     overflow: hidden;
     background-repeat: no-repeat;
     background-size: auto;
     background-position: center center;
-    background-color: #C4C4C4;
+    background-color: #c4c4c4;
 }
 
 @keyframes slide-up {

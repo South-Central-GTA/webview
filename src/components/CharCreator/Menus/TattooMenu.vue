@@ -3,7 +3,11 @@
         <h5>{{ title }}</h5>
         <div class="menu">
             <div class="left">
-                <button type="button" class="btn btn-primary" @click="onPreviousButtonClicked()">
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="onPreviousButtonClicked()"
+                >
                     <font-awesome-icon icon="caret-left"/>
                 </button>
             </div>
@@ -12,12 +16,21 @@
             <p v-if="tattoo.hash === 0">Kein Tattoo</p>
 
             <div>
-                <button type="button" class="icon-button" @click="clear" :hidden="tattoo.hash === 0">
+                <button
+                    type="button"
+                    class="icon-button"
+                    @click="clear"
+                    :hidden="tattoo.hash === 0"
+                >
                     <font-awesome-icon icon="trash"/>
                 </button>
             </div>
             <div class="right">
-                <button type="button" class="btn btn-primary" @click="onNextButtonClicked()">
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="onNextButtonClicked()"
+                >
                     <font-awesome-icon icon="caret-right"/>
                 </button>
             </div>
@@ -26,35 +39,41 @@
 </template>
 
 <script lang="ts">
-import {TattooInterface} from "@/scripts/interfaces/character/tattoo.interface";
-import {PedOverlay} from "@/scripts/interfaces/ped/ped-overlay.interface";
-import {PedOverlayCollections} from "@/scripts/interfaces/ped/ped-overlay-collections.interface";
 import {Vue} from "vue-class-component";
-import {Prop, Ref} from "vue-property-decorator";
+import {Prop} from "vue-property-decorator";
+import {TattooInterface} from "@/scripts/interfaces/character/tattoo.interface";
+import {PedOverlayInterface} from "@/scripts/interfaces/ped/ped-overlay.interface";
+import {PedOverlayCollectionInterface} from "@/scripts/interfaces/ped/ped-overlay-collection.interface";
 
 export default class TattooMenu extends Vue {
     @Prop() private readonly title!: string;
 
-    private overlays: PedOverlay[] = [];
+    private overlays: PedOverlayInterface[] = [];
     private names!: string[];
     private name = "";
     private index = -1;
-    private overlayCollections: PedOverlayCollections[] = [];
+    private overlayCollections: PedOverlayCollectionInterface[] = [];
 
     private tattoo: TattooInterface = {
         collection: "",
-        hash: ""
+        hash: "",
     };
 
-    public setMax(overlays: PedOverlay[], allCollections: PedOverlayCollections[], tattoo?: TattooInterface): void {
+    public setMax(
+        overlays: PedOverlayInterface[],
+        allCollections: PedOverlayCollectionInterface[],
+        tattoo?: TattooInterface
+    ): void {
         this.overlays = overlays;
         this.overlayCollections = allCollections;
-        this.names = this.overlays.flatMap(poc => poc.Title);
+        this.names = this.overlays.flatMap((poc) => poc.Title);
 
         if (tattoo !== undefined && tattoo?.hash !== "") {
             this.tattoo = tattoo;
-            const overlay = this.overlays.find(o => o.OverlayHash === Number.parseInt(tattoo.hash));
-    
+            const overlay = this.overlays.find(
+                (o) => o.OverlayHash === Number.parseInt(tattoo.hash)
+            );
+
             if (overlay != undefined) {
                 this.index = this.overlays.indexOf(overlay);
                 this.updateTattoo(false);
@@ -85,7 +104,7 @@ export default class TattooMenu extends Vue {
     private clear(): void {
         this.tattoo = {
             collection: "",
-            hash: ""
+            hash: "",
         };
 
         this.index = -1;
@@ -98,8 +117,13 @@ export default class TattooMenu extends Vue {
         this.name = this.overlays[this.index].Title;
         this.tattoo.hash = this.overlays[this.index].OverlayHash.toString();
 
-        const collection = this.overlayCollections.find(oc => oc.Overlays.find(o => this.name == o.Title
-            && Number.parseInt(this.tattoo.hash) === o.OverlayHash));
+        const collection = this.overlayCollections.find((oc) =>
+            oc.Overlays.find(
+                (o) =>
+                    this.name == o.Title &&
+                    Number.parseInt(this.tattoo.hash) === o.OverlayHash
+            )
+        );
 
         if (collection === undefined) {
             return;

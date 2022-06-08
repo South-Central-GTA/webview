@@ -4,64 +4,47 @@
             <div class="d-flex">
                 <div class="p-2 flex-grow-1">
                     <h3>{{ name }}</h3>
-                    <h6>South Central Points: <span class="badge bg-dark" style="color: white;">{{
-                            characterPoints
-                        }}</span></h6>
-
-                    <div class="justify-content-end">
-                        <a class="settings-button text-white text-decoration-none" @click="toggleSettingsMenu()">
-                            Einstellungen
-                            <font-awesome-icon v-if="!isSettingsVisible" icon="chevron-down"/>
-                            <font-awesome-icon v-else icon="chevron-up"/>
-                        </a>
-                    </div>
+                    <h6>
+                        South Central Points:
+                        <span class="badge bg-dark" style="color: white">{{
+                                characterPoints
+                            }}</span>
+                    </h6>
                 </div>
 
                 <div>
-                    <img :src="avatarUrl" class="avatar">
+                    <img :src="avatarUrl" class="avatar"/>
                 </div>
             </div>
         </div>
-
-        <div class="transparent-card text-white mt-2" v-if="isSettingsVisible">
-            <div class="btn-group-vertical m-1">
-                <button type="button" @click="isPasswordChangeDialogVisible = true;" class="btn mt-1 btn-secondary">
-                    Passwort ändern
-                </button>
-            </div>
-        </div>
-
-        <dialog-change-password v-on:close="closePasswordDialog($event)" :hidden="!isPasswordChangeDialogVisible"/>
     </div>
 </template>
 
 <script lang="ts">
-import account from '@/scripts/services/account.service';
-import {AccountInterface} from '@/scripts/interfaces/account.interface';
+import account from "@/scripts/services/account.service";
 import {Options, Vue} from "vue-class-component";
-import DialogChangePassword from "@/components/DialogChangePassword.vue";
+import {AccountInterface} from "@/scripts/interfaces/account.interface";
 
 @Options({
-    components: {
-        DialogChangePassword
-    }
+    components: {},
 })
 export default class AccountCard extends Vue {
     private name = "Username";
     private avatarUrl = "Username";
     private characterPoints = 0;
 
-    private isSettingsVisible = false;
-    private isPasswordChangeDialogVisible = false;
-
     public mounted(): void {
         this.update(account.getInstance().Account);
 
-        account.getInstance().AccountChanged.on((account: AccountInterface) => this.update(account));
+        account
+            .getInstance()
+            .AccountChanged.on((account: AccountInterface) => this.update(account));
     }
 
     public unmounted(): void {
-        account.getInstance().AccountChanged.off((account: AccountInterface) => this.update(account));
+        account
+            .getInstance()
+            .AccountChanged.off((account: AccountInterface) => this.update(account));
     }
 
     private update(account: AccountInterface | undefined): void {
@@ -72,14 +55,6 @@ export default class AccountCard extends Vue {
         this.name = account.currentName;
         this.avatarUrl = account.avatarUrl;
         this.characterPoints = account.southCentralPoints;
-    }
-
-    private toggleSettingsMenu(): void {
-        this.isSettingsVisible = !this.isSettingsVisible;
-    }
-
-    private closePasswordDialog(): void {
-        this.isPasswordChangeDialogVisible = false;
     }
 }
 </script>

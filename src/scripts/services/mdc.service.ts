@@ -1,5 +1,4 @@
 import LiteEvent from "@/scripts/systems/lite-event";
-import {MailAccountInterface} from "@/scripts/interfaces/mail/mail-account.interface";
 
 export default class MdcService {
     private static instance: MdcService;
@@ -19,12 +18,14 @@ export default class MdcService {
     get onIsOperatorChanged() {
         return this.onIsOperator.expose();
     }
-    
+
     private isOperator: boolean = false;
     private readonly onIsOperator = new LiteEvent<boolean>();
 
     public listenToEvents(): void {
-        alt.on("mdc:updateoperatorpermission", (args: any[]) => this.onUpdateOperatorPermission(args[0]));
+        alt.on("mdc:updateoperatorpermission", (args: any[]) =>
+            this.onUpdateOperatorPermission(args[0])
+        );
     }
 
     private onUpdateOperatorPermission(isOperator: boolean): void {

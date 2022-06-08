@@ -1,8 +1,13 @@
 <template>
     <div class="team-menu-player-vehicle-catalog">
         <h2>Spielerfahrzeug</h2>
-        <input @input="search()" v-model="searchInput" type="text" class="form-control-dark mb-2"
-               placeholder="Suche nach Fahrzeug Models (Bsp. Sultan)"/>
+        <input
+            @input="search()"
+            v-model="searchInput"
+            type="text"
+            class="form-control-dark mb-2"
+            placeholder="Suche nach Fahrzeug Models (Bsp. Sultan)"
+        />
         <div class="table-holder">
             <table class="table table-striped table-hover">
                 <thead>
@@ -15,13 +20,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="vehicle in vehicles" v-bind:key="vehicle.id" class="entry">
-                        <td>{{ vehicle.id }}</td>
-                        <td>{{ vehicle.model }}</td>
-                        <td>{{ vehicle.displayName }}</td>
-                        <td>{{ vehicle.characterId === -1 ? "Kein Besitzer" : vehicle.characterId }}</td>
-                        <td>{{ vehicle.characterId === -1 ? "" : vehicle.characterName }}</td>
-                    </tr>
+                <tr v-for="vehicle in vehicles" v-bind:key="vehicle.id" class="entry">
+                    <td>{{ vehicle.id }}</td>
+                    <td>{{ vehicle.model }}</td>
+                    <td>{{ vehicle.displayName }}</td>
+                    <td>
+                        {{
+                            vehicle.characterId === -1
+                                ? "Kein Besitzer"
+                                : vehicle.characterId
+                        }}
+                    </td>
+                    <td>
+                        {{ vehicle.characterId === -1 ? "" : vehicle.characterName }}
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -29,13 +42,13 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
-import {VehicleInterface} from "@/scripts/interfaces/vehicle.interface";
+import {VehicleInterface} from "@/scripts/interfaces/vehicles/vehicle.interface";
 
 export default class TeamMenuPlayerVehicleCatalog extends Vue {
-    private vehicles: VehicleInterface[] = []
-    private cachedVehicles: VehicleInterface[] = []
+    private vehicles: VehicleInterface[] = [];
+    private cachedVehicles: VehicleInterface[] = [];
     private searchInput = "";
 
     public mounted(): void {
@@ -57,7 +70,9 @@ export default class TeamMenuPlayerVehicleCatalog extends Vue {
             return;
         }
 
-        this.vehicles = this.cachedVehicles.filter(v => v.model.toLowerCase().includes(this.searchInput.toLowerCase()));
+        this.vehicles = this.cachedVehicles.filter((v) =>
+            v.model.toLowerCase().includes(this.searchInput.toLowerCase())
+        );
     }
 }
 </script>

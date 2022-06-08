@@ -2,7 +2,11 @@
     <div class="status-bar">
         <div class="unextended-menu" @click="toggleExpand()">
             <div class="right">
-                <font-awesome-icon icon="envelope" class="blink" v-if="missingNotifications"/>
+                <font-awesome-icon
+                    icon="envelope"
+                    class="blink"
+                    v-if="missingNotifications"
+                />
                 <font-awesome-icon class="connection" icon="signal"/>
                 <font-awesome-icon class="phonecall" icon="phone" v-if="inCall"/>
             </div>
@@ -11,24 +15,35 @@
             <div class="notification-list">
                 <h1>Benachrichtigungen</h1>
                 <div v-for="notification in notifications" v-bind:key="notification.id">
-                    <div class="notification"
-                         v-bind:class="{ 'maze-bank': notification.type === 1, 'gov': notification.type === 2, 'delivery': notification.type === 3 }">
-                        <button class="notification-close icon-button" @click="deleteNotification(notification.id)">
+                    <div
+                        class="notification"
+                        v-bind:class="{
+              'maze-bank': notification.type === 1,
+              gov: notification.type === 2,
+              delivery: notification.type === 3,
+            }"
+                    >
+                        <button
+                            class="notification-close icon-button"
+                            @click="deleteNotification(notification.id)"
+                        >
                             <font-awesome-icon icon="times-circle"/>
                         </button>
                         <p>{{ notification.context }}</p>
                     </div>
                 </div>
-                <h2 v-if="notifications.length == 0">Du hast keine Benachrichtigungen!</h2>
+                <h2 v-if="notifications.length == 0">
+                    Du hast keine Benachrichtigungen!
+                </h2>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {PhoneNotificationInterface} from '@/scripts/interfaces/phone/phone-notification'
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
+import {PhoneNotificationInterface} from "@/scripts/interfaces/phone/phone-notification";
 
 export default class StatusBar extends Vue {
     public inCall = false;
@@ -38,19 +53,28 @@ export default class StatusBar extends Vue {
     private notifications: PhoneNotificationInterface[] = [];
 
     public mounted(): void {
-        alt.on("phone:pushnotification", (notification: PhoneNotificationInterface) => this.pushNotification(notification));
+        alt.on(
+            "phone:pushnotification",
+            (notification: PhoneNotificationInterface) =>
+                this.pushNotification(notification)
+        );
     }
-    
+
     public unmounted(): void {
         alt.off("phone:pushnotification");
     }
 
-    public setNotifications(notifications: PhoneNotificationInterface[], lastTimeOpendNotifications: string): void {
+    public setNotifications(
+        notifications: PhoneNotificationInterface[],
+        lastTimeOpendNotifications: string
+    ): void {
         this.notifications = notifications;
 
         if (this.notifications.length > 0) {
             const lastUsage = new Date(JSON.parse(lastTimeOpendNotifications));
-            const lastMessageDate = new Date(JSON.parse(this.notifications[this.notifications.length - 1].createdAt));
+            const lastMessageDate = new Date(
+                JSON.parse(this.notifications[this.notifications.length - 1].createdAt)
+            );
             this.missingNotifications = lastUsage < lastMessageDate;
         }
     }
@@ -176,14 +200,14 @@ svg {
 }
 
 .maze-bank::before {
-    content: '_____';
+    content: "_____";
     color: transparent;
 
     position: absolute;
     right: 0%;
     bottom: 6%;
 
-    background-image: url('../../../../assets/images/phone/maze-bank-notification-logo.png');
+    background-image: url("../../../../assets/images/phone/maze-bank-notification-logo.png");
     background-size: 1.15vw;
     height: 1.25vw;
     background-repeat: no-repeat;
@@ -195,14 +219,14 @@ svg {
 }
 
 .gov::before {
-    content: '_____';
+    content: "_____";
     color: transparent;
 
     position: absolute;
     right: 0%;
     bottom: 6%;
 
-    background-image: url('../../../../assets/images/phone/gov-seal.png');
+    background-image: url("../../../../assets/images/phone/gov-seal.png");
     background-size: 1.15vw;
     height: 1.15vw;
     background-repeat: no-repeat;

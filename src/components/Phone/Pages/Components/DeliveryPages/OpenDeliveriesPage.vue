@@ -8,11 +8,16 @@
         </div>
 
         <div class="delivery-block" v-if="loadedData && deliveries.length !== 0">
-            <button type="button" v-for="delivery in deliveries" v-bind:key="delivery.id" class="btn delivery-card"
-                    @click="selectDelivery(delivery.id)">
+            <button
+                type="button"
+                v-for="delivery in deliveries"
+                v-bind:key="delivery.id"
+                class="btn delivery-card"
+                @click="selectDelivery(delivery.id)"
+            >
                 <h1>{{ getHeaderString(delivery.deliveryType) }} #{{ delivery.id }}</h1>
 
-                <hr>
+                <hr/>
                 <h2>Unternehmen: {{ delivery.orderGroupName }}</h2>
 
                 <div v-if="delivery.deliveryType === 1">
@@ -23,7 +28,7 @@
                     <h2>Fahrzeug: {{ delivery.displayName }}</h2>
                 </div>
 
-                <hr>
+                <hr/>
                 <h3>{{ getCorrectDate(delivery.createdAt) }}</h3>
             </button>
         </div>
@@ -34,9 +39,9 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {DeliveryInterface} from "@/scripts/interfaces/delivery/delivery.interface";
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
+import {DeliveryInterface} from "@/scripts/interfaces/delivery/delivery.interface";
 
 export default class OpenDeliveriesPage extends Vue {
     private deliveries: DeliveryInterface[] = [];
@@ -44,18 +49,20 @@ export default class OpenDeliveriesPage extends Vue {
     private companyId = 0;
 
     public mounted(): void {
-        alt.on("delivery:sendopendeliveries", (args: any[]) => this.updateDeliveries(args[0]));
+        alt.on("delivery:sendopendeliveries", (args: any[]) =>
+            this.updateDeliveries(args[0])
+        );
     }
-  
+
     public unmounted(): void {
         alt.off("delivery:sendopendeliveries");
     }
-  
+
     public open(): void {
         alt.emitServer("delivery:getopendeliveries");
     }
 
-    private updateDeliveries(deliveries: DeliveryInterface[]): void {
+    protected updateDeliveries(deliveries: DeliveryInterface[]): void {
         this.deliveries = deliveries;
         this.loadedData = true;
     }
@@ -82,11 +89,11 @@ export default class OpenDeliveriesPage extends Vue {
     private getCorrectDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            weekday: 'long',
-            hour: 'numeric',
-            minute: 'numeric',
-            month: 'long',
-            day: 'numeric'
+            weekday: "long",
+            hour: "numeric",
+            minute: "numeric",
+            month: "long",
+            day: "numeric",
         });
     }
 
@@ -106,9 +113,10 @@ export default class OpenDeliveriesPage extends Vue {
     text-align: center;
 
     background: linear-gradient(
-                    rgba(100, 237, 255, 0.7),
-                    rgba(100, 237, 255, 0.7)
-    ), url("../../../../../assets/images/patterns/shipping.png");
+            rgba(100, 237, 255, 0.7),
+            rgba(100, 237, 255, 0.7)
+    ),
+    url("../../../../../assets/images/patterns/shipping.png");
 
     background-position: center center;
     background-size: 15vw;

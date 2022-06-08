@@ -4,131 +4,261 @@
         <div class="row">
             <div class="col-6">
                 <div :hidden="gender !== 0">
-                    <appearance-menu ref="maleHairMenu" title="Haare" :colors="hairColors"
-                                     :names="maleHairlist.map(mh => mh.name)"
-                                     :maxElements="maleHairlist.length" :clearNumber="0" :hasOpacity="false"
-                                     :hasSecondaryColor="true"
-                                     :menuIndex="1" :currentMenuIndex="menuIndex"
-                                     v-on:request-menu="onMenuButtonClicked($event)"
-                                     v-on:update-appearance="updateHair($event)"/>
+                    <appearance-menu
+                        ref="maleHairMenu"
+                        title="Haare"
+                        :colors="hairColors"
+                        :names="maleHairlist.map((mh) => mh.name)"
+                        :maxElements="maleHairlist.length"
+                        :clearNumber="0"
+                        :hasOpacity="false"
+                        :hasSecondaryColor="true"
+                        :menuIndex="1"
+                        :currentMenuIndex="menuIndex"
+                        v-on:request-menu="onMenuButtonClicked($event)"
+                        v-on:update-appearance="updateHair($event)"
+                    />
                 </div>
                 <div :hidden="gender !== 1">
-                    <appearance-menu ref="femaleHairMenu" title="Haare" :colors="hairColors"
-                                     :names="femaleHairlist.map(fh => fh.name)"
-                                     :maxElements="femaleHairlist.length" :clearNumber="0" :hasOpacity="false"
-                                     :hasSecondaryColor="true"
-                                     :menuIndex="1" :currentMenuIndex="menuIndex"
-                                     v-on:request-menu="onMenuButtonClicked($event)"
-                                     v-on:update-appearance="updateHair($event)"/>
+                    <appearance-menu
+                        ref="femaleHairMenu"
+                        title="Haare"
+                        :colors="hairColors"
+                        :names="femaleHairlist.map((fh) => fh.name)"
+                        :maxElements="femaleHairlist.length"
+                        :clearNumber="0"
+                        :hasOpacity="false"
+                        :hasSecondaryColor="true"
+                        :menuIndex="1"
+                        :currentMenuIndex="menuIndex"
+                        v-on:request-menu="onMenuButtonClicked($event)"
+                        v-on:update-appearance="updateHair($event)"
+                    />
                 </div>
             </div>
             <div class="col-6">
-                <appearance-menu ref="eyeBrowsMenu" title="Augenbrauen" :colors="hairColors" :names="eyebrowNames"
-                                 :maxElements="33" :clearNumber="255" :hasOpacity="true" :hasSecondaryColor="false"
-                                 :menuIndex="2" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateEyebrow($event)"/>
+                <appearance-menu
+                    ref="eyeBrowsMenu"
+                    title="Augenbrauen"
+                    :colors="hairColors"
+                    :names="eyebrowNames"
+                    :maxElements="33"
+                    :clearNumber="255"
+                    :hasOpacity="true"
+                    :hasSecondaryColor="false"
+                    :menuIndex="2"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateEyebrow($event)"
+                />
             </div>
             <div class="col-6">
-                <appearance-menu ref="facialHairMenu" title="Gesichtsbehaarung" :colors="hairColors"
-                                 :names="facialHairNames"
-                                 :maxElements="28" :clearNumber="255" :hasOpacity="true" :hasSecondaryColor="false"
-                                 :menuIndex="3" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateFacialhair($event)"/>
+                <appearance-menu
+                    ref="facialHairMenu"
+                    title="Gesichtsbehaarung"
+                    :colors="hairColors"
+                    :names="facialHairNames"
+                    :maxElements="28"
+                    :clearNumber="255"
+                    :hasOpacity="true"
+                    :hasSecondaryColor="false"
+                    :menuIndex="3"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateFacialhair($event)"
+                />
             </div>
             <div class="col-6">
-                <appearance-menu ref="chestHairMenu" title="Brustbehaarung" :colors="hairColors" :names="null"
-                                 :maxElements="16" :clearNumber="255" :hasOpacity="true" :hasSecondaryColor="false"
-                                 :menuIndex="4" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateChesthair($event)"/>
+                <appearance-menu
+                    ref="chestHairMenu"
+                    title="Brustbehaarung"
+                    :colors="hairColors"
+                    :names="null"
+                    :maxElements="16"
+                    :clearNumber="255"
+                    :hasOpacity="true"
+                    :hasSecondaryColor="false"
+                    :menuIndex="4"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateChesthair($event)"
+                />
             </div>
             <div class="col-6">
-                <appearance-menu ref="ageingMenu" title="Hautalterung" :colors="null" :names="null"
-                                 :maxElements="14" :clearNumber="255" :hasOpacity="true" :hasSecondaryColor="false"
-                                 :menuIndex="5" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateAging($event)"/>
+                <appearance-menu
+                    ref="ageingMenu"
+                    title="Hautalterung"
+                    :colors="null"
+                    :names="null"
+                    :maxElements="14"
+                    :clearNumber="255"
+                    :hasOpacity="true"
+                    :hasSecondaryColor="false"
+                    :menuIndex="5"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateAging($event)"
+                />
             </div>
             <div class="col-6">
-                <appearance-menu ref="complexionMenu" title="Teint" :colors="null" :names="complexionNames"
-                                 :maxElements="11" :clearNumber="255" :hasOpacity="true" :hasSecondaryColor="false"
-                                 :menuIndex="6" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateComplexion($event)"/>
+                <appearance-menu
+                    ref="complexionMenu"
+                    title="Teint"
+                    :colors="null"
+                    :names="complexionNames"
+                    :maxElements="11"
+                    :clearNumber="255"
+                    :hasOpacity="true"
+                    :hasSecondaryColor="false"
+                    :menuIndex="6"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateComplexion($event)"
+                />
             </div>
             <div class="col-6">
-                <appearance-menu ref="frecklesMenu" title="Hautmale" :colors="null" :names="frecklesNames"
-                                 :maxElements="17" :clearNumber="255" :hasOpacity="true" :hasSecondaryColor="false"
-                                 :menuIndex="7" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateFreckles($event)"/>
+                <appearance-menu
+                    ref="frecklesMenu"
+                    title="Hautmale"
+                    :colors="null"
+                    :names="frecklesNames"
+                    :maxElements="17"
+                    :clearNumber="255"
+                    :hasOpacity="true"
+                    :hasSecondaryColor="false"
+                    :menuIndex="7"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateFreckles($event)"
+                />
             </div>
             <div class="col-6">
-                <appearance-menu ref="sundamageMenu" title="Hautschaden" :colors="null" :names="sundamageNames"
-                                 :maxElements="10" :clearNumber="255" :hasOpacity="true" :hasSecondaryColor="false"
-                                 :menuIndex="8" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateSkinDamage($event)"/>
+                <appearance-menu
+                    ref="sundamageMenu"
+                    title="Hautschaden"
+                    :colors="null"
+                    :names="sundamageNames"
+                    :maxElements="10"
+                    :clearNumber="255"
+                    :hasOpacity="true"
+                    :hasSecondaryColor="false"
+                    :menuIndex="8"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateSkinDamage($event)"
+                />
             </div>
             <div class="col-6">
-                <appearance-menu ref="blemishesMenu" title="Gesichtsunreinheiten" :colors="null" :names="blemishesNames"
-                                 :maxElements="23" :clearNumber="255" :hasOpacity="true" :hasSecondaryColor="false"
-                                 :menuIndex="9" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateBlemishes($event)"/>
+                <appearance-menu
+                    ref="blemishesMenu"
+                    title="Gesichtsunreinheiten"
+                    :colors="null"
+                    :names="blemishesNames"
+                    :maxElements="23"
+                    :clearNumber="255"
+                    :hasOpacity="true"
+                    :hasSecondaryColor="false"
+                    :menuIndex="9"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateBlemishes($event)"
+                />
             </div>
             <div class="col-6">
-                <appearance-menu ref="bodyBlemishesMenu" title="Körperunreinheiten" :colors="null" :names="null"
-                                 :maxElements="11" :clearNumber="255" :hasOpacity="true" :hasSecondaryColor="false"
-                                 :menuIndex="10" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateBodyBlemishes($event)"/>
+                <appearance-menu
+                    ref="bodyBlemishesMenu"
+                    title="Körperunreinheiten"
+                    :colors="null"
+                    :names="null"
+                    :maxElements="11"
+                    :clearNumber="255"
+                    :hasOpacity="true"
+                    :hasSecondaryColor="false"
+                    :menuIndex="10"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateBodyBlemishes($event)"
+                />
             </div>
             <div class="col-6">
-                <appearance-menu ref="eyeColorMenu" title="Augenfarbe" :colors="null" :names="null"
-                                 :maxElements="7" :clearNumber="0" :hasOpacity="false" :hasSecondaryColor="false"
-                                 :menuIndex="11" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateEyeColor($event)"/>
+                <appearance-menu
+                    ref="eyeColorMenu"
+                    title="Augenfarbe"
+                    :colors="null"
+                    :names="null"
+                    :maxElements="7"
+                    :clearNumber="0"
+                    :hasOpacity="false"
+                    :hasSecondaryColor="false"
+                    :menuIndex="11"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateEyeColor($event)"
+                />
             </div>
             <div class="col-6">
-                <appearance-menu ref="blushMenu" title="Rouge" :colors="lipsColors" :names="blushNames"
-                                 :maxElements="6" :clearNumber="255" :hasOpacity="true" :hasSecondaryColor="false"
-                                 :menuIndex="12" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateBlush($event)"/>
+                <appearance-menu
+                    ref="blushMenu"
+                    title="Rouge"
+                    :colors="lipsColors"
+                    :names="blushNames"
+                    :maxElements="6"
+                    :clearNumber="255"
+                    :hasOpacity="true"
+                    :hasSecondaryColor="false"
+                    :menuIndex="12"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateBlush($event)"
+                />
             </div>
             <div class="col-6">
-                <appearance-menu ref="makeUpMenu" title="Make-up" :colors="null" :names="makeUpNames"
-                                 :maxElements="74" :clearNumber="255" :hasOpacity="true" :hasSecondaryColor="false"
-                                 :menuIndex="13" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateMakeup($event)"/>
+                <appearance-menu
+                    ref="makeUpMenu"
+                    title="Make-up"
+                    :colors="null"
+                    :names="makeUpNames"
+                    :maxElements="74"
+                    :clearNumber="255"
+                    :hasOpacity="true"
+                    :hasSecondaryColor="false"
+                    :menuIndex="13"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateMakeup($event)"
+                />
             </div>
             <div class="col-6">
-                <appearance-menu ref="lipstickMenu" title="Lippenstift" :colors="lipsColors" :names="lipstickNames"
-                                 :maxElements="9" :clearNumber="255" :hasOpacity="true" :hasSecondaryColor="false"
-                                 :menuIndex="14" :currentMenuIndex="menuIndex"
-                                 v-on:request-menu="onMenuButtonClicked($event)"
-                                 v-on:update-appearance="updateLips($event)"/>
+                <appearance-menu
+                    ref="lipstickMenu"
+                    title="Lippenstift"
+                    :colors="lipsColors"
+                    :names="lipstickNames"
+                    :maxElements="9"
+                    :clearNumber="255"
+                    :hasOpacity="true"
+                    :hasSecondaryColor="false"
+                    :menuIndex="14"
+                    :currentMenuIndex="menuIndex"
+                    v-on:request-menu="onMenuButtonClicked($event)"
+                    v-on:update-appearance="updateLips($event)"
+                />
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import {AppearanceInterface} from "@/scripts/interfaces/character/appearance.interface";
-import {AppearancesInterface} from "@/scripts/interfaces/character/appearances.interface";
-import AppearanceMenu from './Menus/AppearanceMenu.vue';
+import AppearanceMenu from "./Menus/AppearanceMenu.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {AppearancesInterface} from "@/scripts/interfaces/character/appearances.interface";
+import {AppearanceInterface} from "@/scripts/interfaces/character/appearance.interface";
 
 @Options({
     components: {
-        AppearanceMenu
-    }
+        AppearanceMenu,
+    },
 })
 export default class CharacterAppearance extends Vue {
     @Ref() private readonly maleHairMenu!: AppearanceMenu;
@@ -277,7 +407,7 @@ export default class CharacterAppearance extends Vue {
         {r: 160, g: 126, b: 107},
         {r: 130, g: 99, b: 85},
         {r: 109, g: 83, b: 70},
-        {r: 62, g: 45, b: 39}
+        {r: 62, g: 45, b: 39},
     ];
 
     private maleHairlist = [
@@ -523,7 +653,7 @@ export default class CharacterAppearance extends Vue {
         "Scherenschnitt",
         "Schütter",
         "Einfachschwung",
-        "Gleichmäßig"
+        "Gleichmäßig",
     ];
     private facialHairNames = [
         "Kurze Stoppeln",
@@ -554,28 +684,178 @@ export default class CharacterAppearance extends Vue {
         "Dünner Franz",
         "Schnäuzer & Koteletten",
         "Backenbart",
-        "Lincoln-Kinnbart"
+        "Lincoln-Kinnbart",
     ];
     private complexionNames = [
-        "Rotbäckchen", "Stoppelausschlag", "Hitzewallung", "Sonnenbrand", "Blutunterlaufen", "Alkoholiker", "Fleckig", "Totem", "Äderchen", "Lädiert", "Bleich", "Gespenstisch"
+        "Rotbäckchen",
+        "Stoppelausschlag",
+        "Hitzewallung",
+        "Sonnenbrand",
+        "Blutunterlaufen",
+        "Alkoholiker",
+        "Fleckig",
+        "Totem",
+        "Äderchen",
+        "Lädiert",
+        "Bleich",
+        "Gespenstisch",
     ];
     private frecklesNames = [
-        "Engelchen", "Überall", "Unregelmäßig", "Fleckentanz", "Über die Brücke", "Babypuppe", "Kobold", "Sonnenverwöhnt", "Schönheitsflecken", "Reihenweise", "Fotomodelling", "Vereinzelt", "Gesprenkelt", "Regentropfen", "Beide Bäckchen", "Einseitig", "Paarweise", "Wacker"
+        "Engelchen",
+        "Überall",
+        "Unregelmäßig",
+        "Fleckentanz",
+        "Über die Brücke",
+        "Babypuppe",
+        "Kobold",
+        "Sonnenverwöhnt",
+        "Schönheitsflecken",
+        "Reihenweise",
+        "Fotomodelling",
+        "Vereinzelt",
+        "Gesprenkelt",
+        "Regentropfen",
+        "Beide Bäckchen",
+        "Einseitig",
+        "Paarweise",
+        "Wacker",
     ];
     private blemishesNames = [
-        "Masern", "Pickel", "Hautunreinheiten", "Ausschlag", "Mitesser", "Erhitzt", "Pusteln", "Eieterpusteln", "Furunkulose", "Akne", "Ringelröten", "Gesichtsausschlag", "Nasenbohrer", "Pubertät", "Matschauge", "Kinnausschlag", "Two-Face", "T-Zone", "Fettig", "Narbig", "Aknenarben", "Totale Kraterlandschaft", "Herpes", "Eiterflechte"
+        "Masern",
+        "Pickel",
+        "Hautunreinheiten",
+        "Ausschlag",
+        "Mitesser",
+        "Erhitzt",
+        "Pusteln",
+        "Eieterpusteln",
+        "Furunkulose",
+        "Akne",
+        "Ringelröten",
+        "Gesichtsausschlag",
+        "Nasenbohrer",
+        "Pubertät",
+        "Matschauge",
+        "Kinnausschlag",
+        "Two-Face",
+        "T-Zone",
+        "Fettig",
+        "Narbig",
+        "Aknenarben",
+        "Totale Kraterlandschaft",
+        "Herpes",
+        "Eiterflechte",
     ];
     private sundamageNames = [
-        "Uneben", "Sandpapier", "Ungleichmäßig", "Rau", "Ledrig", "Strukturiert", "Grob", "Zerklüftet", "Knittrig", "Rissig", "Hart"
+        "Uneben",
+        "Sandpapier",
+        "Ungleichmäßig",
+        "Rau",
+        "Ledrig",
+        "Strukturiert",
+        "Grob",
+        "Zerklüftet",
+        "Knittrig",
+        "Rissig",
+        "Hart",
     ];
     private makeUpNames = [
-        "Verruchtes Schwarz", "Bronze", "Hellgrau", "Retro-Glam", "Natürlicher Look", "Cat Eyes", "Chola", "Vamp", "Vinewood-Glamour", "Bubblegum", "Aqua-Traum", "Pin-Up", "Lila-Leidenschaft", "Verruchtes Cat Eye", "Glühender Rubin", "Pop-Prinzessin", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "Guyliner", "33", "Blutige Tränen", "Heavy-Metal", "Trauer", "Fürst der Finsternis", "Rochen", "Grufti", "Punk", "Verwüstet", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74"
+        "Verruchtes Schwarz",
+        "Bronze",
+        "Hellgrau",
+        "Retro-Glam",
+        "Natürlicher Look",
+        "Cat Eyes",
+        "Chola",
+        "Vamp",
+        "Vinewood-Glamour",
+        "Bubblegum",
+        "Aqua-Traum",
+        "Pin-Up",
+        "Lila-Leidenschaft",
+        "Verruchtes Cat Eye",
+        "Glühender Rubin",
+        "Pop-Prinzessin",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "Guyliner",
+        "33",
+        "Blutige Tränen",
+        "Heavy-Metal",
+        "Trauer",
+        "Fürst der Finsternis",
+        "Rochen",
+        "Grufti",
+        "Punk",
+        "Verwüstet",
+        "42",
+        "43",
+        "44",
+        "45",
+        "46",
+        "47",
+        "48",
+        "49",
+        "50",
+        "51",
+        "52",
+        "53",
+        "54",
+        "55",
+        "56",
+        "57",
+        "58",
+        "59",
+        "60",
+        "61",
+        "62",
+        "63",
+        "64",
+        "65",
+        "66",
+        "67",
+        "68",
+        "69",
+        "70",
+        "71",
+        "72",
+        "73",
+        "74",
     ];
     private lipstickNames = [
-        "Farbe, matt", "Farbe, glanz", "Umrandet, matt", "Umrandet, glanz", "Stark umrandet, matt", "Stark umrandet, glanz", "Nudelook, umrandet, matt", "Nudelook, umrandet, glanz", "Verwischt", "Geisha"
+        "Farbe, matt",
+        "Farbe, glanz",
+        "Umrandet, matt",
+        "Umrandet, glanz",
+        "Stark umrandet, matt",
+        "Stark umrandet, glanz",
+        "Nudelook, umrandet, matt",
+        "Nudelook, umrandet, glanz",
+        "Verwischt",
+        "Geisha",
     ];
     private blushNames = [
-        "Voll", "Schräg", "Rund", "Horizontal", "Hoch", "Schätzchen", "Achtziger"
+        "Voll",
+        "Schräg",
+        "Rund",
+        "Horizontal",
+        "Hoch",
+        "Schätzchen",
+        "Achtziger",
     ];
 
     private appearances!: AppearancesInterface;
@@ -585,21 +865,21 @@ export default class CharacterAppearance extends Vue {
     private menuIndex = -1;
 
     public setCharacterAppearances(appearances: AppearancesInterface): void {
-        this.appearances = appearances
+        this.appearances = appearances;
 
         if (this.gender === 0) {
             this.maleHairMenu.setAppearance({
                 value: this.appearances.hair,
                 opacity: 1,
                 primaryColor: this.appearances.primHairColor,
-                secondaryColor: this.appearances.secHairColor
+                secondaryColor: this.appearances.secHairColor,
             });
         } else if (this.gender === 1) {
             this.femaleHairMenu.setAppearance({
                 value: this.appearances.hair,
                 opacity: 1,
                 primaryColor: this.appearances.primHairColor,
-                secondaryColor: this.appearances.secHairColor
+                secondaryColor: this.appearances.secHairColor,
             });
         }
 
@@ -612,73 +892,73 @@ export default class CharacterAppearance extends Vue {
         this.eyeBrowsMenu.setAppearance({
             value: this.appearances.eyebrowsValue,
             opacity: this.appearances.eyebrowsOpacity,
-            primaryColor: this.appearances.eyebrowsColor
+            primaryColor: this.appearances.eyebrowsColor,
         });
 
         this.blushMenu.setAppearance({
             value: this.appearances.blushValue,
             opacity: this.appearances.blushOpacity,
-            primaryColor: this.appearances.blushColor
+            primaryColor: this.appearances.blushColor,
         });
 
         this.makeUpMenu.setAppearance({
             value: this.appearances.makeupValue,
             opacity: this.appearances.makeupOpacity,
-            primaryColor: this.appearances.makeupColor
+            primaryColor: this.appearances.makeupColor,
         });
 
         this.lipstickMenu.setAppearance({
             value: this.appearances.lipstickValue,
             opacity: this.appearances.lipstickOpacity,
-            primaryColor: this.appearances.lipstickColor
+            primaryColor: this.appearances.lipstickColor,
         });
 
         this.facialHairMenu.setAppearance({
             value: this.appearances.facialhairValue,
             opacity: this.appearances.facialhairOpacity,
-            primaryColor: this.appearances.facialhairColor
+            primaryColor: this.appearances.facialhairColor,
         });
 
         this.chestHairMenu.setAppearance({
             value: this.appearances.chesthairValue,
             opacity: this.appearances.chesthairOpacity,
-            primaryColor: this.appearances.primHairColor
+            primaryColor: this.appearances.primHairColor,
         });
 
         this.ageingMenu.setAppearance({
             value: this.appearances.ageingValue,
             opacity: this.appearances.ageingOpacity,
-            primaryColor: this.appearances.ageingColor
+            primaryColor: this.appearances.ageingColor,
         });
 
         this.complexionMenu.setAppearance({
             value: this.appearances.complexionValue,
             opacity: this.appearances.complexionOpacity,
-            primaryColor: this.appearances.complexionColor
+            primaryColor: this.appearances.complexionColor,
         });
 
         this.frecklesMenu.setAppearance({
             value: this.appearances.frecklesValue,
             opacity: this.appearances.frecklesOpacity,
-            primaryColor: this.appearances.frecklesColor
+            primaryColor: this.appearances.frecklesColor,
         });
 
         this.sundamageMenu.setAppearance({
             value: this.appearances.sundamageValue,
             opacity: this.appearances.sundamageOpacity,
-            primaryColor: this.appearances.sundamageColor
+            primaryColor: this.appearances.sundamageColor,
         });
 
         this.blemishesMenu.setAppearance({
             value: this.appearances.blemishesValue,
             opacity: this.appearances.blemishesOpacity,
-            primaryColor: this.appearances.blemishesColor
+            primaryColor: this.appearances.blemishesColor,
         });
 
         this.bodyBlemishesMenu.setAppearance({
             value: this.appearances.bodyblemishesValue,
             opacity: this.appearances.bodyblemishesOpacity,
-            primaryColor: this.appearances.bodyblemishesColor
+            primaryColor: this.appearances.bodyblemishesColor,
         });
     }
 

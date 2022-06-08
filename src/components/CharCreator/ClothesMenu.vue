@@ -3,69 +3,124 @@
         <h4>Kleidung</h4>
         <div class="row">
             <div class="col-6">
-                <clothing-menu ref="hatMenu" title="Kopfbedeckung" v-on:update-clothing="updateHat($event)"/>
+                <clothing-menu
+                    ref="hatMenu"
+                    title="Kopfbedeckung"
+                    v-on:update-clothing="updateHat($event)"
+                />
             </div>
             <div class="col-6">
-                <clothing-menu ref="glassesMenu" title="Brillen" v-on:update-clothing="updateGlasses($event)"/>
+                <clothing-menu
+                    ref="glassesMenu"
+                    title="Brillen"
+                    v-on:update-clothing="updateGlasses($event)"
+                />
             </div>
             <div class="col-6">
-                <clothing-menu ref="earsMenu" title="Ohren" v-on:update-clothing="updateEars($event)"/>
+                <clothing-menu
+                    ref="earsMenu"
+                    title="Ohren"
+                    v-on:update-clothing="updateEars($event)"
+                />
             </div>
             <div class="col-6">
-                <clothing-menu ref="masksMenu" title="Masken" v-on:update-clothing="updateMasks($event)"/>
+                <clothing-menu
+                    ref="masksMenu"
+                    title="Masken"
+                    v-on:update-clothing="updateMasks($event)"
+                />
             </div>
             <div class="col-6">
-                <clothing-menu ref="topMenu" title="Oberteil" v-on:update-clothing="updateTop($event)"/>
+                <clothing-menu
+                    ref="topMenu"
+                    title="Oberteil"
+                    v-on:update-clothing="updateTop($event)"
+                />
             </div>
             <div class="col-6">
-                <clothing-menu ref="backpackMenu" title="Rucksack" v-on:update-clothing="updateBackpack($event)"/>
+                <clothing-menu
+                    ref="backpackMenu"
+                    title="Rucksack"
+                    v-on:update-clothing="updateBackpack($event)"
+                />
             </div>
             <div class="col-6">
-                <clothing-menu ref="torsoMenu" title="Torso" v-on:update-clothing="updateTorso($event)"/>
+                <clothing-menu
+                    ref="torsoMenu"
+                    title="Torso"
+                    v-on:update-clothing="updateTorso($event)"
+                />
             </div>
             <div class="col-6">
-                <clothing-menu ref="undershirtMenu" title="Unterhemden"
-                               v-on:update-clothing="updateUndershirt($event)"/>
+                <clothing-menu
+                    ref="undershirtMenu"
+                    title="Unterhemden"
+                    v-on:update-clothing="updateUndershirt($event)"
+                />
             </div>
             <div class="col-6">
-                <clothing-menu ref="accessoriesMenu" title="Zubehör" v-on:update-clothing="updateAccessories($event)"/>
+                <clothing-menu
+                    ref="accessoriesMenu"
+                    title="Zubehör"
+                    v-on:update-clothing="updateAccessories($event)"
+                />
             </div>
             <div class="col-6">
-                <clothing-menu ref="watchMenu" title="Uhren" v-on:update-clothing="updateWatch($event)"/>
+                <clothing-menu
+                    ref="watchMenu"
+                    title="Uhren"
+                    v-on:update-clothing="updateWatch($event)"
+                />
             </div>
             <div class="col-6">
-                <clothing-menu ref="braceletsMenu" title="Armbänder" v-on:update-clothing="updateBracelets($event)"/>
+                <clothing-menu
+                    ref="braceletsMenu"
+                    title="Armbänder"
+                    v-on:update-clothing="updateBracelets($event)"
+                />
             </div>
             <div class="col-6">
-                <clothing-menu ref="pantsMenu" title="Hosen" v-on:update-clothing="updateLeg($event)"/>
+                <clothing-menu
+                    ref="pantsMenu"
+                    title="Hosen"
+                    v-on:update-clothing="updateLeg($event)"
+                />
             </div>
             <div class="col-6">
-                <clothing-menu ref="shoesMenu" title="Schuhe" v-on:update-clothing="updateShoes($event)"/>
+                <clothing-menu
+                    ref="shoesMenu"
+                    title="Schuhe"
+                    v-on:update-clothing="updateShoes($event)"
+                />
             </div>
         </div>
         <div class="alert alert-warning">
-            <p>Einige Kleidungsstücke kann GTA nicht laden, wählt bitte nur Kleidungsstücke aus welche geladen werden
-                und keine Schachbrett-Muster Texture haben. Achte bitte auch darauf das keine Haut durch deine Kleidung schaut oder gar Körperteile fehlen. 
-                Es kann später als Trolling geahndet werden.</p>
+            <p>
+                Einige Kleidungsstücke kann GTA nicht laden, wählt bitte nur
+                Kleidungsstücke aus welche geladen werden und keine Schachbrett-Muster
+                Texture haben. Achte bitte auch darauf das keine Haut durch deine
+                Kleidung schaut oder gar Körperteile fehlen. Es kann später als Trolling
+                geahndet werden.
+            </p>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import ClothingMenu from './Menus/ClothingMenu.vue';
-import {ClothesInterface} from '@/scripts/interfaces/character/clothes.interface';
+import ClothingMenu from "./Menus/ClothingMenu.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
-import {MaxDrawablesInterface} from "@/scripts/interfaces/character/max-drawables.interface";
-import {ClothingInterface} from "@/scripts/interfaces/character/clothing.interface";
 import alt from "@/scripts/services/alt.service";
+import {ClothesInterface} from "@/scripts/interfaces/character/clothes.interface";
 import {MaxDrawablesTexturesInterface} from "@/scripts/interfaces/character/max-drawable-textures.interface";
+import {MaxDrawablesInterface} from "@/scripts/interfaces/character/max-drawables.interface";
 import {GenderType} from "@/scripts/enums/gender.type";
+import {ClothingInterface} from "@/scripts/interfaces/character/clothing.interface";
 
 @Options({
     components: {
-        ClothingMenu
-    }
+        ClothingMenu,
+    },
 })
 export default class ClothesMenu extends Vue {
     @Ref() private readonly hatMenu!: ClothingMenu;
@@ -96,20 +151,24 @@ export default class ClothesMenu extends Vue {
         top: undefined,
         torso: undefined,
         underShirt: undefined,
-        watch: undefined
-    }
-    
+        watch: undefined,
+    };
+
     public mounted(): void {
-        alt.on("clothesmenu:setmaxtexturevariation", (maxTextures: MaxDrawablesTexturesInterface) => this.setMaxDrawablesTextures(maxTextures));
+        alt.on(
+            "clothesmenu:setmaxtexturevariation",
+            (maxTextures: MaxDrawablesTexturesInterface) =>
+                this.setMaxDrawablesTextures(maxTextures)
+        );
     }
-    
+
     public unmounted(): void {
         alt.off("clothesmenu:setmaxtexturevariation");
     }
-    
+
     public setClothes(clothes: ClothesInterface): void {
         this.clothes = clothes;
-        
+
         // this.hatMenu.setClothing(this.clothes.Hat);
         // this.glassesMenu.setClothing(this.clothes.Glasses);
         // this.earsMenu.setClothing(this.clothes.Ears);
@@ -122,8 +181,11 @@ export default class ClothesMenu extends Vue {
         // this.legMenu.setClothing(this.clothes.Leg);
         // this.shoesMenu.setClothing(this.clothes.Shoes);
     }
-    
-    public setGender(maxDrawables: MaxDrawablesInterface, gender: GenderType): void {
+
+    public setGender(
+        maxDrawables: MaxDrawablesInterface,
+        gender: GenderType
+    ): void {
         this.hatMenu?.setup(maxDrawables.maxHat, gender);
         this.glassesMenu?.setup(maxDrawables.maxGlasses, gender);
         this.earsMenu?.setup(maxDrawables.maxEars, gender);
@@ -138,7 +200,7 @@ export default class ClothesMenu extends Vue {
         this.pantsMenu?.setup(maxDrawables.maxPants, gender);
         this.shoesMenu?.setup(maxDrawables.maxShoes, gender);
     }
-    
+
     public checkValidation(): boolean {
         if (!this.hatMenu?.isValid()) {
             return false;
@@ -176,11 +238,13 @@ export default class ClothesMenu extends Vue {
         if (!this.pantsMenu?.isValid()) {
             return false;
         }
-        
+
         return this.shoesMenu?.isValid();
     }
 
-    private setMaxDrawablesTextures(maxTextures: MaxDrawablesTexturesInterface): void {
+    private setMaxDrawablesTextures(
+        maxTextures: MaxDrawablesTexturesInterface
+    ): void {
         this.hatMenu?.setMaxTextures(maxTextures.maxHat);
         this.glassesMenu?.setMaxTextures(maxTextures.maxGlasses);
         this.earsMenu?.setMaxTextures(maxTextures.maxEars);
@@ -195,7 +259,7 @@ export default class ClothesMenu extends Vue {
         this.pantsMenu?.setMaxTextures(maxTextures.maxPants);
         this.shoesMenu?.setMaxTextures(maxTextures.maxShoes);
     }
-    
+
     private updateHat(clothing: ClothingInterface) {
         this.clothes.hat = clothing;
 

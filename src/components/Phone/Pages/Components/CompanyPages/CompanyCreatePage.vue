@@ -10,12 +10,14 @@
             </button>
         </div>
 
-        <img class="logo" src="@/assets/images/phone/gov-seal.png">
+        <img class="logo" src="@/assets/images/phone/gov-seal.png"/>
 
         <div v-if="willBeProcessed" class="info-overlay">
-            <img class="logo-big" src="@/assets/images/phone/gov-seal.png">
-            <p style="padding-bottom: 3vw">Ihre Anfrage wird bearbeitet, dies kann einen Moment dauern. Wir melden uns
-                mit einer Benachrichtigung bei Ihnen.</p>
+            <img class="logo-big" src="@/assets/images/phone/gov-seal.png"/>
+            <p style="padding-bottom: 3vw">
+                Ihre Anfrage wird bearbeitet, dies kann einen Moment dauern. Wir melden
+                uns mit einer Benachrichtigung bei Ihnen.
+            </p>
         </div>
 
         <div v-if="isHelpVisible" class="info-overlay">
@@ -26,41 +28,69 @@
                 </button>
             </div>
 
-            <img class="logo-big" src="@/assets/images/phone/gov-seal.png">
-            <p>Die Erstellung eines Unternehmens belastet das oben genannte Bankkonto mit $20.500, davon werden
-                Bürogänge, Anmeldungen und Verwaltungskosten gedeckt.</p>
+            <img class="logo-big" src="@/assets/images/phone/gov-seal.png"/>
+            <p>
+                Die Erstellung eines Unternehmens belastet das oben genannte Bankkonto
+                mit $20.500, davon werden Bürogänge, Anmeldungen und Verwaltungskosten
+                gedeckt.
+            </p>
         </div>
 
         <div class="phone-gov-button-group">
-            <input ref="companyName" class="form-control" @input="checkValidation()" @focus="onFocus(true)"
-                   @blur="onFocus(false)" type="text" placeholder="Unternehmensname" maxlength="32">
-            <select-bank-account class="pt-2" ref="selectBank" v-on:change-bank-account="setBankAccount($event)"
-                                 v-on:setup="setBankAccount($event)"/>
+            <input
+                ref="companyName"
+                class="form-control"
+                @input="checkValidation()"
+                @focus="onFocus(true)"
+                @blur="onFocus(false)"
+                type="text"
+                placeholder="Unternehmensname"
+                maxlength="32"
+            />
+            <select-bank-account
+                class="pt-2"
+                ref="selectBank"
+                v-on:change-bank-account="setBankAccount($event)"
+                v-on:setup="setBankAccount($event)"
+            />
 
-            <p class="description">Ausgewählte Immobilie wird der Unternehmenshauptsitz!</p>
+            <p class="description">
+                Ausgewählte Immobilie wird der Unternehmenshauptsitz!
+            </p>
 
-            <select-house ref="selectHouse" v-on:change-house="setHouse($event)" v-on:setup="setHouse($event)"/>
+            <select-house
+                ref="selectHouse"
+                v-on:change-house="setHouse($event)"
+                v-on:setup="setHouse($event)"
+            />
 
-            <button type="button" class="btn" @click="createCompany()" :disabled="!valid">Unternehmen eröffnen</button>
+            <button
+                type="button"
+                class="btn"
+                @click="createCompany()"
+                :disabled="!valid"
+            >
+                Unternehmen eröffnen
+            </button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {HouseInterface} from '@/scripts/interfaces/house.interface';
-import {BankAccountInterface} from '@/scripts/interfaces/bank/bank-account.interface';
-import SelectBankAccount from '@/components/General/Banking/SelectBankAccount.vue';
-import SelectHouse from '@/components/General/House/SelectHouse.vue';
+import alt from "@/scripts/services/alt.service";
+import SelectBankAccount from "@/components/General/Banking/SelectBankAccount.vue";
+import SelectHouse from "@/components/General/House/SelectHouse.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
 import {onFocus} from "@/scripts/helpers/helpers";
+import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
+import {HouseInterface} from "@/scripts/interfaces/house.interface";
 
 @Options({
     components: {
         SelectBankAccount,
         SelectHouse,
-    }
+    },
 })
 export default class CompanyCreatePage extends Vue {
     @Ref() private readonly companyName!: HTMLInputElement;
@@ -103,7 +133,12 @@ export default class CompanyCreatePage extends Vue {
             return;
         }
 
-        alt.emit("phonecompany:create", this.companyName.value, this.selectedBankAccount?.id, this.selectedHouse?.id);
+        alt.emit(
+            "phonecompany:create",
+            this.companyName.value,
+            this.selectedBankAccount?.id,
+            this.selectedHouse?.id
+        );
 
         this.willBeProcessed = true;
         setTimeout(() => {
@@ -115,7 +150,11 @@ export default class CompanyCreatePage extends Vue {
     }
 
     private checkValidation(): void {
-        this.valid = this.companyName.value != "" && /^[a-zA-ZÀ-ž&., -]*$/.test(this.companyName.value) && this.selectBank.hasBank && this.selectHouse.hasHouse;
+        this.valid =
+            this.companyName.value != "" &&
+            /^[a-zA-ZÀ-ž&., -]*$/.test(this.companyName.value) &&
+            this.selectBank.hasBank &&
+            this.selectHouse.hasHouse;
     }
 
     private onFocus(state: boolean): void {
@@ -133,8 +172,8 @@ export default class CompanyCreatePage extends Vue {
     height: 100%;
 
     background: linear-gradient(
-                    rgba(255, 234, 176, 0.5),
-                    rgba(255, 234, 176, 0.5)
+            rgba(255, 234, 176, 0.5),
+            rgba(255, 234, 176, 0.5)
     ), url("../../../../../assets/images/patterns/double-bubble.png");
 
     background-position: center center;
@@ -184,9 +223,10 @@ export default class CompanyCreatePage extends Vue {
     height: 100%;
 
     background: linear-gradient(
-                    rgba(255, 234, 176, 0.5),
-                    rgba(255, 234, 176, 0.5)
-    ), url("../../../../../assets/images/patterns/double-bubble.png");
+            rgba(255, 234, 176, 0.5),
+            rgba(255, 234, 176, 0.5)
+    ),
+    url("../../../../../assets/images/patterns/double-bubble.png");
 
     background-position: center center;
     background-size: 25vw;

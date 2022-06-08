@@ -4,12 +4,21 @@
             <tattoos ref="tattoosMenu" v-on:update-tattoos="updateTattoos($event)"/>
 
             <div class="save-box">
-                <button type="button" class="btn btn-secondary" @click="closeHairSalon()" :disabled="isSaving">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    @click="closeHairSalon()"
+                    :disabled="isSaving"
+                >
                     Abbrechen
                 </button>
 
-                <button type="button" class="btn btn-primary m-2" @click="requestBuy()"
-                        :disabled="isSaving || !hasChanges">
+                <button
+                    type="button"
+                    class="btn btn-primary m-2"
+                    @click="requestBuy()"
+                    :disabled="isSaving || !hasChanges"
+                >
                     Änderungen kaufen
                 </button>
             </div>
@@ -18,14 +27,22 @@
         <div class="rotate-box">
             <div class="row">
                 <div class="col-5">
-                    <button type="button" @mousedown="rotateCharacter(-1)" @mouseup="stopRotateCharacter()"
-                            class="btn rotate-icon btn-secondary">
+                    <button
+                        type="button"
+                        @mousedown="rotateCharacter(-1)"
+                        @mouseup="stopRotateCharacter()"
+                        class="btn rotate-icon btn-secondary"
+                    >
                         <font-awesome-icon icon="redo"/>
                     </button>
                 </div>
                 <div class="col-5">
-                    <button type="button" @mousedown="rotateCharacter(1)" @mouseup="stopRotateCharacter()"
-                            class="btn rotate-icon btn-secondary">
+                    <button
+                        type="button"
+                        @mousedown="rotateCharacter(1)"
+                        @mouseup="stopRotateCharacter()"
+                        class="btn rotate-icon btn-secondary"
+                    >
                         <font-awesome-icon icon="undo"/>
                     </button>
                 </div>
@@ -36,16 +53,16 @@
 
 <script lang="ts">
 import alt from "@/scripts/services/alt.service";
-import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
-import Tattoos from "@/components/CharCreator/Tattoos.vue";
-import {TattoosInterface} from "@/scripts/interfaces/character/tattoos.interface";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
+import {TattoosInterface} from "@/scripts/interfaces/character/tattoos.interface";
+import Tattoos from "@/components/CharCreator/Tattoos.vue";
 
 @Options({
     components: {
-        Tattoos
-    }
+        Tattoos,
+    },
 })
 export default class HairSalon extends Vue {
     @Ref() private readonly tattoosMenu!: Tattoos;
@@ -55,13 +72,15 @@ export default class HairSalon extends Vue {
 
     public mounted(): void {
         alt.emit("tattoostudio:getcharacter");
-        alt.on("tattoostudio:setcharacter", (character: CharacterInterface) => this.setCharacter(character));
+        alt.on("tattoostudio:setcharacter", (character: CharacterInterface) =>
+            this.setCharacter(character)
+        );
     }
 
     public unmounted(): void {
         alt.off("tattoostudio:setcharacter");
     }
-    
+
     private setCharacter(character: CharacterInterface): void {
         this.isSaving = false;
 

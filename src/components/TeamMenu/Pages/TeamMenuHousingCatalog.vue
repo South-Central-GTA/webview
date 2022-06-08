@@ -2,8 +2,13 @@
     <div class="team-menu-housing-catalog">
         <div v-if="!isPopupOpen">
             <h2>Häuser</h2>
-            <input @input="search()" v-model="houseSearch" type="text" class="form-control-dark mb-2"
-                   placeholder="Suche nach Haus ID"/>
+            <input
+                @input="search()"
+                v-model="houseSearch"
+                type="text"
+                class="form-control-dark mb-2"
+                placeholder="Suche nach Haus ID"
+            />
             <div class="table-holder">
                 <table class="table table-striped table-hover">
                     <thead>
@@ -17,22 +22,37 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="house in houses" v-bind:key="house.id" class="entry" @click="requestDetails(house)">
+                    <tr
+                        v-for="house in houses"
+                        v-bind:key="house.id"
+                        class="entry"
+                        @click="requestDetails(house)"
+                    >
                         <td>{{ house.id }}</td>
-                        <td>{{ house.ownerId === -1 ? "Kein Besitzer" : house.ownerId }}</td>
-                        <td>{{ house.groupOwnerId === -1 ? "Kein Gruppe" : house.groupOwnerId }}</td>
+                        <td>
+                            {{ house.ownerId === -1 ? "Kein Besitzer" : house.ownerId }}
+                        </td>
+                        <td>
+                            {{
+                                house.groupOwnerId === -1 ? "Kein Gruppe" : house.groupOwnerId
+                            }}
+                        </td>
                         <td>{{ house.keyItemIds }}</td>
-                        <td>${{ house.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
+                        <td>
+                            ${{
+                                house.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                            }}
+                        </td>
                         <td>{{ house.interiorId }}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-        </div>    
+        </div>
         <div v-else class="details">
             <button class="icon-button text-white" @click="closeDetails()">
                 <font-awesome-icon class="mx-2" icon="chevron-left"/>
-                <span>Haus ID: {{openHouse.id}}</span>
+                <span>Haus ID: {{ openHouse.id }}</span>
             </button>
 
             <h6>Türen</h6>
@@ -48,13 +68,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="door in this.openHouse.doors" v-bind:key="door.id" class="entry">
-                            <td>{{ door.id }}</td>
-                            <td>{{ door.locked ? "Abgeschlossen" : "Aufgeschlossen" }}</td>
-                            <td>{{ door.positionX }}</td>
-                            <td>{{ door.positionY }}</td>
-                            <td>{{ door.positionZ }}</td>
-                        </tr>
+                    <tr
+                        v-for="door in this.openHouse.doors"
+                        v-bind:key="door.id"
+                        class="entry"
+                    >
+                        <td>{{ door.id }}</td>
+                        <td>{{ door.locked ? "Abgeschlossen" : "Aufgeschlossen" }}</td>
+                        <td>{{ door.positionX }}</td>
+                        <td>{{ door.positionY }}</td>
+                        <td>{{ door.positionZ }}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -63,23 +87,25 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {HouseInterface} from "@/scripts/interfaces/house.interface";
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
+import {HouseInterface} from "@/scripts/interfaces/house.interface";
 
 export default class TeamMenuHouseingCatalog extends Vue {
-    private houses: HouseInterface[] = []
-    private cachedHouses: HouseInterface[] = []
+    private houses: HouseInterface[] = [];
+    private cachedHouses: HouseInterface[] = [];
     private houseSearch = "";
     private isPopupOpen = false;
-    
+
     private openHouse!: HouseInterface;
 
     public mounted(): void {
         alt.on("housingcatalog:setup", (args: any) => this.setup(args[0]));
-        alt.on("housingcatalog:opendetails", (args: any) => this.openDetails(args[0]));
+        alt.on("housingcatalog:opendetails", (args: any) =>
+            this.openDetails(args[0])
+        );
     }
-    
+
     public unmounted(): void {
         alt.off("housingcatalog:setup");
         alt.off("housingcatalog:opendetails");
@@ -102,14 +128,16 @@ export default class TeamMenuHouseingCatalog extends Vue {
     private closeDetails(): void {
         this.isPopupOpen = false;
     }
-    
+
     private search(): void {
         if (this.houseSearch === "") {
             this.houses = this.cachedHouses;
             return;
         }
 
-        this.houses = this.cachedHouses.filter(h => h.id == Number.parseInt(this.houseSearch));
+        this.houses = this.cachedHouses.filter(
+            (h) => h.id == Number.parseInt(this.houseSearch)
+        );
     }
 }
 </script>

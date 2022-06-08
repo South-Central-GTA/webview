@@ -1,6 +1,6 @@
-import {HouseInterface} from '@/scripts/interfaces/house.interface';
-import alt from '@/scripts/services/alt.service';
-import LiteEvent from '@/scripts/systems/lite-event'
+import alt from "@/scripts/services/alt.service";
+import LiteEvent from "@/scripts/systems/lite-event";
+import {HouseInterface} from "@/scripts/interfaces/house.interface";
 
 export default class HouseService {
     private static instance: HouseService;
@@ -26,10 +26,12 @@ export default class HouseService {
     }
 
     private readonly onHousesChanged = new LiteEvent<HouseInterface[]>();
-    private houses: HouseInterface [] = [];
+    private houses: HouseInterface[] = [];
 
     public listenToEvents(): void {
-        alt.on("house:updatecharacterhouses", (houses: HouseInterface[]) => this.updateHouses(houses));
+        alt.on("house:updatecharacterhouses", (houses: HouseInterface[]) =>
+            this.updateHouses(houses)
+        );
     }
 
     private updateHouses(houses: HouseInterface[]): void {

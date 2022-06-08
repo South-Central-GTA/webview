@@ -5,26 +5,32 @@
                 <h5 class="name-text">{{ header }}</h5>
             </div>
             <div class="col-5">
-                <p class="weight-text float-end m-0">Gewichtlimit: {{ currentWeight }} / {{ maxWeight }}</p>
+                <p class="weight-text float-end m-0">
+                    Gewichtlimit: {{ currentWeight }} / {{ maxWeight }}
+                </p>
             </div>
             <div class="col-12 m-0">
-                <input type="text"
-                       @focus="onFocus(true)"
-                       @blur="onFocus(false)"
-                       @input="search()" v-model="itemSearch"
-                       id="search-bar"
-                       class="form-control float-end m-1 text-white"
-                       placeholder="Suche nach bestimmten Item..."/>
+                <input
+                    type="text"
+                    @focus="onFocus(true)"
+                    @blur="onFocus(false)"
+                    @input="search()"
+                    v-model="itemSearch"
+                    id="search-bar"
+                    class="form-control float-end m-1 text-white"
+                    placeholder="Suche nach bestimmten Item..."
+                />
             </div>
         </div>
 
         <div class="items-block">
             <div v-for="item in items" v-bind:key="item.slot">
                 <item-slot
-                        v-bind:item="item"
-                        @click.right="openContextMenu($event, item)"
-                        v-on:start-dragging="startDragging"
-                        v-on:stop-dragging="stopDragging"/>
+                    v-bind:item="item"
+                    @click.right="openContextMenu($event, item)"
+                    v-on:start-dragging="startDragging"
+                    v-on:stop-dragging="stopDragging"
+                />
             </div>
             <div class="drop-zone" v-if="dropZoneVisible" @mouseup="onMouseUp"></div>
         </div>
@@ -32,19 +38,19 @@
 </template>
 
 <script lang="ts">
-import {ItemInterface} from '@/scripts/interfaces/inventory/item.interface';
-import ItemSlot from '@/components/Inventories/ItemSlot.vue';
+import ItemSlot from "@/components/Inventories/ItemSlot.vue";
 import {Options, Vue} from "vue-class-component";
 import {Prop, Watch} from "vue-property-decorator";
-import {InventoryInterface} from "@/scripts/interfaces/inventory/inventory.interface";
 import {onFocus} from "@/scripts/helpers/helpers";
-import {ClothingItemTypes} from "@/scripts/enums/clothing-item.types";
+import {ItemInterface} from "@/scripts/interfaces/inventory/item.interface";
+import {InventoryInterface} from "@/scripts/interfaces/inventory/inventory.interface";
 import {ClothingInterface} from "@/scripts/interfaces/character/clothing.interface";
+import {ClothingItemTypes} from "@/scripts/enums/clothing-item.types";
 
 @Options({
     components: {
         ItemSlot,
-    }
+    },
 })
 export default class Inventory extends Vue {
     @Prop() private readonly inventory!: InventoryInterface;
@@ -56,14 +62,20 @@ export default class Inventory extends Vue {
     private maxWeight = 0;
     private currentWeight = 0;
     private dropZoneVisible = false;
-  
-    @Watch('inventory')
-    private onInventoryPropertyChanged(value: InventoryInterface, oldValue: InventoryInterface): void {
-        if (value) {
 
+    @Watch("inventory")
+    private onInventoryPropertyChanged(
+        value: InventoryInterface,
+    ): void {
+        if (value) {
             value.items.forEach((item: ItemInterface) => {
-                if (item.attachedToWeaponItem !== null && item.attachedToWeaponItem !== -1) {
-                    const weaponItem = value.items.find(i => i.id == item.attachedToWeaponItem);
+                if (
+                    item.attachedToWeaponItem !== null &&
+                    item.attachedToWeaponItem !== -1
+                ) {
+                    const weaponItem = value.items.find(
+                        (i) => i.id == item.attachedToWeaponItem
+                    );
                     if (weaponItem !== undefined) {
                         if (weaponItem.attachmentItems === undefined) {
                             weaponItem.attachmentItems = [];
@@ -78,9 +90,9 @@ export default class Inventory extends Vue {
             this.currentWeight = this.getWeight(value.items);
 
             // Remove all attached weapon comps. so there are not getting shown in UI.
-            value.items = value.items.filter(i => i.attachedToWeaponItem === -1)
+            value.items = value.items.filter((i) => i.attachedToWeaponItem === -1);
 
-            this.items = value.items.sort((a, b) => (a.slot > b.slot) ? 1 : -1);
+            this.items = value.items.sort((a, b) => ((a.slot ?? -1) > (b.slot ?? -1) ? 1 : -1));
             this.maxWeight = value.maxWeight;
             this.cachedItems = this.items;
             this.header = value.name;
@@ -94,7 +106,7 @@ export default class Inventory extends Vue {
     public clearSearchBar(): void {
         this.itemSearch = "";
     }
-    
+
     public toggleDropZone(state: boolean): void {
         this.dropZoneVisible = state;
     }
@@ -107,7 +119,11 @@ export default class Inventory extends Vue {
         this.$emit("open-context-menu", mouseEvent, item);
     }
 
-    private startDragging(event: MouseEvent, element: Element, item: ItemInterface): void {
+    private startDragging(
+        event: MouseEvent,
+        element: Element,
+        item: ItemInterface
+    ): void {
         this.$emit("start-dragging", event, element, item);
     }
 
@@ -115,7 +131,7 @@ export default class Inventory extends Vue {
         this.$emit("stop-dragging", event, item);
     }
 
-    private onMouseUp(event: MouseEvent): void {
+    private onMouseUp(): void {
         this.$emit("drop-item-in-zone", this.inventory.id);
     }
 
@@ -142,7 +158,9 @@ export default class Inventory extends Vue {
         }
 
         this.items = this.cachedItems;
-        this.items = this.items.filter(i => this.getItemName(i).toLowerCase().includes(this.itemSearch.toLowerCase()));
+        this.items = this.items.filter((i) =>
+            this.getItemName(i).toLowerCase().includes(this.itemSearch.toLowerCase())
+        );
     }
 
     private getWeight(items: ItemInterface[]): number {
@@ -155,7 +173,7 @@ export default class Inventory extends Vue {
             }
         }
 
-        return Math.round(weight * 100) / 100
+        return Math.round(weight * 100) / 100;
     }
 
     private onFocus(state: boolean): void {
@@ -165,7 +183,7 @@ export default class Inventory extends Vue {
 </script>
 <style scoped lang="scss">
 .inventory {
-  padding: 0;
+    padding: 0;
 }
 
 .items-block {
@@ -201,7 +219,7 @@ export default class Inventory extends Vue {
 }
 
 .drop-zone {
-    background-color: rgba(0, 0, 0, .3);
+    background-color: rgba(0, 0, 0, 0.3);
     height: 3vw;
     border-radius: 0.3vw;
     margin: 0.5vw;

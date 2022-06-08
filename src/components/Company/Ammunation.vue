@@ -1,30 +1,45 @@
 <template>
     <div class="ammunation">
-        <div class="sc-card text-white w-25 center" :hidden="!active" v-bind:class="{ enable: active, disable: !active }">
+        <div
+            class="sc-card text-white w-25 center"
+            :hidden="!active"
+            v-bind:class="{ enable: active, disable: !active }"
+        >
             <div class="card-body">
-                <button type="button" class="btn-close-white icon-button float-end" @click="close()">
+                <button
+                    type="button"
+                    class="btn-close-white icon-button float-end"
+                    @click="close()"
+                >
                     <font-awesome-icon class="center" icon="times"/>
                 </button>
-                <h5 class="card-title">Ammunation</h5> 
+                <h5 class="card-title">Ammunation</h5>
 
                 <div class="list row">
                     <div v-for="item in buyableItems" v-bind:key="item.id" class="col-3">
                         <image-amount-input
-                                class="mb-3"
-                                v-bind:item="item"
-                                v-bind:class="{ selected: item.id === currentItemId, unselect: item.id !== currentItemId }"
-                                v-on:choose-item="chooseItem($event)"
-                                v-on:update-amount="updateAmount($event)"/>
+                            class="mb-3"
+                            v-bind:item="item"
+                            v-bind:class="{
+                selected: item.id === currentItemId,
+                unselect: item.id !== currentItemId,
+              }"
+                            v-on:choose-item="chooseItem($event)"
+                            v-on:update-amount="updateAmount($event)"
+                        />
                     </div>
                 </div>
 
                 <button
-                        type="button"
-                        class="btn w-100 mt-2"
-                        @click="takeItem()"
-                        :disabled="currentItemId == 0 || !currentAmount"
-                        v-bind:class="{ 'btn-primary': currentItemId !== 0 && currentAmount, 'btn-secondary': currentItemId === 0 || !currentAmount }">
-
+                    type="button"
+                    class="btn w-100 mt-2"
+                    @click="takeItem()"
+                    :disabled="currentItemId == 0 || !currentAmount"
+                    v-bind:class="{
+            'btn-primary': currentItemId !== 0 && currentAmount,
+            'btn-secondary': currentItemId === 0 || !currentAmount,
+          }"
+                >
                     {{ buttonText }}
                 </button>
             </div>
@@ -33,15 +48,15 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {CatalogItemInterface} from '@/scripts/interfaces/catalog-item.interface';
-import ImageAmountInput from './ImageAmountInput.vue';
+import alt from "@/scripts/services/alt.service";
+import ImageAmountInput from "./ImageAmountInput.vue";
 import {Options, Vue} from "vue-class-component";
+import {CatalogItemInterface} from "@/scripts/interfaces/inventory/catalog-item.interface";
 
 @Options({
     components: {
-        ImageAmountInput
-    }
+        ImageAmountInput,
+    },
 })
 export default class Ammunation extends Vue {
     private active = false;
@@ -51,9 +66,11 @@ export default class Ammunation extends Vue {
     private buttonText = "";
 
     public mounted(): void {
-        alt.on("ammunation:openmenu", (buyableItems: CatalogItemInterface[]) => this.setup(buyableItems));
+        alt.on("ammunation:openmenu", (buyableItems: CatalogItemInterface[]) =>
+            this.setup(buyableItems)
+        );
     }
-    
+
     public unmounted(): void {
         alt.off("ammunation:openmenu");
     }
@@ -75,7 +92,7 @@ export default class Ammunation extends Vue {
 
     private chooseItem(item: CatalogItemInterface): void {
         this.currentItemId = item.id;
-        this.buttonText = item.name + " kaufen"
+        this.buttonText = item.name + " kaufen";
     }
 
     private updateAmount(amount: number): void {
@@ -83,7 +100,11 @@ export default class Ammunation extends Vue {
     }
 
     private takeItem(): void {
-        alt.emitServer("ammunation:buyitem", this.currentItemId, this.currentAmount);
+        alt.emitServer(
+            "ammunation:buyitem",
+            this.currentItemId,
+            this.currentAmount
+        );
         this.close();
     }
 

@@ -1,6 +1,6 @@
 export interface MdcNoteInterface {
     id: number;
-    note: string;
+    node: string;
     creatorCharacterName: string;
     createdAtJson: string;
 }

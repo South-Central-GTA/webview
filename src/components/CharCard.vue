@@ -4,42 +4,48 @@
             {{ character.name }}
         </h5>
         <div class="character-information-box">
-            <p class="sub-text">Charakter zuletzt gespielt oder bearbeitet
-                {{ getCorrectDate(character.lastUsage) }}.</p>
-            <p class="sub-text">Charakter erstellt am {{ getCorrectDate(character.createdAt) }}.</p>
+            <p class="sub-text">
+                Charakter zuletzt gespielt oder bearbeitet
+                {{ getCorrectDate(character.lastUsageJson) }}.
+            </p>
+            <p class="sub-text">
+                Charakter erstellt am {{ getCorrectDate(character.createdAtJson) }}.
+            </p>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import {CharacterInterface} from '@/scripts/interfaces/character/character.interface';
 import {Vue} from "vue-class-component";
 import {Prop, Ref} from "vue-property-decorator";
+import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
 
 export default class CharCard extends Vue {
     @Prop() private readonly character!: CharacterInterface;
     @Ref() private readonly selectButton!: HTMLButtonElement;
 
     public mounted(): void {
-        this.selectButton.addEventListener('click', () => this.selectCharacter());
+        this.selectButton.addEventListener("click", () => this.selectCharacter());
     }
 
     public unmounted(): void {
-        this.selectButton.removeEventListener('click', () => this.selectCharacter());
+        this.selectButton.removeEventListener("click", () =>
+            this.selectCharacter()
+        );
     }
 
     private selectCharacter(): void {
-        this.$emit('select-character', this.character);
+        this.$emit("select-character", this.character);
     }
 
     private getCorrectDate(dateString: string): string {
         const date = new Date(JSON.parse(dateString));
         return date.toLocaleDateString("de-DE", {
-            hour: 'numeric',
-            minute: 'numeric',
-            month: 'long',
-            year: 'numeric',
-            day: 'numeric'
+            hour: "numeric",
+            minute: "numeric",
+            month: "long",
+            year: "numeric",
+            day: "numeric",
         });
     }
 }

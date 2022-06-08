@@ -7,16 +7,34 @@
             </button>
         </div>
 
-        <phone-bank-money-transfer :hidden="currentTab !== 1" @back="resetTab()" @phonetransfer="phonetransfer"/>
-        
-        <phone-permission-bank-account ref="phonePermissionBankAccount" :hidden="currentTab !== 2" @back="resetTab()"/>
-        
-        <bank-history ref="bankHistory" :hidden="currentTab !== 3" @back="resetTab()" />
-        
-        <phone-delete-bank-account :hidden="currentTab !== 4" @back="resetTab()"
-                                   @deletebankaccount="deleteBankAccount"/>
+        <phone-bank-money-transfer
+            :hidden="currentTab !== 1"
+            @back="resetTab()"
+            @phonetransfer="phonetransfer"
+        />
 
-        <img class="phone-bank-logo" src="@/assets/images/phone/maze-bank-logo.png">
+        <phone-permission-bank-account
+            ref="phonePermissionBankAccount"
+            :hidden="currentTab !== 2"
+            @back="resetTab()"
+        />
+
+        <bank-history
+            ref="bankHistory"
+            :hidden="currentTab !== 3"
+            @back="resetTab()"
+        />
+
+        <phone-delete-bank-account
+            :hidden="currentTab !== 4"
+            @back="resetTab()"
+            @deletebankaccount="deleteBankAccount"
+        />
+
+        <img
+            class="phone-bank-logo"
+            src="@/assets/images/phone/maze-bank-logo.png"
+        />
 
         <div class="account-stats">
             <h2>{{ details }}</h2>
@@ -24,40 +42,68 @@
         </div>
 
         <div class="phone-bank-button-group">
-            <button type="button" class="btn" @click="openTab(1)" :disabled="!canTransfer">Überweisungen</button>
-            <button type="button" class="btn" @click="openTab(2)" :disabled="!canManage">Berechtigungen</button>
-            <button type="button" class="btn" @click="openTab(3)" :disabled="!canSeeHistory">Umsätze</button>
-            <button type="button" class="btn" @click="openTab(4)" :disabled="!canManage">Konto löschen</button>
+            <button
+                type="button"
+                class="btn"
+                @click="openTab(1)"
+                :disabled="!canTransfer"
+            >
+                Überweisungen
+            </button>
+            <button
+                type="button"
+                class="btn"
+                @click="openTab(2)"
+                :disabled="!canManage"
+            >
+                Berechtigungen
+            </button>
+            <button
+                type="button"
+                class="btn"
+                @click="openTab(3)"
+                :disabled="!canSeeHistory"
+            >
+                Umsätze
+            </button>
+            <button
+                type="button"
+                class="btn"
+                @click="openTab(4)"
+                :disabled="!canManage"
+            >
+                Konto löschen
+            </button>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
+import alt from "@/scripts/services/alt.service";
 import character from "@/scripts/services/character.service";
 import groupService from "@/scripts/services/group.service";
-import {BankAccountInterface} from '@/scripts/interfaces/bank/bank-account.interface';
-import PhoneBankMoneyTransfer from './PhoneBankMoneyTransfer.vue';
-import PhoneDeleteBankAccount from './PhoneDeleteBankAccount.vue';
-import PhonePermissionBankAccount from './PhonePermissionBankAccount.vue';
-import {BankingPermission} from "@/scripts/enums/banking.permission";
+import PhoneBankMoneyTransfer from "./PhoneBankMoneyTransfer.vue";
+import PhoneDeleteBankAccount from "./PhoneDeleteBankAccount.vue";
+import PhonePermissionBankAccount from "./PhonePermissionBankAccount.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
-import {GroupPermission} from "@/scripts/enums/group.permission";
 import BankHistory from "@/components/ATM/Pages/BankHistory.vue";
 import {BankHistoryEntryInterface} from "@/scripts/interfaces/bank/bank-history-entry.interface";
+import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
+import {BankingPermission} from "@/scripts/enums/banking.permission";
+import {GroupPermission} from "@/scripts/enums/group.permission";
 
 @Options({
     components: {
         BankHistory,
         PhoneBankMoneyTransfer,
         PhoneDeleteBankAccount,
-        PhonePermissionBankAccount
-    }
+        PhonePermissionBankAccount,
+    },
 })
-
 export default class PhoneActiveBankAccount extends Vue {
-    @Ref() private readonly phonePermissionBankAccount!: PhonePermissionBankAccount;
+    @Ref()
+    private readonly phonePermissionBankAccount!: PhonePermissionBankAccount;
     @Ref() private readonly bankHistory!: BankHistory;
 
     private id = 0;
@@ -78,39 +124,60 @@ export default class PhoneActiveBankAccount extends Vue {
 
         this.canTransfer = false;
         this.canManage = false;
-    
-        const characterAccess = bankAccount.characterAccesses.find(ca => ca.characterId == character.getInstance().getCharacterId);
+
+        const characterAccess = bankAccount.characterAccesses.find(
+            (ca) => ca.characterId == character.getInstance().getCharacterId
+        );
         if (characterAccess !== undefined) {
-            this.canSeeHistory = (characterAccess.permission & BankingPermission.SEE_HISTORY) === BankingPermission.SEE_HISTORY || characterAccess.owner;
-            this.canTransfer = (characterAccess.permission & BankingPermission.TRANSFER) === BankingPermission.TRANSFER || characterAccess.owner;
-            this.canManage = (characterAccess.permission & BankingPermission.MANAGEMENT) === BankingPermission.MANAGEMENT || characterAccess.owner;
+            this.canSeeHistory =
+                (characterAccess.permission & BankingPermission.SEE_HISTORY) ===
+                BankingPermission.SEE_HISTORY || characterAccess.owner;
+            this.canTransfer =
+                (characterAccess.permission & BankingPermission.TRANSFER) ===
+                BankingPermission.TRANSFER || characterAccess.owner;
+            this.canManage =
+                (characterAccess.permission & BankingPermission.MANAGEMENT) ===
+                BankingPermission.MANAGEMENT || characterAccess.owner;
         }
-        
+
         if (bankAccount.type === 1) {
-            const group = groupService.getInstance().AllGroups?.find(g => bankAccount.groupAccesses.some(ga => ga.groupId === g.id));
+            const group = groupService
+                .getInstance()
+                .AllGroups?.find((g) =>
+                    bankAccount.groupAccesses.some((ga) => ga.groupId === g.id)
+                );
             if (group !== undefined) {
-                const member = group.members.find(m => m.characterId === character.getInstance().getCharacterId);
+                const member = group.members.find(
+                    (m) => m.characterId === character.getInstance().getCharacterId
+                );
                 if (member !== undefined) {
                     if (member.owner) {
                         this.canSeeHistory = true;
                         this.canTransfer = true;
                         this.canManage = true;
                     } else {
-                        const rank = group.ranks.find(r => r.level === member.level);
+                        const rank = group.ranks.find((r) => r.level === member.level);
                         if (rank !== undefined) {
-                            this.canSeeHistory = (rank.groupPermission & GroupPermission.BANKING_SEE_HISTORY) === GroupPermission.BANKING_SEE_HISTORY;
-                            this.canTransfer = (rank.groupPermission & GroupPermission.BANKING_TRANSFER) === GroupPermission.BANKING_TRANSFER;
+                            this.canSeeHistory =
+                                (rank.groupPermission & GroupPermission.BANKING_SEE_HISTORY) ===
+                                GroupPermission.BANKING_SEE_HISTORY;
+                            this.canTransfer =
+                                (rank.groupPermission & GroupPermission.BANKING_TRANSFER) ===
+                                GroupPermission.BANKING_TRANSFER;
                         }
                     }
                 }
             }
         }
-        
+
         if (this.currentTab === 3 && !this.canSeeHistory) {
             this.openTab(0);
         }
 
-        this.phonePermissionBankAccount.setup(this.id, bankAccount.characterAccesses);
+        this.phonePermissionBankAccount.setup(
+            this.id,
+            bankAccount.characterAccesses
+        );
     }
 
     public resetTab(): void {
@@ -119,9 +186,9 @@ export default class PhoneActiveBankAccount extends Vue {
 
     private openTab(id: number): void {
         this.currentTab = id;
-        
+
         if (id === 3) {
-            this.bankHistory.setup(this.history, true)
+            this.bankHistory.setup(this.history, true);
         }
     }
 

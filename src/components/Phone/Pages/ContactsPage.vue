@@ -1,11 +1,17 @@
 <template>
     <div class="contacts-page">
         <div :hidden="!isAddContactPopupOpen">
-            <add-phone-contact ref="addPhoneContact" v-on:add-contact="addContact($event)"/>
+            <add-phone-contact
+                ref="addPhoneContact"
+                v-on:add-contact="addContact($event)"
+            />
         </div>
 
         <div :hidden="!isEditContactPopupOpen">
-            <edit-phone-contact ref="editPhoneContact" v-on:update-contact="updateContact($event)"/>
+            <edit-phone-contact
+                ref="editPhoneContact"
+                v-on:update-contact="updateContact($event)"
+            />
         </div>
 
         <div :hidden="!isDeletePopupOpen">
@@ -16,7 +22,11 @@
             <h1>Ich</h1>
             <h2>{{ getCorrectFormat(myNumber) }}</h2>
             <div class="new-contact-block">
-                <button type="button" class="btn new-contact-button" @click="openAddContactPopup()">
+                <button
+                    type="button"
+                    class="btn new-contact-button"
+                    @click="openAddContactPopup()"
+                >
                     <font-awesome-icon class="center" icon="plus"/>
                 </button>
             </div>
@@ -35,15 +45,27 @@
                     </button>
                 </div>
                 <div style="padding-top: 10px">
-                    <button type="button" class="btn delete-button" @click="openDeletePopup()">
+                    <button
+                        type="button"
+                        class="btn delete-button"
+                        @click="openDeletePopup()"
+                    >
                         <font-awesome-icon class="center" icon="trash"/>
                     </button>
-                    <button type="button" class="btn edit-button" @click="openEditContactPopup()">
+                    <button
+                        type="button"
+                        class="btn edit-button"
+                        @click="openEditContactPopup()"
+                    >
                         <font-awesome-icon class="center" icon="cog"/>
                     </button>
                 </div>
             </div>
-            <button type="button" class="btn close-button" @click="closeActionsPopup()">
+            <button
+                type="button"
+                class="btn close-button"
+                @click="closeActionsPopup()"
+            >
                 <font-awesome-icon class="center" icon="times"/>
             </button>
         </div>
@@ -52,8 +74,10 @@
             <div v-for="sorted in sortedContacts" v-bind:key="sorted.Letter">
                 <h1 v-if="sorted.contacts.length !== 0">{{ sorted.letter }}</h1>
                 <div v-for="contact in sorted.contacts" v-bind:key="contact.id">
-                    <phone-contact v-bind:contact="contact"
-                                   v-on:clicked-contact="openActionsPopup($event)"/>
+                    <phone-contact
+                        v-bind:contact="contact"
+                        v-on:clicked-contact="openActionsPopup($event)"
+                    />
                 </div>
             </div>
         </div>
@@ -61,14 +85,14 @@
 </template>
 
 <script lang="ts">
-import {PhoneContactInterface} from '@/scripts/interfaces/phone/phone-contact.interface';
-import {replaceUmlaut} from '@/scripts/helpers/helpers';
-import PhoneContact from './Components/ContactsPages/PhoneContact.vue';
-import AddPhoneContact from './Components/ContactsPages/AddPhoneContact.vue';
-import EditPhoneContact from './Components/ContactsPages/EditPhoneContact.vue';
-import DeletePhoneContact from './Components/ContactsPages/DeletePhoneContact.vue';
+import {replaceUmlaut} from "@/scripts/helpers/helpers";
+import PhoneContact from "./Components/ContactsPages/PhoneContact.vue";
+import AddPhoneContact from "./Components/ContactsPages/AddPhoneContact.vue";
+import EditPhoneContact from "./Components/ContactsPages/EditPhoneContact.vue";
+import DeletePhoneContact from "./Components/ContactsPages/DeletePhoneContact.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
+import {PhoneContactInterface} from "@/scripts/interfaces/phone/phone-contact.interface";
 
 interface SortedContactInterface {
     letter: string;
@@ -80,8 +104,8 @@ interface SortedContactInterface {
         PhoneContact,
         AddPhoneContact,
         EditPhoneContact,
-        DeletePhoneContact
-    }
+        DeletePhoneContact,
+    },
 })
 export default class ContactsPage extends Vue {
     @Ref() private readonly addPhoneContact!: AddPhoneContact;
@@ -99,29 +123,35 @@ export default class ContactsPage extends Vue {
     public setup(myNumber: string, contacts: PhoneContactInterface[]): void {
         this.sortedContacts = [];
 
-        const alphabet = 'aäbcdefghijklmnoöpqrstuüvwxyz'.toUpperCase().split('');
+        const alphabet = "aäbcdefghijklmnoöpqrstuüvwxyz".toUpperCase().split("");
         for (let index = 0; index < alphabet.length; index++) {
             const letter = alphabet[index];
 
             const sorted: SortedContactInterface = {
                 letter: letter,
-                contacts: contacts.filter(c => c.name[0].toUpperCase() === letter).sort((a, b) => a.name.localeCompare(b.name))
-            }
+                contacts: contacts
+                    .filter((c) => c.name[0].toUpperCase() === letter)
+                    .sort((a, b) => a.name.localeCompare(b.name)),
+            };
 
             this.sortedContacts.push(sorted);
         }
 
         // We have change the german umlaute to uni code.
-        this.sortedContacts.flatMap(sc => sc.contacts).forEach(sc => sc.name = replaceUmlaut(sc.name));
+        this.sortedContacts
+            .flatMap((sc) => sc.contacts)
+            .forEach((sc) => (sc.name = replaceUmlaut(sc.name)));
 
         // We have also to check all other characters to so we are just checking if there is any contacts left.
-        const sortedMap = this.sortedContacts.flatMap(sc => sc.contacts);
-        const missingContacts = contacts.filter(c => !sortedMap.find(sm => sm.id === c.id));
+        const sortedMap = this.sortedContacts.flatMap((sc) => sc.contacts);
+        const missingContacts = contacts.filter(
+            (c) => !sortedMap.find((sm) => sm.id === c.id)
+        );
 
         const sorted: SortedContactInterface = {
             letter: "Andere Zeichen",
-            contacts: missingContacts.sort((a, b) => a.name.localeCompare(b.name))
-        }
+            contacts: missingContacts.sort((a, b) => a.name.localeCompare(b.name)),
+        };
 
         this.sortedContacts.push(sorted);
 
@@ -196,7 +226,11 @@ export default class ContactsPage extends Vue {
     }
 
     private getCorrectFormat(numberString: string): string {
-        return numberString.substring(0, 3) + " - " + numberString.substring(3, numberString.length);
+        return (
+            numberString.substring(0, 3) +
+            " - " +
+            numberString.substring(3, numberString.length)
+        );
     }
 
     private isNumeric(value: string): boolean {
@@ -223,7 +257,7 @@ export default class ContactsPage extends Vue {
 
 .my-phone h1 {
     margin: unset;
-    font-size: 1.0vw;
+    font-size: 1vw;
     text-align: center;
     color: var(--gray);
     padding-top: 1.25vw;
@@ -231,7 +265,7 @@ export default class ContactsPage extends Vue {
 
 .my-phone h2 {
     margin: unset;
-    font-size: 1.0vw;
+    font-size: 1vw;
     text-align: center;
     color: var(--gray);
 }
@@ -329,7 +363,6 @@ h2 {
         background-color: rgb(70, 151, 105);
     }
 }
-
 
 .delete-button {
     position: relative;

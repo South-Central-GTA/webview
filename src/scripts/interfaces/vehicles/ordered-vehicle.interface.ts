@@ -1,4 +1,4 @@
-export interface OrderedVehiclesInterface {
+﻿export interface OrderedVehicleInterface {
     id: number;
     model: string;
     displayName: string;

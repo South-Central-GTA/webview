@@ -1,8 +1,13 @@
 <template>
     <div class="team-menu-account-catalog">
         <h2>Accounts</h2>
-        <input @input="search()" v-model="accountSearch" type="text" class="form-control-dark mb-2"
-               placeholder="Suche nach aktuellen oder ehemaligen Discord Namen (Bsp. Pride)"/>
+        <input
+            @input="search()"
+            v-model="accountSearch"
+            type="text"
+            class="form-control-dark mb-2"
+            placeholder="Suche nach aktuellen oder ehemaligen Discord Namen (Bsp. Pride)"
+        />
         <div class="table-holder">
             <table class="table table-striped table-hover">
                 <thead>
@@ -16,8 +21,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="account in accounts" v-bind:key="account.id" class="entry"
-                    @click="openUserRecord(account.id)">
+                <tr
+                    v-for="account in accounts"
+                    v-bind:key="account.id"
+                    class="entry"
+                    @click="openUserRecord(account.id)"
+                >
                     <td>{{ account.id }}</td>
                     <td>{{ account.discordId }}</td>
                     <td>{{ account.currentName }}</td>
@@ -32,19 +41,19 @@
 </template>
 
 <script lang="ts">
-import alt from '@/scripts/services/alt.service';
-import {AccountInterface} from "@/scripts/interfaces/account.interface";
+import alt from "@/scripts/services/alt.service";
 import {Vue} from "vue-class-component";
+import {AccountInterface} from "@/scripts/interfaces/account.interface";
 
 export default class TeamMenuAccountCatalog extends Vue {
-    private accounts: AccountInterface[] = []
-    private chacheAccounts: AccountInterface[] = []
+    private accounts: AccountInterface[] = [];
+    private chacheAccounts: AccountInterface[] = [];
     private accountSearch = "";
 
     public mounted(): void {
         alt.on("accountcatalog:setup", (args: any) => this.setup(args[0]));
     }
-    
+
     public unmounted(): void {
         alt.off("accountcatalog:setup");
     }
@@ -65,31 +74,38 @@ export default class TeamMenuAccountCatalog extends Vue {
         }
 
         this.accounts = this.chacheAccounts;
-        this.accounts = this.accounts.filter(c => c.currentName.toLowerCase().includes(this.accountSearch.toLowerCase())
-            || this.getNameHistory(c.nameHistoryJson).find(n => n.includes(this.accountSearch.toLowerCase())));
+        this.accounts = this.accounts.filter(
+            (c) =>
+                c.currentName
+                    .toLowerCase()
+                    .includes(this.accountSearch.toLowerCase()) ||
+                this.getNameHistory(c.nameHistoryJson).find((n) =>
+                    n.includes(this.accountSearch.toLowerCase())
+                )
+        );
     }
 
     private getDate(dateJson: string): string {
         const date = new Date(JSON.parse(dateJson));
         return date.toLocaleDateString("de-DE", {
-            hour: 'numeric',
-            minute: 'numeric',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
+            hour: "numeric",
+            minute: "numeric",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
         });
     }
 
     private getNameHistory(nameHistoryJson: string): string[] {
         const names: string[] = JSON.parse(nameHistoryJson);
-        return names.map(n => n.toLowerCase());
+        return names.map((n) => n.toLowerCase());
     }
 
     private getNameHistoryString(nameHistoryJson: string): string {
-        const names: string[] = JSON.parse(nameHistoryJson)
+        const names: string[] = JSON.parse(nameHistoryJson);
 
         if (names.length === 0) {
-            return "Keine ehemaligen Namen"
+            return "Keine ehemaligen Namen";
         }
 
         return names.join(", ");
