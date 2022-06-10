@@ -1,7 +1,7 @@
 <template>
     <div class='team-menu-event-log'>
         <h2>Eventlog</h2>
-        <input @input='search()' v-model='searchInput' type='text' class='form-control-dark mb-2' placeholder='Suche nach ausführenden Personen' />
+        <input v-model='searchInput' class='form-control-dark mb-2' placeholder='Suche nach ausführenden Personen' type='text' @input='search()' />
         <div class='table-holder'>
             <table class='table table-striped table-hover'>
                 <thead>
@@ -17,7 +17,7 @@
                     <td>{{ command.name }}</td>
                     <td>{{ command.arguments }}</td>
                     <td>{{ command.accountName }}</td>
-                    <td>{{ getDate(command.loggedAtJson) }}</td>
+                    <td>{{ getDate(command.createdAtJson) }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -35,17 +35,12 @@ export default class TeamMenuEventLog extends Vue {
     private cachedCommands: LogCommandInterface[] = [];
     private searchInput = "";
 
-    public mounted(): void {
-        alt.on("eventlog:setup", (args: any) => this.setup(args[0]));
-    }
-
-    public unmounted(): void {
-        alt.off("eventlog:setup");
-    }
-
-    private setup(commands: LogCommandInterface[]): void {
-        this.commands = commands;
-        this.cachedCommands = this.commands;
+    public open(): void {
+        alt.emitServerWithResponse<LogCommandInterface[]>("eventlog:open")
+            .then((commands: LogCommandInterface[]) => {
+                this.commands = commands;
+                this.cachedCommands = this.commands;
+            });
     }
 
     private search(): void {
@@ -54,7 +49,8 @@ export default class TeamMenuEventLog extends Vue {
             return;
         }
 
-        this.commands = this.cachedCommands.filter((c) => c.accountName.toLowerCase().includes(this.searchInput.toLowerCase()));
+        this.commands = this.cachedCommands.filter(
+            (c) => c.accountName.toLowerCase().includes(this.searchInput.toLowerCase()));
     }
 
     private getDate(jsonDate: string): string {

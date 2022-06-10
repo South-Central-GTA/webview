@@ -1,5 +1,5 @@
 <template>
-    <div class='char-card card' ref='selectButton'>
+    <div ref='selectButton' class='char-card card'>
         <h5 class='character-name'>
             {{ character.name }} </h5>
         <div class='character-information-box'>
@@ -41,7 +41,7 @@ export default class CharCard extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .char-card {
     margin: 0.5vw 0vw;
 

@@ -13,7 +13,11 @@ export function countWords(input: string): number {
 
 export const UUIDV4 = (): string => {
     let uuid = "";
-    for (let ii = 0; 32 > ii; ii += 1) 8 === ii || 20 === ii ? ((uuid += "-"), (uuid += (0 | (16 * Math.random())).toString(16))) : 12 === ii ? ((uuid += "-"), (uuid += "4")) : 16 === ii ? ((uuid += "-"), (uuid += (8 | (4 * Math.random())).toString(16))) : (uuid += (0 | (16 * Math.random())).toString(16));
+    for (let ii = 0; 32 > ii; ii += 1) {
+        8 === ii || 20 === ii ? ((uuid += "-"), (uuid += (0 | (16 * Math.random())).toString(
+                16))) : 12 === ii ? ((uuid += "-"), (uuid += "4")) : 16 === ii ? ((uuid += "-"), (uuid += (8 | (4 * Math.random())).toString(
+                16))) : (uuid += (0 | (16 * Math.random())).toString(16));
+    }
     return uuid;
 };
 

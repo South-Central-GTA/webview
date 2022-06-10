@@ -1,10 +1,10 @@
 <template>
-    <div class='set-torso-menu' :hidden='!isVisible' v-bind:class='{ enable: isVisible, disable: !isVisible }'>
+    <div :hidden='!isVisible' class='set-torso-menu' v-bind:class='{ enable: isVisible, disable: !isVisible }'>
         <div class='modal-dialog'>
             <div class='modal-content sc-dark text-white'>
                 <div class='modal-header'>
                     <h5 class='modal-title'>Torso aktualisieren</h5>
-                    <button type='button' class='text-white icon-button float-end' @click='close()'>
+                    <button class='text-white icon-button float-end' type='button' @click='close()'>
                         <font-awesome-icon class='center' icon='times' />
                     </button>
                 </div>
@@ -14,7 +14,7 @@
                 </div>
 
                 <div class='modal-footer justify-content-evenly row'>
-                    <button type='button' class='btn btn-primary col-5' @click='onTorsoUpdateButtonClicked()'>
+                    <button class='btn btn-primary col-5' type='button' @click='onTorsoUpdateButtonClicked()'>
                         Torso aktualisieren
                     </button>
                 </div>

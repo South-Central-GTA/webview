@@ -19,7 +19,7 @@ export default class Notification extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .notification {
     width: 20vw;
     margin: 0.5vw 1vw;

@@ -6,7 +6,7 @@
             <ul class='user-records-block list-group'>
                 <li v-for='userRecord in automaticUserRecords' v-bind:key='userRecord.id' class='pb-1'>
                     <div class='border'>
-                        [{{ getDate(userRecord.loggedAt) }}]<br />{{
+                        [{{ getDate(userRecord.createdAtJson) }}]<br />{{
                             userRecord.text
                         }}<br /><span style='font-style: italic'>Ausführendes Teammitglied {{ userRecord.staffAccountName }}</span>
                     </div>
@@ -18,7 +18,7 @@
             <ul class='user-records-block list-group'>
                 <li v-for='userRecord in staffUserRecords' v-bind:key='userRecord.id' class='pb-1'>
                     <div class='border'>
-                        [{{ getDate(userRecord.loggedAt) }}]<br />{{
+                        [{{ getDate(userRecord.createdAtJson) }}]<br />{{
                             userRecord.text
                         }}<br /><span style='font-style: italic'>Ausführendes Teammitglied {{ userRecord.staffAccountName }}</span>
                     </div>
@@ -26,10 +26,10 @@
             </ul>
         </div>
 
-        <textarea class='form-control-dark' v-model='manuelUserEntry' rows='2' style='resize: none' maxlength='2048' @focus='onFocus(true)' @blur='onFocus(false)'></textarea>
+        <textarea v-model='manuelUserEntry' class='form-control-dark' maxlength='2048' rows='2' style='resize: none' @blur='onFocus(false)' @focus='onFocus(true)'></textarea>
 
         <div class='pt-2'>
-            <button type='button' class='btn btn-primary float-end' :disabled='manuelUserEntry.trim().length < 5' @click='saveEntry()'>
+            <button :disabled='manuelUserEntry.trim().length < 5' class='btn btn-primary float-end' type='button' @click='saveEntry()'>
                 Eintrag speichern
             </button>
         </div>
@@ -52,6 +52,10 @@ export default class TeamMenuUserRecord extends Vue {
     private manuelUserEntry: string = "";
     private accountId: number = 0;
 
+    public open(): void {
+
+    }
+
     public setup(accountId: number, userRecords: UserRecordInterface[]) {
         this.accountId = accountId;
         this.automaticUserRecords = userRecords.filter((ur) => ur.userRecordType == 0);
@@ -63,8 +67,8 @@ export default class TeamMenuUserRecord extends Vue {
         this.manuelUserEntry = "";
     }
 
-    private getDate(loggedAtJson: string): string {
-        const date = new Date(JSON.parse(loggedAtJson));
+    private getDate(jsonDate: string): string {
+        const date = new Date(JSON.parse(jsonDate));
         return date.toLocaleDateString("de-DE", {
             weekday: "short", hour: "numeric", minute: "numeric", month: "long", day: "numeric",
         });

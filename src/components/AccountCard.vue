@@ -58,7 +58,7 @@ export default class AccountCard extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .account-card {
     margin: 1vw;
     text-align: right;

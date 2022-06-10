@@ -1,7 +1,7 @@
 <template>
     <div class='company-worker-edit'>
         <div class='phone-header'>
-            <button type='button' class='icon-button' @click='save()'>
+            <button class='icon-button' type='button' @click='save()'>
                 <font-awesome-icon icon='chevron-left' />
                 <span>Zurück & speichern</span>
             </button>
@@ -18,17 +18,17 @@
                     <div class='col' style='padding: 0 0.8vw 0 0.2vw'>
                         <div class='input-group'>
                             <span class='input-group-text'>$</span>
-                            <input ref='salaryInput' class='form-control' :value='member.salary' :readonly='ownProfile && !owner' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @keypress='allowOnlyNumbers($event)' @focus='onFocus(true)' @blur='onFocus(false)' maxlength='5' />
+                            <input ref='salaryInput' :readonly='ownProfile && !owner' :value='member.salary' class='form-control' maxlength='5' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @blur='onFocus(false)' @focus='onFocus(true)' @keypress='allowOnlyNumbers($event)' />
                         </div>
                     </div>
                 </div>
-                <button type='button' class='btn' :disabled='ownProfile || !rankUpPossible || owner' @click='rankCharacterUp()'>
+                <button :disabled='ownProfile || !rankUpPossible || owner' class='btn' type='button' @click='rankCharacterUp()'>
                     Befördern
                 </button>
-                <button type='button' class='btn' :disabled='ownProfile || !rankDownPossible || owner' @click='rankCharacterDown()'>
+                <button :disabled='ownProfile || !rankDownPossible || owner' class='btn' type='button' @click='rankCharacterDown()'>
                     Degradieren
                 </button>
-                <button type='button' class='btn' :disabled='ownProfile || owner' @click='kickCharacter()'>
+                <button :disabled='ownProfile || owner' class='btn' type='button' @click='kickCharacter()'>
                     Kündigen
                 </button>
             </div>
@@ -40,9 +40,7 @@
 import character from "@/scripts/services/character.service";
 import alt from "@/scripts/services/alt.service";
 import group from "@/scripts/services/group.service";
-import {
-    allowOnlyNumbers, isNumeric, onFocus,
-} from "@/scripts/helpers/helpers";
+import {allowOnlyNumbers, isNumeric, onFocus,} from "@/scripts/helpers/helpers";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
 import {GroupMemberInterface} from "@/scripts/interfaces/group/group-member.interface";
@@ -86,6 +84,24 @@ export default class CompanyWorkerEditPage extends Vue {
         this.updateRankDisplay();
     }
 
+    public save(): void {
+        let salary = 0;
+        if (isNumeric(this.salaryInput.value)) {
+            salary = Number.parseInt(this.salaryInput.value);
+        }
+
+        if (salary <= 0) {
+            salary = 0;
+        }
+
+        this.member.salary = salary;
+
+        alt.emitServer("group:savemember", this.member.groupId, this.member.characterId, this.member.level,
+            this.member.salary);
+
+        this.$emit("back");
+    }
+
     private updateCompany(company?: CompanyInterface): void {
         if (this.company === undefined) {
             return;
@@ -100,23 +116,6 @@ export default class CompanyWorkerEditPage extends Vue {
         if (maxRank !== undefined && this.member.level > maxRank.level) {
             this.rankCharacterDown();
         }
-    }
-
-    public save(): void {
-        let salary = 0;
-        if (isNumeric(this.salaryInput.value)) {
-            salary = Number.parseInt(this.salaryInput.value);
-        }
-
-        if (salary <= 0) {
-            salary = 0;
-        }
-
-        this.member.salary = salary;
-
-        alt.emitServer("group:savemember", this.member.groupId, this.member.characterId, this.member.level, this.member.salary);
-
-        this.$emit("back");
     }
 
     private rankCharacterUp(): void {
@@ -168,7 +167,7 @@ export default class CompanyWorkerEditPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .company-worker-edit {
     overflow: hidden;
     position: absolute;

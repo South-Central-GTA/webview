@@ -3,16 +3,16 @@
         <mdc-fd-header-bar></mdc-fd-header-bar>
         <div class='float-start'>
             <div class='btn-group-vertical m-4'>
-                <button type='button' class='w-100 m-2' @click='openPageId(0)'>
+                <button class='w-100 m-2' type='button' @click='openPageId(0)'>
                     Home
                 </button>
-                <button type='button' class='w-100 m-2' @click='openPageId(1)'>
+                <button class='w-100 m-2' type='button' @click='openPageId(1)'>
                     Suche
                 </button>
-                <button type='button' class='w-100 m-2' @click='openPageId(2)'>
+                <button class='w-100 m-2' type='button' @click='openPageId(2)'>
                     News
                 </button>
-                <button type='button' class='w-100 m-2' @click='openPageId(3)'>
+                <button class='w-100 m-2' type='button' @click='openPageId(3)'>
                     Dateien
                 </button>
             </div>
@@ -21,7 +21,7 @@
         <mdc-fd-home ref='home' :hidden='pageId !== 0'></mdc-fd-home>
         <mdc-search ref='search' :hidden='pageId !== 1'></mdc-search>
         <mdc-apb ref='apb' :hidden='pageId !== 2'></mdc-apb>
-        <mdc-files ref='files' v-on:show-notification='onShowNotification' :hidden='pageId !== 2'></mdc-files>
+        <mdc-files ref='files' :hidden='pageId !== 2' v-on:show-notification='onShowNotification'></mdc-files>
 
         <mdc-patient-record ref='patientRecord' :hidden='pageId !== 1000'></mdc-patient-record>
     </div>
@@ -68,7 +68,9 @@ export default class MdcFdBase extends Vue {
         MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
 
         alt.on("firemdc:openapbscreen", (bulletIns: ApbEntryInterface[]) => this.onOpenApbScreen(bulletIns));
-        alt.on("firemdc:openpatientrecord", (character: CharacterInterface, houses: HouseInterface[], phoneNumbers: string[], medicalHistory: MdcMedicalEntryInterface[], allergies: MdcAllergyInterface[]) => this.onOpenPatientRecord(character, houses, phoneNumbers, medicalHistory, allergies));
+        alt.on("firemdc:openpatientrecord",
+            (character: CharacterInterface, houses: HouseInterface[], phoneNumbers: string[], medicalHistory: MdcMedicalEntryInterface[], allergies: MdcAllergyInterface[]) => this.onOpenPatientRecord(
+                character, houses, phoneNumbers, medicalHistory, allergies));
 
         this.search.setup(FactionType.FIRE_DEPARTMENT);
     }
@@ -78,6 +80,14 @@ export default class MdcFdBase extends Vue {
 
         alt.off("firemdc:openapbscreen");
         alt.off("firemdc:openpatientrecord");
+    }
+
+    public updateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
+        this.home.updateCallSigns(callSigns, hasCallSign);
+    }
+
+    public setEntities(entities: MdcSearchEntityInterface[]): void {
+        this.search.setEntities(entities);
     }
 
     private onShowNotification(message: string): void {
@@ -97,14 +107,6 @@ export default class MdcFdBase extends Vue {
         this.patientRecord.setup(character, houses, phoneNumbers, medicalHistory, allergies);
     }
 
-    public updateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
-        this.home.updateCallSigns(callSigns, hasCallSign);
-    }
-
-    public setEntities(entities: MdcSearchEntityInterface[]): void {
-        this.search.setEntities(entities);
-    }
-
     private openPageId(id: number): void {
         this.pageId = id;
         alt.emitServer("firemdc:openpage", id);
@@ -112,7 +114,7 @@ export default class MdcFdBase extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-fd-base {
     background-color: #cecece;
     height: 100%;

@@ -14,7 +14,7 @@
                         <button type='button' @click='revokeEditFile()'>
                             Änderungen verwerfen
                         </button>
-                        <button type='button' class='mx-2' @click='save()'>
+                        <button class='mx-2' type='button' @click='save()'>
                             Änderungen speichern
                         </button>
                     </div>
@@ -109,7 +109,7 @@ export default class MdcFile extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-file {
     background-color: #cecece;
     height: 100%;

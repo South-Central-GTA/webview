@@ -4,7 +4,7 @@
             <div class='col-12'>
                 <div v-if='bulletIns.length !== 0' class='big-list-holder'>
                     <p v-for='entry in bulletIns' v-bind:key='entry.id'>
-                        <button type='button' v-if='isOperator' class='mx-2' @click='deleteBulletIn(entry.id)'>
+                        <button v-if='isOperator' class='mx-2' type='button' @click='deleteBulletIn(entry.id)'>
                             X
                         </button>
                         <span class='date-text'>{{ entry.creatorCharacterName }} -
@@ -12,10 +12,10 @@
                     </p>
                 </div>
 
-                <div class='position-absolute mb-5 bottom-0' v-if='isOperator'>
-                    <input class='w-100' v-model='bulletInInput' type='text' />
+                <div v-if='isOperator' class='position-absolute mb-5 bottom-0'>
+                    <input v-model='bulletInInput' class='w-100' type='text' />
 
-                    <button type='button' class='float-end mt-1' @click='createBulletIn()'>
+                    <button class='float-end mt-1' type='button' @click='createBulletIn()'>
                         Bulletin hinzufügen
                     </button>
                 </div>
@@ -87,7 +87,7 @@ export default class MdcApb extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-apb {
     background-color: #cecece;
     height: 100%;

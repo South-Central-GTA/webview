@@ -10,9 +10,9 @@
         <img class='phone-bank-logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
         <div class='phone-bank-button-group'>
-            <input ref='receiverBankDetails' class='form-control' oninput='this.value = this.value.toUpperCase();' type='text' @focus='onFocus(true)' @blur='onFocus(false)' placeholder='Bankkonto des Empfängers' maxlength='12' />
-            <input ref='transferValueInput' class='form-control' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @keypress='allowOnlyNumbers($event)' @focus='onFocus(true)' @blur='onFocus(false)' placeholder='Überweisungsmenge in $' maxlength='9' />
-            <button type='button' class='btn' @click='phoneMoneyTransfer()'>
+            <input ref='receiverBankDetails' class='form-control' maxlength='12' oninput='this.value = this.value.toUpperCase();' placeholder='Bankkonto des Empfängers' type='text' @blur='onFocus(false)' @focus='onFocus(true)' />
+            <input ref='transferValueInput' class='form-control' maxlength='9' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' placeholder='Überweisungsmenge in $' type='number' @blur='onFocus(false)' @focus='onFocus(true)' @keypress='allowOnlyNumbers($event)' />
+            <button class='btn' type='button' @click='phoneMoneyTransfer()'>
                 Überweisen
             </button>
         </div>
@@ -53,7 +53,7 @@ export default class PhoneActiveBankAccount extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .phone-bank-money-transfer {
     overflow: hidden;
     position: absolute;

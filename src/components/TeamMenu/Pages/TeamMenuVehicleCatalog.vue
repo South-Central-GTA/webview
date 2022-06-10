@@ -3,10 +3,10 @@
         <h2>Fahrzeug Katalog</h2>
         <div class='row'>
             <div class='col-4'>
-                <input @input='search()' v-model='vehicleSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach Model (Bsp. dilettante)' />
+                <input v-model='vehicleSearch' class='form-control-dark mb-2' placeholder='Suche nach Model (Bsp. dilettante)' type='text' @input='search()' />
             </div>
             <div class='col-3'>
-                <select name='class' ref='classSelection' class='form-control-dark' @change='onChangeClass()'>
+                <select ref='classSelection' class='form-control-dark' name='class' @change='onChangeClass()'>
                     <option value='ALL'>Alle</option>
                     <option value='BOAT'>Boot</option>
                     <option value='COMMERCIAL'>Commercial</option>
@@ -64,8 +64,8 @@
                     <td>{{ vehicle.southCentralPoints }}</td>
                     <td>
                         <div class='input-group'>
-                            <input v-model='vehicle.amountOfOrderableVehicles' type='number' class='form-control-dark' />
-                            <span @click='updateOrderableVehicles(vehicle)' class='btn btn-primary input-group-text'>Stück</span>
+                            <input v-model='vehicle.amountOfOrderableVehicles' class='form-control-dark' type='number' />
+                            <span class='btn btn-primary input-group-text' @click='updateOrderableVehicles(vehicle)'>Stück</span>
                         </div>
                     </td>
                 </tr>
@@ -89,20 +89,21 @@ export default class TeamMenuVehicleCatalog extends Vue {
     private vehicleSearch = "";
     private warningMessage = "";
 
+    public open(): void {
+        alt.emitServerWithResponse<CatalogVehicleInterface[]>("vehiclecatalog:open")
+            .then((vehicles: CatalogVehicleInterface[]) => {
+                this.vehicles = vehicles;
+                this.cachedVehicles = this.vehicles;
+                this.classSelection.value = "ALL";
+            });
+    }
+
     public mounted(): void {
-        alt.on("vehiclecatalog:setup", (args: any[]) => this.setup(args[0]));
         alt.on("vehiclecatalog:update", (args: any[]) => this.update(args[0]));
     }
 
     public unmounted(): void {
-        alt.off("vehiclecatalog:setup");
         alt.off("vehiclecatalog:update");
-    }
-
-    private setup(vehicles: CatalogVehicleInterface[]): void {
-        this.vehicles = vehicles;
-        this.cachedVehicles = this.vehicles;
-        this.classSelection.value = "ALL";
     }
 
     private update(vehicle: CatalogVehicleInterface): void {
@@ -138,7 +139,8 @@ export default class TeamMenuVehicleCatalog extends Vue {
             return;
         }
 
-        alt.emitServer("vehiclecatalog:requestsetorderablevehiclesamount", vehicle.model, vehicle.amountOfOrderableVehicles);
+        alt.emitServer("vehiclecatalog:requestsetorderablevehiclesamount", vehicle.model,
+            vehicle.amountOfOrderableVehicles);
     }
 
     private showWarningMessage(message: string): void {
@@ -161,11 +163,13 @@ export default class TeamMenuVehicleCatalog extends Vue {
         }
 
         if (this.classSelection.value === "ALL") {
-            this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase()));
+            this.vehicles = this.vehicles.filter(
+                (v) => v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase()));
         } else {
             this.vehicles = this.vehicles.filter((v) => v.displayName
                 .toLowerCase()
-                .includes(this.vehicleSearch.toLowerCase()) && v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
+                .includes(
+                    this.vehicleSearch.toLowerCase()) && v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
         }
     }
 
@@ -176,17 +180,20 @@ export default class TeamMenuVehicleCatalog extends Vue {
             if (this.vehicleSearch === "") {
                 this.vehicles = this.cachedVehicles;
             } else {
-                this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase()));
+                this.vehicles = this.vehicles.filter(
+                    (v) => v.displayName.toLowerCase().includes(this.vehicleSearch.toLowerCase()));
             }
             return;
         }
 
         if (this.vehicleSearch === "") {
-            this.vehicles = this.vehicles.filter((v) => v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
+            this.vehicles = this.vehicles.filter(
+                (v) => v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
         } else {
             this.vehicles = this.vehicles.filter((v) => v.displayName
                 .toLowerCase()
-                .includes(this.vehicleSearch.toLowerCase()) && v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
+                .includes(
+                    this.vehicleSearch.toLowerCase()) && v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
         }
     }
 }

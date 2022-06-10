@@ -8,29 +8,29 @@
                         <div class='modal-content sc-dark text-white'>
                             <div class='modal-header'>
                                 <h5 class='modal-title'>{{ title }}</h5>
-                                <button type='button' class='icon-button float-end p-3' @click='closeButtonClicked()'>
+                                <button class='icon-button float-end p-3' type='button' @click='closeButtonClicked()'>
                                     <font-awesome-icon class='center text-white' icon='times' />
                                 </button>
                             </div>
                             <div class='modal-body'>
                                 <span v-html='description'></span>
                                 <div :hidden='!hasBankAccountSelection' class='pt-3'>
-                                    <select-bank-account v-on:change-bank-account='setBankAccount($event)' v-on:setup='setBankAccount($event)' />
+                                    <select-bank-account v-on:setup='setBankAccount($event)' v-on:change-bank-account='setBankAccount($event)' />
                                 </div>
                                 <div :hidden='!hasInputField' class='pt-3'>
-                                    <input class='form-control-dark' type='text' v-model='inputContent' />
+                                    <input v-model='inputContent' class='form-control-dark' type='text' />
                                 </div>
                             </div>
-                            <div class='modal-footer' v-if='type === 0'>
-                                <button type='button' class='btn btn-primary w-50' @click='primaryButtonClicked()'>
+                            <div v-if='type === 0' class='modal-footer'>
+                                <button class='btn btn-primary w-50' type='button' @click='primaryButtonClicked()'>
                                     {{ primaryButton }}
                                 </button>
                             </div>
-                            <div class='modal-footer justify-content-evenly row' v-if='type === 1'>
-                                <button type='button' class='btn btn-secondary col-5' @click='secondaryButtonClicked()'>
+                            <div v-if='type === 1' class='modal-footer justify-content-evenly row'>
+                                <button class='btn btn-secondary col-5' type='button' @click='secondaryButtonClicked()'>
                                     {{ secondaryButton }}
                                 </button>
-                                <button type='button' class='btn btn-primary col-5' @click='primaryButtonClicked()'>
+                                <button class='btn btn-primary col-5' type='button' @click='primaryButtonClicked()'>
                                     {{ primaryButton }}
                                 </button>
                             </div>
@@ -172,7 +172,8 @@ export default class DialogHolder extends Vue {
 
     private primaryButtonClicked(): void {
         if (!this.firedEvent) {
-            alt.emit("dialog:primarybuttonclicked", this.primaryButtonServerEvent, this.primaryButtonClientEvent, this.selectedBankAccount.id, this.inputContent);
+            alt.emit("dialog:primarybuttonclicked", this.primaryButtonServerEvent, this.primaryButtonClientEvent,
+                this.selectedBankAccount.id, this.inputContent);
         }
 
         this.firedEvent = true;
@@ -180,7 +181,8 @@ export default class DialogHolder extends Vue {
 
     private secondaryButtonClicked(): void {
         if (!this.firedEvent) {
-            alt.emit("dialog:secondarybuttonclicked", this.secondaryButtonServerEvent, this.secondaryButtonClientEvent, this.selectedBankAccount.id, this.inputContent);
+            alt.emit("dialog:secondarybuttonclicked", this.secondaryButtonServerEvent, this.secondaryButtonClientEvent,
+                this.selectedBankAccount.id, this.inputContent);
         }
 
         this.firedEvent = true;

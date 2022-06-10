@@ -3,7 +3,7 @@
         <h5>{{ title }}</h5>
         <div class='menu'>
             <div class='left'>
-                <button type='button' class='btn btn-primary' @click='onPreviousButtonClicked()'>
+                <button class='btn btn-primary' type='button' @click='onPreviousButtonClicked()'>
                     <font-awesome-icon icon='caret-left' />
                 </button>
             </div>
@@ -19,24 +19,24 @@
             <p v-if='appearance.value === clearNumber && clearNumber !== 0'>Keine</p>
 
             <div>
-                <button type='button' class='icon-button' @click='toggleMenu()' v-if='hasOpacity || colors !== null'>
+                <button v-if='hasOpacity || colors !== null' class='icon-button' type='button' @click='toggleMenu()'>
                     <font-awesome-icon class='text-white' icon='cog' />
                 </button>
-                <button type='button' class='icon-button' ref='clearButton' :hidden='appearance.value === clearNumber'>
+                <button ref='clearButton' :hidden='appearance.value === clearNumber' class='icon-button' type='button'>
                     <font-awesome-icon class='text-white' icon='trash' />
                 </button>
             </div>
             <div class='right'>
-                <button type='button' class='btn btn-primary' @click='onNextButtonClicked()'>
+                <button class='btn btn-primary' type='button' @click='onNextButtonClicked()'>
                     <font-awesome-icon icon='caret-right' />
                 </button>
             </div>
         </div>
 
         <div :hidden='currentMenuIndex !== menuIndex' class='sub-menu'>
-            <div class='colorBox' v-if='colors !== null'>
+            <div v-if='colors !== null' class='colorBox'>
                 <div v-for='(color, index) in colors' :key='index'>
-                    <button type='button' class='icon-button' @click='selectPrimaryColor(index)'>
+                    <button class='icon-button' type='button' @click='selectPrimaryColor(index)'>
                         <font-awesome-icon icon='circle' v-bind:style="{
                 color: 'rgb(' + color.r + ', ' + color.g + ', ' + color.b + ')',
               }" />
@@ -44,11 +44,11 @@
                 </div>
             </div>
 
-            <div style='padding-top: 1vw' v-if='hasSecondaryColor'>
+            <div v-if='hasSecondaryColor' style='padding-top: 1vw'>
                 <p class='text-white-50'>Haarspitzen Farbe</p>
                 <div class='colorBox'>
                     <div v-for='(color, index) in colors' :key='index'>
-                        <button type='button' class='icon-button' @click='selectSecondaryColor(index)'>
+                        <button class='icon-button' type='button' @click='selectSecondaryColor(index)'>
                             <font-awesome-icon icon='circle' v-bind:style="{
                   color:
                     'rgb(' + color.r + ', ' + color.g + ', ' + color.b + ')',
@@ -59,7 +59,7 @@
             </div>
 
             <div v-if='hasOpacity'>
-                <input type='range' class='form-range' min='0' max='1' step='0.01' v-model='opacityString' @input='updateOpacity()' />
+                <input v-model='opacityString' class='form-range' max='1' min='0' step='0.01' type='range' @input='updateOpacity()' />
                 <div style='margin: unset'>
                     <p class='float-start'>Deckkraft</p>
                 </div>

@@ -2,23 +2,23 @@
     <div class='internet-app programm'>
         <div class='programm'>
             <div class='topbar-internet'>
-                <div class='row p-2' v-if='pageId !== 0'>
+                <div v-if='pageId !== 0' class='row p-2'>
                     <div class='col-md-1'>
-                        <button type='button' class='btn w-100 btn-secondary' @click='reset()'>
+                        <button class='btn w-100 btn-secondary' type='button' @click='reset()'>
                             Home
                         </button>
                     </div>
                     <div class='col-md-11'>
-                        <input type='text' class='form-control' v-model='internetAddress' readonly disabled />
+                        <input v-model='internetAddress' class='form-control' disabled readonly type='text' />
                     </div>
                 </div>
-                <div class='row p-2' v-else>
+                <div v-else class='row p-2'>
                     <div class='col-md-12'>
-                        <input type='text' class='form-control' v-model='internetAddress' readonly disabled />
+                        <input v-model='internetAddress' class='form-control' disabled readonly type='text' />
                     </div>
                 </div>
             </div>
-            <div class='app-group' v-if='pageId === 0'>
+            <div v-if='pageId === 0' class='app-group'>
                 <div class='row'>
                     <button class='app vehicle-dealership' @click='openPageId(1)'>
                         <font-awesome-icon class='center' icon='car' />
@@ -92,7 +92,7 @@ export default class InternetApp extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .internet-app {
     width: 100%;
     height: 100%;

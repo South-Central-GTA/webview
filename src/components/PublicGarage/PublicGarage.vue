@@ -1,8 +1,8 @@
 <template>
     <div class='public-garage' v-bind:class='{ enable: active, disable: !active }'>
-        <div class='sc-card w-25 center' :hidden='!active'>
-            <div class='card-body' :hidden='tabIndex !== 1'>
-                <button type='button' class='btn-close-white icon-button float-end' @click='close()'>
+        <div :hidden='!active' class='sc-card w-25 center'>
+            <div :hidden='tabIndex !== 1' class='card-body'>
+                <button class='btn-close-white icon-button float-end' type='button' @click='close()'>
                     <font-awesome-icon class='center' icon='times' />
                 </button>
 
@@ -12,19 +12,19 @@
 
                 <div class='list'>
                     <div v-for='vehicle in parkedVehicles' v-bind:key='vehicle.id'>
-                        <public-garage-vehicle-card v-bind:vehicle='vehicle' @click='chooseVehicle(vehicle.id)' v-bind:class='{
+                        <public-garage-vehicle-card v-bind:class='{
                 selected: vehicle.id === currentVehicleId,
                 unselected: vehicle.id !== currentVehicleId,
-              }' />
+              }' v-bind:vehicle='vehicle' @click='chooseVehicle(vehicle.id)' />
                     </div>
                 </div>
 
-                <button type='button' class='btn btn-primary w-100 mt-2' @click='unparkVehicle()'>
+                <button class='btn btn-primary w-100 mt-2' type='button' @click='unparkVehicle()'>
                     Ausparken
                 </button>
             </div>
-            <div class='card-body' :hidden='tabIndex !== 2'>
-                <button type='button' class='btn-close-white icon-button float-end' @click='close()'>
+            <div :hidden='tabIndex !== 2' class='card-body'>
+                <button class='btn-close-white icon-button float-end' type='button' @click='close()'>
                     <font-awesome-icon class='center' icon='times' />
                 </button>
 
@@ -109,7 +109,7 @@ export default class PublicGarage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .public-garage {
     position: absolute;
     top: 0;

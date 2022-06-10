@@ -21,13 +21,13 @@
             <p class='card-text'>
                 Wähle das Bankkonto aus auf welchem das Gehalt von deinem definierten Beruf überwiesen werden soll: </p>
 
-            <select-bank-account v-on:change-bank-account='setBankAccount($event)' v-on:setup='setBankAccount($event)' />
+            <select-bank-account v-on:setup='setBankAccount($event)' v-on:change-bank-account='setBankAccount($event)' />
 
             <div class='bottom-0 position-absolute pb-5'>
                 <p class='card-text text-muted'>
                     Solltest du mehr Rollenspiel wollen, können wir dir nur empfehlen eine unserer spielerbasierten Unternehmen aufzusuchen und dort IC einen Job dir zu besorgen. Sie bezahlen besser und du hast die beste Spielerfahrung. </p>
 
-                <button type='button' class='btn btn-primary' @click='chooseJob()' :disabled='!hasBankAccount'>
+                <button :disabled='!hasBankAccount' class='btn btn-primary' type='button' @click='chooseJob()'>
                     Berufsfeld auswählen
                 </button>
             </div>
@@ -50,9 +50,9 @@
                 <p class='card-text'>
                     Wähle das Bankkonto aus auf welchem das Gehalt von deinem definierten Beruf überwiesen werden soll: </p>
 
-                <select-bank-account v-on:change-bank-account='changeBankAccount($event)' v-on:setup='setBankAccount($event)' />
+                <select-bank-account v-on:setup='setBankAccount($event)' v-on:change-bank-account='changeBankAccount($event)' />
 
-                <button type='button' class='btn btn-secondary mt-3' @click='quitJob()'>
+                <button class='btn btn-secondary mt-3' type='button' @click='quitJob()'>
                     Berufsfeld wechseln
                 </button>
             </div>
@@ -87,7 +87,9 @@ export default class CharacterMenuJob extends Vue {
     private selectedBankAccount?: BankAccountInterface;
 
     public mounted(): void {
-        alt.on("jobmenu:setup", (jobs: DefinedJobDataInterface[], playerDefinedJob: DefinedJobDataInterface) => this.setup(jobs, playerDefinedJob));
+        alt.on("jobmenu:setup",
+            (jobs: DefinedJobDataInterface[], playerDefinedJob: DefinedJobDataInterface) => this.setup(jobs,
+                playerDefinedJob));
         alt.on("jobmenu:sendplayerjob", (args: any[]) => this.setJob(args[0]));
     }
 
@@ -113,7 +115,8 @@ export default class CharacterMenuJob extends Vue {
     }
 
     private chooseJob(): void {
-        alt.emitServer("definedjob:select", this.jobs[this.select.options.selectedIndex].id, this.selectedBankAccount?.id);
+        alt.emitServer("definedjob:select", this.jobs[this.select.options.selectedIndex].id,
+            this.selectedBankAccount?.id);
     }
 
     private quitJob(): void {

@@ -1,6 +1,6 @@
 <template>
     <div class='money-transfer'>
-        <button type='button' class='atm-close-button float-end' @click='back()'>
+        <button class='atm-close-button float-end' type='button' @click='back()'>
             <font-awesome-icon class='center' icon='caret-left' />
         </button>
 
@@ -9,20 +9,20 @@
         <div class='button-group'>
             <div class='row'>
                 <div class='col-12'>
-                    <input ref='receiverBankDetails' class='form-control mb-3' type='text' oninput='this.value = this.value.toUpperCase();' placeholder='Konto des Empfängers (SA-123456789)' @input='checkPattern()' maxlength='12' />
+                    <input ref='receiverBankDetails' class='form-control mb-3' maxlength='12' oninput='this.value = this.value.toUpperCase();' placeholder='Konto des Empfängers (SA-123456789)' type='text' @input='checkPattern()' />
                 </div>
                 <div class='col-12'>
                     <div class='input-group w-100 mb-3'>
                         <span class='input-group-text'>$</span>
-                        <input ref='transferValueInput' class='form-control' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' placeholder='Wieviel Geld überweisen?' maxlength='7' @keypress='allowOnlyNumbers($event)' />
+                        <input ref='transferValueInput' class='form-control' maxlength='7' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' placeholder='Wieviel Geld überweisen?' type='number' @keypress='allowOnlyNumbers($event)' />
                     </div>
                 </div>
                 <div class='col-12'>
-                    <input class='form-control' type='text' v-model='purposeOfUse' placeholder='Überweisungsgrund' maxlength='64' />
+                    <input v-model='purposeOfUse' class='form-control' maxlength='64' placeholder='Überweisungsgrund' type='text' />
                 </div>
             </div>
 
-            <button type='button' class='btn atm-menu-button w-100' @click='transfer()' :disabled='!bankDetailsValid || !isValuePositive'>
+            <button :disabled='!bankDetailsValid || !isValuePositive' class='btn atm-menu-button w-100' type='button' @click='transfer()'>
                 Überweisen
             </button>
         </div>
@@ -53,7 +53,8 @@ export default class MoneyTransfer extends Vue {
     private transfer(): void {
         if (!this.isValuePositive || !this.bankDetailsValid) return;
 
-        this.$emit("transfer", this.receiverBankDetails.value, Number.parseInt(this.transferValueInput.value), this.purposeOfUse);
+        this.$emit("transfer", this.receiverBankDetails.value, Number.parseInt(this.transferValueInput.value),
+            this.purposeOfUse);
 
         this.transferValueInput.value = "";
         this.receiverBankDetails.value = "";
@@ -65,7 +66,8 @@ export default class MoneyTransfer extends Vue {
     }
 
     private checkValue(): void {
-        this.isValuePositive = isNumeric(this.transferValueInput.value) && Number.parseInt(this.transferValueInput.value) >= 1;
+        this.isValuePositive = isNumeric(this.transferValueInput.value) && Number.parseInt(
+            this.transferValueInput.value) >= 1;
     }
 
     private allowOnlyNumbers(state: KeyboardEvent): void {

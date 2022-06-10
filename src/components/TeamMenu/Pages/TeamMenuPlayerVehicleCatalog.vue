@@ -1,7 +1,7 @@
 <template>
     <div class='team-menu-player-vehicle-catalog'>
         <h2>Spielerfahrzeug</h2>
-        <input @input='search()' v-model='searchInput' type='text' class='form-control-dark mb-2' placeholder='Suche nach Fahrzeug Models (Bsp. Sultan)' />
+        <input v-model='searchInput' class='form-control-dark mb-2' placeholder='Suche nach Fahrzeug Models (Bsp. Sultan)' type='text' @input='search()' />
         <div class='table-holder'>
             <table class='table table-striped table-hover'>
                 <thead>
@@ -45,17 +45,12 @@ export default class TeamMenuPlayerVehicleCatalog extends Vue {
     private cachedVehicles: VehicleInterface[] = [];
     private searchInput = "";
 
-    public mounted(): void {
-        alt.on("playervehiclecatalog:setup", (args: any) => this.setup(args[0]));
-    }
-
-    public unmounted(): void {
-        alt.off("playervehiclecatalog:setup");
-    }
-
-    private setup(vehicles: VehicleInterface[]): void {
-        this.vehicles = vehicles;
-        this.cachedVehicles = this.vehicles;
+    public open(): void {
+        alt.emitServerWithResponse<VehicleInterface[]>("playervehiclecatalog:open")
+            .then((vehicles: VehicleInterface[]) => {
+                this.vehicles = vehicles;
+                this.cachedVehicles = this.vehicles;
+            });
     }
 
     private search(): void {
@@ -64,7 +59,8 @@ export default class TeamMenuPlayerVehicleCatalog extends Vue {
             return;
         }
 
-        this.vehicles = this.cachedVehicles.filter((v) => v.model.toLowerCase().includes(this.searchInput.toLowerCase()));
+        this.vehicles = this.cachedVehicles.filter(
+            (v) => v.model.toLowerCase().includes(this.searchInput.toLowerCase()));
     }
 }
 </script>

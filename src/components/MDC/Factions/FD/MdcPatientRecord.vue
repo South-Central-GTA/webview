@@ -26,7 +26,7 @@
 
                 <div v-if='medicalHistory.length !== 0' class='big-list-holder'>
                     <p v-for='entry in medicalHistory' v-bind:key='entry.id'>
-                        <button type='button' v-if='isOperator' @click='deleteMedicalHistory(entry.id)'>
+                        <button v-if='isOperator' type='button' @click='deleteMedicalHistory(entry.id)'>
                             X
                         </button>
                         {{ entry.content }}<br /> <span class='date-text'>{{ entry.creatorCharacterName }} -
@@ -35,9 +35,9 @@
                 </div>
 
                 <div class='position-absolute mb-5 bottom-0'>
-                    <input class='w-100' v-model='medicalHistoryInput' type='text' />
+                    <input v-model='medicalHistoryInput' class='w-100' type='text' />
 
-                    <button type='button' class='float-end mt-1' @click='createMedicalHistory()'>
+                    <button class='float-end mt-1' type='button' @click='createMedicalHistory()'>
                         Medical History hinzufügen
                     </button>
                 </div>
@@ -47,7 +47,7 @@
 
                 <div v-if='allergies.length !== 0' class='big-list-holder'>
                     <p v-for='entry in allergies' v-bind:key='entry.id'>
-                        <button type='button' v-if='isOperator' @click='deleteAllergy(entry.id)'>
+                        <button v-if='isOperator' type='button' @click='deleteAllergy(entry.id)'>
                             X
                         </button>
                         {{ entry.content }}<br /> <span class='date-text'>{{ entry.creatorCharacterName }} -
@@ -56,9 +56,9 @@
                 </div>
 
                 <div class='position-absolute mb-5 bottom-0'>
-                    <input class='w-100' v-model='allergyInput' type='text' />
+                    <input v-model='allergyInput' class='w-100' type='text' />
 
-                    <button type='button' class='float-end mt-1' @click='createAllergy()'>
+                    <button class='float-end mt-1' type='button' @click='createAllergy()'>
                         Neue Allergie hinzufügen
                     </button>
                 </div>
@@ -100,10 +100,6 @@ export default class MdcPatientRecord extends Vue {
         MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
 
-    private onIsOperatorChanged(value: boolean): void {
-        this.isOperator = value;
-    }
-
     public setup(character: CharacterInterface, houses: HouseInterface[], phoneNumbers: string[], medicalHistory: MdcMedicalEntryInterface[], allergies: MdcAllergyInterface[]): void {
         this.characterId = character.id;
         this.characterName = character.name;
@@ -111,6 +107,10 @@ export default class MdcPatientRecord extends Vue {
         this.phoneNumbers = phoneNumbers;
         this.medicalHistory = medicalHistory;
         this.allergies = allergies;
+    }
+
+    private onIsOperatorChanged(value: boolean): void {
+        this.isOperator = value;
     }
 
     private createMedicalHistory(): void {
@@ -154,7 +154,7 @@ export default class MdcPatientRecord extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-patient-record {
     background-color: #cecece;
     height: 100%;

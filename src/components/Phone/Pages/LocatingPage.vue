@@ -8,7 +8,7 @@
             <p class='subtitle'>Wir wissen, wo Sie nachts parken.</p>
         </div>
 
-        <div class='loading' v-if='isLoading && !loadedOnce'>
+        <div v-if='isLoading && !loadedOnce' class='loading'>
             <h1>{{ loadingText }}</h1>
         </div>
 
@@ -18,15 +18,15 @@
                     <h6>Privatfahrzeuge</h6>
                     <div class='list'>
                         <div v-for='vehicle in characterVehicles' v-bind:key='vehicle.id'>
-                            <vehicle-card v-bind:vehicle='vehicle' class='vehicle-entry' @click='chooseVehicle(vehicle.id)' />
+                            <vehicle-card class='vehicle-entry' v-bind:vehicle='vehicle' @click='chooseVehicle(vehicle.id)' />
                         </div>
                     </div>
                 </div>
-                <div class='pt-1' v-if='groupVehicles.length !== 0'>
+                <div v-if='groupVehicles.length !== 0' class='pt-1'>
                     <h6>Gruppen Fahrzeuge</h6>
                     <div class='list'>
                         <div v-for='vehicle in groupVehicles' v-bind:key='vehicle.id'>
-                            <vehicle-card v-bind:vehicle='vehicle' class='vehicle-entry' @click='chooseVehicle(vehicle.id)' />
+                            <vehicle-card class='vehicle-entry' v-bind:vehicle='vehicle' @click='chooseVehicle(vehicle.id)' />
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div v-else>
-                <button type='button' class='mt-5 btn stop-tracking-button' @click='stopTracking()'>
+                <button class='mt-5 btn stop-tracking-button' type='button' @click='stopTracking()'>
                     Tracking beenden
                 </button>
             </div>
@@ -144,7 +144,7 @@ export default class LocatingPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .locating-page {
     overflow: hidden;
     top: 0;

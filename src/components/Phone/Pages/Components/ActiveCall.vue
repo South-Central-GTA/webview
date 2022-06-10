@@ -4,7 +4,7 @@
         <h1 class='call-time'>{{ callTime }}</h1>
         <div class='actions-block'>
             <div class='rows'>
-                <button type='button' class='btn hangup-button' @click='hangupClicked'>
+                <button class='btn hangup-button' type='button' @click='hangupClicked'>
                     <font-awesome-icon class='center' icon='phone' />
                 </button>
             </div>
@@ -123,7 +123,7 @@ export default class ActiveCall extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .active-call {
     position: absolute;
     top: 0;

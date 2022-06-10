@@ -1,7 +1,7 @@
 <template>
     <div class='character-menu-animations'>
         <h2>Animationen</h2>
-        <input @input='search()' v-model='searchBar' type='text' class='form-control-dark mb-2' placeholder='Suche nach einem Namen' />
+        <input v-model='searchBar' class='form-control-dark mb-2' placeholder='Suche nach einem Namen' type='text' @input='search()' />
 
         <div class='table-holder'>
             <table class='table table-striped table-hover'>
@@ -15,7 +15,7 @@
                 <tr v-for='animation in animations' v-bind:key='animation.id' class='entry'>
                     <td>{{ animation.name }}</td>
                     <td>
-                        <button type='button' class='btn w-100' v-bind:class="{
+                        <button class='btn w-100' type='button' v-bind:class="{
                   'btn-outline-primary': !hasAnimation(animation.id),
                   'btn-primary': hasAnimation(animation.id),
                 }" @click='toggleAnimation(animation.id)'>
@@ -117,7 +117,8 @@ export default class CharacterMenuAnimations extends Vue {
             return;
         }
 
-        this.animations = this.cachedAnimations.filter((m) => m.name.toLowerCase().includes(this.searchBar.toLowerCase()));
+        this.animations = this.cachedAnimations.filter(
+            (m) => m.name.toLowerCase().includes(this.searchBar.toLowerCase()));
     }
 }
 </script>

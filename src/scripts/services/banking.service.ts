@@ -4,17 +4,11 @@ import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.inter
 
 export default class BankingService {
     private static instance: BankingService;
+    private readonly onBankAccountsChanged = new LiteEvent<BankAccountInterface[]>();
+    private bankAccounts: BankAccountInterface[] = [];
 
     private constructor() {
         // do something construct...
-    }
-
-    static getInstance() {
-        if (!BankingService.instance) {
-            BankingService.instance = new BankingService();
-            // ... any one time initialization goes here ...
-        }
-        return BankingService.instance;
     }
 
     get hasBankAccount() {
@@ -29,8 +23,13 @@ export default class BankingService {
         return this.onBankAccountsChanged.expose();
     }
 
-    private readonly onBankAccountsChanged = new LiteEvent<BankAccountInterface[]>();
-    private bankAccounts: BankAccountInterface[] = [];
+    static getInstance() {
+        if (!BankingService.instance) {
+            BankingService.instance = new BankingService();
+            // ... any one time initialization goes here ...
+        }
+        return BankingService.instance;
+    }
 
     public listenToEvents(): void {
         alt.on("bank:updatebankaccounts", (args: any[]) => this.updateBankAccounts(args[0]));

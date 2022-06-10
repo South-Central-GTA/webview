@@ -2,7 +2,7 @@
     <div class='team-menu-character-catalog'>
         <div v-if='!isPopupOpen'>
             <h2>Charaktere</h2>
-            <input @input='search()' v-model='characterSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach Namen (Bsp. Max Mustermann)' />
+            <input v-model='characterSearch' class='form-control-dark mb-2' placeholder='Suche nach Namen (Bsp. Max Mustermann)' type='text' @input='search()' />
             <div class='table-holder'>
                 <table class='table table-striped table-hover'>
                     <thead>
@@ -16,13 +16,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for='character in characters' v-bind:key='character.id' class='entry' @click='requestDetails(character)'>
+                    <tr v-for='character in characters' v-bind:key='character.id' class='entry' @click='requestDetails(character.id)'>
                         <td>{{ character.id }}</td>
-                        <td>{{ character.currentAccountName }}</td>
+                        <td>{{ character.accountName }}</td>
                         <td>{{ character.name }}</td>
-                        <td>{{ getDate(character.onlineSince) }}</td>
-                        <td>{{ getDate(character.lastUsage) }}</td>
-                        <td>{{ getDate(character.createdAt) }}</td>
+                        <td>{{ getDate(character.onlineSinceJson) }}</td>
+                        <td>{{ getDate(character.lastUsageJson) }}</td>
+                        <td>{{ getDate(character.createdAtJson) }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -39,7 +39,7 @@
                 <div class='row'>
                     <div class='col-6'>
                         <p>
-                            <b>OOC Account:</b> [{{ this.openCharacter.accountId }}] {{ this.openCharacter.currentAccountName }}
+                            <b>OOC Account:</b> [{{ this.openCharacter.accountId }}] {{ this.openCharacter.accountName }}
                         </p>
                     </div>
                     <div class='col-6'>
@@ -159,6 +159,7 @@ import {HouseInterface} from "@/scripts/interfaces/house.interface";
 import {VehicleInterface} from "@/scripts/interfaces/vehicles/vehicle.interface";
 import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
 import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
+import {CharacterCatalogRequestDetailsInterface} from "@/scripts/interfaces/team-menu/haracter-catalog-request-details.interface";
 
 export default class TeamMenuVehicleCatalog extends Vue {
     private characters: CharacterInterface[] = [];
@@ -172,33 +173,27 @@ export default class TeamMenuVehicleCatalog extends Vue {
     private groups: GroupInterface[] = [];
     private bankAccounts: BankAccountInterface[] = [];
 
-    public mounted(): void {
-        alt.on("charactercatalog:setup", (args: any) => this.setup(args[0]));
-        alt.on("charactercatalog:opendetails", (args: any) => this.openDetails(args[0], args[1], args[2], args[3], args[4]));
+    public open(): void {
+        alt.emitServerWithResponse<CharacterInterface[]>("charactercatalog:open")
+            .then((characters: CharacterInterface[]) => {
+                this.characters = characters;
+                this.cachedCharacters = this.characters;
+                this.isPopupOpen = false;
+            });
     }
 
-    public unmounted(): void {
-        alt.off("charactercatalog:setup");
-        alt.off("charactercatalog:opendetails");
-    }
+    private requestDetails(characterId: number): void {
+        alt.emitServerWithResponse<CharacterCatalogRequestDetailsInterface>("charactercatalog:requestdetails",
+            characterId)
+            .then((request: CharacterCatalogRequestDetailsInterface) => {
 
-    private setup(characters: CharacterInterface[]): void {
-        this.characters = characters;
-        this.cachedCharacters = this.characters;
-        this.isPopupOpen = false;
-    }
-
-    private requestDetails(character: CharacterInterface): void {
-        alt.emitServer("charactercatalog:requestdetails", character.id);
-    }
-
-    private openDetails(character: CharacterInterface, vehicles: VehicleInterface[], houses: HouseInterface[], groups: GroupInterface[], bankAccounts: BankAccountInterface[]): void {
-        this.openCharacter = character;
-        this.vehicles = vehicles;
-        this.houses = houses;
-        this.groups = groups;
-        this.bankAccounts = bankAccounts;
-        this.isPopupOpen = true;
+                this.openCharacter = request.character;
+                this.vehicles = request.vehicles;
+                this.houses = request.houses;
+                this.groups = request.groups;
+                this.bankAccounts = request.bankAccounts;
+                this.isPopupOpen = true;
+            });
     }
 
     private closeDetails(): void {
@@ -211,7 +206,8 @@ export default class TeamMenuVehicleCatalog extends Vue {
             return;
         }
 
-        this.characters = this.cachedCharacters.filter((c) => c.name.toLowerCase().includes(this.characterSearch.toLowerCase()));
+        this.characters = this.cachedCharacters.filter(
+            (c) => c.name.toLowerCase().includes(this.characterSearch.toLowerCase()));
     }
 
     private getCharacterState(state: number): string {

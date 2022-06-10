@@ -39,43 +39,43 @@
             '>Keine Suchergebnisse!</span>
                 </p>
                 <div class='row'>
-                    <div class='col-6' v-if='hasDrivingLicense'>
+                    <div v-if='hasDrivingLicense' class='col-6'>
                         <label class='form-label'>Führerschein:</label><br />
                         <div class='btn-group w-100'>
-                            <button type='button' class='bg-warning' @click='warnDriverLicense()'>
+                            <button class='bg-warning' type='button' @click='warnDriverLicense()'>
                                 Verwarnung
                             </button>
-                            <button type='button' class='bg-danger mx-1' @click='removeDriverLicense()'>
+                            <button class='bg-danger mx-1' type='button' @click='removeDriverLicense()'>
                                 Entziehen
                             </button>
                         </div>
                     </div>
-                    <div class='col-6' v-if='hasBoatsLicense'>
+                    <div v-if='hasBoatsLicense' class='col-6'>
                         <label class='form-label'>Bootsschein:</label><br />
                         <div class='btn-group w-100'>
-                            <button type='button' class='bg-warning' @click='warnBoatLicense()'>
+                            <button class='bg-warning' type='button' @click='warnBoatLicense()'>
                                 Verwarnung
                             </button>
-                            <button type='button' class='bg-danger mx-1' @click='removeBoatLicense()'>
+                            <button class='bg-danger mx-1' type='button' @click='removeBoatLicense()'>
                                 Entziehen
                             </button>
                         </div>
                     </div>
-                    <div class='col-6' v-if='hasFlyingLicense'>
+                    <div v-if='hasFlyingLicense' class='col-6'>
                         <label class='form-label'>Flugschein:</label><br />
                         <div class='btn-group w-100'>
-                            <button type='button' class='bg-warning' @click='warnFlyingLicense()'>
+                            <button class='bg-warning' type='button' @click='warnFlyingLicense()'>
                                 Verwarnung
                             </button>
-                            <button type='button' class='bg-danger mx-1' @click='removeFlyingLicense()'>
+                            <button class='bg-danger mx-1' type='button' @click='removeFlyingLicense()'>
                                 Entziehen
                             </button>
                         </div>
                     </div>
-                    <div class='col-6' v-if='hasWeaponLicense'>
+                    <div v-if='hasWeaponLicense' class='col-6'>
                         <label class='form-label'>Waffenschein:</label><br />
                         <div class='btn-group w-100'>
-                            <button type='button' class='bg-danger' @click='removeWeaponLicense()'>
+                            <button class='bg-danger' type='button' @click='removeWeaponLicense()'>
                                 Entziehen
                             </button>
                         </div>
@@ -87,7 +87,7 @@
 
                 <div v-if='records.length !== 0' class='big-list-holder'>
                     <p v-for='record in records' v-bind:key='record.id'>
-                        <button type='button' v-if='isOperator' @click='deleteRecord(record.id)'>
+                        <button v-if='isOperator' type='button' @click='deleteRecord(record.id)'>
                             X
                         </button>
                         {{ record.reason }}<br /> <span class='date-text'>{{ record.creatorCharacterName }} -
@@ -96,9 +96,9 @@
                 </div>
 
                 <div class='position-absolute mb-5 bottom-0'>
-                    <input class='w-100' v-model='recordInput' type='text' />
+                    <input v-model='recordInput' class='w-100' type='text' />
 
-                    <button type='button' class='float-end mt-1' @click='createRecord()'>
+                    <button class='float-end mt-1' type='button' @click='createRecord()'>
                         Record hinzufügen
                     </button>
                 </div>
@@ -108,7 +108,7 @@
 
                 <div v-if='notes.length !== 0' class='big-list-holder'>
                     <p v-for='note in notes' v-bind:key='note.id'>
-                        <button type='button' v-if='isOperator' @click='deleteNote(note.id)'>
+                        <button v-if='isOperator' type='button' @click='deleteNote(note.id)'>
                             X
                         </button>
                         {{ note.note }}<br /> <span class='date-text'>{{ note.creatorCharacterName }} -
@@ -117,9 +117,9 @@
                 </div>
 
                 <div class='position-absolute mb-5 bottom-0'>
-                    <input class='w-100' v-model='noteInput' type='text' />
+                    <input v-model='noteInput' class='w-100' type='text' />
 
-                    <button type='button' class='float-end mt-1' @click='createNote()'>
+                    <button class='float-end mt-1' type='button' @click='createNote()'>
                         Notiz hinzufügen
                     </button>
                 </div>
@@ -308,7 +308,7 @@ export default class MdcCharacterRecord extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-character-record {
     background-color: #cecece;
     height: 100%;

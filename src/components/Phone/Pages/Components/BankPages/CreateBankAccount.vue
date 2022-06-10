@@ -19,7 +19,7 @@
             <div class='phone-bank-button-group'>
                 <p class='pb-4'>
                     Das erste Konto ist bei der Maze Bank komplett kostenfrei. </p>
-                <button type='button' class='btn' @click='createAccountFree()'>
+                <button class='btn' type='button' @click='createAccountFree()'>
                     Konto eröffnen
                 </button>
                 <p class='subtitle'>
@@ -29,8 +29,8 @@
         <div :hidden='isFirstAccount || willBeProcessed'>
             <div class='phone-bank-button-group'>
                 <p class='pb-4'>Ein Bankkonto kostet Sie einmalig $500.</p>
-                <select-bank-account class='select-bank' v-on:change-bank-account='setBankAccount($event)' v-on:setup='setBankAccount($event)' />
-                <button type='button' class='btn' @click='buyNewAccount()'>
+                <select-bank-account class='select-bank' v-on:setup='setBankAccount($event)' v-on:change-bank-account='setBankAccount($event)' />
+                <button class='btn' type='button' @click='buyNewAccount()'>
                     Konto eröffnen
                 </button>
                 <p class='subtitle'>
@@ -53,15 +53,14 @@ import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.inter
     },
 })
 export default class CreateBankAccount extends Vue {
-    get isCreatingAccount() {
-        return this.willBeProcessed;
-    }
-
     @Ref() private readonly selectBank!: SelectBankAccount;
-
     private isFirstAccount = true;
     private willBeProcessed = false;
     private selectedBankAccount!: BankAccountInterface;
+
+    get isCreatingAccount() {
+        return this.willBeProcessed;
+    }
 
     public setup(firstAccount: boolean): void {
         this.isFirstAccount = firstAccount;
@@ -101,7 +100,7 @@ export default class CreateBankAccount extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .create-bank-account {
     overflow: hidden;
     position: absolute;

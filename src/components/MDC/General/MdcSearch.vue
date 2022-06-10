@@ -3,13 +3,13 @@
         <div class='content row m-4'>
             <div class='col'>
                 <h5>Interne Suche:</h5>
-                <input class='w-100' :placeholder='placeHolderText' v-model='searchInput' type='text' :disabled='isLoading' />
-                <button class='w-100 mt-2' @click='searchClicked' :disabled='isLoading'>
+                <input v-model='searchInput' :disabled='isLoading' :placeholder='placeHolderText' class='w-100' type='text' />
+                <button :disabled='isLoading' class='w-100 mt-2' @click='searchClicked'>
                     Suchen
                 </button>
 
                 <div v-if='searchEntities.length !== 0' class='list-holder pt-5'>
-                    <div class='pb-1' v-for='(entity, index) in searchEntities' v-bind:key='index'>
+                    <div v-for='(entity, index) in searchEntities' v-bind:key='index' class='pb-1'>
                         <button class='w-100' @click='clickEntity(entity)'>
                             {{ entity.name }}
                         </button>
@@ -72,7 +72,7 @@ export default class MdcSearch extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-search {
     background-color: #cecece;
     height: 100%;

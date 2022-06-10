@@ -2,9 +2,9 @@
     <div class='mdc-files'>
         <div class='content row m-4'>
             <div class='col'>
-                <mdc-file ref='file' :hidden='!isFileOpen' v-on:show-notification='onShowNotification' v-on:close='onCloseFile()'></mdc-file>
+                <mdc-file ref='file' :hidden='!isFileOpen' v-on:close='onCloseFile()' v-on:show-notification='onShowNotification'></mdc-file>
 
-                <div class='background' style='z-index: 99999 !important' v-if='showDeleteDialog'>
+                <div v-if='showDeleteDialog' class='background' style='z-index: 99999 !important'>
                     <div class='center'>
                         <div class='modal-dialog'>
                             <div class='modal-content bg-white overflow-hidden' style='border-radius: 0 !important'>
@@ -14,10 +14,10 @@
                                         soll?</span>
                                 </div>
                                 <div class='py-2 justify-content-evenly row'>
-                                    <button type='button' class='col-5' @click='deleteFile()'>
+                                    <button class='col-5' type='button' @click='deleteFile()'>
                                         Ja
                                     </button>
-                                    <button type='button' class='col-5' @click='closeDialog()'>
+                                    <button class='col-5' type='button' @click='closeDialog()'>
                                         Nein
                                     </button>
                                 </div>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                <div class='background' style='z-index: 99999 !important' v-if='showSetPermissionDialog'>
+                <div v-if='showSetPermissionDialog' class='background' style='z-index: 99999 !important'>
                     <div class='center'>
                         <div class='modal-dialog'>
                             <div class='modal-content bg-white overflow-hidden' style='border-radius: 0 !important'>
@@ -34,20 +34,20 @@
                                     <h5 class='modal-title'>Zugriffseinschränkung</h5>
                                     <span>Welcher Rang soll Lesezugriff auf diesen Ordner haben?</span>
                                     <select class='form-select' @change='onChangeReadPermission($event)'>
-                                        <option v-for='groupRank in groupRanks' v-bind:key='groupRank.level' :value='groupRank.level' :selected='readGroupRankLevel === groupRank.level'>
+                                        <option v-for='groupRank in groupRanks' v-bind:key='groupRank.level' :selected='readGroupRankLevel === groupRank.level' :value='groupRank.level'>
                                             {{ groupRank.name }}
                                         </option>
                                     </select>
 
                                     <span class='pt-4'>Welcher Rang soll in dem Ordner was bearbeiten
                     dürfen?</span> <select class='form-select' @change='onChangeWritePermission($event)'>
-                                    <option v-for='groupRank in groupRanks' v-bind:key='groupRank.level' :value='groupRank.level' :selected='writeGroupRankLevel === groupRank.level'>
+                                    <option v-for='groupRank in groupRanks' v-bind:key='groupRank.level' :selected='writeGroupRankLevel === groupRank.level' :value='groupRank.level'>
                                         {{ groupRank.name }}
                                     </option>
                                 </select>
                                 </div>
                                 <div class='py-2 justify-content-evenly row'>
-                                    <button type='button' class='col-5' @click='closeDialog()'>
+                                    <button class='col-5' type='button' @click='closeDialog()'>
                                         Okay
                                     </button>
                                 </div>
@@ -57,12 +57,12 @@
                 </div>
 
                 <div v-if='!isFileOpen'>
-                    <button class='icon-button' @click='backToRoot()' v-if='directoryId !== null'>
+                    <button v-if='directoryId !== null' class='icon-button' @click='backToRoot()'>
                         <font-awesome-icon icon='chevron-left' />
                         <span class='px-2'>{{ directoryName }}</span>
                     </button>
 
-                    <div class='table-fix-head' ref='mdcFiles'>
+                    <div ref='mdcFiles' class='table-fix-head'>
                         <table class='table table-striped table-hover'>
                             <thead>
                             <tr>
@@ -82,22 +82,22 @@
                                     {{ file.title }}
                                 </td>
                                 <td v-if='editFileNameId === file.id'>
-                                    <input v-model='file.title' v-on:keyup.enter='requestFileNameChange(file)' maxlength='50' />
+                                    <input v-model='file.title' maxlength='50' v-on:keyup.enter='requestFileNameChange(file)' />
                                 </td>
                                 <td>{{ file.creatorCharacterName }}</td>
                                 <td class='date'>
                                     {{ getDate(file.lastEditAtJson) }} - <i>{{ file.lastEditCharacterName }}</i>
                                 </td>
                                 <td class='pointer-event'>
-                                    <button class='icon-button' @click='editFileName(file)' v-if='
+                                    <button v-if='
                         file.creatorCharacterId === characterId || isOperator
-                      '>
+                      ' class='icon-button' @click='editFileName(file)'>
                                         <font-awesome-icon icon='pen' />
                                     </button>
-                                    <button class='icon-button' @click='requestDeleteFile(file)' v-if='isOperator'>
+                                    <button v-if='isOperator' class='icon-button' @click='requestDeleteFile(file)'>
                                         <font-awesome-icon icon='trash' />
                                     </button>
-                                    <button class='icon-button' @click='requestSetAccessPermission(file)' v-if='isOwner && file.isDirectory'>
+                                    <button v-if='isOwner && file.isDirectory' class='icon-button' @click='requestSetAccessPermission(file)'>
                                         <font-awesome-icon icon='universal-access' />
                                     </button>
                                 </td>
@@ -107,10 +107,10 @@
                     </div>
 
                     <div class='pb-5 position-absolute bottom-0'>
-                        <button type='button' v-if='directoryId === null' @click='createDirectory()'>
+                        <button v-if='directoryId === null' type='button' @click='createDirectory()'>
                             Ordner erstellen
                         </button>
-                        <button type='button' v-if='directoryId !== null' @click='createFile()'>
+                        <button v-if='directoryId !== null' type='button' @click='createFile()'>
                             Textdatei erstellen
                         </button>
                     </div>
@@ -169,7 +169,8 @@ export default class MdcFiles extends Vue {
         this.characterId = character.getInstance().getCharacterId;
 
         if (this.groupId !== -1) {
-            const member = GroupService.getInstance().Faction?.members.find((w) => w.characterId == character.getInstance().getCharacterId);
+            const member = GroupService.getInstance().Faction?.members
+                .find((w) => w.characterId == character.getInstance().getCharacterId);
             if (member !== undefined) {
                 this.isOwner = member.owner;
             }
@@ -181,6 +182,16 @@ export default class MdcFiles extends Vue {
         alt.off("filesystem:openfile");
 
         MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
+    }
+
+    public onOpenFile(file: FileInterface): void {
+        this.file.setup(file);
+        this.isFileOpen = true;
+    }
+
+    public onCloseFile(): void {
+        this.file.revokeEditFile();
+        this.isFileOpen = false;
     }
 
     private onShowNotification(message: string): void {
@@ -195,16 +206,6 @@ export default class MdcFiles extends Vue {
         this.directoryId = directoryId;
         this.directoryName = directoryName;
         this.files = files;
-    }
-
-    public onOpenFile(file: FileInterface): void {
-        this.file.setup(file);
-        this.isFileOpen = true;
-    }
-
-    public onCloseFile(): void {
-        this.file.revokeEditFile();
-        this.isFileOpen = false;
     }
 
     private onChangeReadPermission(eventData: any) {
@@ -375,7 +376,7 @@ export default class MdcFiles extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-files {
     background-color: #cecece;
     height: 100%;

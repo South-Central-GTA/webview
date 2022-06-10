@@ -23,16 +23,16 @@
         </div>
 
         <div class='phone-bank-button-group'>
-            <button type='button' class='btn' @click='openTab(1)' :disabled='!canTransfer'>
+            <button :disabled='!canTransfer' class='btn' type='button' @click='openTab(1)'>
                 Überweisungen
             </button>
-            <button type='button' class='btn' @click='openTab(2)' :disabled='!canManage'>
+            <button :disabled='!canManage' class='btn' type='button' @click='openTab(2)'>
                 Berechtigungen
             </button>
-            <button type='button' class='btn' @click='openTab(3)' :disabled='!canSeeHistory'>
+            <button :disabled='!canSeeHistory' class='btn' type='button' @click='openTab(3)'>
                 Umsätze
             </button>
-            <button type='button' class='btn' @click='openTab(4)' :disabled='!canManage'>
+            <button :disabled='!canManage' class='btn' type='button' @click='openTab(4)'>
                 Konto löschen
             </button>
         </div>
@@ -82,7 +82,8 @@ export default class PhoneActiveBankAccount extends Vue {
         this.canTransfer = false;
         this.canManage = false;
 
-        const characterAccess = bankAccount.characterAccesses.find((ca) => ca.characterId == character.getInstance().getCharacterId);
+        const characterAccess = bankAccount.characterAccesses.find(
+            (ca) => ca.characterId == character.getInstance().getCharacterId);
         if (characterAccess !== undefined) {
             this.canSeeHistory = (characterAccess.permission & BankingPermission.SEE_HISTORY) === BankingPermission.SEE_HISTORY || characterAccess.owner;
             this.canTransfer = (characterAccess.permission & BankingPermission.TRANSFER) === BankingPermission.TRANSFER || characterAccess.owner;
@@ -147,7 +148,7 @@ export default class PhoneActiveBankAccount extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .phone-active-bank-account {
     overflow: hidden;
     position: absolute;

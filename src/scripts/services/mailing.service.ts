@@ -4,17 +4,11 @@ import {MailAccountInterface} from "@/scripts/interfaces/mail/mail-account.inter
 
 export default class MailingService {
     private static instance: MailingService;
+    private readonly onMailAccountsChanged = new LiteEvent<MailAccountInterface[]>();
+    private mailAccounts: MailAccountInterface[] = [];
 
     private constructor() {
         // do something construct...
-    }
-
-    static getInstance() {
-        if (!MailingService.instance) {
-            MailingService.instance = new MailingService();
-            // ... any one time initialization goes here ...
-        }
-        return MailingService.instance;
     }
 
     get hasMailAccount() {
@@ -29,8 +23,13 @@ export default class MailingService {
         return this.onMailAccountsChanged.expose();
     }
 
-    private readonly onMailAccountsChanged = new LiteEvent<MailAccountInterface[]>();
-    private mailAccounts: MailAccountInterface[] = [];
+    static getInstance() {
+        if (!MailingService.instance) {
+            MailingService.instance = new MailingService();
+            // ... any one time initialization goes here ...
+        }
+        return MailingService.instance;
+    }
 
     public listenToEvents(): void {
         alt.on("mailing:updatemailaccounts", (args: any[]) => this.update(args[0]));

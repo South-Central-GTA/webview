@@ -4,13 +4,13 @@
         <div class='row'>
             <div class='col-6'>
                 <div class='float-end'>
-                    <button @click='setGender(0)' type='button' class='icon-button'>
+                    <button class='icon-button' type='button' @click='setGender(0)'>
                         <font-awesome-icon icon='mars' v-bind:class='{ male: gender === 0}' />
                     </button>
                 </div>
             </div>
             <div class='col-6'>
-                <button @click='setGender(1)' type='button' class='icon-button'>
+                <button class='icon-button' type='button' @click='setGender(1)'>
                     <font-awesome-icon icon='venus' v-bind:class='{ female: gender === 1}' />
                 </button>
             </div>

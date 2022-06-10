@@ -1,7 +1,7 @@
 <template>
     <div class='background-setting'>
         <div class='phone-header'>
-            <button type='button' class='icon-button' @click='back()'>
+            <button class='icon-button' type='button' @click='back()'>
                 <font-awesome-icon icon='chevron-left' />
                 <span>Hintergrundbild</span>
             </button>
@@ -9,8 +9,8 @@
 
         <div class='thumbnail-block'>
             <div v-for='index in maxBackgrounds' :key='index'>
-                <button type='button' class='thumbnail' @click='selectBackground(index - 1)'>
-                    <font-awesome-icon v-if='currentBackgroundId === index - 1' icon='hand-pointer' class='selected-icon' />
+                <button class='thumbnail' type='button' @click='selectBackground(index - 1)'>
+                    <font-awesome-icon v-if='currentBackgroundId === index - 1' class='selected-icon' icon='hand-pointer' />
                     <img :src='getImage(index - 1)' v-bind:alt='index' />
                 </button>
             </div>
@@ -46,7 +46,7 @@ export default class BackgroundSetting extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .background-setting {
     overflow: hidden;
     position: absolute;

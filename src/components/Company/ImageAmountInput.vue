@@ -3,7 +3,7 @@
         <img :src='getImage(item.image)' />
         <div class='input-group'>
             <span class='input-group-text-dark'>x</span>
-            <input v-model.number='amount' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' class='form-control-dark' @keypress='allowOnlyNumbers($event)' @input='sendAmount()' @focus='choose()' maxlength='2' />
+            <input v-model.number='amount' class='form-control-dark' maxlength='2' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @focus='choose()' @input='sendAmount()' @keypress='allowOnlyNumbers($event)' />
         </div>
         <p class='name'>{{ item.name }}</p>
         <p class='price money-color'>${{ item.price }}</p>

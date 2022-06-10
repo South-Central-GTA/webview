@@ -32,15 +32,15 @@
         </div>
 
         <div class='phone-gov-button-group'>
-            <input ref='companyName' class='form-control' @input='checkValidation()' @focus='onFocus(true)' @blur='onFocus(false)' type='text' placeholder='Unternehmensname' maxlength='32' />
-            <select-bank-account class='pt-2' ref='selectBank' v-on:change-bank-account='setBankAccount($event)' v-on:setup='setBankAccount($event)' />
+            <input ref='companyName' class='form-control' maxlength='32' placeholder='Unternehmensname' type='text' @blur='onFocus(false)' @focus='onFocus(true)' @input='checkValidation()' />
+            <select-bank-account ref='selectBank' class='pt-2' v-on:setup='setBankAccount($event)' v-on:change-bank-account='setBankAccount($event)' />
 
             <p class='description'>
                 Ausgewählte Immobilie wird der Unternehmenshauptsitz! </p>
 
-            <select-house ref='selectHouse' v-on:change-house='setHouse($event)' v-on:setup='setHouse($event)' />
+            <select-house ref='selectHouse' v-on:setup='setHouse($event)' v-on:change-house='setHouse($event)' />
 
-            <button type='button' class='btn' @click='createCompany()' :disabled='!valid'>
+            <button :disabled='!valid' class='btn' type='button' @click='createCompany()'>
                 Unternehmen eröffnen
             </button>
         </div>
@@ -69,14 +69,13 @@ export default class CompanyCreatePage extends Vue {
 
     private selectedBankAccount!: BankAccountInterface;
     private selectedHouse!: HouseInterface;
+    private willBeProcessed = false;
+    private isHelpVisible = false;
+    private valid = false;
 
     get isCreatingCompany() {
         return this.willBeProcessed;
     }
-
-    private willBeProcessed = false;
-    private isHelpVisible = false;
-    private valid = false;
 
     private back(): void {
         this.$emit("back");
@@ -115,7 +114,8 @@ export default class CompanyCreatePage extends Vue {
     }
 
     private checkValidation(): void {
-        this.valid = this.companyName.value != "" && /^[a-zA-ZÀ-ž&., -]*$/.test(this.companyName.value) && this.selectBank.hasBank && this.selectHouse.hasHouse;
+        this.valid = this.companyName.value != "" && /^[a-zA-ZÀ-ž&., -]*$/.test(
+            this.companyName.value) && this.selectBank.hasBank && this.selectHouse.hasHouse;
     }
 
     private onFocus(state: boolean): void {
@@ -124,7 +124,7 @@ export default class CompanyCreatePage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .company-create {
     overflow: hidden;
     position: absolute;

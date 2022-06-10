@@ -4,11 +4,11 @@
         <div class='row g-3'>
             <div class='col-md-6'>
                 <label class='form-label'>Vorname</label>
-                <input @input='send()' v-model='form.profile.firstName' type='text' class='form-control-dark' placeholder='Maxim' maxlength='16' v-bind:class="{
+                <input v-model='form.profile.firstName' class='form-control-dark' maxlength='16' placeholder='Maxim' type='text' v-bind:class="{
             'is-invalid':
               firstNameValidation !== 'OKAY' && firstNameValidation !== '',
             'is-valid': firstNameValidation === 'OKAY',
-          }" />
+          }" @input='send()' />
                 <div v-if="firstNameValidation === 'EMPTY'" class='invalid-feedback'>
                     Bitte definiere einen Vornamen.
                 </div>
@@ -21,11 +21,11 @@
             </div>
             <div class='col-md-6'>
                 <label class='form-label'>Nachname</label>
-                <input @input='send()' v-model='form.profile.lastName' type='text' class='form-control-dark' placeholder='Mustermann' maxlength='16' v-bind:class="{
+                <input v-model='form.profile.lastName' class='form-control-dark' maxlength='16' placeholder='Mustermann' type='text' v-bind:class="{
             'is-invalid':
               lastNameValidation !== 'OKAY' && lastNameValidation !== '',
             'is-valid': lastNameValidation === 'OKAY',
-          }" />
+          }" @input='send()' />
                 <div v-if="lastNameValidation === 'EMPTY'" class='invalid-feedback'>
                     Bitte definiere ein Nachnamen.
                 </div>
@@ -38,11 +38,11 @@
             </div>
             <div class='col-10'>
                 <label class='form-label'>Herkunft</label>
-                <input @input='send()' v-model='form.profile.origin' type='text' class='form-control-dark' placeholder='San Andreas, Los Santos' maxlength='32' v-bind:class="{
+                <input v-model='form.profile.origin' class='form-control-dark' maxlength='32' placeholder='San Andreas, Los Santos' type='text' v-bind:class="{
             'is-invalid':
               originValidation !== 'OKAY' && originValidation !== '',
             'is-valid': originValidation === 'OKAY',
-          }" />
+          }" @input='send()' />
 
                 <div v-if="originValidation === 'EMPTY'" class='invalid-feedback'>
                     Bitte definiere die Herkunft.
@@ -54,10 +54,10 @@
             </div>
             <div class='col'>
                 <label class='form-label'>Alter</label>
-                <input @input='send()' v-model='age' type='number' class='form-control-dark' placeholder='21' v-bind:class="{
+                <input v-model='age' class='form-control-dark' placeholder='21' type='number' v-bind:class="{
             'is-invalid': ageValidation !== 'OKAY' && ageValidation !== '',
             'is-valid': ageValidation === 'OKAY',
-          }" />
+          }" @input='send()' />
                 <div v-if="ageValidation === 'EMPTY'" class='invalid-feedback'>
                     Bitte definiere das Alter.
                 </div>
@@ -70,11 +70,11 @@
             </div>
             <div class='col-9'>
                 <label class='form-label'>Körperbau</label>
-                <input @input='send()' v-model='form.profile.physique' type='text' class='form-control-dark' maxlength='256' placeholder='Schlaksig, sportlich, dick, dünn, durchschnittlich etc.' v-bind:class="{
+                <input v-model='form.profile.physique' class='form-control-dark' maxlength='256' placeholder='Schlaksig, sportlich, dick, dünn, durchschnittlich etc.' type='text' v-bind:class="{
             'is-invalid':
               physiqueValidation !== 'OKAY' && physiqueValidation !== '',
             'is-valid': physiqueValidation === 'OKAY',
-          }" />
+          }" @input='send()' />
                 <div v-if="physiqueValidation === 'EMPTY'" class='invalid-feedback'>
                     Bitte gebe definiere den Körperbau.
                 </div>
@@ -85,11 +85,11 @@
             <div class='col'>
                 <label class='form-label'>Körpergröße</label>
                 <div class='input-group'>
-                    <input @input='send()' v-model='bodySize' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' maxlength='3' class='form-control-dark' placeholder='180' v-bind:class="{
+                    <input v-model='bodySize' class='form-control-dark' maxlength='3' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' placeholder='180' type='number' v-bind:class="{
               'is-invalid':
                 bodySizeValidation !== 'OKAY' && bodySizeValidation !== '',
               'is-valid': bodySizeValidation === 'OKAY',
-            }" /> <span class='input-group-text-dark'>cm</span>
+            }" @input='send()' /> <span class='input-group-text-dark'>cm</span>
                     <div v-if="bodySizeValidation === 'EMPTY'" class='invalid-feedback'>
                         Bitte definiere die Körpergröße.
                     </div>
@@ -103,10 +103,10 @@
             </div>
             <div class='col-12'>
                 <label class='form-label'>Vorgeschichte</label>
-                <textarea class='form-control-dark' v-model='form.profile.story' rows='9' style='resize: none' maxlength='2048' @input='send()' v-bind:class="{
+                <textarea v-model='form.profile.story' class='form-control-dark' maxlength='2048' rows='9' style='resize: none' v-bind:class="{
             'is-invalid': storyValidation !== 'OKAY' && storyValidation !== '',
             'is-valid': storyValidation === 'OKAY',
-          }">
+          }" @input='send()'>
 ></textarea>
                 <div v-if="storyValidation === 'EMPTY'" class='invalid-feedback'>
                     Bitte definiere die Vorgeschichte.
@@ -119,18 +119,18 @@
                 <label class='form-label'>Wieviel Geld hat dein Charakter?</label>
                 <div class='row g-3'>
                     <div class='col-4'>
-                        <button type='button' @click='onLessMoneyClicked()' class='btn btn-primary' style='width: 100%'>
+                        <button class='btn btn-primary' style='width: 100%' type='button' @click='onLessMoneyClicked()'>
                             <font-awesome-icon icon='arrow-down' />
                         </button>
                     </div>
                     <div class='col-4'>
                         <div class='input-group'>
                             <span class='input-group-text-dark'>$</span>
-                            <input @input='send()' v-model='form.startMoney' type='number' class='form-control-dark' readonly />
+                            <input v-model='form.startMoney' class='form-control-dark' readonly type='number' @input='send()' />
                         </div>
                     </div>
                     <div class='col-4'>
-                        <button type='button' @click='onMoreMoneyClicked()' class='btn btn-primary' style='width: 100%'>
+                        <button class='btn btn-primary' style='width: 100%' type='button' @click='onMoreMoneyClicked()'>
                             <font-awesome-icon icon='arrow-up' />
                         </button>
                     </div>
@@ -141,17 +141,17 @@
             </div>
             <div class='col-6'>
                 <div class='form-check'>
-                    <input class='form-check-input' type='checkbox' v-model='this.form.hasPhone' @change='send()' />
+                    <input v-model='this.form.hasPhone' class='form-check-input' type='checkbox' @change='send()' />
                     <label class='form-check-label'> Hat dein Charakter ein Handy? </label>
                 </div>
                 <div class='form-check'>
-                    <input class='form-check-input' type='checkbox' v-model='this.form.isRegistered' @change='send()' />
+                    <input v-model='this.form.isRegistered' class='form-check-input' type='checkbox' @change='send()' />
                     <label class='form-check-label'> Ist dein Charakter im Registration Office gemeldet? </label>
                 </div>
             </div>
             <div class='col-6'>
                 <div class='form-check'>
-                    <input class='form-check-input' type='checkbox' :disabled='!this.form.isRegistered || this.form.profile.age < 21' v-model='this.form.hasDrivingLicense' @change='send()' />
+                    <input v-model='this.form.hasDrivingLicense' :disabled='!this.form.isRegistered || this.form.profile.age < 21' class='form-check-input' type='checkbox' @change='send()' />
                     <label class='form-check-label'> Hat dein Charakter ein Führerschein? </label>
                 </div>
             </div>

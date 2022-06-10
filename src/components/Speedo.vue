@@ -1,7 +1,7 @@
 <template>
-    <div class='speedo' :hidden='!active'>
-        <canvas ref='backgroundCanvas' width='600' height='600'></canvas>
-        <canvas ref='foregroundCanvas' width='600' height='600'></canvas>
+    <div :hidden='!active' class='speedo'>
+        <canvas ref='backgroundCanvas' height='600' width='600'></canvas>
+        <canvas ref='foregroundCanvas' height='600' width='600'></canvas>
     </div>
 </template>
 
@@ -44,7 +44,8 @@ export default class Speedo extends Vue {
     // Function gets called when view is ready and loaded.
     public mounted(): void {
         alt.on("speedo:toggleui", (state: boolean) => this.toggleVehicleUI(state));
-        alt.on("speedo:getinformation", (vehicleInformations: VehicleInformationInterface) => this.setVehicleInformations(vehicleInformations));
+        alt.on("speedo:getinformation",
+            (vehicleInformations: VehicleInformationInterface) => this.setVehicleInformations(vehicleInformations));
 
         const foregroundCtx = this.foregroundCanvas?.getContext("2d");
         if (foregroundCtx) {
@@ -287,19 +288,26 @@ export default class Speedo extends Vue {
             const innerTicky = tickRadius - Math.sin(rad) * tickRadius;
 
             if (tick <= 10) {
-                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 8 + innerTickX, this.center.y - tickRadius - 14 + innerTicky + 5);
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 8 + innerTickX,
+                    this.center.y - tickRadius - 14 + innerTicky + 5);
             } else if (tick < 50) {
-                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 4 + innerTickX - 5, this.center.y - tickRadius - 14 + innerTicky + 5);
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 4 + innerTickX - 5,
+                    this.center.y - tickRadius - 14 + innerTicky + 5);
             } else if (tick < 90) {
-                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 8 + innerTickX, this.center.y - tickRadius - 12 + innerTicky);
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 8 + innerTickX,
+                    this.center.y - tickRadius - 12 + innerTicky);
             } else if (tick === 90) {
-                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 10 + innerTickX + 4, this.center.y - tickRadius - 10 + innerTicky);
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 10 + innerTickX + 4,
+                    this.center.y - tickRadius - 10 + innerTicky);
             } else if (tick < 145) {
-                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 14 + innerTickX + 10, this.center.y - tickRadius - 12 + innerTicky);
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 14 + innerTickX + 10,
+                    this.center.y - tickRadius - 12 + innerTicky);
             } else if (tick < 180) {
-                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 16 + innerTickX + 10, this.center.y - tickRadius - 12 + innerTicky);
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 16 + innerTickX + 10,
+                    this.center.y - tickRadius - 12 + innerTicky);
             } else {
-                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 31 + innerTickX + 15, this.center.y - tickRadius - 14 + innerTicky + 5);
+                this.backgroundCtx.fillText(numberToPrint.toString(), this.center.x - tickRadius - 31 + innerTickX + 15,
+                    this.center.y - tickRadius - 14 + innerTicky + 5);
             }
 
             numberToPrint++;

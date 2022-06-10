@@ -34,7 +34,8 @@ export default class VehicleStats extends Vue {
     };
 
     public mounted(): void {
-        alt.on("vehicle:updatestats", (vehicleStats: VehicleStatsInterface, name: string) => this.update(vehicleStats, name));
+        alt.on("vehicle:updatestats",
+            (vehicleStats: VehicleStatsInterface, name: string) => this.update(vehicleStats, name));
     }
 
     public unmounted(): void {

@@ -1,6 +1,6 @@
 <template>
     <div class='withdraw-window'>
-        <button type='button' class='atm-close-button float-end' @click='back()'>
+        <button class='atm-close-button float-end' type='button' @click='back()'>
             <font-awesome-icon class='center' icon='caret-left' />
         </button>
 
@@ -9,10 +9,10 @@
         <div class='button-group'>
             <div class='input-group w-100 mb-3'>
                 <span class='input-group-text'>$</span>
-                <input ref='withdrawInput' class='form-control' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' placeholder='Wieviel möchtest du abheben?' maxlength='7' @keydown.enter='withdraw()' @input='checkValue()' @keypress='allowOnlyNumbers($event)' />
+                <input ref='withdrawInput' class='form-control' maxlength='7' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' placeholder='Wieviel möchtest du abheben?' type='number' @input='checkValue()' @keypress='allowOnlyNumbers($event)' @keydown.enter='withdraw()' />
             </div>
 
-            <button type='button' class='btn atm-menu-button w-100' @click='withdraw()' :disabled='!isValuePositive'>
+            <button :disabled='!isValuePositive' class='btn atm-menu-button w-100' type='button' @click='withdraw()'>
                 Abheben
             </button>
         </div>
@@ -54,7 +54,7 @@ export default class WithdrawWindow extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .withdraw-window {
     position: absolute;
     top: 0;

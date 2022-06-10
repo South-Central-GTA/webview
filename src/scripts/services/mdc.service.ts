@@ -2,9 +2,15 @@ import LiteEvent from "@/scripts/systems/lite-event";
 
 export default class MdcService {
     private static instance: MdcService;
+    private isOperator: boolean = false;
+    private readonly onIsOperator = new LiteEvent<boolean>();
 
     private constructor() {
         // do something construct...
+    }
+
+    get onIsOperatorChanged() {
+        return this.onIsOperator.expose();
     }
 
     static getInstance() {
@@ -14,13 +20,6 @@ export default class MdcService {
         }
         return MdcService.instance;
     }
-
-    get onIsOperatorChanged() {
-        return this.onIsOperator.expose();
-    }
-
-    private isOperator: boolean = false;
-    private readonly onIsOperator = new LiteEvent<boolean>();
 
     public listenToEvents(): void {
         alt.on("mdc:updateoperatorpermission", (args: any[]) => this.onUpdateOperatorPermission(args[0]));

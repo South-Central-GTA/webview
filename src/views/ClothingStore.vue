@@ -6,11 +6,11 @@
             <clothes-menu ref='clothesMenu' v-on:update-clothes='updateClothes($event)' />
 
             <div class='save-box'>
-                <button type='button' class='btn btn-secondary' @click='closeHairSalon()' :disabled='isSaving'>
+                <button :disabled='isSaving' class='btn btn-secondary' type='button' @click='closeHairSalon()'>
                     Abbrechen
                 </button>
 
-                <button type='button' class='btn btn-primary m-2' @click='requestBuy()' :disabled='isSaving || !hasChanges'>
+                <button :disabled='isSaving || !hasChanges' class='btn btn-primary m-2' type='button' @click='requestBuy()'>
                     Kleidung in den Warenkorb packen
                 </button>
             </div>
@@ -19,12 +19,12 @@
         <div class='rotate-box'>
             <div class='row'>
                 <div class='col-5'>
-                    <button type='button' @mousedown='rotateCharacter(-1)' @mouseup='stopRotateCharacter()' class='btn rotate-icon btn-secondary'>
+                    <button class='btn rotate-icon btn-secondary' type='button' @mousedown='rotateCharacter(-1)' @mouseup='stopRotateCharacter()'>
                         <font-awesome-icon icon='redo' />
                     </button>
                 </div>
                 <div class='col-5'>
-                    <button type='button' @mousedown='rotateCharacter(1)' @mouseup='stopRotateCharacter()' class='btn rotate-icon btn-secondary'>
+                    <button class='btn rotate-icon btn-secondary' type='button' @mousedown='rotateCharacter(1)' @mouseup='stopRotateCharacter()'>
                         <font-awesome-icon icon='undo' />
                     </button>
                 </div>
@@ -58,7 +58,8 @@ export default class ClothingStore extends Vue {
 
     public mounted(): void {
         alt.emit("clothingstore:getcharacter");
-        alt.on("clothingstore:setcharacter", (maxDrawables: MaxDrawablesInterface, gender: GenderType) => this.onSetCharacter(maxDrawables, gender));
+        alt.on("clothingstore:setcharacter",
+            (maxDrawables: MaxDrawablesInterface, gender: GenderType) => this.onSetCharacter(maxDrawables, gender));
     }
 
     public unmounted(): void {
@@ -105,7 +106,7 @@ export default class ClothingStore extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .clothing-store {
     position: absolute;
     top: 0;

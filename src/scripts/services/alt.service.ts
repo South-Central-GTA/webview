@@ -23,9 +23,9 @@ export default new class AltService implements Alt {
         if (this.altVExists) {
             if (args.length === 0) {
                 console.log(`Emit to server got sent.`);
-                alt.emit("gui:emitserver", eventName, null);
+                alt.emit("webview:emitserver", eventName, null);
             } else {
-                alt.emit("gui:emitserver", eventName, ...args);
+                alt.emit("webview:emitserver", eventName, ...args);
             }
         } else {
             console.log(`AltV-Service: Emit Event to Server - ${eventName}`);
@@ -42,6 +42,8 @@ export default new class AltService implements Alt {
 
             this.on(eventName, (args: any[]) => {
                 this.off(eventName);
+
+                console.log("emitServerWithResponse got event " + eventName + " with args: " + JSON.stringify(args[0]));
 
                 if (args.length !== requestArgs.length && args.length !== 0 && requestArgs.length !== 0) {
                     return reject(new ServerEventCustomError(args[0]));

@@ -34,7 +34,7 @@ export default class DeletePhoneContact extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .delete-phone-contact {
     position: absolute;
     top: 0;

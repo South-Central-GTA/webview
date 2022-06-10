@@ -13,8 +13,8 @@
             Gebe den Namen der Person an, welche Sie Zugriffsrechte auf Ihr Bankkonto geben wollen. </p>
 
         <div class='phone-bank-button-group'>
-            <input v-model='characterName' class='form-control' type='text' @focus='onFocus(true)' @blur='onFocus(false)' placeholder='Max Mustermann' />
-            <button type='button' class='btn' @click='addPerson()' :disabled="characterName === ''">
+            <input v-model='characterName' class='form-control' placeholder='Max Mustermann' type='text' @blur='onFocus(false)' @focus='onFocus(true)' />
+            <button :disabled="characterName === ''" class='btn' type='button' @click='addPerson()'>
                 Person hinzufügen
             </button>
         </div>
@@ -49,7 +49,7 @@ export default class PhoneAddPermissionBankAccount extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .phone-add-permission-bank-account {
     overflow: hidden;
     position: absolute;

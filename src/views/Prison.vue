@@ -7,7 +7,7 @@
                     Los Santos Police Department </h6>
                 <p class='card-text'>
                     Die Zeit läuft auch ab wenn du mit diesem Charakter nicht online bist. </p>
-                <button type='button' class='btn btn-secondary p-2' @click='requestCharacterSelection()'>
+                <button class='btn btn-secondary p-2' type='button' @click='requestCharacterSelection()'>
                     Zurück zur Charakterauswahl
                 </button>
 
@@ -56,7 +56,7 @@ export default class Prison extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .adminprison {
     position: absolute;
     top: 0;

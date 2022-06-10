@@ -19,14 +19,14 @@
         </div>
 
         <div class='text-box'>
-            <input ref='textInput' @focus='onFocus(true)' @blur='onFocus(false)' type='text' class='form-control' placeholder='Nachricht' maxlength='500' v-on:keydown.enter='send' />
+            <input ref='textInput' class='form-control' maxlength='500' placeholder='Nachricht' type='text' @blur='onFocus(false)' @focus='onFocus(true)' v-on:keydown.enter='send' />
         </div>
     </div>
 </template>
 
 <script lang='ts'>
 import alt from "@/scripts/services/alt.service";
-import {UID, onFocus} from "@/scripts/helpers/helpers";
+import {onFocus, UID} from "@/scripts/helpers/helpers";
 import character from "@/scripts/services/character.service";
 import {Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
@@ -39,7 +39,7 @@ export default class ActiveChat extends Vue {
 
     private characterId: number | undefined;
     private chat: PhoneChatInterface = {
-        id: 0, phoneNumber: "", name: "", lastUsage: "", messages: [],
+        id: 0, phoneNumber: "", name: "", lastUsageJson: "", messages: [],
     };
 
     public setup(): void {
@@ -86,7 +86,8 @@ export default class ActiveChat extends Vue {
             return;
         }
 
-        if (!/^(?!\s*$)[-a-zA-Z0-9À-žÄÜÖäüö$€_:;?§%!?/[++|#=,.' \]&<²³>{~*^@}°''"'()]{1,100}$/gm.test(this.textInput.value)) {
+        if (!/^(?!\s*$)[-a-zA-Z0-9À-žÄÜÖäüö$€_:;?§%!?/[++|#=,.' \]&<²³>{~*^@}°''"'()]{1,100}$/gm.test(
+            this.textInput.value)) {
             return;
         }
 
@@ -126,7 +127,7 @@ export default class ActiveChat extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .active-chat {
     position: absolute;
     top: 0;

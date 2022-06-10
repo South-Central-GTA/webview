@@ -1,10 +1,10 @@
 <template>
-    <div class='atm center' :hidden='!active' v-bind:class='{ enable: active, disable: !active }'>
-        <button type='button' class='atm-close-button float-end' @click='close()'>
+    <div :hidden='!active' class='atm center' v-bind:class='{ enable: active, disable: !active }'>
+        <button class='atm-close-button float-end' type='button' @click='close()'>
             <font-awesome-icon class='center' icon='sign-out-alt' />
         </button>
 
-        <active-bank-account ref='activeBankAccount' :hidden='currentTab !== 1' v-on:close='close()' v-on:back='resetTab()' />
+        <active-bank-account ref='activeBankAccount' :hidden='currentTab !== 1' v-on:back='resetTab()' v-on:close='close()' />
 
         <img class='logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <div class='no-bank-accounts-block' v-if='bankAccounts.length === 0'>
+        <div v-if='bankAccounts.length === 0' class='no-bank-accounts-block'>
             <h2>Keine Konten verfügbar...</h2>
         </div>
     </div>
@@ -58,6 +58,10 @@ export default class ATM extends Vue {
         alt.off("atm:openmenu");
     }
 
+    public resetTab(): void {
+        this.openTab(0);
+    }
+
     private open(): void {
         this.active = true;
     }
@@ -78,10 +82,6 @@ export default class ATM extends Vue {
         this.active = false;
         this.resetTab();
         alt.emit("menu:close");
-    }
-
-    public resetTab(): void {
-        this.openTab(0);
     }
 
     private openTab(id: number): void {

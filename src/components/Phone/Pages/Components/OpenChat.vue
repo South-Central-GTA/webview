@@ -2,7 +2,7 @@
     <div class='open-chat'>
         <div class='bar'></div>
 
-        <div class='delete-popup' v-if='isDeletePopupOpen'>
+        <div v-if='isDeletePopupOpen' class='delete-popup'>
             <h1>Diesen Chat löschen?</h1>
             <button @click='deleteChat($event)'>Ja</button>
             <button @click='closeDeletePopup($event)'>Nein</button>
@@ -10,7 +10,7 @@
 
         <div class='chat-entry' @click='openChat()'>
             <div class='delete-button float-end'>
-                <button type='button' class='btn' @click='openDeletePopup($event)'>
+                <button class='btn' type='button' @click='openDeletePopup($event)'>
                     <font-awesome-icon class='center' icon='trash' />
                 </button>
             </div>
@@ -119,7 +119,7 @@ export default class OpenChat extends Vue {
 
     private updateReadedDotNotifier(): void {
         if (this.chat && this.chat.messages && this.chat.messages.length > 0) {
-            const lastUsage = new Date(JSON.parse(this.chat.lastUsage));
+            const lastUsage = new Date(JSON.parse(this.chat.lastUsageJson));
             const lastMessageDate = new Date(JSON.parse(this.chat.messages[this.chat.messages.length - 1].sendetAt));
 
             this.unreadedMessages = lastUsage <= lastMessageDate;
@@ -130,7 +130,7 @@ export default class OpenChat extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .open-chat {
     background-color: rgb(207, 207, 207);
     width: 100%;

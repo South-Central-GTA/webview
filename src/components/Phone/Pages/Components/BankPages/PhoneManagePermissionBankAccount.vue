@@ -13,16 +13,16 @@
             <div>
                 <label class='form-label'>Geld einzahlen:</label>
                 <div class='btn-group'>
-                    <button type='button' class='btn' @click='addPermission(depositPermission)' v-bind:class="{
+                    <button class='btn' type='button' v-bind:class="{
               'btn-success': canDeposit,
               'btn-outline-success': !canDeposit,
-            }">
+            }" @click='addPermission(depositPermission)'>
                         Ja
                     </button>
-                    <button type='button' class='btn' @click='removePermission(depositPermission)' v-bind:class="{
+                    <button class='btn' type='button' v-bind:class="{
               'btn-danger': !canDeposit,
               'btn-outline-danger': canDeposit,
-            }">
+            }" @click='removePermission(depositPermission)'>
                         Nein
                     </button>
                 </div>
@@ -30,16 +30,16 @@
             <div>
                 <label class='form-label'>Geld abheben:</label>
                 <div class='btn-group'>
-                    <button type='button' class='btn' @click='addPermission(withdrawPermission)' v-bind:class="{
+                    <button class='btn' type='button' v-bind:class="{
               'btn-success': canWithdraw,
               'btn-outline-success': !canWithdraw,
-            }">
+            }" @click='addPermission(withdrawPermission)'>
                         Ja
                     </button>
-                    <button type='button' class='btn' @click='removePermission(withdrawPermission)' v-bind:class="{
+                    <button class='btn' type='button' v-bind:class="{
               'btn-danger': !canWithdraw,
               'btn-outline-danger': canWithdraw,
-            }">
+            }" @click='removePermission(withdrawPermission)'>
                         Nein
                     </button>
                 </div>
@@ -47,16 +47,16 @@
             <div>
                 <label class='form-label'>Geld überweisen:</label>
                 <div class='btn-group'>
-                    <button type='button' class='btn' @click='addPermission(transferPermission)' v-bind:class="{
+                    <button class='btn' type='button' v-bind:class="{
               'btn-success': canTransfer,
               'btn-outline-success': !canTransfer,
-            }">
+            }" @click='addPermission(transferPermission)'>
                         Ja
                     </button>
-                    <button type='button' class='btn' @click='removePermission(transferPermission)' v-bind:class="{
+                    <button class='btn' type='button' v-bind:class="{
               'btn-danger': !canTransfer,
               'btn-outline-danger': canTransfer,
-            }">
+            }" @click='removePermission(transferPermission)'>
                         Nein
                     </button>
                 </div>
@@ -64,16 +64,16 @@
             <div>
                 <label class='form-label'>Umsätze einsehen:</label>
                 <div class='btn-group'>
-                    <button type='button' class='btn' @click='addPermission(seeTransactionPermission)' v-bind:class="{
+                    <button class='btn' type='button' v-bind:class="{
               'btn-success': canSeeTransaction,
               'btn-outline-success': !canSeeTransaction,
-            }">
+            }" @click='addPermission(seeTransactionPermission)'>
                         Ja
                     </button>
-                    <button type='button' class='btn' @click='removePermission(seeTransactionPermission)' v-bind:class="{
+                    <button class='btn' type='button' v-bind:class="{
               'btn-danger': !canSeeTransaction,
               'btn-outline-danger': canSeeTransaction,
-            }">
+            }" @click='removePermission(seeTransactionPermission)'>
                         Nein
                     </button>
                 </div>
@@ -81,22 +81,22 @@
             <div>
                 <label class='form-label'>Konto verwalten:</label>
                 <div class='btn-group'>
-                    <button type='button' class='btn' @click='addPermission(managePermission)' v-bind:class="{
+                    <button class='btn' type='button' v-bind:class="{
               'btn-success': canManage,
               'btn-outline-success': !canManage,
-            }">
+            }" @click='addPermission(managePermission)'>
                         Ja
                     </button>
-                    <button type='button' class='btn' @click='removePermission(managePermission)' v-bind:class="{
+                    <button class='btn' type='button' v-bind:class="{
               'btn-danger': !canManage,
               'btn-outline-danger': canManage,
-            }">
+            }" @click='removePermission(managePermission)'>
                         Nein
                     </button>
                 </div>
             </div>
             <div class='text-center'>
-                <button type='button' class='btn btn-dark mb-4' @click='removeAccess()'>
+                <button class='btn btn-dark mb-4' type='button' @click='removeAccess()'>
                     Zugriff entfernen
                 </button>
             </div>
@@ -136,17 +136,6 @@ export default class PhoneManagePermissionBankAccount extends Vue {
             .onChange.on((bankAccounts: BankAccountInterface[]) => this.updateBankAccounts(bankAccounts));
     }
 
-    private updateBankAccounts(bankAccounts: BankAccountInterface[]): void {
-        const bankAccount = bankAccounts.find((b) => b.id === this.bankAccountId);
-        const characterAccess = bankAccount?.characterAccesses.find((ca) => ca.characterId === this.characterId);
-
-        if (characterAccess === undefined) {
-            return;
-        }
-
-        this.setup(this.bankAccountId, characterAccess);
-    }
-
     public setup(bankAccountId: number, characterAccess: BankAccountCharacterAccessInterface): void {
         this.bankAccountId = bankAccountId;
         this.characterId = characterAccess.characterId;
@@ -160,6 +149,17 @@ export default class PhoneManagePermissionBankAccount extends Vue {
         this.canManage = (characterAccess.permission & BankingPermission.MANAGEMENT) === BankingPermission.MANAGEMENT;
     }
 
+    private updateBankAccounts(bankAccounts: BankAccountInterface[]): void {
+        const bankAccount = bankAccounts.find((b) => b.id === this.bankAccountId);
+        const characterAccess = bankAccount?.characterAccesses.find((ca) => ca.characterId === this.characterId);
+
+        if (characterAccess === undefined) {
+            return;
+        }
+
+        this.setup(this.bankAccountId, characterAccess);
+    }
+
     private addPermission(permission: BankingPermission): void {
         if (this.characterAccess === undefined) {
             return;
@@ -169,7 +169,8 @@ export default class PhoneManagePermissionBankAccount extends Vue {
             return;
         }
 
-        alt.emit("phonebank:addpermission", this.characterAccess?.bankAccountId, this.characterAccess?.characterId, permission);
+        alt.emit("phonebank:addpermission", this.characterAccess?.bankAccountId, this.characterAccess?.characterId,
+            permission);
     }
 
     private removePermission(permission: BankingPermission): void {
@@ -181,7 +182,8 @@ export default class PhoneManagePermissionBankAccount extends Vue {
             return;
         }
 
-        alt.emit("phonebank:removepermission", this.characterAccess?.bankAccountId, this.characterAccess?.characterId, permission);
+        alt.emit("phonebank:removepermission", this.characterAccess?.bankAccountId, this.characterAccess?.characterId,
+            permission);
     }
 
     private removeAccess(): void {
@@ -195,7 +197,7 @@ export default class PhoneManagePermissionBankAccount extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .phone-manage-permission-bank-account {
     overflow: hidden;
     position: absolute;

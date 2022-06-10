@@ -1,6 +1,6 @@
 <template>
     <div class='players-list' v-bind:class='{ enable: active, disable: !active }'>
-        <div class='sc-card text-white w-50 center' :hidden='!active'>
+        <div :hidden='!active' class='sc-card text-white w-50 center'>
             <div class='card-body'>
                 <h5 class='card-title'>Online Spielerliste</h5>
 
@@ -52,7 +52,7 @@ export default class PlayersList extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .players-list {
     position: absolute;
     top: 0;

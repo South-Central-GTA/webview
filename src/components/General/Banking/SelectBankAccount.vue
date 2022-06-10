@@ -1,8 +1,8 @@
 <template>
     <div class='select-bank-account'>
-        <select class='form-select' @change='onChange($event)' :disabled='bankAccounts.length <= 1'>
+        <select :disabled='bankAccounts.length <= 1' class='form-select' @change='onChange($event)'>
             <option :hidden='bankAccounts.length != 0'>Bankkonto benötigt</option>
-            <option v-for='(bankAccount, i) in bankAccounts' v-bind:key='bankAccount.id' :hidden='bankAccounts.length == 0' :value='bankAccount.id' :selected='selectedIndex == i'>
+            <option v-for='(bankAccount, i) in bankAccounts' v-bind:key='bankAccount.id' :hidden='bankAccounts.length == 0' :selected='selectedIndex == i' :value='bankAccount.id'>
                 {{ bankAccount.bankDetails }}
             </option>
         </select>
@@ -15,12 +15,12 @@ import {Vue} from "vue-class-component";
 import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
 
 export default class SelectBankAccount extends Vue {
+    private bankAccounts: BankAccountInterface[] = [];
+    private selectedIndex = 0;
+
     get hasBank() {
         return this.bankAccounts.length != 0;
     }
-
-    private bankAccounts: BankAccountInterface[] = [];
-    private selectedIndex = 0;
 
     public mounted(): void {
         banking
@@ -34,19 +34,6 @@ export default class SelectBankAccount extends Vue {
         banking
             .getInstance()
             .onChange.off((bankAccounts: BankAccountInterface[]) => this.update(bankAccounts));
-    }
-
-    private update(bankAccounts: BankAccountInterface[]): void {
-        this.setup(bankAccounts, false);
-    }
-
-    private setup(bankAccounts: BankAccountInterface[], fireEvent = true): void {
-        this.bankAccounts = bankAccounts;
-
-        if (this.bankAccounts.length != 0) {
-            this.setBankAccount(this.bankAccounts[0].id, fireEvent);
-            this.$emit("setup", this.bankAccounts[0]);
-        }
     }
 
     public setBankAccount(id: number, fireEvent = false): void {
@@ -63,6 +50,19 @@ export default class SelectBankAccount extends Vue {
 
         if (fireEvent) {
             this.$emit("change-bank-account", bankAccount);
+        }
+    }
+
+    private update(bankAccounts: BankAccountInterface[]): void {
+        this.setup(bankAccounts, false);
+    }
+
+    private setup(bankAccounts: BankAccountInterface[], fireEvent = true): void {
+        this.bankAccounts = bankAccounts;
+
+        if (this.bankAccounts.length != 0) {
+            this.setBankAccount(this.bankAccounts[0].id, fireEvent);
+            this.$emit("setup", this.bankAccounts[0]);
         }
     }
 

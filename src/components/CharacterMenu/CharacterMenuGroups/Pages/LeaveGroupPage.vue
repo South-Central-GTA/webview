@@ -10,9 +10,9 @@
         <p class='card-text'>Bedenke das dein Charakter
             <strong>sofort</strong> die Gruppe verlässt wenn du den Knopf drückst.</p>
 
-        <input type='text' class='form-control' ref='securityQuestionLeaveInput' @input='validateLeaveButton()' :placeholder="'Gebe den Name der Gruppe an. (' + groupName + ')'">
+        <input ref='securityQuestionLeaveInput' :placeholder="'Gebe den Name der Gruppe an. (' + groupName + ')'" class='form-control' type='text' @input='validateLeaveButton()'>
 
-        <button type='button' class='btn btn-danger w-100 mt-3' :disabled='!leaveButtonEnabled' @click='leave()'>
+        <button :disabled='!leaveButtonEnabled' class='btn btn-danger w-100 mt-3' type='button' @click='leave()'>
             Ja mein Charakter soll die Gruppe verlassen
         </button>
     </div>

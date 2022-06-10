@@ -1,18 +1,18 @@
 <template>
-    <div class='phone' v-bind:class="{
+    <div :hidden='!active' class='phone' v-bind:class="{
       'slide-down': isPhoneDown,
       'slide-up': !isPhoneDown,
       'vertical-phone': isPhoneVertical,
       'horizontal-phone': !isPhoneVertical,
-    }" :hidden='!active'>
+    }">
         <button type='button' v-bind:class="{
         'vertical-home-button': isPhoneVertical,
         'horizontal-home-button': !isPhoneVertical,
       }" @click='backToHome'></button>
-        <div v-bind:class="{
+        <div :style="{ backgroundImage: 'url(\'' + getImage(backgroundId) + '\')' }" v-bind:class="{
         'vertical-background': isPhoneVertical,
         'horizontal-background': !isPhoneVertical,
-      }" :style="{ backgroundImage: 'url(\'' + getImage(backgroundId) + '\')' }">
+      }">
             <status-bar ref='statusBar' />
 
             <home-page :hidden='pageId !== 0' v-on:open-pageid='openPageId($event)' />
@@ -141,7 +141,7 @@ export default class Phone extends Vue {
         this.phone = phone;
         this.backgroundId = phone.backgroundImageId;
 
-        this.statusBar?.setNotifications(this.phone.notifications, this.phone.lastTimeOpendNotifications);
+        this.statusBar?.setNotifications(this.phone.notifications, this.phone.lastTimeOpenedNotificationsJson);
         this.openChatsPage?.setup(this.phone.ownerId, this.phone.chats);
         this.contactsPage?.setup(this.phone.phoneNumber, this.phone.contacts);
         this.settings?.setup(this.backgroundId);
@@ -390,7 +390,7 @@ export default class Phone extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .phone {
     position: absolute;
     background: #2c2c2c;

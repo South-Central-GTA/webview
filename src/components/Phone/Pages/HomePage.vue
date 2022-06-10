@@ -107,7 +107,7 @@ export default class HomePage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .home-page {
     height: 100%;
     display: flex;

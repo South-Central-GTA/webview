@@ -8,7 +8,7 @@
                     <b>{{ $route.params.name }}</b>, Huch, herrje, ohjemine- leider kann der Server deinen Discord nicht erkennen.
                 </p>
 
-                <img src='https://http.cat/404' width='100%' height='100%'>
+                <iframe allowtransparency='true' frameborder='0' height='350' sandbox='allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts' src='https://discord.com/widget?id=568457139622903818&theme=dark' width='350'></iframe>
 
                 <p class='card-text text-muted pt-3'>
                     So können wir leider nicht weitermachen! Schließe dein GTA:V und sei dir sicher das du die Discord Desktop App gestartet hast und auf unserem Discord Server verbunden bist. Solltest du diesen noch nicht haben besuche uns einfach auf www.sc-rp.de! </p>

@@ -9,7 +9,7 @@
                     Gewichtlimit: {{ currentWeight }} / {{ maxWeight }} </p>
             </div>
             <div class='col-12 m-0'>
-                <input type='text' @focus='onFocus(true)' @blur='onFocus(false)' @input='search()' v-model='itemSearch' id='search-bar' class='form-control float-end m-1 text-white' placeholder='Suche nach bestimmten Item...' />
+                <input id='search-bar' v-model='itemSearch' class='form-control float-end m-1 text-white' placeholder='Suche nach bestimmten Item...' type='text' @blur='onFocus(false)' @focus='onFocus(true)' @input='search()' />
             </div>
         </div>
 
@@ -17,7 +17,7 @@
             <div v-for='item in items' v-bind:key='item.slot'>
                 <item-slot v-bind:item='item' @click.right='openContextMenu($event, item)' v-on:start-dragging='startDragging' v-on:stop-dragging='stopDragging' />
             </div>
-            <div class='drop-zone' v-if='dropZoneVisible' @mouseup='onMouseUp'></div>
+            <div v-if='dropZoneVisible' class='drop-zone' @mouseup='onMouseUp'></div>
         </div>
     </div>
 </template>
@@ -48,6 +48,18 @@ export default class Inventory extends Vue {
     private currentWeight = 0;
     private dropZoneVisible = false;
 
+    public getFreeSlot(): number {
+        return this.items.length;
+    }
+
+    public clearSearchBar(): void {
+        this.itemSearch = "";
+    }
+
+    public toggleDropZone(state: boolean): void {
+        this.dropZoneVisible = state;
+    }
+
     @Watch("inventory")
     private onInventoryPropertyChanged(value: InventoryInterface,): void {
         if (value) {
@@ -75,18 +87,6 @@ export default class Inventory extends Vue {
             this.cachedItems = this.items;
             this.header = value.name;
         }
-    }
-
-    public getFreeSlot(): number {
-        return this.items.length;
-    }
-
-    public clearSearchBar(): void {
-        this.itemSearch = "";
-    }
-
-    public toggleDropZone(state: boolean): void {
-        this.dropZoneVisible = state;
     }
 
     private openContextMenu(mouseEvent: MouseEvent, item: ItemInterface): void {
@@ -132,7 +132,8 @@ export default class Inventory extends Vue {
         }
 
         this.items = this.cachedItems;
-        this.items = this.items.filter((i) => this.getItemName(i).toLowerCase().includes(this.itemSearch.toLowerCase()));
+        this.items = this.items.filter(
+            (i) => this.getItemName(i).toLowerCase().includes(this.itemSearch.toLowerCase()));
     }
 
     private getWeight(items: ItemInterface[]): number {
@@ -153,7 +154,7 @@ export default class Inventory extends Vue {
     }
 }
 </script>
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .inventory {
     padding: 0;
 }

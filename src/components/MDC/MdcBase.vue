@@ -1,9 +1,9 @@
 <template>
-    <div class='mdc-base' :hidden='!active'>
+    <div :hidden='!active' class='mdc-base'>
         <div class='screen'>
             <mdc-header-bar ref='header'></mdc-header-bar>
 
-            <div class='login-screen' :hidden='!isLoading'>
+            <div :hidden='!isLoading' class='login-screen'>
                 <h1 class='center text-white'>{{ loadingText }}</h1>
             </div>
 
@@ -11,12 +11,12 @@
         {{ infoMessage }}
       </span>
 
-            <div class='content-screen' :hidden='isLoading'>
-                <mdc-pd-base ref='pdBase' v-on:show-notification='onShowNotification' :hidden='factionType !== 1'></mdc-pd-base>
-                <mdc-fd-base ref='fdBase' v-on:show-notification='onShowNotification' :hidden='factionType !== 2'></mdc-fd-base>
+            <div :hidden='isLoading' class='content-screen'>
+                <mdc-pd-base ref='pdBase' :hidden='factionType !== 1' v-on:show-notification='onShowNotification'></mdc-pd-base>
+                <mdc-fd-base ref='fdBase' :hidden='factionType !== 2' v-on:show-notification='onShowNotification'></mdc-fd-base>
             </div>
 
-            <mdc-footer-bar :hidden='isLoading' ref='footer'></mdc-footer-bar>
+            <mdc-footer-bar ref='footer' :hidden='isLoading'></mdc-footer-bar>
         </div>
     </div>
 </template>
@@ -56,7 +56,9 @@ export default class MdcBase extends Vue {
     private infoTimeout: number | undefined;
 
     public mounted(): void {
-        alt.on("mdc:open", (factionType: FactionType, canLogin: boolean, characterName: string, rankName?: string) => this.onOpen(factionType, canLogin, characterName, rankName));
+        alt.on("mdc:open",
+            (factionType: FactionType, canLogin: boolean, characterName: string, rankName?: string) => this.onOpen(
+                factionType, canLogin, characterName, rankName));
         alt.on("mdc:updatecallsigns", (args: any[]) => this.onUpdateCallSigns(args[0], args[1]));
         alt.on("mdc:sendentities", (args: any[]) => this.onSetEntities(args[0]));
         alt.on("mdc:close", () => this.onClose());
@@ -67,58 +69,6 @@ export default class MdcBase extends Vue {
         alt.off("mdc:updatecallsigns");
         alt.off("mdc:sendentities");
         alt.off("mdc:close");
-    }
-
-    private onShowNotification(message: string): void {
-        this.showInfoMessage(message);
-    }
-
-    private onOpen(factionType: FactionType, canLogin: boolean, characterName: string, rankName?: string): void {
-        this.active = true;
-        this.rankName = rankName;
-        this.characterName = characterName;
-        this.factionType = factionType;
-
-        this.fakeLogin(canLogin);
-
-        if (this.rankName !== undefined) {
-            this.footer.setup(this.characterName, this.rankName);
-        }
-    }
-
-    private onUpdateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
-        switch (this.factionType) {
-            case FactionType.POLICE_DEPARTMENT:
-                this.pdBase.updateCallSigns(callSigns, hasCallSign);
-                break;
-            case FactionType.FIRE_DEPARTMENT:
-                this.fdBase.updateCallSigns(callSigns, hasCallSign);
-                break;
-        }
-    }
-
-    private onSetEntities(entities: MdcSearchEntityInterface[]): void {
-        switch (this.factionType) {
-            case FactionType.POLICE_DEPARTMENT:
-                this.pdBase.setEntities(entities);
-                break;
-            case FactionType.FIRE_DEPARTMENT:
-                this.fdBase.setEntities(entities);
-                break;
-        }
-    }
-
-    private onClose(): void {
-        this.active = false;
-
-        switch (this.factionType) {
-            case FactionType.POLICE_DEPARTMENT:
-                this.pdBase.close();
-                break;
-            case FactionType.FIRE_DEPARTMENT:
-                this.pdBase.close();
-                break;
-        }
     }
 
     public showInfoMessage(info: string): void {
@@ -175,6 +125,58 @@ export default class MdcBase extends Vue {
         }, 1500);
     }
 
+    private onShowNotification(message: string): void {
+        this.showInfoMessage(message);
+    }
+
+    private onOpen(factionType: FactionType, canLogin: boolean, characterName: string, rankName?: string): void {
+        this.active = true;
+        this.rankName = rankName;
+        this.characterName = characterName;
+        this.factionType = factionType;
+
+        this.fakeLogin(canLogin);
+
+        if (this.rankName !== undefined) {
+            this.footer.setup(this.characterName, this.rankName);
+        }
+    }
+
+    private onUpdateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
+        switch (this.factionType) {
+            case FactionType.POLICE_DEPARTMENT:
+                this.pdBase.updateCallSigns(callSigns, hasCallSign);
+                break;
+            case FactionType.FIRE_DEPARTMENT:
+                this.fdBase.updateCallSigns(callSigns, hasCallSign);
+                break;
+        }
+    }
+
+    private onSetEntities(entities: MdcSearchEntityInterface[]): void {
+        switch (this.factionType) {
+            case FactionType.POLICE_DEPARTMENT:
+                this.pdBase.setEntities(entities);
+                break;
+            case FactionType.FIRE_DEPARTMENT:
+                this.fdBase.setEntities(entities);
+                break;
+        }
+    }
+
+    private onClose(): void {
+        this.active = false;
+
+        switch (this.factionType) {
+            case FactionType.POLICE_DEPARTMENT:
+                this.pdBase.close();
+                break;
+            case FactionType.FIRE_DEPARTMENT:
+                this.pdBase.close();
+                break;
+        }
+    }
+
     private login(): void {
         this.header.setup();
 
@@ -190,7 +192,7 @@ export default class MdcBase extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-base {
     z-index: 9999;
     position: absolute;

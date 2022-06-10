@@ -23,7 +23,7 @@ export default class MdcFdHeaderBar extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-fd-header-bar {
     color: white;
     background-color: rgb(95, 0, 0);

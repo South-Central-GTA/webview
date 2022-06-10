@@ -2,7 +2,7 @@
     <div class='team-menu-group-catalog'>
         <div v-if='!isPopupOpen'>
             <h2>Gruppen</h2>
-            <input @input='search()' v-model='groupSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach Namen (Bsp. Fire Department)' />
+            <input v-model='groupSearch' class='form-control-dark mb-2' placeholder='Suche nach Namen (Bsp. Fire Department)' type='text' @input='search()' />
             <div class='table-holder'>
                 <table class='table table-striped table-hover'>
                     <thead>
@@ -15,7 +15,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for='group in groups' v-bind:key='group.id' class='entry' @click='requestDetails(group)'>
+                    <tr v-for='group in groups' v-bind:key='group.id' class='entry' @click='requestDetails(group.id)'>
                         <td>{{ group.id }}</td>
                         <td>{{ group.name }}</td>
                         <td>{{ getStatusLabel(group.status) }}</td>
@@ -117,6 +117,7 @@ import {GroupInterface} from "@/scripts/interfaces/group/group.interface";
 import {BankAccountInterface} from "@/scripts/interfaces/bank/bank-account.interface";
 import {VehicleInterface} from "@/scripts/interfaces/vehicles/vehicle.interface";
 import {GroupMemberInterface} from "@/scripts/interfaces/group/group-member.interface";
+import {GroupCatalogRequestDetailsInterface} from "@/scripts/interfaces/team-menu/group-catalog-request-details.interface";
 
 export default class TeamMenuVehicleCatalog extends Vue {
     private groups: GroupInterface[] = [];
@@ -128,31 +129,23 @@ export default class TeamMenuVehicleCatalog extends Vue {
     private bankAccount!: BankAccountInterface;
     private vehicles: VehicleInterface[] = [];
 
-    public mounted(): void {
-        alt.on("groupcatalog:setup", (args: any) => this.setup(args[0]));
-        alt.on("groupcatalog:opendetails", (args: any) => this.openDetails(args[0], args[1], args[2]));
+    public open(): void {
+        alt.emitServerWithResponse<GroupInterface[]>("groupcatalog:open")
+            .then((groups: GroupInterface[]) => {
+                this.groups = groups;
+                this.chacheGroups = this.groups;
+                this.isPopupOpen = false;
+            });
     }
 
-    public unmounted(): void {
-        alt.off("groupcatalog:setup");
-        alt.off("groupcatalog:opendetails");
-    }
-
-    private setup(groups: GroupInterface[]): void {
-        this.groups = groups;
-        this.chacheGroups = this.groups;
-        this.isPopupOpen = false;
-    }
-
-    private requestDetails(group: GroupInterface): void {
-        alt.emitServer("groupcatalog:requestdetails", group.id);
-    }
-
-    private openDetails(group: GroupInterface, bankAccount: BankAccountInterface, vehicles: VehicleInterface[]): void {
-        this.openGroup = group;
-        this.bankAccount = bankAccount;
-        this.vehicles = vehicles;
-        this.isPopupOpen = true;
+    private requestDetails(groupId: number): void {
+        alt.emitServerWithResponse<GroupCatalogRequestDetailsInterface>("groupcatalog:requestdetails", groupId)
+            .then((request: GroupCatalogRequestDetailsInterface) => {
+                this.openGroup = request.group;
+                this.bankAccount = request.bankAccount;
+                this.vehicles = request.vehicleDatas;
+                this.isPopupOpen = true;
+            });
     }
 
     private closeDetails(): void {

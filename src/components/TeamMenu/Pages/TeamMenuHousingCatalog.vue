@@ -2,7 +2,7 @@
     <div class='team-menu-housing-catalog'>
         <div v-if='!isPopupOpen'>
             <h2>Häuser</h2>
-            <input @input='search()' v-model='houseSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach Haus ID' />
+            <input v-model='houseSearch' class='form-control-dark mb-2' placeholder='Suche nach Haus ID' type='text' @input='search()' />
             <div class='table-holder'>
                 <table class='table table-striped table-hover'>
                     <thead>
@@ -16,7 +16,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for='house in houses' v-bind:key='house.id' class='entry' @click='requestDetails(house)'>
+                    <tr v-for='house in houses' v-bind:key='house.id' class='entry' @click='requestDetails(house.id)'>
                         <td>{{ house.id }}</td>
                         <td>
                             {{ house.ownerId === -1 ? "Kein Besitzer" : house.ownerId }}
@@ -84,28 +84,20 @@ export default class TeamMenuHouseingCatalog extends Vue {
 
     private openHouse!: HouseInterface;
 
-    public mounted(): void {
-        alt.on("housingcatalog:setup", (args: any) => this.setup(args[0]));
-        alt.on("housingcatalog:opendetails", (args: any) => this.openDetails(args[0]));
+    public open(): void {
+        alt.emitServerWithResponse<HouseInterface[]>("housingcatalog:open")
+            .then((houses: HouseInterface[]) => {
+                this.houses = houses;
+                this.cachedHouses = this.houses;
+            });
     }
 
-    public unmounted(): void {
-        alt.off("housingcatalog:setup");
-        alt.off("housingcatalog:opendetails");
-    }
-
-    private setup(houses: HouseInterface[]): void {
-        this.houses = houses;
-        this.cachedHouses = this.houses;
-    }
-
-    private requestDetails(house: HouseInterface): void {
-        alt.emitServer("housingcatalog:requestdetails", house.id);
-    }
-
-    private openDetails(house: HouseInterface): void {
-        this.openHouse = house;
-        this.isPopupOpen = true;
+    private requestDetails(houseId: number): void {
+        alt.emitServerWithResponse<HouseInterface>("housingcatalog:requestdetails", houseId)
+            .then((house: HouseInterface) => {
+                this.openHouse = house;
+                this.isPopupOpen = true;
+            });
     }
 
     private closeDetails(): void {

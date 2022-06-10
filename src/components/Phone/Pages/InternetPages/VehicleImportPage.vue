@@ -11,7 +11,7 @@
             <p>Keine Zugriffsrechte!</p>
         </div>
 
-        <div class='row pt-2' :hidden='isBuyMenuOpen || isOrderMenuOpen'>
+        <div :hidden='isBuyMenuOpen || isOrderMenuOpen' class='row pt-2'>
             <div class='col-2'>
                 <div class='btn-group-vertical p-2 w-100'>
                     <button class='btn btn-dark' @click='openOrderMenu()'>
@@ -20,10 +20,10 @@
                 </div>
             </div>
             <div class='col-8'>
-                <input class='form-control mt-1 mb-1' @focus='onFocus(true)' @blur='onFocus(false)' @input='search()' v-model='nameSearch' type='text' placeholder='Fahrzeugnamen suchen...' />
+                <input v-model='nameSearch' class='form-control mt-1 mb-1' placeholder='Fahrzeugnamen suchen...' type='text' @blur='onFocus(false)' @focus='onFocus(true)' @input='search()' />
 
                 <div class='vehicles-list'>
-                    <button class='icon-button col-4 p-2' v-for='vehicle in vehicles' v-bind:key='vehicle.model' @click='openBuyMenu(vehicle)'>
+                    <button v-for='vehicle in vehicles' v-bind:key='vehicle.model' class='icon-button col-4 p-2' @click='openBuyMenu(vehicle)'>
                         <div class='vehicle-entry'>
                             <img :src='getVehicleImage(vehicle.model)' />
 
@@ -56,7 +56,7 @@
             <div class='col-2'>
                 <div class='m-2'>
                     <label>Kategorien:</label>
-                    <select name='class' ref='classSelection' id='class-select' @change='onChangeClass()'>
+                    <select id='class-select' ref='classSelection' name='class' @change='onChangeClass()'>
                         <option value='ALL'>Alle</option>
                         <option value='COMPACT'>Compact</option>
                         <option value='SEDAN'>Sedan</option>
@@ -75,7 +75,7 @@
                 </div>
             </div>
         </div>
-        <div class='row' :hidden='!isBuyMenuOpen'>
+        <div :hidden='!isBuyMenuOpen' class='row'>
             <div class='col-2'>
                 <div class='btn-group-vertical p-2 w-100'>
                     <button class='btn btn-dark' @click='closeBuyMenu()'>Zurück</button>
@@ -84,7 +84,7 @@
             <div class='col-9 p-3 showcase-entry'>
                 <div class='row'>
                     <div class='col-6'>
-                        <img class='showcase-image' :src='getVehicleImage(buyMenuVehicleModel)' />
+                        <img :src='getVehicleImage(buyMenuVehicleModel)' class='showcase-image' />
                         <p class='text-muted pt-1' style='font-style: italic'>
                             Dies ist nur ein Vorschaubild. </p>
                     </div>
@@ -109,17 +109,17 @@
                 </div>
             </div>
         </div>
-        <div class='row' :hidden='!isOrderMenuOpen'>
+        <div :hidden='!isOrderMenuOpen' class='row'>
             <div class='col-2'>
                 <div class='btn-group-vertical p-2 w-100'>
                     <button class='btn btn-dark' @click='closeOrderMenu()'>Zurück</button>
                 </div>
             </div>
             <div class='col-9'>
-                <input class='form-control mt-1 mb-1' @focus='onFocus(true)' @blur='onFocus(false)' @input='search()' v-model='nameSearch' type='text' placeholder='Fahrzeugnamen suchen...' />
+                <input v-model='nameSearch' class='form-control mt-1 mb-1' placeholder='Fahrzeugnamen suchen...' type='text' @blur='onFocus(false)' @focus='onFocus(true)' @input='search()' />
 
                 <div class='vehicles-list row'>
-                    <div class='icon-button col-4 p-2' v-for='vehicle in orderedVehicles' v-bind:key='vehicle.id'>
+                    <div v-for='vehicle in orderedVehicles' v-bind:key='vehicle.id' class='icon-button col-4 p-2'>
                         <div class='vehicle-entry'>
                             <h1>
                                 Bestellnummer: #{{ vehicle.id.toString().padStart(6, 0) }} </h1>
@@ -138,10 +138,10 @@
 
                             <p>Bestellt von: {{ vehicle.orderedBy }}.</p>
                             <p v-if='vehicle.deliveryRequestedBy'>
-                                Lieferauftrag erstellt von: {{ vehicle.deliveryRequestedBy }} am {{ getDate(vehicle.deliveryRequestedAt) }}. </p>
+                                Lieferauftrag erstellt von: {{ vehicle.deliveryRequestedBy }} am {{ getDate(vehicle.deliveryRequestedAtJson) }}. </p>
 
                             <div class='m-2'>
-                                <button class='btn btn-primary w-100' v-if='!vehicle.deliveryRequestedBy' @click='requestDeliveryTask(vehicle.id)' :disabled='!getButtonState(vehicle)'>
+                                <button v-if='!vehicle.deliveryRequestedBy' :disabled='!getButtonState(vehicle)' class='btn btn-primary w-100' @click='requestDeliveryTask(vehicle.id)'>
                                     {{ getButtonString(vehicle) }}
                                 </button>
                             </div>
@@ -315,9 +315,11 @@ export default class VehicleImportPage extends Vue {
         }
 
         if (this.classSelection.value === "ALL") {
-            this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()));
+            this.vehicles = this.vehicles.filter(
+                (v) => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()));
         } else {
-            this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()) && v.classId.toLowerCase() == this.classSelection.value.toLowerCase());
+            this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(
+                this.nameSearch.toLowerCase()) && v.classId.toLowerCase() == this.classSelection.value.toLowerCase());
         }
     }
 
@@ -328,15 +330,18 @@ export default class VehicleImportPage extends Vue {
             if (this.nameSearch === "") {
                 this.vehicles = this.cachedVehicles;
             } else {
-                this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()));
+                this.vehicles = this.vehicles.filter(
+                    (v) => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()));
             }
             return;
         }
 
         if (this.nameSearch === "") {
-            this.vehicles = this.vehicles.filter((v) => v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
+            this.vehicles = this.vehicles.filter(
+                (v) => v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
         } else {
-            this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(this.nameSearch.toLowerCase()) && v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
+            this.vehicles = this.vehicles.filter((v) => v.displayName.toLowerCase().includes(
+                this.nameSearch.toLowerCase()) && v.classId.toLowerCase() === this.classSelection.value.toLowerCase());
         }
     }
 
@@ -350,7 +355,7 @@ export default class VehicleImportPage extends Vue {
 
     private getButtonState(vehicle: OrderedVehicleInterface): boolean {
         if (this.isDatePast(vehicle.deliverdAt)) {
-            return !this.isDatePast(vehicle.deliveryRequestedAt);
+            return !this.isDatePast(vehicle.deliveryRequestedAtJson);
         } else {
             return false;
         }
@@ -374,7 +379,7 @@ export default class VehicleImportPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .vehicle-import-page {
     position: relative;
     width: 100%;

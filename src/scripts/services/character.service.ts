@@ -3,17 +3,11 @@ import LiteEvent from "@/scripts/systems/lite-event";
 
 export default class CharacterService {
     private static instance: CharacterService;
+    private readonly onCharacterChanged = new LiteEvent<number>();
+    private characterId?: number;
 
     private constructor() {
         // do something construct...
-    }
-
-    static getInstance() {
-        if (!CharacterService.instance) {
-            CharacterService.instance = new CharacterService();
-            // ... any one time initialization goes here ...
-        }
-        return CharacterService.instance;
     }
 
     get Changed() {
@@ -24,8 +18,13 @@ export default class CharacterService {
         return this.characterId ? this.characterId : -1;
     }
 
-    private readonly onCharacterChanged = new LiteEvent<number>();
-    private characterId?: number;
+    static getInstance() {
+        if (!CharacterService.instance) {
+            CharacterService.instance = new CharacterService();
+            // ... any one time initialization goes here ...
+        }
+        return CharacterService.instance;
+    }
 
     public listenToEvents(): void {
         alt.on("character:sync", (characterId: number) => this.setup(characterId));

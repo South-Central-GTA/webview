@@ -1,7 +1,7 @@
 <template>
     <div class='team-menu-animations'>
         <h2>Animations Catalog</h2>
-        <input @input='search()' v-model='searchBar' type='text' class='form-control-dark mb-2' placeholder='Suche nach einem Namen' />
+        <input v-model='searchBar' class='form-control-dark mb-2' placeholder='Suche nach einem Namen' type='text' @input='search()' />
 
         <div class='table-holder'>
             <table class='table table-striped table-hover'>
@@ -39,17 +39,12 @@ export default class TeamMenuAnimations extends Vue {
     private cachedAnimations: AnimationInterface[] = [];
     private searchBar = "";
 
-    public mounted(): void {
-        alt.on("animationcatalog:setup", (args: any[]) => this.setup(args[0]));
-    }
-
-    public unmounted(): void {
-        alt.off("animationcatalog:setup");
-    }
-
-    private setup(animations: AnimationInterface[]): void {
-        this.animations = animations;
-        this.cachedAnimations = this.animations;
+    public open(): void {
+        alt.emitServerWithResponse<AnimationInterface[]>("animationcatalog:open")
+            .then((animations: AnimationInterface[]) => {
+                this.animations = animations;
+                this.cachedAnimations = this.animations;
+            });
     }
 
     private search(): void {
@@ -58,7 +53,8 @@ export default class TeamMenuAnimations extends Vue {
             return;
         }
 
-        this.animations = this.cachedAnimations.filter((m) => m.name.toLowerCase().includes(this.searchBar.toLowerCase()));
+        this.animations = this.cachedAnimations.filter(
+            (m) => m.name.toLowerCase().includes(this.searchBar.toLowerCase()));
     }
 }
 </script>

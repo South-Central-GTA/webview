@@ -14,18 +14,18 @@
 
         <div class='character-access-block'>
             <div v-for='characterAccess in characterAccesses' v-bind:key='characterAccess.name'>
-                <button type='button' class='btn character-access-btn' @click='openCharacterAccessSettings(characterAccess)' :disabled='characterAccess.characterId === characterId'>
+                <button :disabled='characterAccess.characterId === characterId' class='btn character-access-btn' type='button' @click='openCharacterAccessSettings(characterAccess)'>
                     {{ characterAccess.name }}
                 </button>
             </div>
 
-            <div class='no-character-access-block' v-if='characterAccesses.length === 0'>
+            <div v-if='characterAccesses.length === 0' class='no-character-access-block'>
                 <h2>Keine Zugriffsrechte vergeben...</h2>
             </div>
         </div>
 
         <div class='phone-bank-button-group'>
-            <button type='button' class='btn' @click='openTab(1)'>
+            <button class='btn' type='button' @click='openTab(1)'>
                 Person hinzufügen
             </button>
         </div>
@@ -63,6 +63,10 @@ export default class PhonePermissionBankAccount extends Vue {
         this.phoneAddPermissionBankAccount.setup(this.bankAccountId);
     }
 
+    public resetTab(): void {
+        this.openTab(0);
+    }
+
     private openCharacterAccessSettings(characterAccess: BankAccountCharacterAccessInterface): void {
         this.phoneManagePermissionBankAccount.setup(this.bankAccountId, characterAccess);
         this.openTab(2);
@@ -73,17 +77,13 @@ export default class PhonePermissionBankAccount extends Vue {
         this.$emit("back");
     }
 
-    public resetTab(): void {
-        this.openTab(0);
-    }
-
     private openTab(id: number): void {
         this.currentTab = id;
     }
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .phone-permission-bank-account {
     overflow: hidden;
     position: absolute;

@@ -13,7 +13,7 @@
             Sind Sie sicher, dass Sie ihr Bankkonto unwiederruflich löschen wollen? </p>
 
         <div class='phone-bank-button-group'>
-            <button type='button' class='btn' @click='deleteBankAccount()'>
+            <button class='btn' type='button' @click='deleteBankAccount()'>
                 Ja, Konto löschen
             </button>
         </div>
@@ -34,7 +34,7 @@ export default class PhoneActiveBankAccount extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .phone-delete-bank-account {
     overflow: hidden;
     position: absolute;

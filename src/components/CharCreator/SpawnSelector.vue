@@ -1,9 +1,9 @@
 <template>
     <div class='spawn-selector'>
-        <div class='selected-box sc-card text-white' v-if='selectedSpawn.id !== -1'>
+        <div v-if='selectedSpawn' class='selected-box sc-card text-white'>
             <h4>Ausgewählter Spawn</h4>
             <h6>{{ selectedSpawn.name }}</h6>
-            <button type='button' class='btn btn-secondary' @click='show()'>
+            <button class='btn btn-secondary' type='button' @click='show()'>
                 Anschauen
             </button>
         </div>
@@ -11,7 +11,7 @@
         <div class='select-box sc-card text-white bottom-center'>
             <div class='menu'>
                 <div class='left'>
-                    <button type='button' class='btn btn-secondary' @click='change(-1)'>
+                    <button class='btn btn-secondary' type='button' @click='change(-1)'>
                         <font-awesome-icon icon='caret-left' />
                     </button>
                 </div>
@@ -19,13 +19,13 @@
                 <div class='w-100'>
                     <h5 class='text-center' style='height: 2vw'>
                         {{ currentSpawn.name }} </h5>
-                    <button type='button' class='btn btn-primary' @click='select()' :disabled='selectedSpawn.name === currentSpawn.name'>
+                    <button :disabled='selectedSpawn.name === currentSpawn.name' class='btn btn-primary' type='button' @click='select()'>
                         Auswählen
                     </button>
                 </div>
 
                 <div class='right'>
-                    <button type='button' class='btn btn-secondary' @click='change(1)'>
+                    <button class='btn btn-secondary' type='button' @click='change(1)'>
                         <font-awesome-icon icon='caret-right' />
                     </button>
                 </div>
@@ -43,8 +43,13 @@ export default class SpawnSelector extends Vue {
     private buttonDisabled = false;
     private selectButtonDisabled = false;
 
-    private currentSpawn?: SpawnInterface;
-    private selectedSpawn?: SpawnInterface;
+    private currentSpawn: SpawnInterface = {
+        id: 0, name: "", x: 0, y: 0, z: 0
+    };
+
+    private selectedSpawn: SpawnInterface = {
+        id: 0, name: "", x: 0, y: 0, z: 0
+    };
 
     public mounted(): void {
         alt.on("spawnselector:setinfo", (spawn: SpawnInterface) => this.setInfo(spawn));

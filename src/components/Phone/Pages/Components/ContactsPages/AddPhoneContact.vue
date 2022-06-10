@@ -2,10 +2,10 @@
     <div class='add-phone-contact'>
         <div class='center'>
             <h5>Neuen Kontakt hinzufügen</h5>
-            <input ref='nameInput' type='text' class='form-control' @focus='onFocus(true)' @blur='onFocus(false)' placeholder='Max Mustermann' maxlength='32' v-bind:class="{
+            <input ref='nameInput' class='form-control' maxlength='32' placeholder='Max Mustermann' type='text' v-bind:class="{
           'is-invalid': nameValidation !== 'OKAY',
           'is-valid': nameValidation === 'OKAY',
-        }" />
+        }" @blur='onFocus(false)' @focus='onFocus(true)' />
             <div v-if="nameValidation === 'EMPTY'" class='invalid-feedback'>
                 Bitte gebe einen Namen an.
             </div>
@@ -13,10 +13,10 @@
                 Der Name ist zu lang.
             </div>
 
-            <input ref='numberInput' class='form-control' @keypress='allowOnlyNumbers($event)' @focus='onFocus(true)' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @blur='onFocus(false)' placeholder='55512345678' maxlength='11' v-bind:class="{
+            <input ref='numberInput' class='form-control' maxlength='11' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' placeholder='55512345678' type='number' v-bind:class="{
           'is-invalid': numberValidation !== 'OKAY',
           'is-valid': numberValidation === 'OKAY',
-        }" />
+        }" @blur='onFocus(false)' @focus='onFocus(true)' @keypress='allowOnlyNumbers($event)' />
             <div v-if="numberValidation === 'EMPTY'" class='invalid-feedback'>
                 Bitte gebe eine Nummer an.
             </div>
@@ -31,7 +31,7 @@
             </div>
 
             <div class='add-button-box'>
-                <button type='button' class='btn btn-secondary' @click='addContact()'>
+                <button class='btn btn-secondary' type='button' @click='addContact()'>
                     Kontakt erstellen
                 </button>
             </div>
@@ -40,9 +40,7 @@
 </template>
 
 <script lang='ts'>
-import {
-    UID, isNumeric, allowOnlyNumbers, onFocus,
-} from "@/scripts/helpers/helpers";
+import {allowOnlyNumbers, isNumeric, onFocus, UID,} from "@/scripts/helpers/helpers";
 import {Ref} from "vue-property-decorator";
 import {Vue} from "vue-class-component";
 import {PhoneContactInterface} from "@/scripts/interfaces/phone/phone-contact.interface";
@@ -113,7 +111,7 @@ export default class AddPhoneContact extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .add-phone-contact {
     position: absolute;
     top: 0;

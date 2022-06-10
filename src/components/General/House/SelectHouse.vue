@@ -1,8 +1,8 @@
 <template>
     <div class='select-house'>
-        <select class='form-select' @change='onChange($event)' :disabled='houses.length <= 1'>
+        <select :disabled='houses.length <= 1' class='form-select' @change='onChange($event)'>
             <option :hidden='houses.length != 0'>Immobilie benötigt</option>
-            <option v-for='(house, i) in houses' v-bind:key='house.Id' :hidden='houses.length == 0' :value='house.id' :selected='selectedIndex == i'>
+            <option v-for='(house, i) in houses' v-bind:key='house.Id' :hidden='houses.length == 0' :selected='selectedIndex == i' :value='house.id'>
                 {{ house.streetName + " " + house.subName + " " + house.houseNumber }}
             </option>
         </select>
@@ -15,12 +15,12 @@ import {Vue} from "vue-class-component";
 import {HouseInterface} from "@/scripts/interfaces/house.interface";
 
 export default class SelectHouse extends Vue {
+    private houses: HouseInterface[] = [];
+    private selectedIndex = 0;
+
     get hasHouse() {
         return this.houses.length != 0;
     }
-
-    private houses: HouseInterface[] = [];
-    private selectedIndex = 0;
 
     public mounted(): void {
         house
@@ -34,19 +34,6 @@ export default class SelectHouse extends Vue {
         house
             .getInstance()
             .onChange.off((houses: HouseInterface[]) => this.update(houses.filter((h) => h.houseType === 0)));
-    }
-
-    private update(houses: HouseInterface[]): void {
-        this.setup(houses, false);
-    }
-
-    private setup(houses: HouseInterface[], fireEvent: boolean): void {
-        this.houses = houses;
-
-        if (this.houses.length != 0) {
-            this.setHouse(this.houses[0].id, fireEvent);
-            this.$emit("setup", this.houses[0]);
-        }
     }
 
     public setHouse(id: number, fireEvent = false): void {
@@ -63,6 +50,19 @@ export default class SelectHouse extends Vue {
 
         if (fireEvent) {
             this.$emit("change-house", house);
+        }
+    }
+
+    private update(houses: HouseInterface[]): void {
+        this.setup(houses, false);
+    }
+
+    private setup(houses: HouseInterface[], fireEvent: boolean): void {
+        this.houses = houses;
+
+        if (this.houses.length != 0) {
+            this.setHouse(this.houses[0].id, fireEvent);
+            this.$emit("setup", this.houses[0]);
         }
     }
 

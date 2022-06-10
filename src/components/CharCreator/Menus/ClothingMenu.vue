@@ -3,7 +3,7 @@
         <h5>{{ title }}</h5>
         <div class='row'>
             <div class='col-12'>
-                <input type='range' class='form-range-dark' min='-1' :max='maxDrawables' v-model.number='drawableId' @input='updateClothing()' />
+                <input v-model.number='drawableId' :max='maxDrawables' class='form-range-dark' min='-1' type='range' @input='updateClothing()' />
                 <div style='margin: unset'>
                     <p class='float-end'>
                         {{
@@ -13,18 +13,18 @@
                         }} </p>
                 </div>
             </div>
-            <div class='col-12' v-if='this.clothing.drawableId !== -1'>
+            <div v-if='this.clothing.drawableId !== -1' class='col-12'>
                 Variationen
-                <input type='range' :disabled='maxTextures < 1' class='form-range-dark' min='0' :max='maxTextures' v-model.number='textureId' @input='updateClothing()' />
+                <input v-model.number='textureId' :disabled='maxTextures < 1' :max='maxTextures' class='form-range-dark' min='0' type='range' @input='updateClothing()' />
                 <div style='margin: unset'>
                     <p class='float-end'>{{ textureId }}</p>
                 </div>
             </div>
-            <div class='col-12' v-if="this.clothing.drawableId !== -1 && this.title !== 'Torso'">
-                <input v-model='itemName' type='text' class='form-control-dark' @input='updateClothing()' placeholder='Item Name' maxlength='32' v-bind:class="{
+            <div v-if="this.clothing.drawableId !== -1 && this.title !== 'Torso'" class='col-12'>
+                <input v-model='itemName' class='form-control-dark' maxlength='32' placeholder='Item Name' type='text' v-bind:class="{
             'is-invalid': clothValidation !== 'OKAY',
             'is-valid': clothValidation === 'OKAY',
-          }" />
+          }" @input='updateClothing()' />
 
                 <div v-if="clothValidation === 'EMPTY'" class='invalid-feedback'>
                     Bitte definiere einen Namen für dieses Kleidungsitem.
@@ -53,10 +53,8 @@ import {ClothingInterface} from "@/scripts/interfaces/character/clothing.interfa
 import {GenderType} from "@/scripts/enums/gender.type";
 
 export default class ClothingMenu extends Vue {
-    @Prop() private readonly title!: string;
-
     public clothValidation = "OKAY";
-
+    @Prop() private readonly title!: string;
     private maxDrawables = -1;
     private maxTextures = 0;
 

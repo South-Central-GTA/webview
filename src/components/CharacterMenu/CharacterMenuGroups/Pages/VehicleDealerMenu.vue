@@ -10,7 +10,7 @@
                     <p class='text-muted'>
                         Klicke das Fahrzeug an welches du aus dem Lager ausparken möchtest. </p>
                     <div class='list row g-1'>
-                        <div class='col-4' v-for='vehicle in vehicles' v-bind:key='vehicle.id'>
+                        <div v-for='vehicle in vehicles' v-bind:key='vehicle.id' class='col-4'>
                             <vehicle-card class='btn btn-secondary' v-bind:vehicle='vehicle' @click='chooseVehicle(vehicle.id)' />
                         </div>
                     </div>
@@ -100,7 +100,7 @@ export default class VehicleDealerMenu extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .list {
     overflow-y: auto;
     height: 10vw;

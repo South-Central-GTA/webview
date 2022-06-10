@@ -1,17 +1,17 @@
 <template>
     <div class='house-selector'>
-        <div class='selected-box sc-card text-white' v-if='selectedHouseId !== -1'>
+        <div v-if='selectedHouseId !== -1' class='selected-box sc-card text-white'>
             <h4>Ausgewählte Immobilie</h4>
             <h6>
                 {{ selectedHouseStreetName }} {{ selectedHouseSubName }} {{ selectedHouseHouseNumber }} </h6>
             <div class='row'>
                 <div class='col-10'>
-                    <button type='button' class='btn btn-secondary selected-house-button' @click='show()'>
+                    <button class='btn btn-secondary selected-house-button' type='button' @click='show()'>
                         Anschauen
                     </button>
                 </div>
                 <div class='col-2'>
-                    <button type='button' class='btn btn-secondary remove-house-button' @click='remove()'>
+                    <button class='btn btn-secondary remove-house-button' type='button' @click='remove()'>
                         <font-awesome-icon class='delete-icon' icon='trash' />
                     </button>
                 </div>
@@ -21,7 +21,7 @@
         <div class='select-box sc-card text-white bottom-center'>
             <div class='menu'>
                 <div class='left'>
-                    <button type='button' class='btn btn-secondary' @click='change(-1)'>
+                    <button class='btn btn-secondary' type='button' @click='change(-1)'>
                         <font-awesome-icon icon='caret-left' />
                     </button>
                 </div>
@@ -31,25 +31,25 @@
                         {{ currentHouseStreetName }} {{ currentHouseSubName }} {{ currentHouseNumber }} </h5>
                     <h6 class='text-center'>
                         {{ currentHouseSouthCentralPoints }} Character Points </h6>
-                    <button type='button' class='btn btn-primary' :disabled='selectButtonDisabled' @click='trySelect()'>
+                    <button :disabled='selectButtonDisabled' class='btn btn-primary' type='button' @click='trySelect()'>
                         Auswählen
                     </button>
                 </div>
 
                 <div class='right'>
-                    <button type='button' class='btn btn-secondary' @click='change(1)'>
+                    <button class='btn btn-secondary' type='button' @click='change(1)'>
                         <font-awesome-icon icon='caret-right' />
                     </button>
                 </div>
             </div>
             <div class='row' style='padding-top: 0.5vw'>
                 <div class='col'>
-                    <button type='button' class='btn btn-secondary' @click='changeCameraPos(0)'>
+                    <button class='btn btn-secondary' type='button' @click='changeCameraPos(0)'>
                         Haustür Kamera
                     </button>
                 </div>
                 <div class='col'>
-                    <button type='button' class='btn btn-secondary' @click='changeCameraPos(1)'>
+                    <button class='btn btn-secondary' type='button' @click='changeCameraPos(1)'>
                         Rundflug Kamera
                     </button>
                 </div>

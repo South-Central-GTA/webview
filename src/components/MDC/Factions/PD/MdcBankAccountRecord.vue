@@ -18,7 +18,7 @@
 
                 <div v-if='notes.length !== 0' class='big-list-holder'>
                     <p v-for='note in notes' v-bind:key='note.id'>
-                        <button type='button' v-if='isOperator' @click='deleteNote(note.id)'>
+                        <button v-if='isOperator' type='button' @click='deleteNote(note.id)'>
                             X
                         </button>
                         {{ note.note }}<br /><span class='date-text'>{{ note.creatorCharacterName }} -
@@ -27,9 +27,9 @@
                 </div>
 
                 <div class='position-absolute mb-5 bottom-0'>
-                    <input class='w-100' v-model='noteInput' type='text' />
+                    <input v-model='noteInput' class='w-100' type='text' />
 
-                    <button type='button' class='float-end mt-1' @click='createNote()'>
+                    <button class='float-end mt-1' type='button' @click='createNote()'>
                         Notiz erstellen
                     </button>
                 </div>
@@ -126,7 +126,7 @@ export default class MdcBankAccountRecord extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-bank-account-record {
     background-color: #cecece;
     height: 100%;

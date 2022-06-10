@@ -1,6 +1,6 @@
 <template>
     <div class='company-page'>
-        <div class='loading' v-if='isLoading && !loadedOnce'>
+        <div v-if='isLoading && !loadedOnce' class='loading'>
             <img class='logo' src='@/assets/images/phone/gov-seal.png' />
             <h1>{{ loadingText }}</h1>
         </div>
@@ -18,14 +18,14 @@
         <div v-if='hasData'>
             <div v-if='isPlayerInCompany'>
                 <div class='phone-gov-button-group'>
-                    <button type='button' class='btn' @click='openTab(1)' :disabled='!companyReady'>
+                    <button :disabled='!companyReady' class='btn' type='button' @click='openTab(1)'>
                         Mein Unternehmen
                     </button>
                 </div>
             </div>
             <div v-else>
                 <div class='phone-gov-button-group'>
-                    <button type='button' class='btn' @click='openTab(2)'>
+                    <button class='btn' type='button' @click='openTab(2)'>
                         Unternehmen eröffnen
                     </button>
                 </div>
@@ -52,24 +52,20 @@ import {CompanyInterface} from "@/scripts/interfaces/group/company.interface";
 export default class CompanyPage extends Vue {
     @Ref() private readonly companyManage!: CompanyManage;
     @Ref() private readonly companyCreate!: CompanyCreate;
-
-    get isCreatingCompany() {
-        return this.companyCreate.isCreatingCompany;
-    }
-
     private company?: CompanyInterface;
-
     private isPlayerInCompany = false;
     private companyReady = false;
-
     private hasData = false;
     private currentTab = 0;
     private isLoading = false;
     private loadedOnce = false;
     private loadingText = "";
     private loadingInt = 0;
-
     private licenses: LicenseInterface[] = [];
+
+    get isCreatingCompany() {
+        return this.companyCreate.isCreatingCompany;
+    }
 
     get getTab() {
         return this.currentTab;
@@ -183,7 +179,7 @@ export default class CompanyPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .company-page {
     overflow: hidden;
     top: 0;

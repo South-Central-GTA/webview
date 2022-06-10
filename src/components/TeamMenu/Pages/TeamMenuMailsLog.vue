@@ -1,7 +1,7 @@
 <template>
     <div class='team-menu-mails-log'>
         <h2>Mails Log</h2>
-        <input @input='search()' v-model='mailSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach der E-Mail' />
+        <input v-model='mailSearch' class='form-control-dark mb-2' placeholder='Suche nach der E-Mail' type='text' @input='search()' />
         <div class='table-holder'>
             <table class='table table-striped table-hover'>
                 <thead>
@@ -21,15 +21,15 @@
             </table>
         </div>
 
-        <div class='popup' :hidden='!isPopupOpen'>
+        <div :hidden='!isPopupOpen' class='popup'>
             <div class='modal-header transparent-card'>
                 <h5 class='modal-title'>Mail lesen</h5>
-                <button type='button' class='btn-close-white icon-button float-end' @click='closeDetails()'>
+                <button class='btn-close-white icon-button float-end' type='button' @click='closeDetails()'>
                     <font-awesome-icon class='center' icon='times' />
                 </button>
             </div>
 
-            <div class='mail-context' ref='mailContextElement'></div>
+            <div ref='mailContextElement' class='mail-context'></div>
         </div>
     </div>
 </template>
@@ -48,17 +48,12 @@ export default class TeamMenuMailsLog extends Vue {
     private mailSearch = "";
     private isPopupOpen = false;
 
-    public mounted(): void {
-        alt.on("mailslog:setup", (args: any[]) => this.setup(args[0]));
-    }
-
-    public unmounted(): void {
-        alt.off("mailslog:setup");
-    }
-
-    private setup(mails: MailInterface[]): void {
-        this.mails = mails;
-        this.cachedMails = this.mails;
+    public open(): void {
+        alt.emitServerWithResponse<MailInterface[]>("mailslog:open")
+            .then((mails: MailInterface[]) => {
+                this.mails = mails;
+                this.cachedMails = this.mails;
+            });
     }
 
     private search(): void {

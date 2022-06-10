@@ -1,16 +1,16 @@
 <template>
-    <div class='vehicle-sell-menu' :hidden='!isVisible' v-bind:class='{ enable: isVisible, disable: !isVisible }'>
+    <div :hidden='!isVisible' class='vehicle-sell-menu' v-bind:class='{ enable: isVisible, disable: !isVisible }'>
         <div class='background'></div>
         <div class='modal-dialog'>
             <div class='modal-content sc-dark text-white'>
                 <div class='modal-header'>
                     <h5 class='modal-title'>Fahrzeug verkaufen</h5>
-                    <button type='button' class='icon-button text-white float-end' @click='close()'>
+                    <button class='icon-button text-white float-end' type='button' @click='close()'>
                         <font-awesome-icon class='center text-white' icon='times' />
                     </button>
                 </div>
 
-                <div class='modal-body' v-if='pageId === 0'>
+                <div v-if='pageId === 0' class='modal-body'>
           <span v-if='!isGroupVehicle'>Bitte fülle alle Felder aus, wenn du über Banküberweisung verkaufen
             möchtest kannst du im nächsten Menu das gewünschte Bankkonto
             auswählen.</span> <span v-if='isGroupVehicle'>Bitte fülle alle Felder aus, da es ein Gruppenfahrzeug ist, geht
@@ -18,16 +18,16 @@
 
                     <div class='row pt-3 pb-3'>
                         <div class='col-3'>
-                            <input ref='transferValueInput' class='form-control-dark' v-model='targetId' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @keypress='allowOnlyNumbers($event)' @focus='onFocus(true)' @blur='onFocus(false)' placeholder='Spieler ID' maxlength='4' />
+                            <input ref='transferValueInput' v-model='targetId' class='form-control-dark' maxlength='4' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' placeholder='Spieler ID' type='number' @blur='onFocus(false)' @focus='onFocus(true)' @keypress='allowOnlyNumbers($event)' />
                         </div>
                         <div class='col-9'>
-                            <input ref='transferValueInput' class='form-control-dark' v-model='price' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @keypress='allowOnlyNumbers($event)' @focus='onFocus(true)' @blur='onFocus(false)' placeholder='Preis in Dollar (Bsp. 20000)' maxlength='10' />
+                            <input ref='transferValueInput' v-model='price' class='form-control-dark' maxlength='10' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' placeholder='Preis in Dollar (Bsp. 20000)' type='number' @blur='onFocus(false)' @focus='onFocus(true)' @keypress='allowOnlyNumbers($event)' />
                         </div>
                     </div>
                     <span>Per was möchtest du das Angebot machen?</span>
                 </div>
 
-                <div class='modal-body' v-if='pageId === 1'>
+                <div v-if='pageId === 1' class='modal-body'>
           <span v-if='isGroupVehicle'>Der Preis von ${{
                   price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
                                       }}
@@ -36,23 +36,23 @@
                                                                                   }}
             erhalten möchtest.</span>
                     <div :hidden='isGroupVehicle'>
-                        <select-bank-account class='pt-3' v-on:change-bank-account='setBankAccount($event)' v-on:setup='setBankAccount($event)' />
+                        <select-bank-account class='pt-3' v-on:setup='setBankAccount($event)' v-on:change-bank-account='setBankAccount($event)' />
                     </div>
                 </div>
 
-                <div class='modal-footer justify-content-evenly row' v-if='pageId === 0'>
-                    <button type='button' class='btn btn-primary col-5' @click='onBuyCash()'>
+                <div v-if='pageId === 0' class='modal-footer justify-content-evenly row'>
+                    <button class='btn btn-primary col-5' type='button' @click='onBuyCash()'>
                         Bargeld
                     </button>
-                    <button type='button' class='btn btn-secondary col-5' @click='openSecondPage()'>
+                    <button class='btn btn-secondary col-5' type='button' @click='openSecondPage()'>
                         Banküberweisung
                     </button>
                 </div>
-                <div class='modal-footer justify-content-evenly row' v-if='pageId === 1'>
-                    <button type='button' class='btn btn-secondary col-5' @click='openFirstPage()'>
+                <div v-if='pageId === 1' class='modal-footer justify-content-evenly row'>
+                    <button class='btn btn-secondary col-5' type='button' @click='openFirstPage()'>
                         Zurück
                     </button>
-                    <button type='button' class='btn btn-primary col-5' @click='onBuyBank()'>
+                    <button class='btn btn-primary col-5' type='button' @click='onBuyBank()'>
                         Banküberweisung
                     </button>
                 </div>
@@ -84,7 +84,8 @@ export default class VehicleSellMenu extends Vue {
     private selectedBankAccount: BankAccountInterface | undefined;
 
     public mounted(): void {
-        alt.on("vehiclesellmenu:show", (hasBankAccount: boolean, isGroupVehicle: boolean) => this.show(hasBankAccount, isGroupVehicle));
+        alt.on("vehiclesellmenu:show",
+            (hasBankAccount: boolean, isGroupVehicle: boolean) => this.show(hasBankAccount, isGroupVehicle));
     }
 
     public unmounted(): void {
@@ -129,7 +130,8 @@ export default class VehicleSellMenu extends Vue {
 
     private onBuyBank(): void {
         this.close();
-        alt.emitServer("vehiclesellmenu:requestbank", Number.parseInt(this.targetId), Number.parseInt(this.price), this.selectedBankAccount?.id);
+        alt.emitServer("vehiclesellmenu:requestbank", Number.parseInt(this.targetId), Number.parseInt(this.price),
+            this.selectedBankAccount?.id);
     }
 
     private onFocus(state: boolean): void {

@@ -9,15 +9,15 @@
         <background-setting ref='background' :hidden='currentTab !== 1' v-on:back='resetTab()' />
 
         <div class='phone-button-group'>
-            <button type='button' class='btn btn-primary' @click='openTab(1)'>
+            <button class='btn btn-primary' type='button' @click='openTab(1)'>
                 <font-awesome-icon class='background-icon' icon='images' />
                 <span>Hintergrundbild</span>
             </button>
-            <button type='button' class='btn btn-secondary' disabled>
+            <button class='btn btn-secondary' disabled type='button'>
                 <font-awesome-icon class='call-icon' icon='phone' />
                 <span>Klingeltöne</span>
             </button>
-            <button type='button' class='btn btn-secondary' disabled>
+            <button class='btn btn-secondary' disabled type='button'>
                 <font-awesome-icon class='internet-icon' icon='globe' />
                 <span>Internet</span>
             </button>
@@ -37,12 +37,11 @@ import {Ref} from "vue-property-decorator";
 })
 export default class SettingsPage extends Vue {
     @Ref() private readonly background!: BackgroundSetting;
+    private currentTab = 0;
 
     get getTab() {
         return this.currentTab;
     }
-
-    private currentTab = 0;
 
     public setup(backgroundId: number): void {
         this.background.setup(backgroundId);
@@ -58,7 +57,7 @@ export default class SettingsPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .settings-page {
     height: 100%;
 

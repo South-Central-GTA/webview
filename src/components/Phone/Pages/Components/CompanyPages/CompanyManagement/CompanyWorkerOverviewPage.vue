@@ -1,7 +1,7 @@
 <template>
     <div class='company-worker-overview'>
         <div class='phone-header'>
-            <button type='button' class='icon-button' @click='back()'>
+            <button class='icon-button' type='button' @click='back()'>
                 <font-awesome-icon icon='chevron-left' />
                 <span>Mitarbeiter</span>
             </button>
@@ -9,8 +9,8 @@
 
         <company-worker-edit ref='workerEdit' :hidden='!isEditingWindowOpen' v-on:back='closeEditWorker()' />
 
-        <div class='workers-block' v-if='members.length !== 0'>
-            <button v-for='member in members' v-bind:key='member.characterName' class='workers-card' :disabled='member.owner && !isOwner' @click='openEditWorker(member)'>
+        <div v-if='members.length !== 0' class='workers-block'>
+            <button v-for='member in members' v-bind:key='member.characterName' :disabled='member.owner && !isOwner' class='workers-card' @click='openEditWorker(member)'>
                 <h1>
                     {{
                         member.characterName
@@ -41,16 +41,15 @@ import {GroupInterface} from "@/scripts/interfaces/group/group.interface";
     },
 })
 export default class CompanyWorkerOverviewPage extends Vue {
-    get getIsEditingWindowOpen() {
-        return this.isEditingWindowOpen;
-    }
-
     @Ref() private readonly workerEdit!: CompanyWorkerEdit;
-
     private members: GroupMemberInterface[] = [];
     private company!: GroupInterface;
     private isEditingWindowOpen = false;
     private isOwner = false;
+
+    get getIsEditingWindowOpen() {
+        return this.isEditingWindowOpen;
+    }
 
     public setup(company: GroupInterface): void {
         this.company = company;
@@ -81,7 +80,7 @@ export default class CompanyWorkerOverviewPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .company-worker-overview {
     overflow: hidden;
     position: absolute;

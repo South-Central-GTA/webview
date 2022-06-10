@@ -98,7 +98,8 @@ export default class ClothesMenu extends Vue {
     };
 
     public mounted(): void {
-        alt.on("clothesmenu:setmaxtexturevariation", (maxTextures: MaxDrawablesTexturesInterface) => this.setMaxDrawablesTextures(maxTextures));
+        alt.on("clothesmenu:setmaxtexturevariation",
+            (maxTextures: MaxDrawablesTexturesInterface) => this.setMaxDrawablesTextures(maxTextures));
     }
 
     public unmounted(): void {

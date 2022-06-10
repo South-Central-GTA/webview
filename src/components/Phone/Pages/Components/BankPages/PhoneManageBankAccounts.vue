@@ -15,12 +15,12 @@
                     <h1>{{ bankAccount.bankDetails }}</h1>
                     <h2 v-if='bankAccount.status === 0'>Wird noch eingerichtet ...</h2>
                     <h2 v-if='bankAccount.status === 1'>${{ bankAccount.amount }}</h2>
-                    <h2 class='fst-italic' v-if='bankAccount.type === 0'>Privatkonto</h2>
-                    <h2 class='fst-italic' v-if='bankAccount.type === 1'>Gruppenkonto</h2>
+                    <h2 v-if='bankAccount.type === 0' class='fst-italic'>Privatkonto</h2>
+                    <h2 v-if='bankAccount.type === 1' class='fst-italic'>Gruppenkonto</h2>
                 </div>
             </div>
 
-            <div class='no-bank-accounts-block' v-if='bankAccounts.length === 0'>
+            <div v-if='bankAccounts.length === 0' class='no-bank-accounts-block'>
                 <h2>Keine Konten verfügbar...</h2>
             </div>
         </div>
@@ -55,7 +55,7 @@ export default class PhoneManageBankAccounts extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .phone-manage-bank-accounts {
     overflow: hidden;
     position: absolute;

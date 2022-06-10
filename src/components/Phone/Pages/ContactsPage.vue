@@ -16,39 +16,39 @@
             <h1>Ich</h1>
             <h2>{{ getCorrectFormat(myNumber) }}</h2>
             <div class='new-contact-block'>
-                <button type='button' class='btn new-contact-button' @click='openAddContactPopup()'>
+                <button class='btn new-contact-button' type='button' @click='openAddContactPopup()'>
                     <font-awesome-icon class='center' icon='plus' />
                 </button>
             </div>
         </div>
 
-        <div class='actions-popup' v-if='isActionsPopupOpen'>
+        <div v-if='isActionsPopupOpen' class='actions-popup'>
             <h4>{{ currentContact.name }}</h4>
             <h5>{{ getCorrectFormat(currentContact.phoneNumber) }}</h5>
             <div class='center w-100'>
                 <div style='padding-top: 20px'>
-                    <button type='button' class='btn call-button' @click='callContact()'>
+                    <button class='btn call-button' type='button' @click='callContact()'>
                         <font-awesome-icon class='center' icon='phone' />
                     </button>
-                    <button type='button' class='btn text-button' @click='textContact()'>
+                    <button class='btn text-button' type='button' @click='textContact()'>
                         <font-awesome-icon class='center' icon='comments' />
                     </button>
                 </div>
                 <div style='padding-top: 10px'>
-                    <button type='button' class='btn delete-button' @click='openDeletePopup()'>
+                    <button class='btn delete-button' type='button' @click='openDeletePopup()'>
                         <font-awesome-icon class='center' icon='trash' />
                     </button>
-                    <button type='button' class='btn edit-button' @click='openEditContactPopup()'>
+                    <button class='btn edit-button' type='button' @click='openEditContactPopup()'>
                         <font-awesome-icon class='center' icon='cog' />
                     </button>
                 </div>
             </div>
-            <button type='button' class='btn close-button' @click='closeActionsPopup()'>
+            <button class='btn close-button' type='button' @click='closeActionsPopup()'>
                 <font-awesome-icon class='center' icon='times' />
             </button>
         </div>
 
-        <div class='contacts-block' v-if='sortedContacts !== null'>
+        <div v-if='sortedContacts !== null' class='contacts-block'>
             <div v-for='sorted in sortedContacts' v-bind:key='sorted.Letter'>
                 <h1 v-if='sorted.contacts.length !== 0'>{{ sorted.letter }}</h1>
                 <div v-for='contact in sorted.contacts' v-bind:key='contact.id'>
@@ -80,14 +80,12 @@ interface SortedContactInterface {
     },
 })
 export default class ContactsPage extends Vue {
-    @Ref() private readonly addPhoneContact!: AddPhoneContact;
-    @Ref() private readonly editPhoneContact!: EditPhoneContact;
-
     public isAddContactPopupOpen = false;
     public isEditContactPopupOpen = false;
     public isDeletePopupOpen = false;
     public isActionsPopupOpen = false;
-
+    @Ref() private readonly addPhoneContact!: AddPhoneContact;
+    @Ref() private readonly editPhoneContact!: EditPhoneContact;
     private sortedContacts: SortedContactInterface[] = [];
     private myNumber = "";
     private currentContact!: PhoneContactInterface;
@@ -203,7 +201,7 @@ export default class ContactsPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .contacts-page {
     height: 100%;
 

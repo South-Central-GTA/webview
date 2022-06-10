@@ -6,17 +6,17 @@
             <a class='navbar-brand px-4'> South Central Roleplay </a>
             <ul class='navbar-nav'>
                 <li class='nav-item' style='padding-left: 1vw; font-size: 1.3vw'>
-                    <a class='nav-link' @click='closeCharCreation()' :disabled='isSaving'>
+                    <a :disabled='isSaving' class='nav-link' @click='closeCharCreation()'>
                         <font-awesome-icon icon='chevron-left' />
                     </a>
                 </li>
-                <li class='nav-item' v-if='isNewCharacter' v-bind:class='{ active: tabIndex === 0 }'>
+                <li v-if='isNewCharacter' class='nav-item' v-bind:class='{ active: tabIndex === 0 }'>
                     <a class='nav-link' @click='openMenu(0)'>Eckdaten</a>
                 </li>
-                <li class='nav-item' v-if='isNewCharacter' v-bind:class='{ active: tabIndex === 1 }'>
+                <li v-if='isNewCharacter' class='nav-item' v-bind:class='{ active: tabIndex === 1 }'>
                     <a class='nav-link' @click='openMenu(1)'>Geschlecht & Eltern</a>
                 </li>
-                <li class='nav-item' v-if='isNewCharacter' v-bind:class='{ active: tabIndex === 2 }'>
+                <li v-if='isNewCharacter' class='nav-item' v-bind:class='{ active: tabIndex === 2 }'>
                     <a class='nav-link' @click='openMenu(2)'>Gesichtszüge</a>
                 </li>
                 <li class='nav-item' v-bind:class='{ active: tabIndex === 3 }'>
@@ -46,7 +46,7 @@
                 <div class='card-header text-white'>Einkaufskorb</div>
                 <ul class='list-group mb-3'>
                     <div class='scrollable'>
-                        <li class='list-group-item sc-card text-white d-flex justify-content-between lh-sm' v-for='purchaseOrder in purchaseOrders' v-bind:key='purchaseOrder.id'>
+                        <li v-for='purchaseOrder in purchaseOrders' v-bind:key='purchaseOrder.id' class='list-group-item sc-card text-white d-flex justify-content-between lh-sm'>
                             <div class='float-start'>
                                 <h6 class='my-0'>{{ purchaseOrder.name }}</h6>
                                 <small class='text-white-50'>{{
@@ -55,7 +55,7 @@
                             </div>
                             <div class='float-end'>
                                 <span class='text-white-50'>{{ purchaseOrder.southCentralPoints }} SCP</span>
-                                <button type='button' v-if='purchaseOrder.removeable' class='btn delete-button' @click='removePurchaseOrder(purchaseOrder)'>
+                                <button v-if='purchaseOrder.removeable' class='btn delete-button' type='button' @click='removePurchaseOrder(purchaseOrder)'>
                                     <font-awesome-icon class='delete-icon' icon='trash' />
                                 </button>
                             </div>
@@ -66,7 +66,7 @@
               <strong>{{ characterCosts }}</strong></span>
                     </li>
                     <div class='p-2'>
-                        <button type='button' v-if='isNewCharacter' class='btn btn-primary w-100' @click='requestBuyCharacter()' :disabled='isSaving'>
+                        <button v-if='isNewCharacter' :disabled='isSaving' class='btn btn-primary w-100' type='button' @click='requestBuyCharacter()'>
                             Kaufen & Charakter erstellen
                             <font-awesome-icon icon='plus' />
                         </button>
@@ -75,14 +75,14 @@
             </div>
         </div>
 
-        <div class='sc-card charcreator-box text-white' :hidden='tabIndex === 6 || tabIndex === 7 || tabIndex === 8'>
-            <character-formular :hidden='tabIndex !== 0' ref='formularMenu' v-on:update-form='updateForm($event)' />
-            <gender :hidden='tabIndex !== 1' ref='genderMenu' v-on:set-gender='setGender($event)' />
-            <parents :hidden='tabIndex !== 1' ref='parentsMenu' v-on:update-parents='updateParents($event)' />
-            <face-features :hidden='tabIndex !== 2' ref='faceFeaturesMenu' v-on:update-face-features='updateFaceFeatures($event)' />
-            <character-appearance :hidden='tabIndex !== 3' ref='characterAppearanceMenu' v-on:update-appearances='updateAppearances($event)' />
-            <clothes-menu :hidden='tabIndex !== 4' ref='clothesMenu' v-on:update-clothes='updateClothes($event)' />
-            <tattoos :hidden='tabIndex !== 5' ref='tattoosMenu' v-on:update-tattoos='updateTattoos($event)' />
+        <div :hidden='tabIndex === 6 || tabIndex === 7 || tabIndex === 8' class='sc-card charcreator-box text-white'>
+            <character-formular ref='formularMenu' :hidden='tabIndex !== 0' v-on:update-form='updateForm($event)' />
+            <gender ref='genderMenu' :hidden='tabIndex !== 1' v-on:set-gender='setGender($event)' />
+            <parents ref='parentsMenu' :hidden='tabIndex !== 1' v-on:update-parents='updateParents($event)' />
+            <face-features ref='faceFeaturesMenu' :hidden='tabIndex !== 2' v-on:update-face-features='updateFaceFeatures($event)' />
+            <character-appearance ref='characterAppearanceMenu' :hidden='tabIndex !== 3' v-on:update-appearances='updateAppearances($event)' />
+            <clothes-menu ref='clothesMenu' :hidden='tabIndex !== 4' v-on:update-clothes='updateClothes($event)' />
+            <tattoos ref='tattoosMenu' :hidden='tabIndex !== 5' v-on:update-tattoos='updateTattoos($event)' />
         </div>
 
         <div :hidden='tabIndex !== 6'>
@@ -97,23 +97,23 @@
         </div>
 
         <div v-if='tabIndex !== 6 && tabIndex !== 7 && tabIndex !== 8'>
-            <div class='camera-box' v-if='!cameraButtonsGotClicked'>
-                <button type='button' @click='changeCameraPos(0)' class='reset-camera-button' v-if='resetCameraButtonVisible'></button>
-                <button type='button' @click='changeCameraPos(1)' class='head-button'></button>
-                <button type='button' @click='changeCameraPos(2)' class='belly-button'></button>
-                <button type='button' @click='changeCameraPos(3)' class='pants-button'></button>
-                <button type='button' @click='changeCameraPos(4)' class='shoes-button'></button>
+            <div v-if='!cameraButtonsGotClicked' class='camera-box'>
+                <button v-if='resetCameraButtonVisible' class='reset-camera-button' type='button' @click='changeCameraPos(0)'></button>
+                <button class='head-button' type='button' @click='changeCameraPos(1)'></button>
+                <button class='belly-button' type='button' @click='changeCameraPos(2)'></button>
+                <button class='pants-button' type='button' @click='changeCameraPos(3)'></button>
+                <button class='shoes-button' type='button' @click='changeCameraPos(4)'></button>
             </div>
 
             <div class='rotate-box'>
                 <div class='row'>
                     <div class='col-5'>
-                        <button type='button' @mousedown='rotateCharacter(-1)' @mouseup='stopRotateCharacter()' class='btn rotate-icon btn-secondary'>
+                        <button class='btn rotate-icon btn-secondary' type='button' @mousedown='rotateCharacter(-1)' @mouseup='stopRotateCharacter()'>
                             <font-awesome-icon icon='redo' />
                         </button>
                     </div>
                     <div class='col-5'>
-                        <button type='button' @mousedown='rotateCharacter(1)' @mouseup='stopRotateCharacter()' class='btn rotate-icon btn-secondary'>
+                        <button class='btn rotate-icon btn-secondary' type='button' @mousedown='rotateCharacter(1)' @mouseup='stopRotateCharacter()'>
                             <font-awesome-icon icon='undo' />
                         </button>
                     </div>
@@ -193,9 +193,12 @@ export default class CharCreator extends Vue {
     public mounted(): void {
         alt.emit("charcreator:getcharacter");
 
-        alt.on("charcreator:setcharacter", (character: CharacterInterface, maxDrawables: MaxDrawablesInterface, isNewCharacter: boolean) => this.onSetCharacter(character, maxDrawables, isNewCharacter));
+        alt.on("charcreator:setcharacter",
+            (character: CharacterInterface, maxDrawables: MaxDrawablesInterface, isNewCharacter: boolean) => this.onSetCharacter(
+                character, maxDrawables, isNewCharacter));
 
-        alt.on("charcreator:setgender", (gender: number, maxDrawables: MaxDrawablesInterface) => this.onSetGender(gender, maxDrawables));
+        alt.on("charcreator:setgender",
+            (gender: number, maxDrawables: MaxDrawablesInterface) => this.onSetGender(gender, maxDrawables));
 
         alt.on("charcreator:resetissaving", () => {
             this.isSaving = false;
@@ -206,7 +209,8 @@ export default class CharCreator extends Vue {
             this.$forceUpdate();
         });
 
-        alt.on("charcreator:updatepurchaseorders", (purchaseOrders: CharacterCreatorPurchaseInterface[]) => this.onUpdatePurchaseOrders(purchaseOrders));
+        alt.on("charcreator:updatepurchaseorders",
+            (purchaseOrders: CharacterCreatorPurchaseInterface[]) => this.onUpdatePurchaseOrders(purchaseOrders));
     }
 
     public unmounted(): void {
@@ -506,7 +510,7 @@ export default class CharCreator extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .charcreator {
     height: 100%;
 }

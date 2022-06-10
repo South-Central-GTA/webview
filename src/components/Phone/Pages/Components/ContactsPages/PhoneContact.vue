@@ -23,12 +23,13 @@ export default class PhoneContact extends Vue {
     }
 
     private getCorrectFormat(): string {
-        return (this.contact.phoneNumber.substring(0, 3) + " - " + this.contact.phoneNumber.substring(3, this.contact.phoneNumber.length));
+        return (this.contact.phoneNumber.substring(0, 3) + " - " + this.contact.phoneNumber.substring(3,
+            this.contact.phoneNumber.length));
     }
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .phone-contact {
     background-color: rgb(207, 207, 207);
     width: 100%;

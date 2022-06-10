@@ -1,7 +1,7 @@
 <template>
     <div class='team-menu-helpme'>
         <h2>Offene Help Me's</h2>
-        <input @input='search()' v-model='playerNameSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach Spieler Namen' />
+        <input v-model='playerNameSearch' class='form-control-dark mb-2' placeholder='Suche nach Spieler Namen' type='text' @input='search()' />
         <div class='table-holder'>
             <table class='table table-striped table-hover'>
                 <thead>
@@ -39,19 +39,20 @@ export default class TeamMenuHelpMe extends Vue {
     private chacheTickets: HelpMeTicketInterface[] = [];
     private playerNameSearch = "";
 
+    public open(): void {
+        alt.emitServerWithResponse<HelpMeTicketInterface[]>("helpme:open")
+            .then((tickets: HelpMeTicketInterface[]) => {
+                this.tickets = tickets;
+                this.chacheTickets = this.tickets;
+            });
+    }
+
     public mounted(): void {
-        alt.on("helpme:setup", (args: any) => this.setup(args[0]));
         alt.on("helpme:update", (args: any[]) => this.update(args[0]));
     }
 
     public unmounted(): void {
-        alt.off("helpme:setup");
         alt.off("helpme:update");
-    }
-
-    private setup(tickets: HelpMeTicketInterface[]): void {
-        this.tickets = tickets;
-        this.chacheTickets = this.tickets;
     }
 
     private update(tickets: HelpMeTicketInterface[]): void {

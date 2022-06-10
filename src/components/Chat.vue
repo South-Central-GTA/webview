@@ -1,18 +1,18 @@
 <template>
-    <div class='chat-box' :hidden='!chatVisible' v-bind:style="{ height: chatBoxHeight + 'vw' }">
-        <div class='chat-list' ref='chatList' v-bind:style="{ height: messagesListHeight + 'vw' }" v-bind:class='{
+    <div :hidden='!chatVisible' class='chat-box' v-bind:style="{ height: chatBoxHeight + 'vw' }">
+        <div ref='chatList' class='chat-list' v-bind:class='{
         overflow_visible: inputActive,
         overflow_hidden: !inputActive,
-      }'>
+      }' v-bind:style="{ height: messagesListHeight + 'vw' }">
             <div v-for='(message, index) in messages' v-bind:key='index'>
-                <div v-bind:style="{ 'background-color': message.backgroundColor }" class='message-box'>
-          <span class='chat-message' v-bind:style='{ color: message.color }' v-bind:class='{
+                <div class='message-box' v-bind:style="{ 'background-color': message.backgroundColor }">
+          <span class='chat-message' v-bind:class='{
               whisper: getIsWisper(message.chatType),
               scream: getIsScream(message.chatType),
               lowemote: getIsLowEmote(message.chatType),
               megaphone: getIsMegaPhone(message.chatType),
               achat: getIsAChat(message.chatType),
-            }'>{{ getTimestamp(message.sendetAt) }} {{
+            }' v-bind:style='{ color: message.color }'>{{ getTimestamp(message.sendetAt) }} {{
                   message.beforeChat
                }}<span v-bind:style='{ color: message.nameColor }'>{{
                       message.sender
@@ -22,7 +22,7 @@
         </div>
 
         <div :hidden='!inputActive'>
-            <input ref='chatInput' class='input-bar card' type='text' v-on:blur='focusInput()' v-on:keydown.enter='send()' v-on:keydown.up='historyUp()' v-on:keydown.down='historyDown()' v-on:input='handleSuggestions()' spellcheck='false' maxlength='256' />
+            <input ref='chatInput' class='input-bar card' maxlength='256' spellcheck='false' type='text' v-on:blur='focusInput()' v-on:input='handleSuggestions()' v-on:keydown.enter='send()' v-on:keydown.up='historyUp()' v-on:keydown.down='historyDown()' />
 
             <div ref='suggestions' class='suggestions card'>
                 <ul></ul>
@@ -121,7 +121,8 @@ export default class Chat extends Vue {
         let suggestions: CommandInterface[] = [];
 
         this.cachedCommands.forEach((command: CommandInterface) => {
-            if (command.name.toLowerCase().includes(message[0].toLowerCase()) || command.aliases.find((n) => n.toLowerCase().includes(message[0].toLowerCase()))) {
+            if (command.name.toLowerCase().includes(message[0].toLowerCase()) || command.aliases.find(
+                (n) => n.toLowerCase().includes(message[0].toLowerCase()))) {
                 suggestions.push(command);
             }
         });
@@ -271,8 +272,8 @@ export default class Chat extends Vue {
 
         const date = new Date(JSON.parse(timeJson));
         return ("[" + date.toLocaleTimeString("de-DE", {
-                hour: "numeric", minute: "numeric", second: "numeric",
-            }) + "]");
+            hour: "numeric", minute: "numeric", second: "numeric",
+        }) + "]");
     }
 
     private getIsWisper(chatType: ChatType): boolean {

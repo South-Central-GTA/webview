@@ -24,17 +24,17 @@
             <div class='col-sm'>
                 <div class='card character-list transparent-card text-white'>
                     <h3>Deine Charaktere</h3>
-                    <div class='character-block' v-if='characters.length !== 0'>
+                    <div v-if='characters.length !== 0' class='character-block'>
                         <div v-for='character in characters' v-bind:key='character.id' class='character-card'>
-                            <char-card @click.right='openCharacterContextMenu($event, character)' v-bind:character='character' v-on:select-character='selectCharacter($event)' v-bind:class='{
+                            <char-card v-bind:character='character' v-bind:class='{
                   selected: character.id === currentCharacterId,
                   unselected: character.id !== currentCharacterId,
-                }' />
+                }' @click.right='openCharacterContextMenu($event, character)' v-on:select-character='selectCharacter($event)' />
                         </div>
                     </div>
 
                     <div class='create-character-button'>
-                        <button type='button' class='btn btn-secondary' @click='createCharacter()'>
+                        <button class='btn btn-secondary' type='button' @click='createCharacter()'>
               <span>Neuen Charakter erstellen
                 <font-awesome-icon icon='sign-in-alt' /></span>
                         </button>
@@ -49,7 +49,7 @@
         </div>
 
         <div class='bottom-center'>
-            <button type='button' class='btn btn-primary play-button' :disabled='currentCharacterId === -1 || characterSpawned' @click='play()'>
+            <button :disabled='currentCharacterId === -1 || characterSpawned' class='btn btn-primary play-button' type='button' @click='play()'>
                 <span>Spielen <font-awesome-icon icon='play' /></span>
             </button>
         </div>
@@ -82,7 +82,8 @@ export default class CharSelector extends Vue {
     public mounted(): void {
         alt.emit("charselector:ready");
 
-        alt.on("charselector:setup", (characters: CharacterInterface[], lastCharacterId: number) => this.setup(characters, lastCharacterId));
+        alt.on("charselector:setup",
+            (characters: CharacterInterface[], lastCharacterId: number) => this.setup(characters, lastCharacterId));
     }
 
     public unmounted(): void {
@@ -147,7 +148,7 @@ export default class CharSelector extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .navbar-brand {
     padding: 0;
 }

@@ -2,7 +2,7 @@
     <div class='team-menu-bank-accounts'>
         <div v-if='!isPopupOpen'>
             <h2>Bankkonten</h2>
-            <input @input='search()' v-model='searchBar' type='text' class='form-control-dark mb-2' placeholder='Suche nach einer Kontonummer' />
+            <input v-model='searchBar' class='form-control-dark mb-2' placeholder='Suche nach einer Kontonummer' type='text' @input='search()' />
 
             <div class='table-holder'>
                 <table class='table table-striped table-hover'>
@@ -107,18 +107,13 @@ export default class TeamMenuBankAccounts extends Vue {
 
     private openBankAccount!: BankAccountInterface;
 
-    public mounted(): void {
-        alt.on("bankaccountcatalog:setup", (args: any[]) => this.setup(args[0]));
-    }
-
-    public unmounted(): void {
-        alt.off("bankaccountcatalog:setup");
-    }
-
-    private setup(bankAccounts: BankAccountInterface[]): void {
-        this.bankAccounts = bankAccounts;
-        this.cachedBankAccounts = this.bankAccounts;
-        this.isPopupOpen = false;
+    public open(): void {
+        alt.emitServerWithResponse<BankAccountInterface[]>("bankaccountcatalog:open")
+            .then((bankAccounts: BankAccountInterface[]) => {
+                this.bankAccounts = bankAccounts;
+                this.cachedBankAccounts = this.bankAccounts;
+                this.isPopupOpen = false;
+            });
     }
 
     private openDetails(bankAccount: BankAccountInterface): void {
@@ -140,7 +135,8 @@ export default class TeamMenuBankAccounts extends Vue {
             return;
         }
 
-        this.bankAccounts = this.cachedBankAccounts.filter((m) => m.bankDetails.toLowerCase().includes(this.searchBar.toLowerCase()));
+        this.bankAccounts = this.cachedBankAccounts.filter(
+            (m) => m.bankDetails.toLowerCase().includes(this.searchBar.toLowerCase()));
     }
 
     private getDate(jsonDate: string): string {

@@ -1,6 +1,6 @@
 <template>
     <div class='call-page'>
-        <input ref='numberInput' class='form-control mt-3' @keypress='allowOnlyNumbers($event)' @input='validate()' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' maxlength='11' @focus='onFocus(true)' @blur='onFocus(false)' />
+        <input ref='numberInput' class='form-control mt-3' maxlength='11' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @blur='onFocus(false)' @focus='onFocus(true)' @input='validate()' @keypress='allowOnlyNumbers($event)' />
 
         <div v-if='addContactButtonVisible'>
             <a class='contact-button' @click='addAsContact()'>Kontakt hinzufügen</a>
@@ -8,25 +8,25 @@
 
         <div class='number-block'>
             <div class='rows'>
-                <button type='button' class='btn' @click='addNumber(1)'>1</button>
-                <button type='button' class='btn' @click='addNumber(2)'>2</button>
-                <button type='button' class='btn' @click='addNumber(3)'>3</button>
+                <button class='btn' type='button' @click='addNumber(1)'>1</button>
+                <button class='btn' type='button' @click='addNumber(2)'>2</button>
+                <button class='btn' type='button' @click='addNumber(3)'>3</button>
             </div>
             <div class='rows'>
-                <button type='button' class='btn' @click='addNumber(4)'>4</button>
-                <button type='button' class='btn' @click='addNumber(5)'>5</button>
-                <button type='button' class='btn' @click='addNumber(6)'>6</button>
+                <button class='btn' type='button' @click='addNumber(4)'>4</button>
+                <button class='btn' type='button' @click='addNumber(5)'>5</button>
+                <button class='btn' type='button' @click='addNumber(6)'>6</button>
             </div>
             <div class='rows'>
-                <button type='button' class='btn' @click='addNumber(7)'>7</button>
-                <button type='button' class='btn' @click='addNumber(8)'>8</button>
-                <button type='button' class='btn' @click='addNumber(9)'>9</button>
+                <button class='btn' type='button' @click='addNumber(7)'>7</button>
+                <button class='btn' type='button' @click='addNumber(8)'>8</button>
+                <button class='btn' type='button' @click='addNumber(9)'>9</button>
             </div>
             <div class='rows'>
                 <button class='btn correct-button' @click='removeNumber()'>
                     <font-awesome-icon class='center' icon='caret-left' />
                 </button>
-                <button type='button' class='btn' @click='addNumber(0)'>0</button>
+                <button class='btn' type='button' @click='addNumber(0)'>0</button>
                 <button class='btn call-button' @click='requestCall()'>
                     <font-awesome-icon class='center' icon='phone' />
                 </button>
@@ -75,7 +75,8 @@ export default class CallPage extends Vue {
             const startPos = this.numberInput.selectionStart;
             const endPos = this.numberInput.selectionEnd;
 
-            this.numberInput.value = this.numberInput.value.substring(0, startPos) + number + this.numberInput.value.substring(endPos, this.numberInput.value.length);
+            this.numberInput.value = this.numberInput.value.substring(0,
+                startPos) + number + this.numberInput.value.substring(endPos, this.numberInput.value.length);
         } else {
             this.numberInput.value += number;
         }
@@ -105,7 +106,7 @@ export default class CallPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .call-page {
     background-color: rgb(235, 235, 235);
     height: 100%;

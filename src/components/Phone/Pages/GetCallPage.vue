@@ -3,10 +3,10 @@
         <h1 class='call-with'>{{ displayedName }}</h1>
         <div class='actions-block'>
             <div class='rows'>
-                <button type='button' class='btn hangup-button' @click='deny()'>
+                <button class='btn hangup-button' type='button' @click='deny()'>
                     <font-awesome-icon class='center' icon='phone-slash' />
                 </button>
-                <button type='button' class='btn accept-button' @click='accept()'>
+                <button class='btn accept-button' type='button' @click='accept()'>
                     <font-awesome-icon class='center' icon='phone' />
                 </button>
             </div>
@@ -45,7 +45,7 @@ export default class GetCallPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .get-call-page {
     width: 100%;
     height: 100%;

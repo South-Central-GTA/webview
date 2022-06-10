@@ -1,6 +1,6 @@
 <template>
     <div class='delete-bank-account'>
-        <button type='button' class='atm-close-button float-end' @click='back()'>
+        <button class='atm-close-button float-end' type='button' @click='back()'>
             <font-awesome-icon class='center' icon='caret-left' />
         </button>
 
@@ -9,7 +9,7 @@
         <div class='bottom-center py-5'>
             <p>
                 Sind Sie sicher, dass Sie ihr Bankkonto unwiederruflich löschen wollen? </p>
-            <button type='button' class='btn w-100 atm-menu-button' @click='deleteBankAccount()'>
+            <button class='btn w-100 atm-menu-button' type='button' @click='deleteBankAccount()'>
                 Ja, Konto unwiederruflich löschen
             </button>
         </div>

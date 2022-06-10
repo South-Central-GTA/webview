@@ -13,9 +13,9 @@
             <strong>sofort</strong> gelöscht wird. Der Hauptsitz und pachtbare Unternehmenssitze werden verkauft, Lizenzen sowie der Name gelöscht. Alle IC Mitglieder sofort rausgeschmissen und jegliche Gruppenspezifische Information gelöscht.
         </p>
 
-        <input type='text' class='form-control' ref='securityQuestionInput' @input='validateButton()' @focus='onFocus(true)' @blur='onFocus(false)' :placeholder="'Gebe den Name der Gruppe an. (' + groupName + ')'" />
+        <input ref='securityQuestionInput' :placeholder="'Gebe den Name der Gruppe an. (' + groupName + ')'" class='form-control' type='text' @blur='onFocus(false)' @focus='onFocus(true)' @input='validateButton()' />
 
-        <button type='button' class='btn btn-danger w-100 mt-3' :disabled='!closeButtonEnabled' @click='deleteGroup()'>
+        <button :disabled='!closeButtonEnabled' class='btn btn-danger w-100 mt-3' type='button' @click='deleteGroup()'>
             Ja ich möchte die Gruppe löschen
         </button>
     </div>

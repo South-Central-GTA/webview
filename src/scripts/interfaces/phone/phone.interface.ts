@@ -8,7 +8,7 @@ export interface PhoneInterface {
     active: boolean;
     backgroundImageId: number;
     ownerId: number;
-    lastTimeOpendNotifications: string;
+    lastTimeOpenedNotificationsJson: string;
     chats: PhoneChatInterface[];
     contacts: PhoneContactInterface[];
     notifications: PhoneNotificationInterface[];

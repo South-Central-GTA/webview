@@ -13,15 +13,15 @@
                     <div class='row g-2 pt-2'>
                         <div class='col-md-10'>
                             <label class='form-label'>Rang {{ rank.level }} Name:</label>
-                            <input class='form-control-dark' v-model='rank.name' type='text' placeholder='Rangname' maxlength='46' @blur='changeName(rank)' />
+                            <input v-model='rank.name' class='form-control-dark' maxlength='46' placeholder='Rangname' type='text' @blur='changeName(rank)' />
                         </div>
-                        <div class='col-md-1' v-if='isOwner'>
-                            <button type='button' class='btn btn-dark delete-rank-button' @click='editPermission(rank)'>
+                        <div v-if='isOwner' class='col-md-1'>
+                            <button class='btn btn-dark delete-rank-button' type='button' @click='editPermission(rank)'>
                                 <font-awesome-icon icon='cog' />
                             </button>
                         </div>
-                        <div class='col-md-1' v-if='index + 1 === ranks.length && ranks.length !== 1'>
-                            <button type='button' class='btn btn-danger delete-rank-button' @click='deleteRank(rank)'>
+                        <div v-if='index + 1 === ranks.length && ranks.length !== 1' class='col-md-1'>
+                            <button class='btn btn-danger delete-rank-button' type='button' @click='deleteRank(rank)'>
                                 <font-awesome-icon icon='trash' />
                             </button>
                         </div>
@@ -29,12 +29,12 @@
                 </div>
             </div>
 
-            <button type='button' class='btn btn-primary w-100 mt-3' @click='create()'>
+            <button class='btn btn-primary w-100 mt-3' type='button' @click='create()'>
                 Neuen Rang hinzufügen
             </button>
         </div>
 
-        <group-permission-settings-page :hidden='!editRankPermissionsOpen' ref='groupPermissionSettingsPage' v-on:back='closeEditRankWindow()' />
+        <group-permission-settings-page ref='groupPermissionSettingsPage' :hidden='!editRankPermissionsOpen' v-on:back='closeEditRankWindow()' />
     </div>
 </template>
 

@@ -1,14 +1,14 @@
 <template>
     <div class='open-deliveries-page'>
         <div class='phone-header'>
-            <button type='button' class='icon-button' @click='back()'>
+            <button class='icon-button' type='button' @click='back()'>
                 <font-awesome-icon icon='chevron-left' />
                 <span>Offene Aufträge</span>
             </button>
         </div>
 
-        <div class='delivery-block' v-if='loadedData && deliveries.length !== 0'>
-            <button type='button' v-for='delivery in deliveries' v-bind:key='delivery.id' class='btn delivery-card' @click='selectDelivery(delivery.id)'>
+        <div v-if='loadedData && deliveries.length !== 0' class='delivery-block'>
+            <button v-for='delivery in deliveries' v-bind:key='delivery.id' class='btn delivery-card' type='button' @click='selectDelivery(delivery.id)'>
                 <h1>{{ getHeaderString(delivery.deliveryType) }} #{{ delivery.id }}</h1>
 
                 <hr />
@@ -23,7 +23,7 @@
                 </div>
 
                 <hr />
-                <h3>{{ getCorrectDate(delivery.createdAt) }}</h3>
+                <h3>{{ getCorrectDate(delivery.createdAtJson) }}</h3>
             </button>
         </div>
         <div v-else>
@@ -91,7 +91,7 @@ export default class OpenDeliveriesPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .open-deliveries-page {
     overflow: hidden;
     top: 0;

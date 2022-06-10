@@ -4,17 +4,11 @@ import {HouseInterface} from "@/scripts/interfaces/house.interface";
 
 export default class HouseService {
     private static instance: HouseService;
+    private readonly onHousesChanged = new LiteEvent<HouseInterface[]>();
+    private houses: HouseInterface[] = [];
 
     private constructor() {
         // do something construct...
-    }
-
-    static getInstance() {
-        if (!HouseService.instance) {
-            HouseService.instance = new HouseService();
-            // ... any one time initialization goes here ...
-        }
-        return HouseService.instance;
     }
 
     get getHouses() {
@@ -25,8 +19,13 @@ export default class HouseService {
         return this.onHousesChanged.expose();
     }
 
-    private readonly onHousesChanged = new LiteEvent<HouseInterface[]>();
-    private houses: HouseInterface[] = [];
+    static getInstance() {
+        if (!HouseService.instance) {
+            HouseService.instance = new HouseService();
+            // ... any one time initialization goes here ...
+        }
+        return HouseService.instance;
+    }
 
     public listenToEvents(): void {
         alt.on("house:updatecharacterhouses", (houses: HouseInterface[]) => this.updateHouses(houses));

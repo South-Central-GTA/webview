@@ -21,7 +21,7 @@ export default class MdcFooterBar extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-footer-bar {
     position: absolute;
     bottom: 0;

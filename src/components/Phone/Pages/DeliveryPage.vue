@@ -1,6 +1,6 @@
 <template>
     <div class='delivery-page'>
-        <div class='loading' v-if='isLoading && !loadedOnce'>
+        <div v-if='isLoading && !loadedOnce' class='loading'>
             <font-awesome-icon class='order-products-icon' icon='shipping-fast' />
             <h1 v-if="errorMessage == ''">{{ loadingText }}</h1>
             <h2 v-else>{{ errorMessage }}</h2>
@@ -15,17 +15,17 @@
             <h1>Los Santos<br />Shipping Service</h1>
         </div>
         <div class='phone-delivery-button-group'>
-            <button type='button' class='btn order-products-button' @click='openTab(1)'>
+            <button class='btn order-products-button' type='button' @click='openTab(1)'>
                 <font-awesome-icon class='order-products-icon' icon='shipping-fast' />
                 <h1>Produkte bestellen</h1>
             </button>
-            <button type='button' class='btn' @click='openTab(3)'>
+            <button class='btn' type='button' @click='openTab(3)'>
                 Meine Bestellungen
             </button>
-            <button type='button' class='btn' @click='openTab(2)' v-if='!hasOpenDelivery' :disabled='!canSeeOpenDeliveries'>
+            <button v-if='!hasOpenDelivery' :disabled='!canSeeOpenDeliveries' class='btn' type='button' @click='openTab(2)'>
                 Offene Aufträge
             </button>
-            <button type='button' class='btn' @click='openTab(4)' v-if='hasOpenDelivery'>
+            <button v-if='hasOpenDelivery' class='btn' type='button' @click='openTab(4)'>
                 Mein Auftrag
             </button>
         </div>
@@ -53,11 +53,6 @@ export default class DeliveryPage extends Vue {
     @Ref() private readonly openDeliveries!: OpenDeliveriesPage;
     @Ref() private readonly myDeliveries!: MyDeliveriesPage;
     @Ref() private readonly myCurrentDelivery!: MyCurrentDeliveryPage;
-
-    get getTab() {
-        return this.currentTab;
-    }
-
     private isLoading = false;
     private loadedOnce = false;
     private currentTab = 0;
@@ -68,6 +63,10 @@ export default class DeliveryPage extends Vue {
     private maxProducts = 1000;
     private loadingInt = 0;
     private hasOpenDelivery = false;
+
+    get getTab() {
+        return this.currentTab;
+    }
 
     public mounted(): void {
         group
@@ -188,7 +187,7 @@ export default class DeliveryPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .delivery-page {
     height: 100%;
     text-align: center;

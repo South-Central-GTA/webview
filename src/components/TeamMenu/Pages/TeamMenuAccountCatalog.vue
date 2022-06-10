@@ -1,7 +1,7 @@
 <template>
     <div class='team-menu-account-catalog'>
         <h2>Accounts</h2>
-        <input @input='search()' v-model='accountSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach aktuellen oder ehemaligen Discord Namen (Bsp. Pride)' />
+        <input v-model='accountSearch' class='form-control-dark mb-2' placeholder='Suche nach aktuellen oder ehemaligen Discord Namen (Bsp. Pride)' type='text' @input='search()' />
         <div class='table-holder'>
             <table class='table table-striped table-hover'>
                 <thead>
@@ -39,17 +39,12 @@ export default class TeamMenuAccountCatalog extends Vue {
     private chacheAccounts: AccountInterface[] = [];
     private accountSearch = "";
 
-    public mounted(): void {
-        alt.on("accountcatalog:setup", (args: any) => this.setup(args[0]));
-    }
-
-    public unmounted(): void {
-        alt.off("accountcatalog:setup");
-    }
-
-    private setup(accounts: AccountInterface[]): void {
-        this.accounts = accounts;
-        this.chacheAccounts = this.accounts;
+    public open(): void {
+        alt.emitServerWithResponse<AccountInterface[]>("accountcatalog:open")
+            .then((accounts: AccountInterface[]) => {
+                this.accounts = accounts;
+                this.chacheAccounts = this.accounts;
+            });
     }
 
     private openUserRecord(accountId: number): void {
@@ -65,7 +60,8 @@ export default class TeamMenuAccountCatalog extends Vue {
         this.accounts = this.chacheAccounts;
         this.accounts = this.accounts.filter((c) => c.currentName
             .toLowerCase()
-            .includes(this.accountSearch.toLowerCase()) || this.getNameHistory(c.nameHistoryJson).find((n) => n.includes(this.accountSearch.toLowerCase())));
+            .includes(this.accountSearch.toLowerCase()) || this.getNameHistory(c.nameHistoryJson)
+            .find((n) => n.includes(this.accountSearch.toLowerCase())));
     }
 
     private getDate(dateJson: string): string {

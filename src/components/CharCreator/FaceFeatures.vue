@@ -4,60 +4,60 @@
         <div class='row'>
             <div class='col-6'>
                 <h5>Stirn</h5>
-                <two-d-slider ref='browSlider' topText='Hoch' bottomText='Runter' leftText='Nach Innen' rightText='Nach Außen' v-on:change-position='updateBrow($event)' />
+                <two-d-slider ref='browSlider' bottomText='Runter' leftText='Nach Innen' rightText='Nach Außen' topText='Hoch' v-on:change-position='updateBrow($event)' />
             </div>
             <div class='col-6'>
                 <h5>Nase</h5>
-                <two-d-slider ref='noseSlider' topText='Hoch' bottomText='Runter' leftText='Dünn' rightText='Breit' v-on:change-position='updateNose($event)' />
+                <two-d-slider ref='noseSlider' bottomText='Runter' leftText='Dünn' rightText='Breit' topText='Hoch' v-on:change-position='updateNose($event)' />
             </div>
             <div class='col-6'>
                 <h5>Nasenprofil</h5>
-                <two-d-slider ref='noseProfilSlider' topText='Kurvig' bottomText='Gekrümmt' leftText='Kurz' rightText='Lang' v-on:change-position='updateNoseProfil($event)' />
+                <two-d-slider ref='noseProfilSlider' bottomText='Gekrümmt' leftText='Kurz' rightText='Lang' topText='Kurvig' v-on:change-position='updateNoseProfil($event)' />
             </div>
             <div class='col-6'>
                 <h5>Nasenspitze</h5>
-                <two-d-slider ref='noseTipSlider' topText='Hoch' bottomText='Runter' leftText='Links' rightText='Rechts' v-on:change-position='updateNoseTip($event)' />
+                <two-d-slider ref='noseTipSlider' bottomText='Runter' leftText='Links' rightText='Rechts' topText='Hoch' v-on:change-position='updateNoseTip($event)' />
             </div>
             <div class='col-6'>
                 <h5>Wangenknochen</h5>
-                <two-d-slider ref='cheekboneSlider' topText='Hoch' bottomText='Runter' leftText='Nach Innen' rightText='Nach Außen' v-on:change-position='updateCheekbone($event)' />
+                <two-d-slider ref='cheekboneSlider' bottomText='Runter' leftText='Nach Innen' rightText='Nach Außen' topText='Hoch' v-on:change-position='updateCheekbone($event)' />
             </div>
             <div class='col-6'>
                 <h5>Kiefer</h5>
-                <two-d-slider ref='jawSlider' topText='Rund' bottomText='Kantig' leftText='Oval' rightText='Breit' v-on:change-position='updateJaw($event)' />
+                <two-d-slider ref='jawSlider' bottomText='Kantig' leftText='Oval' rightText='Breit' topText='Rund' v-on:change-position='updateJaw($event)' />
             </div>
             <div class='col-6'>
                 <h5>Kinn</h5>
-                <two-d-slider ref='chinSlider' topText='Spitz' bottomText='Eckig' leftText='Nach Innen' rightText='Nach Außen' v-on:change-position='updateChin($event)' />
+                <two-d-slider ref='chinSlider' bottomText='Eckig' leftText='Nach Innen' rightText='Nach Außen' topText='Spitz' v-on:change-position='updateChin($event)' />
             </div>
             <div class='col-6'>
                 <h5>Kinnform</h5>
-                <two-d-slider ref='chinShapeSlider' topText='Rund' bottomText='Grübchen' leftText='Kurz' rightText='Lang' v-on:change-position='updateChinShape($event)' />
+                <two-d-slider ref='chinShapeSlider' bottomText='Grübchen' leftText='Kurz' rightText='Lang' topText='Rund' v-on:change-position='updateChinShape($event)' />
             </div>
 
             <h5>Augen</h5>
-            <input type='range' class='form-range-dark' min='-100' max='100' v-model='eyesSize' @input='onEyesSizeUpdated()' />
+            <input v-model='eyesSize' class='form-range-dark' max='100' min='-100' type='range' @input='onEyesSizeUpdated()' />
             <div style='margin: unset'>
                 <p class='float-start'>Eng</p>
                 <p class='float-end'>Weit</p>
             </div>
 
             <h5>Wangen</h5>
-            <input type='range' class='form-range-dark' min='-100' max='100' v-model='cheekWidth' @input='onCheekWidthUpdated()' />
+            <input v-model='cheekWidth' class='form-range-dark' max='100' min='-100' type='range' @input='onCheekWidthUpdated()' />
             <div style='margin: unset'>
                 <p class='float-start'>Eingefallen</p>
                 <p class='float-end'>Geschwollen</p>
             </div>
 
             <h5>Nacken</h5>
-            <input type='range' class='form-range-dark' min='-100' max='100' v-model='neckWidth' @input='onNeckWidthUpdated()' />
+            <input v-model='neckWidth' class='form-range-dark' max='100' min='-100' type='range' @input='onNeckWidthUpdated()' />
             <div style='margin: unset'>
                 <p class='float-start'>Eng</p>
                 <p class='float-end'>Weit</p>
             </div>
 
             <h5>Lippen</h5>
-            <input type='range' class='form-range-dark' min='-100' max='100' v-model='lipsThickness' @input='onLipsThicknessUpdated()' />
+            <input v-model='lipsThickness' class='form-range-dark' max='100' min='-100' type='range' @input='onLipsThicknessUpdated()' />
             <div style='margin: unset'>
                 <p class='float-start'>Dick</p>
                 <p class='float-end'>Dünn</p>
@@ -134,33 +134,6 @@ export default class FaceFeatures extends Vue {
         this.chinShapeSlider.setPosition(this.faceFeatures.chinLength, this.faceFeatures.chinShape);
     }
 
-    private onEyesSizeUpdated(): void {
-        this.faceFeatures.eyesSize = -this.eyesSize / 100;
-        this.$emit("update-face-features", this.faceFeatures);
-    }
-
-    private onCheekWidthUpdated(): void {
-        this.faceFeatures.cheekWidth = -this.cheekWidth / 100;
-        this.$emit("update-face-features", this.faceFeatures);
-    }
-
-    private onNeckWidthUpdated(): void {
-        this.faceFeatures.neckWidth = this.neckWidth / 100;
-        this.$emit("update-face-features", this.faceFeatures);
-    }
-
-    private onLipsThicknessUpdated(): void {
-        this.faceFeatures.lipsThickness = this.lipsThickness / 100;
-        this.$emit("update-face-features", this.faceFeatures);
-    }
-
-    private updateBrow(position: TwoDValueInterface): void {
-        this.faceFeatures.browWidth = position.x;
-        this.faceFeatures.browHeight = position.y;
-
-        this.$emit("update-face-features", this.faceFeatures);
-    }
-
     public updateNose(fieldData: TwoDValueInterface) {
         this.faceFeatures.noseWidth = fieldData.x;
         this.faceFeatures.noseHeight = fieldData.y;
@@ -208,6 +181,33 @@ export default class FaceFeatures extends Vue {
     public updateChinShape(fieldData: TwoDValueInterface) {
         this.faceFeatures.chinLength = fieldData.x;
         this.faceFeatures.chinShape = fieldData.y;
+
+        this.$emit("update-face-features", this.faceFeatures);
+    }
+
+    private onEyesSizeUpdated(): void {
+        this.faceFeatures.eyesSize = -this.eyesSize / 100;
+        this.$emit("update-face-features", this.faceFeatures);
+    }
+
+    private onCheekWidthUpdated(): void {
+        this.faceFeatures.cheekWidth = -this.cheekWidth / 100;
+        this.$emit("update-face-features", this.faceFeatures);
+    }
+
+    private onNeckWidthUpdated(): void {
+        this.faceFeatures.neckWidth = this.neckWidth / 100;
+        this.$emit("update-face-features", this.faceFeatures);
+    }
+
+    private onLipsThicknessUpdated(): void {
+        this.faceFeatures.lipsThickness = this.lipsThickness / 100;
+        this.$emit("update-face-features", this.faceFeatures);
+    }
+
+    private updateBrow(position: TwoDValueInterface): void {
+        this.faceFeatures.browWidth = position.x;
+        this.faceFeatures.browHeight = position.y;
 
         this.$emit("update-face-features", this.faceFeatures);
     }

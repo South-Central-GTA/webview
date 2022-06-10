@@ -1,6 +1,6 @@
 <template>
     <div class='deposit-window'>
-        <button type='button' class='atm-close-button float-end' @click='back()'>
+        <button class='atm-close-button float-end' type='button' @click='back()'>
             <font-awesome-icon class='center' icon='caret-left' />
         </button>
 
@@ -9,10 +9,10 @@
         <div class='button-group'>
             <div class='input-group w-100 mb-3'>
                 <span class='input-group-text'>$</span>
-                <input ref='depositInput' class='form-control' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' placeholder='Wieviel möchtest du einzahlen?' maxlength='7' @keydown.enter='deposit' @input='checkValue' @keypress='allowOnlyNumbers($event)' />
+                <input ref='depositInput' class='form-control' maxlength='7' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' placeholder='Wieviel möchtest du einzahlen?' type='number' @input='checkValue' @keypress='allowOnlyNumbers($event)' @keydown.enter='deposit' />
             </div>
 
-            <button type='button' class='btn atm-menu-button w-100' @click='deposit()' :disabled='!isValuePositive'>
+            <button :disabled='!isValuePositive' class='btn atm-menu-button w-100' type='button' @click='deposit()'>
                 Einzahlen
             </button>
         </div>

@@ -6,7 +6,7 @@
                 <div class='modal-content sc-card text-white'>
                     <div class='modal-header'>
                         <h5 class='modal-title'>Tankstelle</h5>
-                        <button type='button' class='btn-close-white icon-button float-end' @click='cancel()'>
+                        <button class='btn-close-white icon-button float-end' type='button' @click='cancel()'>
                             <font-awesome-icon class='center' icon='times' />
                         </button>
                     </div>
@@ -17,17 +17,17 @@
                             <b>${{ fuelPrice }}</b> pro Liter, bezahlen kannst du es an der Zapfseule. </p>
 
                         <label class='form-label'>Treibstoff in Litern</label>
-                        <input class='form-control' v-model='fuelAmount' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @keypress='allowOnlyNumbers($event)' @focus='onFocus(true)' @blur='onFocus(false)' placeholder='Treibstoff in Liter' maxlength='6' />
+                        <input v-model='fuelAmount' class='form-control' maxlength='6' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' placeholder='Treibstoff in Liter' type='number' @blur='onFocus(false)' @focus='onFocus(true)' @keypress='allowOnlyNumbers($event)' />
 
                         <p class='text-muted pt-3'>
                             Du könntest maximal {{ maxAmount }} Liter auftanken. </p>
                     </div>
 
                     <div class='modal-footer justify-content-evenly row'>
-                        <button type='button' class='btn btn-primary col-5' @click='refuel()'>
+                        <button class='btn btn-primary col-5' type='button' @click='refuel()'>
                             Auftanken
                         </button>
-                        <button type='button' class='btn btn-secondary col-5' @click='cancel()'>
+                        <button class='btn btn-secondary col-5' type='button' @click='cancel()'>
                             Abbrechen
                         </button>
                     </div>
@@ -49,7 +49,8 @@ export default class GasStation extends Vue {
     private fuelPrice: number = 0;
 
     public mounted(): void {
-        alt.on("gasstation:openrefuelmenu", (maxPossibleFuel: number, fuelPrice: number) => this.showRefuelMenu(maxPossibleFuel, fuelPrice));
+        alt.on("gasstation:openrefuelmenu",
+            (maxPossibleFuel: number, fuelPrice: number) => this.showRefuelMenu(maxPossibleFuel, fuelPrice));
     }
 
     public unmounted(): void {

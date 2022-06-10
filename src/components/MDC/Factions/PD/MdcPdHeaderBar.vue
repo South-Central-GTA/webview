@@ -23,7 +23,7 @@ export default class MdcPdHeaderBar extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-pd-header-bar {
     color: white;
     background-color: rgb(0, 48, 95);

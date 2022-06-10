@@ -3,16 +3,16 @@
         <div class='content row'>
             <div class='col-6'>
                 <div class='m-4'>
-                    <div class='row p-2' v-if='hasCallSign'>
+                    <div v-if='hasCallSign' class='row p-2'>
                         <div class='col-12'>
                             <button class='w-100' type='button' @click='removeCallSign'>
                                 Callsign austragen
                             </button>
                         </div>
                     </div>
-                    <div class='row p-2' v-else>
+                    <div v-else class='row p-2'>
                         <div class='col-8'>
-                            <input type='text' class='w-100' v-model='callSign' placeholder='25E32' maxlength='12' />
+                            <input v-model='callSign' class='w-100' maxlength='12' placeholder='25E32' type='text' />
                         </div>
                         <div class='col-4'>
                             <button class='w-100' type='button' @click='addCallSign'>
@@ -111,6 +111,11 @@ export default class MdcFdHome extends Vue {
         MdcService.getInstance().onIsOperatorChanged.off((value: boolean) => this.onIsOperatorChanged(value));
     }
 
+    public updateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
+        this.callSigns = callSigns;
+        this.hasCallSign = hasCallSign;
+    }
+
     private onOpen(emergencyCalls: EmergencyCallInterface[], callSigns: CallSignInterface[], hasCallSign: boolean): void {
         this.emergencyCalls = emergencyCalls;
         this.callSigns = callSigns;
@@ -146,11 +151,6 @@ export default class MdcFdHome extends Vue {
         alt.emitServer("firemdc:deletecallsign", callSign);
     }
 
-    public updateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
-        this.callSigns = callSigns;
-        this.hasCallSign = hasCallSign;
-    }
-
     private getDate(jsonDate: string): string {
         const date = new Date(JSON.parse(jsonDate));
         return date.toLocaleDateString("de-DE", {
@@ -160,7 +160,7 @@ export default class MdcFdHome extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-fd-home {
     background-color: #cecece;
     height: 100%;

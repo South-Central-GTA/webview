@@ -1,6 +1,6 @@
 <template>
     <div class='bank-page'>
-        <div class='loading' v-if='isLoading && !loadedOnce'>
+        <div v-if='isLoading && !loadedOnce' class='loading'>
             <img class='logo' src='@/assets/images/phone/maze-bank-logo.png' />
             <h1>{{ loadingText }}</h1>
         </div>
@@ -12,10 +12,10 @@
         <img class='logo' src='@/assets/images/phone/maze-bank-logo.png' />
 
         <div class='phone-bank-button-group'>
-            <button type='button' class='btn' @click='openTab(1)'>
+            <button class='btn' type='button' @click='openTab(1)'>
                 Konto eröffnen
             </button>
-            <button type='button' class='btn' @click='openTab(2)'>
+            <button class='btn' type='button' @click='openTab(2)'>
                 Konten verwalten
             </button>
         </div>
@@ -42,6 +42,13 @@ export default class BankPage extends Vue {
     @Ref() private readonly createBankAccount!: CreateBankAccount;
     @Ref() private readonly manageBankAccounts!: PhoneManageBankAccounts;
     @Ref() private readonly activeBankAccount!: PhoneActiveBankAccount;
+    private currentTab = 0;
+    private bankAccounts: BankAccountInterface[] = [];
+    private currentBankAccount!: BankAccountInterface;
+    private isLoading = false;
+    private loadedOnce = false;
+    private loadingText = "";
+    private loadingInt = 0;
 
     get isCreatingAccount() {
         return this.createBankAccount.isCreatingAccount;
@@ -50,14 +57,6 @@ export default class BankPage extends Vue {
     get getTab() {
         return this.currentTab;
     }
-
-    private currentTab = 0;
-    private bankAccounts: BankAccountInterface[] = [];
-    private currentBankAccount!: BankAccountInterface;
-    private isLoading = false;
-    private loadedOnce = false;
-    private loadingText = "";
-    private loadingInt = 0;
 
     public mounted(): void {
         banking
@@ -117,10 +116,16 @@ export default class BankPage extends Vue {
         this.loadedOnce = false;
     }
 
+    public resetTab(): void {
+        this.openTab(0);
+        this.activeBankAccount.resetTab();
+    }
+
     private setup(bankAccounts: BankAccountInterface[]): void {
         this.bankAccounts = bankAccounts;
 
-        const ownedBankAccounts = this.bankAccounts.filter((b) => b.characterAccesses.find((ca) => ca.characterId == character.getInstance().getCharacterId)?.owner);
+        const ownedBankAccounts = this.bankAccounts.filter(
+            (b) => b.characterAccesses.find((ca) => ca.characterId == character.getInstance().getCharacterId)?.owner);
         this.createBankAccount?.setup(ownedBankAccounts.length === 0);
 
         if (this.currentTab === 3) {
@@ -143,18 +148,13 @@ export default class BankPage extends Vue {
         this.openTab(3);
     }
 
-    public resetTab(): void {
-        this.openTab(0);
-        this.activeBankAccount.resetTab();
-    }
-
     private openTab(id: number): void {
         this.currentTab = id;
     }
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .bank-page {
     height: 100%;
 

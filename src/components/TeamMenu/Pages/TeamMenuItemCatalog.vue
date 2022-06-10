@@ -1,7 +1,7 @@
 <template>
     <div class='team-menu-item-catalog'>
         <h2>Item Katalog</h2>
-        <input @input='search()' v-model='itemSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach Namen (Bsp. Schlüssel)' />
+        <input v-model='itemSearch' class='form-control-dark mb-2' placeholder='Suche nach Namen (Bsp. Schlüssel)' type='text' @input='search()' />
 
         <div class='table-holder'>
             <table class='table table-striped table-hover'>
@@ -21,7 +21,7 @@
                 <tbody>
                 <tr v-for='catalogItem in catalogItems' v-bind:key='catalogItem.id' class='entry'>
                     <td>{{ catalogItem.id }}</td>
-                    <td><img class='showcase-image' :src='getImage(catalogItem.image)' v-bind:alt='catalogItem' /></td>
+                    <td><img :src='getImage(catalogItem.image)' class='showcase-image' v-bind:alt='catalogItem' /></td>
                     <td>{{ catalogItem.name }}</td>
                     <td>{{ catalogItem.description }}</td>
                     <td>{{ catalogItem.rarity }}</td>
@@ -49,16 +49,13 @@ export default class TeamMenuItemCatalog extends Vue {
     private cachedCatalogItems: CatalogItemInterface[] = [];
     private itemSearch = "";
 
-    public mounted(): void {
-        alt.on("itemcatalog:setup", (args: any) => this.setup(args[0]));
-        alt.emitServerWithResponse("itemcatalog:open");
-    }
-
-
-    private setup(catalogItems: CatalogItemInterface[]): void {
-        catalogItems.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
-        this.catalogItems = catalogItems;
-        this.cachedCatalogItems = this.catalogItems;
+    public open(): void {
+        alt.emitServerWithResponse<CatalogItemInterface[]>("itemcatalog:open")
+            .then((catalogItems: CatalogItemInterface[]) => {
+                catalogItems.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
+                this.catalogItems = catalogItems;
+                this.cachedCatalogItems = this.catalogItems;
+            });
     }
 
     private getImage(image: string): string {

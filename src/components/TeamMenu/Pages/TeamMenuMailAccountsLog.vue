@@ -1,7 +1,7 @@
 <template>
     <div class='team-menu-mail-accounts-log'>
         <h2>E-Mail Accounts</h2>
-        <input @input='search()' v-model='mailAddressSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach der E-Mail' />
+        <input v-model='mailAddressSearch' class='form-control-dark mb-2' placeholder='Suche nach der E-Mail' type='text' @input='search()' />
         <div class='table-holder'>
             <table class='table table-striped table-hover'>
                 <thead>
@@ -33,18 +33,14 @@ export default class TeamMenuMailAccountsLog extends Vue {
     private cachedMailAccounts: MailAccountInterface[] = [];
     private mailAddressSearch = "";
 
-    public mounted(): void {
-        alt.on("mailaccountslog:setup", (args: any[]) => this.setup(args[0]));
+    public open(): void {
+        alt.emitServerWithResponse<MailAccountInterface[]>("mailaccountslog:open")
+            .then((mailAccounts: MailAccountInterface[]) => {
+                this.mailAccounts = mailAccounts;
+                this.cachedMailAccounts = this.mailAccounts;
+            });
     }
 
-    public unmounted(): void {
-        alt.off("mailaccountslog:setup");
-    }
-
-    private setup(mailAccounts: MailAccountInterface[]): void {
-        this.mailAccounts = mailAccounts;
-        this.cachedMailAccounts = this.mailAccounts;
-    }
 
     private search(): void {
         if (this.mailAddressSearch === "") {
@@ -53,7 +49,8 @@ export default class TeamMenuMailAccountsLog extends Vue {
         }
 
         this.mailAccounts = this.cachedMailAccounts;
-        this.mailAccounts = this.mailAccounts.filter((m) => m.mailAddress?.includes(this.mailAddressSearch.toLowerCase()));
+        this.mailAccounts = this.mailAccounts.filter(
+            (m) => m.mailAddress?.includes(this.mailAddressSearch.toLowerCase()));
     }
 
     private getType(type: number): string {

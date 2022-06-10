@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class='no-messages-block' v-if='chats.length === 0'>
+        <div v-if='chats.length === 0' class='no-messages-block'>
             <h4>Keine Nachrichten verfügbar...</h4>
         </div>
     </div>
@@ -39,17 +39,14 @@ import {PhoneContactInterface} from "@/scripts/interfaces/phone/phone-contact.in
 })
 export default class OpenChatsPage extends Vue {
     @Ref() private readonly activeChat!: ActiveChat;
+    private isChatOpen = false;
+    private activeChatId: number | undefined = undefined;
+    private phoneOwner = -1;
+    private chats: PhoneChatInterface[] = [];
 
     get IsChatOpen() {
         return this.isChatOpen;
     }
-
-    private isChatOpen = false;
-    private activeChatId: number | undefined = undefined;
-
-    private phoneOwner = -1;
-
-    private chats: PhoneChatInterface[] = [];
 
     public mounted(): void {
         alt.on("phone:opennewchat", (oldId: number, chat: PhoneChatInterface) => this.openNewChat(oldId, chat));
@@ -109,7 +106,7 @@ export default class OpenChatsPage extends Vue {
             this.openChat(chat);
         } else {
             const newChat: PhoneChatInterface = {
-                id: UID(), name: contact.name, phoneNumber: contact.phoneNumber, lastUsage: "", messages: [],
+                id: UID(), name: contact.name, phoneNumber: contact.phoneNumber, lastUsageJson: "", messages: [],
             };
             this.chats.push(newChat);
 
@@ -162,7 +159,7 @@ export default class OpenChatsPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .open-chats-page {
     height: 100%;
     text-align: center;

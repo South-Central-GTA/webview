@@ -1,5 +1,5 @@
 <template>
-    <div ref='cef' id='app' class='unselectable'>
+    <div id='app' ref='cef' class='unselectable'>
         <router-view class='unselectable' />
         <dialog-holder class='unselectable' />
     </div>
@@ -10,7 +10,6 @@ import alt from "@/scripts/services/alt.service";
 import DialogHolder from "@/components/DialogHolder.vue";
 import {Options, Vue} from "vue-class-component";
 import {Ref} from "vue-property-decorator";
-import {allowOnlyNumbers} from '@/scripts/helpers/helpers';
 
 @Options({
     components: {

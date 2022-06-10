@@ -3,16 +3,16 @@
         <mdc-pd-header-bar></mdc-pd-header-bar>
         <div class='float-start'>
             <div class='btn-group-vertical m-4'>
-                <button type='button' class='w-100 m-2' @click='openPageId(0)'>
+                <button class='w-100 m-2' type='button' @click='openPageId(0)'>
                     Home
                 </button>
-                <button type='button' class='w-100 m-2' @click='openPageId(1)'>
+                <button class='w-100 m-2' type='button' @click='openPageId(1)'>
                     Suche
                 </button>
-                <button type='button' class='w-100 m-2' @click='openPageId(2)'>
+                <button class='w-100 m-2' type='button' @click='openPageId(2)'>
                     APB
                 </button>
-                <button type='button' class='w-100 m-2' @click='openPageId(3)'>
+                <button class='w-100 m-2' type='button' @click='openPageId(3)'>
                     Dateien
                 </button>
             </div>
@@ -21,7 +21,7 @@
         <mdc-pd-home ref='home' :hidden='pageId !== 0'></mdc-pd-home>
         <mdc-search ref='search' :hidden='pageId !== 1'></mdc-search>
         <mdc-apb ref='apb' :hidden='pageId !== 2'></mdc-apb>
-        <mdc-files ref='files' v-on:show-notification='onShowNotification' :hidden='pageId !== 3'></mdc-files>
+        <mdc-files ref='files' :hidden='pageId !== 3' v-on:show-notification='onShowNotification'></mdc-files>
 
         <mdc-character-record ref='characterRecord' :hidden='pageId !== 1000'></mdc-character-record>
         <mdc-phone-record ref='phoneRecord' :hidden='pageId !== 1001'></mdc-phone-record>
@@ -99,12 +99,17 @@ export default class MdcPdBase extends Vue {
         MdcService.getInstance().onIsOperatorChanged.on((value: boolean) => this.onIsOperatorChanged(value));
 
         alt.on("policemdc:openapbscreen", (args: any[]) => this.onOpenApbScreen(args[0]));
-        alt.on("policemdc:opencharacterrecord", (character: CharacterInterface, records: CriminalRecordInterface[], tickets: PoliceTicketInterface[], nodes: MdcNoteInterface[], vehicles: VehicleInterface[], houses: HouseInterface[], bankAccounts: BankAccountInterface[], phoneNumbers: string[]) => this.onOpenCharacterRecord(character, records, tickets, nodes, vehicles, houses, bankAccounts, phoneNumbers));
-        alt.on("policemdc:openphonerecord", (args: any[]) => this.onOpenPhoneRecord(args[0], args[1], args[2], args[3]));
-        alt.on("policemdc:openvehiclerecord", (args: any[]) => this.onOpenVehicleRecord(args[0], args[1], args[2], args[3], args[4], args[5]));
+        alt.on("policemdc:opencharacterrecord",
+            (character: CharacterInterface, records: CriminalRecordInterface[], tickets: PoliceTicketInterface[], nodes: MdcNoteInterface[], vehicles: VehicleInterface[], houses: HouseInterface[], bankAccounts: BankAccountInterface[], phoneNumbers: string[]) => this.onOpenCharacterRecord(
+                character, records, tickets, nodes, vehicles, houses, bankAccounts, phoneNumbers));
+        alt.on("policemdc:openphonerecord",
+            (args: any[]) => this.onOpenPhoneRecord(args[0], args[1], args[2], args[3]));
+        alt.on("policemdc:openvehiclerecord",
+            (args: any[]) => this.onOpenVehicleRecord(args[0], args[1], args[2], args[3], args[4], args[5]));
         alt.on("policemdc:openbankaccountrecord", (args: any[]) => this.onOpenBankAccountRecord(args[0], args[1]));
         alt.on("policemdc:openmailaccountrecord", (args: any[]) => this.onOpenMailAccountRecord(args[0], args[1]));
-        alt.on("policemdc:openweaponrecord", (args: any[]) => this.onOpenWeaponRecord(args[0], args[1], args[2], args[3], args[4]));
+        alt.on("policemdc:openweaponrecord",
+            (args: any[]) => this.onOpenWeaponRecord(args[0], args[1], args[2], args[3], args[4]));
 
         this.search.setup(FactionType.POLICE_DEPARTMENT);
         this.files.setup();
@@ -122,6 +127,14 @@ export default class MdcPdBase extends Vue {
         alt.off("policemdc:openweaponrecord");
 
         this.files.terminate();
+    }
+
+    public updateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
+        this.home.updateCallSigns(callSigns, hasCallSign);
+    }
+
+    public setEntities(entities: MdcSearchEntityInterface[]): void {
+        this.search.setEntities(entities);
     }
 
     private onShowNotification(message: string): void {
@@ -166,14 +179,6 @@ export default class MdcPdBase extends Vue {
         this.weaponRecord.setup(weaponId, serialNumber, ownerName, weaponName, notes);
     }
 
-    public updateCallSigns(callSigns: CallSignInterface[], hasCallSign: boolean): void {
-        this.home.updateCallSigns(callSigns, hasCallSign);
-    }
-
-    public setEntities(entities: MdcSearchEntityInterface[]): void {
-        this.search.setEntities(entities);
-    }
-
     private openPageId(id: number): void {
         this.pageId = id;
 
@@ -188,7 +193,7 @@ export default class MdcPdBase extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mdc-pd-base {
     background-color: #cecece;
     height: 100%;

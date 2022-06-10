@@ -3,7 +3,7 @@
         <div class='select-box sc-card text-white bottom-center'>
             <div class='menu'>
                 <div class='left'>
-                    <button type='button' class='btn btn-secondary' :disabled='buttonBlocked' @click='changeVehicle(-1)'>
+                    <button :disabled='buttonBlocked' class='btn btn-secondary' type='button' @click='changeVehicle(-1)'>
                         <font-awesome-icon icon='caret-left' />
                     </button>
                 </div>
@@ -14,13 +14,13 @@
                     </h5>
                     <h6 class='text-center'>
                         {{ characterPoints }} South Central Points </h6>
-                    <button type='button' class='btn btn-primary' @click='orderVehicle()'>
+                    <button class='btn btn-primary' type='button' @click='orderVehicle()'>
                         Auswählen
                     </button>
                 </div>
 
                 <div class='right'>
-                    <button type='button' class='btn btn-secondary' :disabled='buttonBlocked' @click='changeVehicle(1)'>
+                    <button :disabled='buttonBlocked' class='btn btn-secondary' type='button' @click='changeVehicle(1)'>
                         <font-awesome-icon icon='caret-right' />
                     </button>
                 </div>
@@ -42,7 +42,8 @@ export default class VehicleSelector extends Vue {
     private buttonBlocked = false;
 
     public mounted(): void {
-        alt.on("vehicleselector:setvehicleinfo", (catalogVehicle: CatalogVehicleInterface) => this.setVehicleInfo(catalogVehicle));
+        alt.on("vehicleselector:setvehicleinfo",
+            (catalogVehicle: CatalogVehicleInterface) => this.setVehicleInfo(catalogVehicle));
         alt.on("vehicleselector:unlocksetfree", () => {
             this.buttonBlocked = false;
         });

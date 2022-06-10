@@ -1,7 +1,7 @@
 <template>
     <div class='my-delivery-page'>
         <div class='phone-header'>
-            <button type='button' class='icon-button' @click='back()'>
+            <button class='icon-button' type='button' @click='back()'>
                 <font-awesome-icon icon='chevron-left' />
                 <span>Mein Auftrag</span>
             </button>
@@ -23,10 +23,10 @@
         </div>
 
         <div class='phone-delivery-button-group'>
-            <button type='button' class='btn' @click='stop()'>
+            <button class='btn' type='button' @click='stop()'>
                 Auftrag abbrechen
             </button>
-            <button type='button' class='btn' @click='requestMarker()'>
+            <button class='btn' type='button' @click='requestMarker()'>
                 Markierung erneuern
             </button>
         </div>
@@ -120,7 +120,7 @@ export default class MyCurrentDeliveryPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .my-delivery-page {
     overflow: hidden;
     top: 0;

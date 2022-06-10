@@ -1,7 +1,7 @@
 <template>
     <div class='team-menu-phone-messages-log'>
         <h2>SMS</h2>
-        <input @input='search()' v-model='phoneNumberSearch' type='text' class='form-control-dark mb-2' placeholder='Suche nach der Sender Nummer.' />
+        <input v-model='phoneNumberSearch' class='form-control-dark mb-2' placeholder='Suche nach der Sender Nummer.' type='text' @input='search()' />
         <div class='table-holder'>
             <table class='table table-striped table-hover'>
                 <thead>
@@ -37,17 +37,12 @@ export default class TeamMenuPhoneMessagesLog extends Vue {
     private cachedMessages: PhoneMessageInterface[] = [];
     private phoneNumberSearch = "";
 
-    public mounted(): void {
-        alt.on("phonemessageslog:setup", (args: any[]) => this.setup(args[0]));
-    }
-
-    public unmounted(): void {
-        alt.off("phonemessageslog:setup");
-    }
-
-    private setup(messages: PhoneMessageInterface[]): void {
-        this.messages = messages;
-        this.cachedMessages = this.messages;
+    public open(): void {
+        alt.emitServerWithResponse<PhoneMessageInterface[]>("phonemessageslog:open")
+            .then((messages: PhoneMessageInterface[]) => {
+                this.messages = messages;
+                this.cachedMessages = this.messages;
+            });
     }
 
     private search(): void {
@@ -57,7 +52,8 @@ export default class TeamMenuPhoneMessagesLog extends Vue {
         }
 
         this.messages = this.cachedMessages;
-        this.messages = this.messages.filter((m) => m.senderPhoneNumber?.includes(this.phoneNumberSearch.toLowerCase()));
+        this.messages = this.messages.filter(
+            (m) => m.senderPhoneNumber?.includes(this.phoneNumberSearch.toLowerCase()));
     }
 
     private getDate(dateJson: string): string {

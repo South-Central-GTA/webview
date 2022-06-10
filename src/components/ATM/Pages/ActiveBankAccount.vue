@@ -1,14 +1,14 @@
 <template>
     <div class='active-bank-accounts'>
-        <button type='button' class='atm-close-button float-end' @click='back()'>
+        <button class='atm-close-button float-end' type='button' @click='back()'>
             <font-awesome-icon class='center' icon='caret-left' />
         </button>
 
-        <withdraw-window ref='withdrawWindow' :hidden='currentTab !== 1' v-on:back='resetTab()' @withdraw='withdraw' />
+        <withdraw-window ref='withdrawWindow' :hidden='currentTab !== 1' @withdraw='withdraw' v-on:back='resetTab()' />
 
-        <deposit-window ref='depositWindow' :hidden='currentTab !== 2' v-on:back='resetTab()' @deposit='deposit' />
+        <deposit-window ref='depositWindow' :hidden='currentTab !== 2' @deposit='deposit' v-on:back='resetTab()' />
 
-        <money-transfer ref='transferWindow' :hidden='currentTab !== 3' v-on:back='resetTab()' @transfer='transfer' />
+        <money-transfer ref='transferWindow' :hidden='currentTab !== 3' @transfer='transfer' v-on:back='resetTab()' />
 
         <bank-history ref='bankHistory' :hidden='currentTab !== 4' v-on:back='resetTab()' />
 
@@ -23,27 +23,27 @@
 
         <div class='row bottom-center py-5'>
             <div class='col-6'>
-                <button type='button' @click='openTab(1)' class='btn atm-menu-button' :disabled='!canWithdraw'>
+                <button :disabled='!canWithdraw' class='btn atm-menu-button' type='button' @click='openTab(1)'>
                     Abheben
                 </button>
             </div>
             <div class='col-6'>
-                <button type='button' @click='openTab(2)' class='btn atm-menu-button' :disabled='!canDeposit'>
+                <button :disabled='!canDeposit' class='btn atm-menu-button' type='button' @click='openTab(2)'>
                     Einzahlen
                 </button>
             </div>
             <div class='col-6'>
-                <button type='button' @click='openTab(3)' class='btn atm-menu-button' :disabled='!canTransfer'>
+                <button :disabled='!canTransfer' class='btn atm-menu-button' type='button' @click='openTab(3)'>
                     Überweisungen
                 </button>
             </div>
             <div class='col-6'>
-                <button type='button' @click='openTab(4)' class='btn atm-menu-button' :disabled='!canSeeHistory'>
+                <button :disabled='!canSeeHistory' class='btn atm-menu-button' type='button' @click='openTab(4)'>
                     Umsätze
                 </button>
             </div>
             <div class='col-6'>
-                <button type='button' @click='openTab(5)' class='btn atm-menu-button' :disabled='!canManage'>
+                <button :disabled='!canManage' class='btn atm-menu-button' type='button' @click='openTab(5)'>
                     Konto schließen
                 </button>
             </div>
@@ -102,7 +102,8 @@ export default class ActiveBankAccount extends Vue {
         this.canSeeHistory = false;
         this.canManage = false;
 
-        const characterAccess = bankAccount.characterAccesses.find((ca) => ca.characterId == character.getInstance().getCharacterId);
+        const characterAccess = bankAccount.characterAccesses.find(
+            (ca) => ca.characterId == character.getInstance().getCharacterId);
         if (characterAccess !== undefined) {
             this.canDeposit = (characterAccess.permission & BankingPermission.DEPOSIT) === BankingPermission.DEPOSIT || characterAccess.owner;
             this.canWithdraw = (characterAccess.permission & BankingPermission.WITHDRAW) === BankingPermission.WITHDRAW || characterAccess.owner;
@@ -139,12 +140,12 @@ export default class ActiveBankAccount extends Vue {
         }
     }
 
-    private back(): void {
-        this.$emit("back");
-    }
-
     public resetTab(): void {
         this.openTab(0);
+    }
+
+    private back(): void {
+        this.$emit("back");
     }
 
     private openTab(id: number): void {
@@ -184,7 +185,7 @@ export default class ActiveBankAccount extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .active-bank-accounts {
     position: absolute;
     top: 0;

@@ -1,107 +1,107 @@
 <template>
-    <div class='inventories' ref='inventories' :hidden='!active'>
+    <div ref='inventories' :hidden='!active' class='inventories'>
         <div class='row own-inventories text-white'>
-            <inventory class='transparent-card col-11' ref='ownInventory' v-bind:inventory='ownInventories[activeOwnInventoryIndex]' v-on:open-context-menu='requestItemContextMenu' v-on:start-dragging='startItemDragging' v-on:stop-dragging='stopItemDragging' v-on:drop-item-in-zone='dropItemInZone' />
-            <div class='button-holder col' v-if='ownInventories.length !== 1'>
+            <inventory ref='ownInventory' class='transparent-card col-11' v-bind:inventory='ownInventories[activeOwnInventoryIndex]' v-on:open-context-menu='requestItemContextMenu' v-on:start-dragging='startItemDragging' v-on:stop-dragging='stopItemDragging' v-on:drop-item-in-zone='dropItemInZone' />
+            <div v-if='ownInventories.length !== 1' class='button-holder col'>
                 <div v-for='ownInventory in ownInventories' v-bind:key='ownInventory.id'>
-                    <button type='button' @mouseup='onMouseUpOnInventoryButton(ownInventory.id)' v-bind:class="{
+                    <button type='button' v-bind:class="{
               'inventory-button':
                 activeOwnInventoryIndex !==
                 ownInventories.indexOf(ownInventory),
               'inventory-button-active':
                 activeOwnInventoryIndex ===
                 ownInventories.indexOf(ownInventory),
-            }" @click='openOwnInventory(ownInventory.id)'>
+            }" @click='openOwnInventory(ownInventory.id)' @mouseup='onMouseUpOnInventoryButton(ownInventory.id)'>
                         <font-awesome-icon :icon='getInventoryIcon(ownInventory.inventoryType)' />
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class='row extraneous-inventories text-white' :hidden='extraneousInventories.length === 0'>
-            <inventory class='transparent-card col-11' ref='extraneousInventory' v-bind:inventory='extraneousInventories[activeExtraneousInventoryIndex]' v-on:open-context-menu='requestItemContextMenu' v-on:start-dragging='startItemDragging' v-on:stop-dragging='stopItemDragging' v-on:drop-item-in-zone='dropItemInZone' />
+        <div :hidden='extraneousInventories.length === 0' class='row extraneous-inventories text-white'>
+            <inventory ref='extraneousInventory' class='transparent-card col-11' v-bind:inventory='extraneousInventories[activeExtraneousInventoryIndex]' v-on:open-context-menu='requestItemContextMenu' v-on:start-dragging='startItemDragging' v-on:stop-dragging='stopItemDragging' v-on:drop-item-in-zone='dropItemInZone' />
 
-            <div class='button-holder col' v-if='extraneousInventories.length !== 1'>
+            <div v-if='extraneousInventories.length !== 1' class='button-holder col'>
                 <div v-for='extraneousInventory in extraneousInventories' v-bind:key='extraneousInventory.id'>
-                    <button type='button' @mouseup='onMouseUpOnInventoryButton(extraneousInventory.id)' v-bind:class="{
+                    <button type='button' v-bind:class="{
               'inventory-button':
                 activeExtraneousInventoryIndex !==
                 extraneousInventories.indexOf(extraneousInventory),
               'inventory-button-active':
                 activeExtraneousInventoryIndex ===
                 extraneousInventories.indexOf(extraneousInventory),
-            }" @click='openExtraneousInventory(extraneousInventory.id)'>
+            }" @click='openExtraneousInventory(extraneousInventory.id)' @mouseup='onMouseUpOnInventoryButton(extraneousInventory.id)'>
                         <font-awesome-icon :icon='getInventoryIcon(extraneousInventory.inventoryType)' />
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class='modal-dialog' style='width: 20vw; top: 40%' :hidden='!isSplitOpen'>
+        <div :hidden='!isSplitOpen' class='modal-dialog' style='width: 20vw; top: 40%'>
             <div class='modal-content sc-dark text-white'>
                 <div class='modal-header'>
                     <h5 class='modal-title'>Item aufteilen</h5>
-                    <button type='button' class='icon-button float-end p-3' @click='closeMenu()'>
+                    <button class='icon-button float-end p-3' type='button' @click='closeMenu()'>
                         <font-awesome-icon class='center text-white' icon='times' />
                     </button>
                 </div>
                 <div class='modal-body'>
                     <p>Wie viel möchtest du von diesem Item aufteilen?</p>
-                    <input class='form-control-dark' style='margin-bottom: 1vw' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' v-model='splitAmount' @focus='onFocus(true)' @blur='onFocus(false)' @input='onSplitInput()' @keypress='allowOnlyNumbers($event)' v-on:keydown.enter='onSplitClicked()' maxlength='10' />
+                    <input v-model='splitAmount' class='form-control-dark' maxlength='10' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' style='margin-bottom: 1vw' type='number' @blur='onFocus(false)' @focus='onFocus(true)' @input='onSplitInput()' @keypress='allowOnlyNumbers($event)' v-on:keydown.enter='onSplitClicked()' />
                 </div>
                 <div class='modal-footer'>
-                    <button type='button' class='btn btn-primary w-50' :disabled='splitButtonDisabled' @click='onSplitClicked()'>
+                    <button :disabled='splitButtonDisabled' class='btn btn-primary w-50' type='button' @click='onSplitClicked()'>
                         Aufteilen
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class='modal-dialog' style='width: 20vw; top: 40%' :hidden='!isNoteOpen'>
+        <div :hidden='!isNoteOpen' class='modal-dialog' style='width: 20vw; top: 40%'>
             <div class='modal-content sc-dark text-white'>
                 <div class='modal-header'>
                     <h5 class='modal-title'>Notiz schreiben</h5>
-                    <button type='button' class='icon-button float-end p-3' @click='closeMenu()'>
+                    <button class='icon-button float-end p-3' type='button' @click='closeMenu()'>
                         <font-awesome-icon class='center text-white' icon='times' />
                     </button>
                 </div>
                 <div class='modal-body'>
                     <p>Welche Notiz möchtest du an dem Item heften?</p>
-                    <input class='form-control-dark' style='margin-bottom: 1vw' v-model='itemNote' @focus='onFocus(true)' @blur='onFocus(false)' type='text' maxlength='28' v-on:keydown.enter='onSetNoteClicked()' />
+                    <input v-model='itemNote' class='form-control-dark' maxlength='28' style='margin-bottom: 1vw' type='text' @blur='onFocus(false)' @focus='onFocus(true)' v-on:keydown.enter='onSetNoteClicked()' />
                 </div>
                 <div class='modal-footer'>
-                    <button type='button' class='btn btn-primary w-50' @click='onSetNoteClicked()'>
+                    <button class='btn btn-primary w-50' type='button' @click='onSetNoteClicked()'>
                         Notieren
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class='modal-dialog' style='width: 20vw; top: 40%' :hidden='!isRenameOpen'>
+        <div :hidden='!isRenameOpen' class='modal-dialog' style='width: 20vw; top: 40%'>
             <div class='modal-content sc-dark text-white'>
                 <div class='modal-header'>
                     <h5 class='modal-title'>Namen ersetzen</h5>
-                    <button type='button' class='icon-button float-end p-3' @click='closeMenu()'>
+                    <button class='icon-button float-end p-3' type='button' @click='closeMenu()'>
                         <font-awesome-icon class='center text-white' icon='times' />
                     </button>
                 </div>
                 <div class='modal-body'>
                     <p>Wie soll das Kleidungsstück heißen?</p>
-                    <input class='form-control-dark' style='margin-bottom: 1vw' v-model='itemName' @focus='onFocus(true)' @blur='onFocus(false)' type='text' maxlength='32' v-on:keydown.enter='onSetNameClicked()' />
+                    <input v-model='itemName' class='form-control-dark' maxlength='32' style='margin-bottom: 1vw' type='text' @blur='onFocus(false)' @focus='onFocus(true)' v-on:keydown.enter='onSetNameClicked()' />
                 </div>
                 <div class='modal-footer'>
-                    <button type='button' class='btn btn-primary w-50' @click='onSetNameClicked()'>
+                    <button class='btn btn-primary w-50' type='button' @click='onSetNameClicked()'>
                         Notieren
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class='modal-dialog' style='width: 20vw; top: 40%' :hidden='!isCharactersAroundOpen'>
+        <div :hidden='!isCharactersAroundOpen' class='modal-dialog' style='width: 20vw; top: 40%'>
             <div class='modal-content sc-dark text-white'>
                 <div class='modal-header'>
                     <h5 class='modal-title'>Item übergeben</h5>
-                    <button type='button' class='icon-button float-end p-3' @click='closeMenu()'>
+                    <button class='icon-button float-end p-3' type='button' @click='closeMenu()'>
                         <font-awesome-icon class='center text-white' icon='times' />
                     </button>
                 </div>
@@ -110,7 +110,7 @@
 
                     <div class='characters-list'>
                         <div v-for='character in charactersAroundPlayer' v-bind:key='character.id'>
-                            <button type='button' class='btn btn-secondary mt-1' @click='giveItemToCharacter(character.id)'>
+                            <button class='btn btn-secondary mt-1' type='button' @click='giveItemToCharacter(character.id)'>
                                 {{ character.firstName }} {{ character.lastName }}
                             </button>
                         </div>
@@ -571,7 +571,7 @@ export default class Inventories extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .inventories {
     position: absolute;
     width: 100%;

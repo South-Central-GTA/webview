@@ -6,17 +6,17 @@ import {FactionInterface} from "@/scripts/interfaces/group/faction.interface";
 
 export default class GroupService {
     private static instance: GroupService;
+    private readonly onAllGroupsChanged = new LiteEvent<GroupInterface[] | undefined>();
+    private readonly onGroupsChanged = new LiteEvent<GroupInterface[] | undefined>();
+    private readonly onCompanyChanged = new LiteEvent<CompanyInterface | undefined>();
+    private readonly onFactionChanged = new LiteEvent<FactionInterface | undefined>();
+    private allGroups?: GroupInterface[];
+    private groups?: GroupInterface[];
+    private companyGroup?: CompanyInterface = undefined;
+    private factionGroup?: FactionInterface = undefined;
 
     private constructor() {
         // do something construct...
-    }
-
-    static getInstance() {
-        if (!GroupService.instance) {
-            GroupService.instance = new GroupService();
-            // ... any one time initialization goes here ...
-        }
-        return GroupService.instance;
     }
 
     get AllGroupsChanged() {
@@ -51,20 +51,18 @@ export default class GroupService {
         return this.factionGroup;
     }
 
-    private readonly onAllGroupsChanged = new LiteEvent<GroupInterface[] | undefined>();
-
-    private readonly onGroupsChanged = new LiteEvent<GroupInterface[] | undefined>();
-    private readonly onCompanyChanged = new LiteEvent<CompanyInterface | undefined>();
-    private readonly onFactionChanged = new LiteEvent<FactionInterface | undefined>();
-
-    private allGroups?: GroupInterface[];
-
-    private groups?: GroupInterface[];
-    private companyGroup?: CompanyInterface = undefined;
-    private factionGroup?: FactionInterface = undefined;
+    static getInstance() {
+        if (!GroupService.instance) {
+            GroupService.instance = new GroupService();
+            // ... any one time initialization goes here ...
+        }
+        return GroupService.instance;
+    }
 
     public listenToEvents(): void {
-        alt.on("group:setup", (allGroups: GroupInterface[], groups: GroupInterface[], companyGroup?: CompanyInterface, factionGroup?: FactionInterface) => this.setup(allGroups, groups, companyGroup, factionGroup));
+        alt.on("group:setup",
+                (allGroups: GroupInterface[], groups: GroupInterface[], companyGroup?: CompanyInterface, factionGroup?: FactionInterface) => this.setup(
+                        allGroups, groups, companyGroup, factionGroup));
         alt.on("group:reset", () => this.reset());
     }
 

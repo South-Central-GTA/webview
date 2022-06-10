@@ -1,7 +1,7 @@
 <template>
     <div class='order-products-page'>
         <div class='phone-header'>
-            <button type='button' class='icon-button' @click='back()'>
+            <button class='icon-button' type='button' @click='back()'>
                 <font-awesome-icon icon='chevron-left' />
                 <span>Produkte bestellen</span>
             </button>
@@ -16,8 +16,8 @@
         </div>
 
         <div class='phone-delivery-button-group'>
-            <input class='form-control border-3' v-model='amount' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @keypress='allowOnlyNumbers($event)' @focus='onFocus(true)' @blur='onFocus(false)' maxlength='3' />
-            <button type='button' class='btn' @click='order()' :disabled="amount === ''">
+            <input v-model='amount' class='form-control border-3' maxlength='3' oninput='if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);' type='number' @blur='onFocus(false)' @focus='onFocus(true)' @keypress='allowOnlyNumbers($event)' />
+            <button :disabled="amount === ''" class='btn' type='button' @click='order()'>
                 Produkte bestellen
             </button>
         </div>
@@ -63,7 +63,7 @@ export default class OrderProductsPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .order-products-page {
     overflow: hidden;
     top: 0;

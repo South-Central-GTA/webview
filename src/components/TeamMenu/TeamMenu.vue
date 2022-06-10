@@ -1,87 +1,87 @@
 <template>
     <div class='team-menu'>
-        <div class='sc-card text-white center' :hidden='!active' v-bind:class='{ enable: active, disable: !active }'>
+        <div :hidden='!active' class='sc-card text-white center' v-bind:class='{ enable: active, disable: !active }'>
             <div class='card-body'>
                 <h5 class='card-title'>Team Menu</h5>
                 <div class='row'>
                     <div class='col-2'>
                         <div class='btn-group-vertical'>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 0,
                   'btn-primary': activeTabId === 0 }" @click='openTab(0)'>
                                 Dashboard
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 1,
                   'btn-primary': activeTabId === 1 }" @click='openTab(1)'>
                                 Eventlog
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 2,
                   'btn-primary': activeTabId === 2}" @click='openTab(2)'>
                                 Item Katalog
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 3,
                   'btn-primary': activeTabId === 3 }" @click='openTab(3)'>
                                 Fahrzeug Katalog
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 4,
                   'btn-primary': activeTabId === 4 }" @click='openTab(4)'>
                                 Online Spielerliste
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 5,
                   'btn-primary': activeTabId === 5 }" @click='openTab(5)'>
                                 Gruppen
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 6,
                   'btn-primary': activeTabId === 6 }" @click='openTab(6)'>
                                 Charaktere
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 7,
                   'btn-primary': activeTabId === 7  }" @click='openTab(7)'>
                                 Accounts
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 8,
                   'btn-primary': activeTabId === 8 }" @click='openTab(8)'>
                                 Fahrzeuge
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 9,
                   'btn-primary': activeTabId === 9 }" @click='openTab(9)'>
                                 Häuser Katalog
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 10,
                   'btn-primary': activeTabId === 10 }" @click='openTab(10)'>
                                 Offene Help Me's
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 11,
                   'btn-primary': activeTabId === 11 }" @click='openTab(11)'>
                                 SMS Log
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 12,
                   'btn-primary': activeTabId === 12 }" @click='openTab(12)'>
                                 E-Mail Accounts
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 13,
                   'btn-primary': activeTabId === 13 }" @click='openTab(13)'>
                                 Mails Log
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 14,
                   'btn-primary': activeTabId === 14 }" @click='openTab(14)'>
                                 Animationen
                             </button>
-                            <button type='button' class='btn' v-bind:class="{
+                            <button class='btn' type='button' v-bind:class="{
                   'btn-outline-primary': activeTabId !== 15,
                   'btn-primary': activeTabId === 15 }" @click='openTab(15)'>
                                 Bankkonten
@@ -90,21 +90,21 @@
                     </div>
                     <div class='col-10'>
                         <team-menu-dashboard :hidden='activeTabId !== 0' />
-                        <team-menu-event-log :hidden='activeTabId !== 1' />
-                        <team-menu-item-catalog :hidden='activeTabId !== 2' />
-                        <team-menu-vehicle-catalog :hidden='activeTabId !== 3' />
-                        <team-menu-player-catalog :hidden='activeTabId !== 4' />
-                        <team-menu-group-catalog :hidden='activeTabId !== 5' />
-                        <team-menu-character-catalog :hidden='activeTabId !== 6' />
-                        <team-menu-account-catalog :hidden='activeTabId !== 7' />
-                        <team-menu-player-vehicle-catalog :hidden='activeTabId !== 8' />
-                        <team-menu-housing-catalog :hidden='activeTabId !== 9' />
-                        <team-menu-help-me :hidden='activeTabId !== 10' />
-                        <team-menu-phone-messages-log :hidden='activeTabId !== 11' />
-                        <team-menu-mail-accounts-log :hidden='activeTabId !== 12' />
-                        <team-menu-mails-log :hidden='activeTabId !== 13' />
-                        <team-menu-animations :hidden='activeTabId !== 14' />
-                        <team-menu-bank-accounts :hidden='activeTabId !== 15' />
+                        <team-menu-event-log ref='eventLog' :hidden='activeTabId !== 1' />
+                        <team-menu-item-catalog ref='itemCatalog' :hidden='activeTabId !== 2' />
+                        <team-menu-vehicle-catalog ref='vehicleCatalog' :hidden='activeTabId !== 3' />
+                        <team-menu-player-catalog ref='playerCatalog' :hidden='activeTabId !== 4' />
+                        <team-menu-group-catalog ref='groupCatalog' :hidden='activeTabId !== 5' />
+                        <team-menu-character-catalog ref='characterCatalog' :hidden='activeTabId !== 6' />
+                        <team-menu-account-catalog ref='accountCatalog' :hidden='activeTabId !== 7' />
+                        <team-menu-player-vehicle-catalog ref='playerVehicleCatalog' :hidden='activeTabId !== 8' />
+                        <team-menu-housing-catalog ref='housingCatalog' :hidden='activeTabId !== 9' />
+                        <team-menu-help-me ref='helpMeCatalog' :hidden='activeTabId !== 10' />
+                        <team-menu-phone-messages-log ref='phoneMessageCatalog' :hidden='activeTabId !== 11' />
+                        <team-menu-mail-accounts-log ref='accountsCatalog' :hidden='activeTabId !== 12' />
+                        <team-menu-mails-log ref='mailsCatalog' :hidden='activeTabId !== 13' />
+                        <team-menu-animations ref='animationsCatalog' :hidden='activeTabId !== 14' />
+                        <team-menu-bank-accounts ref='bankAccountsCatalog' :hidden='activeTabId !== 15' />
 
                         <team-menu-user-record ref='userRecordMenu' :hidden='activeTabId !== 1001' />
                     </div>
@@ -159,6 +159,21 @@ import {UserRecordInterface} from "@/scripts/interfaces/team-menu/user-record.in
     },
 })
 export default class TeamMenu extends Vue {
+    @Ref() private readonly eventLog!: TeamMenuEventLog;
+    @Ref() private readonly itemCatalog!: TeamMenuItemCatalog;
+    @Ref() private readonly vehicleCatalog!: TeamMenuVehicleCatalog;
+    @Ref() private readonly playerCatalog!: TeamMenuPlayerCatalog;
+    @Ref() private readonly groupCatalog!: TeamMenuGroupCatalog;
+    @Ref() private readonly characterCatalog!: TeamMenuCharacterCatalog;
+    @Ref() private readonly accountCatalog!: TeamMenuAccountCatalog;
+    @Ref() private readonly playerVehicleCatalog!: TeamMenuPlayerVehicleCatalog;
+    @Ref() private readonly housingCatalog!: TeamMenuHousingCatalog;
+    @Ref() private readonly helpMeCatalog!: TeamMenuHelpMe;
+    @Ref() private readonly phoneMessageCatalog!: TeamMenuPhoneMessagesLog;
+    @Ref() private readonly mailsAccountCatalog!: TeamMenuMailAccountsLog;
+    @Ref() private readonly mailsCatalog!: TeamMenuMailsLog;
+    @Ref() private readonly animationsCatalog!: TeamMenuAnimations;
+    @Ref() private readonly bankAccountsCatalog!: TeamMenuBankAccounts;
     @Ref() private readonly userRecordMenu!: TeamMenuUserRecord;
 
     private activeTabId = 0;
@@ -190,48 +205,49 @@ export default class TeamMenu extends Vue {
 
         switch (tabId) {
             case 1:
-                alt.emitServer("eventlog:open");
+                this.eventLog.open();
                 break;
             case 2:
+                this.itemCatalog.open();
                 break;
             case 3:
-                alt.emitServer("vehiclecatalog:open");
+                this.vehicleCatalog.open();
                 break;
             case 4:
-                alt.emitServer("playercatalog:open");
+                this.playerCatalog.open();
                 break;
             case 5:
-                alt.emitServer("groupcatalog:open");
+                this.groupCatalog.open();
                 break;
             case 6:
-                alt.emitServer("charactercatalog:open");
+                this.characterCatalog.open();
                 break;
             case 7:
-                alt.emitServer("accountcatalog:open");
+                this.accountCatalog.open();
                 break;
             case 8:
-                alt.emitServer("playervehiclecatalog:open");
+                this.playerVehicleCatalog.open();
                 break;
             case 9:
-                alt.emitServer("housingcatalog:open");
+                this.housingCatalog.open();
                 break;
             case 10:
-                alt.emitServer("helpme:open");
+                this.helpMeCatalog.open();
                 break;
             case 11:
-                alt.emitServer("phonemessageslog:open");
+                this.phoneMessageCatalog.open();
                 break;
             case 12:
-                alt.emitServer("mailaccountslog:open");
+                this.mailsAccountCatalog.open();
                 break;
             case 13:
-                alt.emitServer("mailslog:open");
+                this.mailsCatalog.open();
                 break;
             case 14:
-                alt.emitServer("animationcatalog:open");
+                this.animationsCatalog.open();
                 break;
             case 15:
-                alt.emitServer("bankaccountcatalog:open");
+                this.bankAccountsCatalog.open();
                 break;
         }
     }

@@ -1,32 +1,32 @@
 <template>
     <div class='bank-history'>
-        <div class='phone-header' v-if='mobileVersion'>
+        <div v-if='mobileVersion' class='phone-header'>
             <button class='icon-button' @click='back()'>
                 <font-awesome-icon icon='chevron-left' />
                 <span>Umsätze</span>
             </button>
         </div>
 
-        <div class='m-4' v-if='mobileVersion'>
-            <input type='text' @input='search()' v-model='entrySearch' class='form-control w-100' placeholder='Umsätze durchsuchen...' />
+        <div v-if='mobileVersion' class='m-4'>
+            <input v-model='entrySearch' class='form-control w-100' placeholder='Umsätze durchsuchen...' type='text' @input='search()' />
         </div>
-        <div class='row' v-else>
+        <div v-else class='row'>
             <div class='col-10'>
-                <input type='text' @input='search()' v-model='entrySearch' class='form-control m-4' placeholder='Umsätze durchsuchen...' />
+                <input v-model='entrySearch' class='form-control m-4' placeholder='Umsätze durchsuchen...' type='text' @input='search()' />
             </div>
 
             <div class='col-2'>
-                <button type='button' class='atm-close-button float-end' @click='back()'>
+                <button class='atm-close-button float-end' type='button' @click='back()'>
                     <font-awesome-icon class='center' icon='caret-left' />
                 </button>
             </div>
         </div>
 
         <div class='history-block pb-5'>
-            <button type='button' class='btn btn-secondary p-2' v-if='currentSelectionIndex !== 0' @click='getNewerEntries()'>
+            <button v-if='currentSelectionIndex !== 0' class='btn btn-secondary p-2' type='button' @click='getNewerEntries()'>
                 Neuer ...
             </button>
-            <div class='row entry' v-bind:class="{ 'entry-atm': !mobileVersion }" v-for='entry in history' v-bind:key='entry.id'>
+            <div v-for='entry in history' v-bind:key='entry.id' class='row entry' v-bind:class="{ 'entry-atm': !mobileVersion }">
                 <div class='col-12'>
                     <p class='text-start float-start'>
                         {{ entry.purposeOfUse }} </p>
@@ -34,22 +34,22 @@
             <span v-if='!entry.income'>-</span>{{ entry.amount }}$
           </span>
                 </div>
-                <div class='col-12' v-if='mobileVersion'>
+                <div v-if='mobileVersion' class='col-12'>
                     <p class='text-start text-muted'>
                         {{ getDate(entry.sendetAtJson) }} | {{ getType(entry.type) }} </p>
                 </div>
-                <div class='col-8' v-if='!mobileVersion'>
+                <div v-if='!mobileVersion' class='col-8'>
                     <p class='text-start text-muted'>
                         {{ getDate(entry.sendetAtJson) }} </p>
                 </div>
-                <div class='col-4' v-if='!mobileVersion'>
+                <div v-if='!mobileVersion' class='col-4'>
                     <p class='text-end text-muted'>
                         {{ getType(entry.type) }} </p>
                 </div>
             </div>
-            <button type='button' class='btn btn-secondary p-2' v-if='
+            <button v-if='
           this.STEPS * currentSelectionIndex + this.STEPS < allHistory.length
-        ' @click='getOlderEntries()'>
+        ' class='btn btn-secondary p-2' type='button' @click='getOlderEntries()'>
                 Ältere ...
             </button>
         </div>
@@ -144,7 +144,8 @@ export default class BankHistory extends Vue {
             return;
         }
 
-        this.history = this.cachedHistory.filter((h) => h.purposeOfUse.toLowerCase().includes(this.entrySearch.toLowerCase()));
+        this.history = this.cachedHistory.filter(
+            (h) => h.purposeOfUse.toLowerCase().includes(this.entrySearch.toLowerCase()));
     }
 
     private getTime(dateJson: string) {
@@ -154,7 +155,7 @@ export default class BankHistory extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .bank-history {
     position: absolute;
     top: 0;

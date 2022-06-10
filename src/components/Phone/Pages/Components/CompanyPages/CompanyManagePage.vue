@@ -23,10 +23,10 @@
         </div>
 
         <div class='phone-gov-button-group'>
-            <button type='button' class='btn' @click='openTab(1)' :disabled='!canManageMembers'>
+            <button :disabled='!canManageMembers' class='btn' type='button' @click='openTab(1)'>
                 Mitarbeiter
             </button>
-            <button type='button' class='btn' @click='openTab(2)'>Verwalten</button>
+            <button class='btn' type='button' @click='openTab(2)'>Verwalten</button>
         </div>
     </div>
 </template>
@@ -51,26 +51,21 @@ import {LicenseInterface} from "@/scripts/interfaces/group/license.interface";
 export default class CompanyManagePage extends Vue {
     @Ref() private readonly companyWorkerOverview!: CompanyWorkerOverview;
     @Ref() private readonly companySettings!: CompanySettings;
-
-    get getCurrentTab() {
-        return this.currentTab;
-    }
-
     private companyName = "";
-
     private currentTab = 0;
     private company?: CompanyInterface;
-
     private canManageMembers = true;
     private canBuyLics = true;
     private canSellLics = true;
     private canChangeDeliveryVisibility = true;
     private isOwner = false;
-
     private bankAccountAmout = "";
     private officeHouseText = "";
-
     private licenses: LicenseInterface[] = [];
+
+    get getCurrentTab() {
+        return this.currentTab;
+    }
 
     public setup(company: CompanyInterface, licenses: LicenseInterface[]): void {
         this.company = company;
@@ -121,7 +116,8 @@ export default class CompanyManagePage extends Vue {
         }
 
         if (this.currentTab === 2) {
-            this.companySettings.setup(this.company, this.licenses, this.isOwner, this.canSellLics, this.canBuyLics, this.canChangeDeliveryVisibility);
+            this.companySettings.setup(this.company, this.licenses, this.isOwner, this.canSellLics, this.canBuyLics,
+                this.canChangeDeliveryVisibility);
         }
     }
 
@@ -144,7 +140,8 @@ export default class CompanyManagePage extends Vue {
         }
 
         if (id === 2) {
-            this.companySettings.setup(this.company, this.licenses, this.isOwner, this.canSellLics, this.canBuyLics, this.canChangeDeliveryVisibility);
+            this.companySettings.setup(this.company, this.licenses, this.isOwner, this.canSellLics, this.canBuyLics,
+                this.canChangeDeliveryVisibility);
         }
 
         this.currentTab = id;
@@ -156,7 +153,7 @@ export default class CompanyManagePage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .company-manage {
     overflow: hidden;
     position: absolute;

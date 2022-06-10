@@ -1,17 +1,17 @@
 <template>
     <div class='my-deliveries-page'>
         <div class='phone-header'>
-            <button type='button' class='icon-button' @click='back()'>
+            <button class='icon-button' type='button' @click='back()'>
                 <font-awesome-icon icon='chevron-left' />
                 <span>Meine Bestellungen</span>
             </button>
         </div>
 
         <div v-if='loadedData'>
-            <div class='delivery-block' v-if='deliveries.length !== 0'>
+            <div v-if='deliveries.length !== 0' class='delivery-block'>
                 <div v-for='delivery in deliveries' v-bind:key='delivery.id' class='delivery-card'>
                     <div v-if='delivery.status === 0 || delivery.status === 3'>
-                        <button type='button' class='remove-button icon-button' @click='remove(delivery.id)'>
+                        <button class='remove-button icon-button' type='button' @click='remove(delivery.id)'>
                             <font-awesome-icon class='delete-icon' icon='trash' />
                         </button>
                     </div>
@@ -39,7 +39,7 @@
                     </div>
 
                     <hr />
-                    <h3>{{ getCorrectDate(delivery.createdAt) }}</h3>
+                    <h3>{{ getCorrectDate(delivery.createdAtJson) }}</h3>
                 </div>
             </div>
             <div v-else>
@@ -130,7 +130,7 @@ export default class MyDeliveriesPage extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .my-deliveries-page {
     overflow: hidden;
     top: 0;

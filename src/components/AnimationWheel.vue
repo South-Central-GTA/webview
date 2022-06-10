@@ -1,10 +1,10 @@
 <template>
-    <div class='animation-wheel' :hidden='!active'>
+    <div :hidden='!active' class='animation-wheel'>
         <div ref='actionMenu' class='actions-box'>
             <div class='action'>
                 <a @click.prevent='stopAnimation()'>Animation stoppen</a>
             </div>
-            <div class='action' v-for='(animation, index) in animations' v-bind:key='index'>
+            <div v-for='(animation, index) in animations' v-bind:key='index' class='action'>
                 <a @click.prevent='chooseAnimation(animation)'>{{ animation.name }}</a>
             </div>
         </div>
@@ -88,7 +88,7 @@ export default class AnimationWheel extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .animation-wheel {
     position: absolute;
     top: 50%;

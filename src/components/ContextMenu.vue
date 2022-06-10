@@ -1,7 +1,7 @@
 ﻿<template>
-    <div class='context-menu' :hidden='!active'>
+    <div :hidden='!active' class='context-menu'>
         <div ref='actionMenu' class='actions-box'>
-            <div class='action' v-for='(action, index) in contextMenu.actions' v-bind:key='index'>
+            <div v-for='(action, index) in contextMenu.actions' v-bind:key='index' class='action'>
                 <a @click.prevent='chooseAction(action)'>{{ action.title }}</a>
             </div>
         </div>
@@ -81,7 +81,7 @@ export default class ContextMenu extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 $pos-x: var(--pos-x);
 $pos-y: var(--pos-y);
 

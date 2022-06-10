@@ -5,8 +5,8 @@
     </span>
 
         <span v-if='infoMessage.length !== 0' class='info-message'>
-      {{ infoMessage }}
-    </span>
+  {{ infoMessage }}
+        </span>
 
         <div :hidden='openTabId !== 0'>
             <div class='topbar-mail'>Bleiben Sie immer vernetzt mit MailSA.</div>
@@ -32,12 +32,12 @@
                             <h2 v-if='mailAccount.type === 1'>Gruppenkonto</h2>
                         </div>
                     </div>
-                    <div class='no-accounts-block' v-if='mailAccounts.length === 0'>
+                    <div v-if='mailAccounts.length === 0' class='no-accounts-block'>
                         <h2>Keine Konten verfügbar...</h2>
                     </div>
                 </div>
                 <div class='position-absolute bottom-0 end-0 p-2'>
-                    <button type='button' class='btn btn-success' @click='openTab(1)'>
+                    <button class='btn btn-success' type='button' @click='openTab(1)'>
                         Neues Konto erstellen
                     </button>
                 </div>
@@ -66,19 +66,19 @@
                         <div class='form-group'>
                             <label>Mail Adresse</label>
                             <div class='input-group'>
-                                <input type='email' v-model='newMailAddress' @input='validCreateButton' class='form-control' placeholder='max.mustermann' />
+                                <input v-model='newMailAddress' class='form-control' placeholder='max.mustermann' type='email' @input='validCreateButton' />
                                 <span class='input-group-text'>@mail.sa</span>
                             </div>
                             <small class='form-text text-muted'>Wir würden nie Ihre Mail an andere verkaufen.</small>
                         </div>
-                        <button type='button' class='btn btn-success w-100' @click='createNewAccount' :disabled='!isCreateButtonValid'>
+                        <button :disabled='!isCreateButtonValid' class='btn btn-success w-100' type='button' @click='createNewAccount'>
                             Konto kostenfrei erstellen
                         </button>
                     </div>
                 </div>
 
                 <div class='position-absolute bottom-0 end-0 p-2'>
-                    <button type='button' class='btn btn-secondary mx-2' @click='openTab(0)'>
+                    <button class='btn btn-secondary mx-2' type='button' @click='openTab(0)'>
                         Zurück
                     </button>
                 </div>
@@ -89,14 +89,14 @@
             <div class='topbar-mail'>Account: {{ currentMailAddress }}@mail.sa</div>
 
             <div class='content-mail p-4'>
-                <div class='block-background' v-if='textPopupOpen || readPopupOpen || deletePopupOpen'></div>
+                <div v-if='textPopupOpen || readPopupOpen || deletePopupOpen' class='block-background'></div>
 
                 <div class='col'>
                     <h2 class='grid-title'>
                         <font-awesome-icon icon='inbox' />
                         Posteingang
                     </h2>
-                    <button class='btn btn-block btn-success' :disabled='!this.canSending' @click='openTextDialog()'>
+                    <button :disabled='!this.canSending' class='btn btn-block btn-success' @click='openTextDialog()'>
                         NEUE MAIL
                     </button>
                     <hr />
@@ -104,7 +104,7 @@
 
                 <div class='col mb-2'>
                     <div class='input-group'>
-                        <input @input='search()' v-model='mailNameSearch' :readonly='!this.canReading' type='text' class='form-control' placeholder='Suche nach Absender' />
+                        <input v-model='mailNameSearch' :readonly='!this.canReading' class='form-control' placeholder='Suche nach Absender' type='text' @input='search()' />
                     </div>
                 </div>
                 <div class='mails-block'>
@@ -126,10 +126,10 @@
                     </div>
                 </div>
 
-                <div class='popup-mail' :hidden='!mailPopupOpen'>
+                <div :hidden='!mailPopupOpen' class='popup-mail'>
                     <div class='modal-header bg-light'>
                         <h5 class='modal-title'>{{ mailPopupHeader }}</h5>
-                        <button type='button' class='btn-close icon-button float-end' @click='closeMailPopup()'>
+                        <button class='btn-close icon-button float-end' type='button' @click='closeMailPopup()'>
                             <font-awesome-icon class='center' icon='times' />
                         </button>
                     </div>
@@ -137,34 +137,34 @@
                     <div v-if='isWriting'>
                         <div class='input-group'>
                             <span class='input-group-text'>An:</span>
-                            <input type='email' v-model='targetMailAddress' maxlength='20' @input='validSendButton()' class='form-control' placeholder='max.mustermann' />
+                            <input v-model='targetMailAddress' class='form-control' maxlength='20' placeholder='max.mustermann' type='email' @input='validSendButton()' />
                             <span class='input-group-text'>@mail.sa</span>
                         </div>
                         <div class='input-group'>
                             <span class='input-group-text'>Betreff:</span>
-                            <input type='email' v-model='newTitle' maxlength='50' @input='validSendButton()' class='form-control' placeholder='Betreff' />
+                            <input v-model='newTitle' class='form-control' maxlength='50' placeholder='Betreff' type='email' @input='validSendButton()' />
                         </div>
                     </div>
 
                     <custom-editor ref='customEditor' />
 
                     <div v-if='isWriting'>
-                        <button type='button' class='btn btn-success w-25 fa-pull-right' :disabled='!isSendButtonValid' @click='sendMail()'>
+                        <button :disabled='!isSendButtonValid' class='btn btn-success w-25 fa-pull-right' type='button' @click='sendMail()'>
                             Mail senden
                         </button>
                     </div>
                 </div>
 
                 <div class='position-absolute bottom-0 end-0 p-2'>
-                    <button type='button' class='btn btn-secondary' @click='logout()'>
+                    <button class='btn btn-secondary' type='button' @click='logout()'>
                         Abmelden
                     </button>
                 </div>
 
-                <div class='popup-mail w-25' :hidden='!deletePopupOpen'>
+                <div :hidden='!deletePopupOpen' class='popup-mail w-25'>
                     <div class='modal-header bg-light'>
                         <h5 class='modal-title'>Mail löschen</h5>
-                        <button type='button' class='btn-close-white icon-button float-end' @click='closeDeletePopup()'>
+                        <button class='btn-close-white icon-button float-end' type='button' @click='closeDeletePopup()'>
                             <font-awesome-icon class='center' icon='times' />
                         </button>
                     </div>
@@ -173,20 +173,20 @@
                         Möchtest du diese Mail wirklich für immer löschen?
                     </div>
                     <div class='modal-footer justify-content-evenly row'>
-                        <button type='button' class='btn btn-secondary col-5' @click='closeDeletePopup()'>
+                        <button class='btn btn-secondary col-5' type='button' @click='closeDeletePopup()'>
                             Nein
                         </button>
-                        <button type='button' class='btn btn-primary col-5' @click='deleteMail()'>
+                        <button class='btn btn-primary col-5' type='button' @click='deleteMail()'>
                             Ja
                         </button>
                     </div>
                 </div>
 
                 <div class='position-absolute bottom-0 end-0 p-2'>
-                    <button type='button' class='btn btn-secondary mx-3' @click='openTab(3)' :hidden='!isOwner'>
+                    <button :hidden='!isOwner' class='btn btn-secondary mx-3' type='button' @click='openTab(3)'>
                         Einstellungen
                     </button>
-                    <button type='button' class='btn btn-secondary' @click='logout()'>
+                    <button class='btn btn-secondary' type='button' @click='logout()'>
                         Abmelden
                     </button>
                 </div>
@@ -212,23 +212,23 @@
                                             </a> </small>
                                         <span :hidden='characterAccess.characterId !== characterId' class='text-muted'>Du bist der Besitzer dieses Kontos</span>
                                         <span :hidden='characterAccess.characterId === characterId'>
-                      <input class='form-check-input' type='checkbox' @change='
+                      <input :checked='checkCanRead(characterAccess)' class='form-check-input' type='checkbox' @change='
                           toggleCanRead($event, characterAccess.characterId)
-                        ' :checked='checkCanRead(characterAccess)' />
+                        ' />
                       <label class='form-check-label px-2'>
                         Kann Mails lesen
                       </label>
                     </span> <span :hidden='characterAccess.characterId === characterId' class='p-2'>
-                      <input class='form-check-input' type='checkbox' @change='
+                      <input :checked='checkCanSend(characterAccess)' class='form-check-input' type='checkbox' @change='
                           toggleCanSend($event, characterAccess.characterId)
-                        ' :checked='checkCanSend(characterAccess)' />
+                        ' />
                       <label class='form-check-label px-2'>
                         Kann Mails schreiben
                       </label>
                     </span> <span :hidden='characterAccess.characterId === characterId' class='p-2'>
-                      <input class='form-check-input' type='checkbox' @change='
+                      <input :checked='checkCanDelete(characterAccess)' class='form-check-input' type='checkbox' @change='
                           toggleCanDelete($event, characterAccess.characterId)
-                        ' :checked='checkCanDelete(characterAccess)' />
+                        ' />
                       <label class='form-check-label px-2'>
                         Kann Mails löschen
                       </label>
@@ -239,20 +239,20 @@
                         </div>
                     </div>
 
-                    <div class='center' v-if='characterAccesses.length === 0'>
+                    <div v-if='characterAccesses.length === 0' class='center'>
                         <hr />
                         <h2>Keine Zugriffsrechte vergeben...</h2>
                         <hr />
                     </div>
                 </div>
 
-                <input v-model='characterName' class='form-control' type='text' placeholder='Max Mustermann' />
-                <button type='button' class='btn btn-secondary w-100 mt-3' @click='addPerson()' :disabled="characterName === ''">
+                <input v-model='characterName' class='form-control' placeholder='Max Mustermann' type='text' />
+                <button :disabled="characterName === ''" class='btn btn-secondary w-100 mt-3' type='button' @click='addPerson()'>
                     Person hinzufügen
                 </button>
 
                 <div class='position-absolute bottom-0 start-0 p-2'>
-                    <button type='button' class='btn btn-secondary' @click='openTab(2)'>
+                    <button class='btn btn-secondary' type='button' @click='openTab(2)'>
                         Zurück
                     </button>
                 </div>
@@ -403,7 +403,8 @@ export default class MailApp extends Vue {
         this.currentAccount = mailAccount;
         this.currentMailAddress = mailAccount.mailAddress;
 
-        const characterAccess = mailAccount.characterAccesses.find((ca) => ca.characterId == character.getInstance().getCharacterId);
+        const characterAccess = mailAccount.characterAccesses.find(
+            (ca) => ca.characterId == character.getInstance().getCharacterId);
         if (characterAccess !== undefined) {
             this.isOwner = characterAccess.owner;
             this.canSending = (characterAccess.permission & MailingPermission.SENDING) === MailingPermission.SENDING || characterAccess.owner;
@@ -532,7 +533,8 @@ export default class MailApp extends Vue {
             return;
         }
 
-        alt.emitServer("mailing:sendmail", this.currentMailAddress, this.targetMailAddress, this.newTitle, this.customEditor.getContent);
+        alt.emitServer("mailing:sendmail", this.currentMailAddress, this.targetMailAddress, this.newTitle,
+            this.customEditor.getContent);
 
         this.closeMailPopup();
         this.setBackup("", "");
@@ -566,11 +568,13 @@ export default class MailApp extends Vue {
     }
 
     private validCreateButton(): void {
-        this.isCreateButtonValid = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9À-ž._äöüÄÖÜ]+(?<![_.])$/.test(this.newMailAddress);
+        this.isCreateButtonValid = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9À-ž._äöüÄÖÜ]+(?<![_.])$/.test(
+            this.newMailAddress);
     }
 
     private validSendButton(): void {
-        this.isSendButtonValid = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9À-ž._äöüÄÖÜ]+(?<![_.])$/.test(this.targetMailAddress) || this.newTitle != "";
+        this.isSendButtonValid = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9À-ž._äöüÄÖÜ]+(?<![_.])$/.test(
+            this.targetMailAddress) || this.newTitle != "";
     }
 
     private getDate(jsonDate: string): string {
@@ -583,27 +587,33 @@ export default class MailApp extends Vue {
     private toggleCanRead(event: any, characterId: number): void {
         const state = event.currentTarget.checked;
         if (state) {
-            alt.emitServer("mailing:addpermission", this.currentAccount?.mailAddress, characterId, MailingPermission.READING);
+            alt.emitServer("mailing:addpermission", this.currentAccount?.mailAddress, characterId,
+                MailingPermission.READING);
         } else {
-            alt.emitServer("mailing:removepermission", this.currentAccount?.mailAddress, characterId, MailingPermission.READING);
+            alt.emitServer("mailing:removepermission", this.currentAccount?.mailAddress, characterId,
+                MailingPermission.READING);
         }
     }
 
     private toggleCanSend(event: any, characterId: number): void {
         const state = event.currentTarget.checked;
         if (state) {
-            alt.emitServer("mailing:addpermission", this.currentAccount?.mailAddress, characterId, MailingPermission.SENDING);
+            alt.emitServer("mailing:addpermission", this.currentAccount?.mailAddress, characterId,
+                MailingPermission.SENDING);
         } else {
-            alt.emitServer("mailing:removepermission", this.currentAccount?.mailAddress, characterId, MailingPermission.SENDING);
+            alt.emitServer("mailing:removepermission", this.currentAccount?.mailAddress, characterId,
+                MailingPermission.SENDING);
         }
     }
 
     private toggleCanDelete(event: any, characterId: number): void {
         const state = event.currentTarget.checked;
         if (state) {
-            alt.emitServer("mailing:addpermission", this.currentAccount?.mailAddress, characterId, MailingPermission.DELETING);
+            alt.emitServer("mailing:addpermission", this.currentAccount?.mailAddress, characterId,
+                MailingPermission.DELETING);
         } else {
-            alt.emitServer("mailing:removepermission", this.currentAccount?.mailAddress, characterId, MailingPermission.DELETING);
+            alt.emitServer("mailing:removepermission", this.currentAccount?.mailAddress, characterId,
+                MailingPermission.DELETING);
         }
     }
 
@@ -621,7 +631,7 @@ export default class MailApp extends Vue {
 }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss' scoped>
 .mail-app {
     width: 100%;
     height: 100%;

@@ -7,6 +7,6 @@
     orderedBy: string;
     deliverdAt: string;
 
-    deliveryRequestedAt: string;
+    deliveryRequestedAtJson: string;
     deliveryRequestedBy: string;
 }
