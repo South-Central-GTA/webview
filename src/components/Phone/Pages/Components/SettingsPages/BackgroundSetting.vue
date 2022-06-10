@@ -35,7 +35,8 @@ export default class BackgroundSetting extends Vue {
     }
 
     private getImage(id: number): string {
-        return "@/assets/images/phone/backgrounds/background" + id + ".png";
+        const images = require.context("@/assets/images/phone/backgrounds/", false, /\.jpg$/);
+        return images("./background" + id + ".jpg");
     }
 
     private selectBackground(id: number): void {
