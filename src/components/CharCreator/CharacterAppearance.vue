@@ -215,116 +215,25 @@ export default class CharacterAppearance extends Vue {
     }, {id: 99, name: ""}, {id: 100, name: ""}, {id: 101, name: ""}, {id: 102, name: ""}, {id: 103, name: ""}, {
         id: 104, name: ""
     }, {id: 105, name: ""}, {id: 106, name: ""}, {id: 107, name: ""},];
-    private eyebrowNames = ["Normal", "Modisch", "Kleopatra", "Fragend", "Femme", "Verführerisch", "Verkniffen", "Chola", "Triomphe", "Sorglos", "Kurvig", "Mäuschen", "Doppelschwung", "Dünn", "Gestrichelt", "Gezupft", "Schmal und gerade", "Natürlich", "Buschig", "Ungekämmt", "Raupe", "Normal", "Mediterran", "Gepflegt", "Büschel", "Federig", "Stachelig", "Zusammengewachsen", "Geschwungen", "Dreifachschwung", "Hoher Bogen", "Scherenschnitt", "Schütter", "Einfachschwung", "Gleichmäßig",];
-    private facialHairNames = ["Kurze Stoppeln", "Balbo", "Henriquatre", "Spitzbart", "Kinnbart", "Kinnflaum", "Dünner Kinnstreifen", "Ungepflegt", "Knebelbart", "Schnurrbart", "Kurzer Bart", "Dreitagebart", "Dünner Henriquatre", "Mongolenbart", "Stift und Koteletten", "Kinnstreifen", "Balbo und Backenbart", "Koteletten", "Ungepflegter Bart", "Gezwirbelt", "Gezwirbelt & Dreitagebart", "Langer Schnäuzer", "Faustisch", "Otto & Kinnbart", "Otto & Vollbart", "Dünner Franz", "Schnäuzer & Koteletten", "Backenbart", "Lincoln-Kinnbart",];
-    private complexionNames = ["Rotbäckchen", "Stoppelausschlag", "Hitzewallung", "Sonnenbrand", "Blutunterlaufen", "Alkoholiker", "Fleckig", "Totem", "Äderchen", "Lädiert", "Bleich", "Gespenstisch",];
-    private frecklesNames = ["Engelchen", "Überall", "Unregelmäßig", "Fleckentanz", "Über die Brücke", "Babypuppe", "Kobold", "Sonnenverwöhnt", "Schönheitsflecken", "Reihenweise", "Fotomodelling", "Vereinzelt", "Gesprenkelt", "Regentropfen", "Beide Bäckchen", "Einseitig", "Paarweise", "Wacker",];
-    private blemishesNames = ["Masern", "Pickel", "Hautunreinheiten", "Ausschlag", "Mitesser", "Erhitzt", "Pusteln", "Eieterpusteln", "Furunkulose", "Akne", "Ringelröten", "Gesichtsausschlag", "Nasenbohrer", "Pubertät", "Matschauge", "Kinnausschlag", "Two-Face", "T-Zone", "Fettig", "Narbig", "Aknenarben", "Totale Kraterlandschaft", "Herpes", "Eiterflechte",];
-    private sundamageNames = ["Uneben", "Sandpapier", "Ungleichmäßig", "Rau", "Ledrig", "Strukturiert", "Grob", "Zerklüftet", "Knittrig", "Rissig", "Hart",];
-    private makeUpNames = ["Verruchtes Schwarz", "Bronze", "Hellgrau", "Retro-Glam", "Natürlicher Look", "Cat Eyes", "Chola", "Vamp", "Vinewood-Glamour", "Bubblegum", "Aqua-Traum", "Pin-Up", "Lila-Leidenschaft", "Verruchtes Cat Eye", "Glühender Rubin", "Pop-Prinzessin", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "Guyliner", "33", "Blutige Tränen", "Heavy-Metal", "Trauer", "Fürst der Finsternis", "Rochen", "Grufti", "Punk", "Verwüstet", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74",];
-    private lipstickNames = ["Farbe, matt", "Farbe, glanz", "Umrandet, matt", "Umrandet, glanz", "Stark umrandet, matt", "Stark umrandet, glanz", "Nudelook, umrandet, matt", "Nudelook, umrandet, glanz", "Verwischt", "Geisha",];
-    private blushNames = ["Voll", "Schräg", "Rund", "Horizontal", "Hoch", "Schätzchen", "Achtziger",];
+    private eyebrowNames = ["Normal", "Modisch", "Kleopatra", "Fragend", "Femme", "Verführerisch", "Verkniffen", "Chola", "Triomphe", "Sorglos", "Kurvig", "Mäuschen", "Doppelschwung", "Dünn", "Gestrichelt", "Gezupft", "Schmal und gerade", "Natürlich", "Buschig", "Ungekämmt", "Raupe", "Normal", "Mediterran", "Gepflegt", "Büschel", "Federig", "Stachelig", "Zusammengewachsen", "Geschwungen", "Dreifachschwung", "Hoher Bogen", "Scherenschnitt", "Schütter", "Einfachschwung", "Gleichmäßig"];
+    private facialHairNames = ["Kurze Stoppeln", "Balbo", "Henriquatre", "Spitzbart", "Kinnbart", "Kinnflaum", "Dünner Kinnstreifen", "Ungepflegt", "Knebelbart", "Schnurrbart", "Kurzer Bart", "Dreitagebart", "Dünner Henriquatre", "Mongolenbart", "Stift und Koteletten", "Kinnstreifen", "Balbo und Backenbart", "Koteletten", "Ungepflegter Bart", "Gezwirbelt", "Gezwirbelt & Dreitagebart", "Langer Schnäuzer", "Faustisch", "Otto & Kinnbart", "Otto & Vollbart", "Dünner Franz", "Schnäuzer & Koteletten", "Backenbart", "Lincoln-Kinnbart"];
+    private complexionNames = ["Rotbäckchen", "Stoppelausschlag", "Hitzewallung", "Sonnenbrand", "Blutunterlaufen", "Alkoholiker", "Fleckig", "Totem", "Äderchen", "Lädiert", "Bleich", "Gespenstisch"];
+    private frecklesNames = ["Engelchen", "Überall", "Unregelmäßig", "Fleckentanz", "Über die Brücke", "Babypuppe", "Kobold", "Sonnenverwöhnt", "Schönheitsflecken", "Reihenweise", "Fotomodelling", "Vereinzelt", "Gesprenkelt", "Regentropfen", "Beide Bäckchen", "Einseitig", "Paarweise", "Wacker"];
+    private blemishesNames = ["Masern", "Pickel", "Hautunreinheiten", "Ausschlag", "Mitesser", "Erhitzt", "Pusteln", "Eieterpusteln", "Furunkulose", "Akne", "Ringelröten", "Gesichtsausschlag", "Nasenbohrer", "Pubertät", "Matschauge", "Kinnausschlag", "Two-Face", "T-Zone", "Fettig", "Narbig", "Aknenarben", "Totale Kraterlandschaft", "Herpes", "Eiterflechte"];
+    private sundamageNames = ["Uneben", "Sandpapier", "Ungleichmäßig", "Rau", "Ledrig", "Strukturiert", "Grob", "Zerklüftet", "Knittrig", "Rissig", "Hart"];
+    private makeUpNames = ["Verruchtes Schwarz", "Bronze", "Hellgrau", "Retro-Glam", "Natürlicher Look", "Cat Eyes", "Chola", "Vamp", "Vinewood-Glamour", "Bubblegum", "Aqua-Traum", "Pin-Up", "Lila-Leidenschaft", "Verruchtes Cat Eye", "Glühender Rubin", "Pop-Prinzessin", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "Guyliner", "33", "Blutige Tränen", "Heavy-Metal", "Trauer", "Fürst der Finsternis", "Rochen", "Grufti", "Punk", "Verwüstet", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74"];
+    private lipstickNames = ["Farbe, matt", "Farbe, glanz", "Umrandet, matt", "Umrandet, glanz", "Stark umrandet, matt", "Stark umrandet, glanz", "Nudelook, umrandet, matt", "Nudelook, umrandet, glanz", "Verwischt", "Geisha"];
+    private blushNames = ["Voll", "Schräg", "Rund", "Horizontal", "Hoch", "Schätzchen", "Achtziger"];
 
     private appearances!: AppearancesInterface;
 
     private gender = 0;
-    private hairIndex = -1;
+    private hairIndex = 0;
     private menuIndex = -1;
 
     public setCharacterAppearances(appearances: AppearancesInterface): void {
         this.appearances = appearances;
-
-        if (this.gender === 0) {
-            this.maleHairMenu.setAppearance({
-                value: this.appearances.hair,
-                opacity: 1,
-                primaryColor: this.appearances.primHairColor,
-                secondaryColor: this.appearances.secHairColor,
-            });
-        } else if (this.gender === 1) {
-            this.femaleHairMenu.setAppearance({
-                value: this.appearances.hair,
-                opacity: 1,
-                primaryColor: this.appearances.primHairColor,
-                secondaryColor: this.appearances.secHairColor,
-            });
-        }
-
-        this.eyeColorMenu.setAppearance({
-            value: this.appearances.eyeColor, opacity: 1, primaryColor: 0,
-        });
-
-        this.eyeBrowsMenu.setAppearance({
-            value: this.appearances.eyebrowsValue,
-            opacity: this.appearances.eyebrowsOpacity,
-            primaryColor: this.appearances.eyebrowsColor,
-        });
-
-        this.blushMenu.setAppearance({
-            value: this.appearances.blushValue,
-            opacity: this.appearances.blushOpacity,
-            primaryColor: this.appearances.blushColor,
-        });
-
-        this.makeUpMenu.setAppearance({
-            value: this.appearances.makeupValue,
-            opacity: this.appearances.makeupOpacity,
-            primaryColor: this.appearances.makeupColor,
-        });
-
-        this.lipstickMenu.setAppearance({
-            value: this.appearances.lipstickValue,
-            opacity: this.appearances.lipstickOpacity,
-            primaryColor: this.appearances.lipstickColor,
-        });
-
-        this.facialHairMenu.setAppearance({
-            value: this.appearances.facialhairValue,
-            opacity: this.appearances.facialhairOpacity,
-            primaryColor: this.appearances.facialhairColor,
-        });
-
-        this.chestHairMenu.setAppearance({
-            value: this.appearances.chesthairValue,
-            opacity: this.appearances.chesthairOpacity,
-            primaryColor: this.appearances.primHairColor,
-        });
-
-        this.ageingMenu.setAppearance({
-            value: this.appearances.ageingValue,
-            opacity: this.appearances.ageingOpacity,
-            primaryColor: this.appearances.ageingColor,
-        });
-
-        this.complexionMenu.setAppearance({
-            value: this.appearances.complexionValue,
-            opacity: this.appearances.complexionOpacity,
-            primaryColor: this.appearances.complexionColor,
-        });
-
-        this.frecklesMenu.setAppearance({
-            value: this.appearances.frecklesValue,
-            opacity: this.appearances.frecklesOpacity,
-            primaryColor: this.appearances.frecklesColor,
-        });
-
-        this.sundamageMenu.setAppearance({
-            value: this.appearances.sundamageValue,
-            opacity: this.appearances.sundamageOpacity,
-            primaryColor: this.appearances.sundamageColor,
-        });
-
-        this.blemishesMenu.setAppearance({
-            value: this.appearances.blemishesValue,
-            opacity: this.appearances.blemishesOpacity,
-            primaryColor: this.appearances.blemishesColor,
-        });
-
-        this.bodyBlemishesMenu.setAppearance({
-            value: this.appearances.bodyblemishesValue,
-            opacity: this.appearances.bodyblemishesOpacity,
-            primaryColor: this.appearances.bodyblemishesColor,
-        });
+        this.updateAppearancesMenus();
     }
 
     public setGender(gender: number): void {
@@ -457,6 +366,98 @@ export default class CharacterAppearance extends Vue {
         this.appearances.lipstickColor = appearance.primaryColor;
 
         this.$emit("update-appearances", this.appearances);
+    }
+    
+    private updateAppearancesMenus(): void {
+        this.maleHairMenu.setAppearance({
+            value: this.appearances.hair,
+            opacity: 1,
+            primaryColor: this.appearances.primHairColor,
+            secondaryColor: this.appearances.secHairColor,
+        });
+
+        this.femaleHairMenu.setAppearance({
+            value: this.appearances.hair,
+            opacity: 1,
+            primaryColor: this.appearances.primHairColor,
+            secondaryColor: this.appearances.secHairColor,
+        });
+
+        this.eyeColorMenu.setAppearance({
+            value: this.appearances.eyeColor, opacity: 1, primaryColor: 0,
+        });
+
+        this.eyeBrowsMenu.setAppearance({
+            value: this.appearances.eyebrowsValue,
+            opacity: this.appearances.eyebrowsOpacity,
+            primaryColor: this.appearances.eyebrowsColor,
+        });
+
+        this.blushMenu.setAppearance({
+            value: this.appearances.blushValue,
+            opacity: this.appearances.blushOpacity,
+            primaryColor: this.appearances.blushColor,
+        });
+
+        this.makeUpMenu.setAppearance({
+            value: this.appearances.makeupValue,
+            opacity: this.appearances.makeupOpacity,
+            primaryColor: this.appearances.makeupColor,
+        });
+
+        this.lipstickMenu.setAppearance({
+            value: this.appearances.lipstickValue,
+            opacity: this.appearances.lipstickOpacity,
+            primaryColor: this.appearances.lipstickColor,
+        });
+
+        this.facialHairMenu.setAppearance({
+            value: this.appearances.facialhairValue,
+            opacity: this.appearances.facialhairOpacity,
+            primaryColor: this.appearances.facialhairColor,
+        });
+
+        this.chestHairMenu.setAppearance({
+            value: this.appearances.chesthairValue,
+            opacity: this.appearances.chesthairOpacity,
+            primaryColor: this.appearances.primHairColor,
+        });
+
+        this.ageingMenu.setAppearance({
+            value: this.appearances.ageingValue,
+            opacity: this.appearances.ageingOpacity,
+            primaryColor: this.appearances.ageingColor,
+        });
+
+        this.complexionMenu.setAppearance({
+            value: this.appearances.complexionValue,
+            opacity: this.appearances.complexionOpacity,
+            primaryColor: this.appearances.complexionColor,
+        });
+
+        this.frecklesMenu.setAppearance({
+            value: this.appearances.frecklesValue,
+            opacity: this.appearances.frecklesOpacity,
+            primaryColor: this.appearances.frecklesColor,
+        });
+
+        this.sundamageMenu.setAppearance({
+            value: this.appearances.sundamageValue,
+            opacity: this.appearances.sundamageOpacity,
+            primaryColor: this.appearances.sundamageColor,
+        });
+
+        this.blemishesMenu.setAppearance({
+            value: this.appearances.blemishesValue,
+            opacity: this.appearances.blemishesOpacity,
+            primaryColor: this.appearances.blemishesColor,
+        });
+
+        this.bodyBlemishesMenu.setAppearance({
+            value: this.appearances.bodyblemishesValue,
+            opacity: this.appearances.bodyblemishesOpacity,
+            primaryColor: this.appearances.bodyblemishesColor,
+        });
     }
 }
 </script>
