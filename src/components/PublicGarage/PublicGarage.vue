@@ -1,27 +1,20 @@
 <template>
     <div class='public-garage' v-bind:class='{ enable: active, disable: !active }'>
-        <div :hidden='!active' class='sc-card w-25 center'>
+        <div :hidden='!active' class='sc-card text-white w-25 center'>
             <div :hidden='tabIndex !== 1' class='card-body'>
                 <button class='btn-close-white icon-button float-end' type='button' @click='close()'>
                     <font-awesome-icon class='center' icon='times' />
                 </button>
-
+                
                 <h5 class='card-title'>Öffentliche Garage</h5>
                 <p class='card-text'>
                     Welches Fahrzeug möchtest du aus der Garage holen? </p>
 
                 <div class='list'>
                     <div v-for='vehicle in parkedVehicles' v-bind:key='vehicle.id'>
-                        <public-garage-vehicle-card v-bind:class='{
-                selected: vehicle.id === currentVehicleId,
-                unselected: vehicle.id !== currentVehicleId,
-              }' v-bind:vehicle='vehicle' @click='chooseVehicle(vehicle.id)' />
+                        <public-garage-vehicle-card v-bind:vehicle='vehicle' @click='chooseVehicle(vehicle.id)' />
                     </div>
                 </div>
-
-                <button class='btn btn-primary w-100 mt-2' type='button' @click='unparkVehicle()'>
-                    Ausparken
-                </button>
             </div>
             <div :hidden='tabIndex !== 2' class='card-body'>
                 <button class='btn-close-white icon-button float-end' type='button' @click='close()'>
@@ -59,7 +52,6 @@ export default class PublicGarage extends Vue {
     private tabIndex = -1;
     private parkedVehicles: PublicGarageVehicleInterface[] = [];
     private destroyedVehicles: VehicleInterface[] = [];
-    private currentVehicleId = 0;
 
     public mounted(): void {
         alt.on("publicgarage:setupunpark", (vehicles: PublicGarageVehicleInterface[]) => this.setupUnpark(vehicles));
@@ -84,7 +76,8 @@ export default class PublicGarage extends Vue {
     }
 
     private chooseVehicle(id: number): void {
-        this.currentVehicleId = id;
+        alt.emitServer("publicgarage:unparkvehicle", id);
+        this.close();
     }
 
     private respawnVehicle(id: number): void {
@@ -92,16 +85,10 @@ export default class PublicGarage extends Vue {
         this.close();
     }
 
-    private unparkVehicle(): void {
-        alt.emitServer("publicgarage:unparkvehicle", this.currentVehicleId);
-        this.close();
-    }
-
     private close(): void {
         this.active = false;
         this.parkedVehicles = [];
         this.destroyedVehicles = [];
-        this.currentVehicleId = 0;
         this.tabIndex = -1;
 
         alt.emit("menu:close");
@@ -122,23 +109,5 @@ export default class PublicGarage extends Vue {
     overflow-y: auto;
     padding-top: 1vw;
     height: 16.5vw;
-}
-
-.selected {
-    border-radius: 0.3vw;
-    background-color: rgba(0, 0, 0, 0.7) !important;
-}
-
-.selected:hover {
-    background-color: rgba(0, 0, 0, 0.8) !important;
-}
-
-.unselected {
-    border-radius: 0.3vw;
-    background-color: rgba(0, 0, 0, 0.4) !important;
-}
-
-.unselected:hover {
-    background-color: rgba(0, 0, 0, 0.5) !important;
 }
 </style>

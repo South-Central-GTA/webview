@@ -25,6 +25,11 @@ export default class PublicGarageVehicleCard extends Vue {
     margin-bottom: 0.2vw;
     border-radius: 0.3vw;
     pointer-events: all !important;
+    background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.public-garage-vehicle-card:hover {
+    background-color: rgba(0, 0, 0, 0.8) !important;
 }
 
 .public-garage-vehicle-card h1 {
@@ -56,4 +61,5 @@ export default class PublicGarageVehicleCard extends Vue {
     padding-top: 0.2vw;
     pointer-events: none !important;
 }
+
 </style>

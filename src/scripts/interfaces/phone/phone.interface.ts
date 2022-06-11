@@ -9,7 +9,7 @@ export interface PhoneInterface {
     backgroundImageId: number;
     ownerId: number;
     lastTimeOpenedNotificationsJson: string;
-    chats: PhoneChatInterface[];
     contacts: PhoneContactInterface[];
+    chats: PhoneChatInterface[];
     notifications: PhoneNotificationInterface[];
 }
