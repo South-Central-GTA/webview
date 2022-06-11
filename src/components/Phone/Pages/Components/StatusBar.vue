@@ -55,7 +55,7 @@ export default class StatusBar extends Vue {
 
         if (this.notifications.length > 0) {
             const lastUsage = new Date(JSON.parse(lastTimeOpenedNotificationsJson));
-            const lastMessageDate = new Date(JSON.parse(this.notifications[this.notifications.length - 1].createdAt));
+            const lastMessageDate = new Date(JSON.parse(this.notifications[this.notifications.length - 1].createdAtJson));
             this.missingNotifications = lastUsage < lastMessageDate;
         }
     }

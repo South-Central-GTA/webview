@@ -20,8 +20,8 @@
                     <td>{{ account.discordId }}</td>
                     <td>{{ account.currentName }}</td>
                     <td>{{ getNameHistoryString(account.nameHistoryJson) }}</td>
-                    <td>{{ getDate(account.lastUsage) }}</td>
-                    <td>{{ getDate(account.createdAt) }}</td>
+                    <td>{{ getDate(account.lastUsageJson) }}</td>
+                    <td>{{ getDate(account.createdAtJson) }}</td>
                 </tr>
                 </tbody>
             </table>
