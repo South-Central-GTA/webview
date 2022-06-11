@@ -22,8 +22,11 @@ export default class ImageAmountInput extends Vue {
     private amount = 1;
 
     private getImage(image: string): string {
-        const images = require.context("@/assets/images/item_icons/", false, /\.jpg$/);
-        return images(image + ".jpg");
+        if (!image)
+            return "";
+
+        const images = require.context('@/assets/images/item_icons/', false, /\.png$/);
+        return images("./" + image + ".png");
     }
 
     private sendAmount(): void {
