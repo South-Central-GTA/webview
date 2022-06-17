@@ -42,6 +42,4 @@ export interface CharacterInterface {
     definedJob: DefinedJobInterface;
     tattoos: TattoosInterface;
     licenses: PersonalLicenseInterface[];
-
-    clothes: ClothesInterface; //only clientside
 }

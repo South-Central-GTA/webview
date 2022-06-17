@@ -48,10 +48,6 @@ export default class Inventory extends Vue {
     private currentWeight = 0;
     private dropZoneVisible = false;
 
-    public getFreeSlot(): number {
-        return this.items.length;
-    }
-
     public clearSearchBar(): void {
         this.itemSearch = "";
     }
@@ -63,6 +59,7 @@ export default class Inventory extends Vue {
     @Watch("inventory")
     private onInventoryPropertyChanged(value: InventoryInterface,): void {
         if (value) {
+            
             value.items.forEach((item: ItemInterface) => {
                 if (item.attachedToWeaponItem !== null && item.attachedToWeaponItem !== -1) {
                     const weaponItem = value.items.find((i) => i.id == item.attachedToWeaponItem);
@@ -80,7 +77,7 @@ export default class Inventory extends Vue {
             this.currentWeight = this.getWeight(value.items);
 
             // Remove all attached weapon comps. so there are not getting shown in UI.
-            value.items = value.items.filter((i) => i.attachedToWeaponItem === -1);
+            value.items = value.items.filter((i) => !i.attachedToWeaponItem || i.attachedToWeaponItem === -1);
 
             this.items = value.items.sort((a, b) => ((a.slot ?? -1) > (b.slot ?? -1) ? 1 : -1));
             this.maxWeight = value.maxWeight;
@@ -114,9 +111,8 @@ export default class Inventory extends Vue {
         let name = "";
 
         if (item.catalogItem) {
-            if (clothingItemTypes.indexOf(item.catalogItem.id.toString()) > -1) {
-                const data: ClothingInterface = JSON.parse(item.customData);
-                name = data.title;
+            if (clothingItemTypes.indexOf(item.catalogItem.id.toString()) > -1 && item.title !== undefined) {
+                name = item.title;
             } else {
                 name = item.catalogItem?.name;
             }
@@ -139,12 +135,17 @@ export default class Inventory extends Vue {
     private getWeight(items: ItemInterface[]): number {
         let weight = 0;
 
-        for (let i = 0; i < items.length; i++) {
-            const item = items[i];
+        items.forEach((item: ItemInterface) => {
             if (item.catalogItem) {
-                weight += item.catalogItem.weight * item.amount;
+                let extraWeight = item.catalogItem.weight;
+                
+                if (item.amount > 1){
+                    extraWeight *= item.amount;
+                }
+                
+                weight += extraWeight;
             }
-        }
+        });
 
         return Math.round(weight * 100) / 100;
     }

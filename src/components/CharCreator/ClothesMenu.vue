@@ -106,22 +106,6 @@ export default class ClothesMenu extends Vue {
         alt.off("clothesmenu:setmaxtexturevariation");
     }
 
-    public setClothes(clothes: ClothesInterface): void {
-        this.clothes = clothes;
-
-        // this.hatMenu.setClothing(this.clothes.Hat);
-        // this.glassesMenu.setClothing(this.clothes.Glasses);
-        // this.earsMenu.setClothing(this.clothes.Ears);
-        // this.topMenu.setClothing(this.clothes.Top);
-        // this.undershirtMenu.setClothing(this.clothes.Undershirt);
-        // this.torsoMenu.setClothing(this.clothes.Torso);
-        // this.accessoriesMenu.setClothing(this.clothes.accessoires);
-        // this.watchMenu.setClothing(this.clothes.Watch);
-        // this.braceletsMenu.setClothing(this.clothes.Bracelets);
-        // this.legMenu.setClothing(this.clothes.Leg);
-        // this.shoesMenu.setClothing(this.clothes.Shoes);
-    }
-
     public setGender(maxDrawables: MaxDrawablesInterface, gender: GenderType): void {
         this.hatMenu?.setup(maxDrawables.maxHat, gender);
         this.glassesMenu?.setup(maxDrawables.maxGlasses, gender);

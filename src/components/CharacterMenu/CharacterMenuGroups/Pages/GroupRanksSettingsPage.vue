@@ -65,7 +65,7 @@ export default class GroupRanksSettingsPage extends Vue {
         if (group === undefined) {
             return;
         }
-
+        
         this.ranks = group.ranks.sort((a, b) => {
             return a.level - b.level;
         });

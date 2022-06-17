@@ -52,8 +52,6 @@ export default class MdcApb extends Vue {
     public setup(factionType: FactionType, bulletIns: ApbEntryInterface[]): void {
         this.factionType = factionType;
         this.bulletIns = bulletIns;
-
-        console.log("bulletIns:_ " + this.bulletIns);
     }
 
     private onIsOperatorChanged(value: boolean): void {

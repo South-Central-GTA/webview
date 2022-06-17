@@ -151,6 +151,7 @@ import {NotificationPositionTypes} from "@/scripts/enums/notification-position.t
 import {CharacterCreatorPurchaseType} from "@/scripts/enums/character-creator-purchase.type";
 import {CharacterInterface} from "@/scripts/interfaces/character/character.interface";
 import {CharacterCreatorPurchaseInterface} from "@/scripts/interfaces/character/character-creator-purchase.interface";
+import { characterCreationService } from '@/scripts/services/character-creation.service';
 
 @Options({
     components: {
@@ -179,7 +180,6 @@ export default class CharCreator extends Vue {
     @Ref() private readonly clothesMenu!: ClothesMenu;
     @Ref() private readonly tattoosMenu!: Tattoos;
 
-    private character!: CharacterInterface;
     private purchaseOrders: CharacterCreatorPurchaseInterface[] = [];
     private characterCosts = 0;
 
@@ -224,25 +224,7 @@ export default class CharCreator extends Vue {
     private onSetCharacter(character: CharacterInterface, maxDrawables: MaxDrawablesInterface, isNewCharacter: boolean): void {
         this.isNewCharacter = isNewCharacter;
 
-        // We have to reset the clothings here.
-        character.clothes = {
-            accessories: undefined,
-            backPack: undefined,
-            bodyArmor: undefined,
-            bracelets: undefined,
-            ears: undefined,
-            glasses: undefined,
-            hat: undefined,
-            mask: undefined,
-            pants: undefined,
-            shoes: undefined,
-            top: undefined,
-            torso: undefined,
-            underShirt: undefined,
-            watch: undefined,
-        };
-
-        this.character = character;
+        characterCreationService.setup(character);
         this.onSetGender(character.gender, maxDrawables);
 
         this.formularMenu?.setup({
@@ -266,7 +248,6 @@ export default class CharCreator extends Vue {
 
         this.faceFeaturesMenu?.setFaceFeatures(character.faceFeatures);
         this.characterAppearanceMenu?.setCharacterAppearances(character.appearances);
-        this.clothesMenu?.setClothes(character.clothes);
 
         this.notificationsHolder.setPosition(NotificationPositionTypes.RIGHT);
     }
@@ -340,68 +321,68 @@ export default class CharCreator extends Vue {
     }
 
     private requestBuyCharacter(): void {
-        if (this.character.firstName === "") {
+        if (characterCreationService.getCharacterCreatorData.character.firstName === "") {
             this.formularMenu.firstNameValidation = "EMPTY";
         } else {
-            if (this.character.firstName.length <= 1) {
+            if (characterCreationService.getCharacterCreatorData.character.firstName.length <= 1) {
                 this.formularMenu.firstNameValidation = "TO_SHORT";
-            } else if (!/^[a-zA-ZÀ-ž]+$/.test(this.character.firstName)) {
+            } else if (!/^[a-zA-ZÀ-ž]+$/.test(characterCreationService.getCharacterCreatorData.character.firstName)) {
                 this.formularMenu.firstNameValidation = "SPECIAL_CHARACTERS";
             } else {
                 this.formularMenu.firstNameValidation = "OKAY";
             }
         }
 
-        if (this.character.lastName === "") {
+        if (characterCreationService.getCharacterCreatorData.character.lastName === "") {
             this.formularMenu.lastNameValidation = "EMPTY";
         } else {
-            if (this.character.lastName.length <= 1) {
+            if (characterCreationService.getCharacterCreatorData.character.lastName.length <= 1) {
                 this.formularMenu.lastNameValidation = "TO_SHORT";
-            } else if (!/^[a-zA-ZÀ-ž]+$/.test(this.character.lastName)) {
+            } else if (!/^[a-zA-ZÀ-ž]+$/.test(characterCreationService.getCharacterCreatorData.character.lastName)) {
                 this.formularMenu.lastNameValidation = "SPECIAL_CHARACTERS";
             } else {
                 this.formularMenu.lastNameValidation = "OKAY";
             }
         }
 
-        if (this.character.origin === "") {
+        if (characterCreationService.getCharacterCreatorData.character.origin === "") {
             this.formularMenu.originValidation = "EMPTY";
         } else {
-            if (!/^[a-zA-ZÀ-ž, ]*$/.test(this.character.origin)) {
+            if (!/^[a-zA-ZÀ-ž, ]*$/.test(characterCreationService.getCharacterCreatorData.character.origin)) {
                 this.formularMenu.originValidation = "SPECIAL_CHARACTERS";
             } else {
                 this.formularMenu.originValidation = "OKAY";
             }
         }
 
-        if (this.character.physique === "") {
+        if (characterCreationService.getCharacterCreatorData.character.physique === "") {
             this.formularMenu.physiqueValidation = "EMPTY";
         } else {
-            if (!/^[a-zA-ZÀ-ž, ]*$/.test(this.character.physique)) {
+            if (!/^[a-zA-ZÀ-ž, ]*$/.test(characterCreationService.getCharacterCreatorData.character.physique)) {
                 this.formularMenu.physiqueValidation = "SPECIAL_CHARACTERS";
             } else {
                 this.formularMenu.physiqueValidation = "OKAY";
             }
         }
 
-        if (this.character.bodySize === 0) {
+        if (characterCreationService.getCharacterCreatorData.character.bodySize === 0) {
             this.formularMenu.bodySizeValidation = "EMPTY";
         } else {
-            if (this.character.bodySize < 110) {
+            if (characterCreationService.getCharacterCreatorData.character.bodySize < 110) {
                 this.formularMenu.bodySizeValidation = "TO_SMALL";
-            } else if (this.character.bodySize > 220) {
+            } else if (characterCreationService.getCharacterCreatorData.character.bodySize > 220) {
                 this.formularMenu.bodySizeValidation = "TO_TALL";
             } else {
                 this.formularMenu.bodySizeValidation = "OKAY";
             }
         }
 
-        if (this.character.age === 0) {
+        if (characterCreationService.getCharacterCreatorData.character.age === 0) {
             this.formularMenu.ageValidation = "EMPTY";
         } else {
-            if (this.character.age < 16) {
+            if (characterCreationService.getCharacterCreatorData.character.age < 16) {
                 this.formularMenu.ageValidation = "TO_YOUNG";
-            } else if (this.character.age > 100) {
+            } else if (characterCreationService.getCharacterCreatorData.character.age > 100) {
                 this.formularMenu.ageValidation = "TO_OLD";
             } else {
                 this.formularMenu.ageValidation = "OKAY";
@@ -410,12 +391,12 @@ export default class CharCreator extends Vue {
 
         this.formularMenu.storyValidation = "OKAY";
 
-        if (this.character.story === "") {
+        if (characterCreationService.getCharacterCreatorData.character.story === "") {
             this.formularMenu.storyValidation = "EMPTY";
         } else {
             // TODO: Activate when server is going live.
 
-            // if (countWords(this.character.story) < 150) {
+            // if (countWords(characterCreationService.getCharacterCreatorData.character.story) < 150) {
             //     this.formularMenu.storyValidation = "TO_SHORT";
             // } else {
             //     this.formularMenu.storyValidation = "OKAY";
@@ -429,7 +410,7 @@ export default class CharCreator extends Vue {
         }
 
         if (this.formularMenu.firstNameValidation === "OKAY" && this.formularMenu.lastNameValidation === "OKAY" && this.formularMenu.originValidation === "OKAY" && this.formularMenu.ageValidation === "OKAY" && this.formularMenu.bodySizeValidation === "OKAY" && this.formularMenu.physiqueValidation === "OKAY" && this.formularMenu.storyValidation === "OKAY") {
-            alt.emit("charcreator:requestbuycharacter", this.character);
+            alt.emit("charcreator:requestbuycharacter");
             this.isSaving = true;
             return;
         }
@@ -461,51 +442,31 @@ export default class CharCreator extends Vue {
     }
 
     private updateForm(form: CharacterFormInterface): void {
-        this.character.firstName = form.profile.firstName;
-        this.character.lastName = form.profile.lastName;
-        this.character.origin = form.profile.origin;
-        this.character.story = form.profile.story;
-        this.character.age = form.profile.age;
-        this.character.bodySize = form.profile.bodySize;
-        this.character.physique = form.profile.physique;
-
-        alt.emit("charcreator:setform", form);
+        characterCreationService.updateForm(form);
     }
 
     private setGender(gender: number): void {
-        if (this.character.gender === gender) return;
-
-        this.character.gender = gender;
-        alt.emit("charcreator:updatechar", this.character, true);
+        characterCreationService.updateGender(gender);
     }
 
     private updateParents(parents: ParentsInterface): void {
-        this.character.mother = parents.mother;
-        this.character.father = parents.father;
-        this.character.similarity = parents.similarity;
-        this.character.skinSimilarity = parents.skinSimilarity;
-
-        alt.emit("charcreator:updatechar", this.character);
+        characterCreationService.updateParents(parents);
     }
 
     private updateFaceFeatures(features: FaceFeaturesInterface): void {
-        this.character.faceFeatures = features;
-        alt.emit("charcreator:updatechar", this.character);
+        characterCreationService.updateFaceFeatures(features);
     }
 
     private updateAppearances(appearances: AppearancesInterface): void {
-        this.character.appearances = appearances;
-        alt.emit("charcreator:updatechar", this.character);
+        characterCreationService.updateAppearances(appearances);
     }
 
     private updateClothes(clothes: ClothesInterface): void {
-        this.character.clothes = clothes;
-        alt.emit("charcreator:updatechar", this.character);
+        characterCreationService.updateClothes(clothes);
     }
 
     private updateTattoos(tattoos: TattoosInterface): void {
-        this.character.tattoos = tattoos;
-        alt.emit("charcreator:updatechar", this.character);
+        characterCreationService.updateTattoos(tattoos);
     }
 }
 </script>

@@ -86,8 +86,6 @@ export default class MdcMailAccountRecord extends Vue {
             });
         });
 
-        console.log("mailAccount.groupAccesses: " + JSON.stringify(mailAccount.groupAccesses));
-
         mailAccount.groupAccesses.forEach((access: MailAccountGroupAccessInterface) => {
             this.accesses.push({
                 name: access.groupName, owner: access.owner,

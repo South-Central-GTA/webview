@@ -27,11 +27,8 @@
                     <td>{{ catalogItem.rarity }}</td>
                     <td>{{ catalogItem.stackable === false ? "Nein" : "Ja" }}</td>
                     <td>{{ catalogItem.sellable === false ? "Nein" : "Ja" }}</td>
-                    <td>${{ catalogItem.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
-                    <td>${{ catalogItem.sellPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }}</td>
-                    <!-- <td>{{ catalogItem.Actions }}</td> -->
-                    <!-- <button>x</button>
-                    <button>b</button> -->
+                    <td>${{ catalogItem.price }}</td>
+                    <td>${{ catalogItem.sellPrice }}</td>
                 </tr>
                 </tbody>
             </table>

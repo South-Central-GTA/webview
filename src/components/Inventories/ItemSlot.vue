@@ -15,7 +15,7 @@
         <div class='col-9'>
             <div class='row'>
                 <div class='col-12'>
-                    <p>{{ this.getName(item) }} <span class='note-text'>{{ item.note }}</span></p>
+                    <p>{{ this.getItemName(item) }} <span class='note-text'>{{ item.note }}</span></p>
                 </div>
                 <div class='col-12 description-text text-white-50'>
                     <p>{{ this.item.catalogItem.description }}</p>
@@ -41,7 +41,6 @@
             </div>
         </div>
         <div class='col-2'>
-            <p v-if='this.item.condition !== -1'>{{ this.item.condition }} / 100</p>
             <p v-if='this.item.amount > 1 && this.item.catalogItem.stackable'>x{{ this.item.amount }}</p>
         </div>
     </div>
@@ -83,14 +82,13 @@ export default class ItemSlot extends Vue {
         return images("./" + item.catalogItem.image + ".png");
     }
 
-    private getName(item: ItemInterface): string {
+    private getItemName(item: ItemInterface): string {
         const clothingItemTypes = Object.keys(ClothingItemTypes);
         let name = "";
-
+        
         if (item.catalogItem) {
-            if (clothingItemTypes.indexOf(item.catalogItem.id.toString()) > -1) {
-                const data: ClothingInterface = JSON.parse(item.customData);
-                name = data.title;
+            if (clothingItemTypes.indexOf(item.catalogItem.id.toString()) > -1 && item.title !== undefined) {
+                name = item.title;
             } else {
                 name = item.catalogItem?.name;
             }
