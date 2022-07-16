@@ -33,17 +33,17 @@ export default class AccountCard extends Vue {
     private characterPoints = 0;
 
     public mounted(): void {
-        this.update(account.getInstance().Account);
+        this.update(account.getInstance().account);
 
         account
             .getInstance()
-            .AccountChanged.on((account: AccountInterface) => this.update(account));
+            .accountChanged.on((account: AccountInterface) => this.update(account));
     }
 
     public unmounted(): void {
         account
             .getInstance()
-            .AccountChanged.off((account: AccountInterface) => this.update(account));
+            .accountChanged.off((account: AccountInterface) => this.update(account));
     }
 
     private update(account: AccountInterface | undefined): void {

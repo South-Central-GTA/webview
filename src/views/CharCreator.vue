@@ -49,9 +49,7 @@
                         <li v-for='purchaseOrder in purchaseOrders' v-bind:key='purchaseOrder.id' class='list-group-item sc-card text-white d-flex justify-content-between lh-sm'>
                             <div class='float-start'>
                                 <h6 class='my-0'>{{ purchaseOrder.name }}</h6>
-                                <small class='text-white-50'>{{
-                                        purchaseOrder.description
-                                                             }}</small>
+                                <small class='text-white-50'>{{ purchaseOrder.description }}</small>
                             </div>
                             <div class='float-end'>
                                 <span class='text-white-50'>{{ purchaseOrder.southCentralPoints }} SCP</span>

@@ -5,18 +5,18 @@ import {AccountInterface} from "@/scripts/interfaces/account.interface";
 export default class AccountService {
     private static instance: AccountService;
     private readonly onAccountChanged = new LiteEvent<AccountInterface>();
-    private account?: AccountInterface;
+    private _account?: AccountInterface;
 
     private constructor() {
         // do something construct...
     }
 
-    get AccountChanged() {
+    get accountChanged() {
         return this.onAccountChanged.expose();
     }
 
-    get Account() {
-        return this.account;
+    get account() {
+        return this._account;
     }
 
     static getInstance() {
@@ -32,10 +32,10 @@ export default class AccountService {
     }
 
     private setup(account: AccountInterface): void {
-        this.account = account;
+        this._account = account;
 
-        if (this.account !== undefined) {
-            this.onAccountChanged.trigger(this.account);
+        if (this._account !== undefined) {
+            this.onAccountChanged.trigger(this._account);
         }
     }
 }

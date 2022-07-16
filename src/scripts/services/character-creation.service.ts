@@ -101,7 +101,5 @@ class CharacterCreationService {
     }
 }
 
-
-
 // Export a singleton instance in the global namespace
 export const characterCreationService = new CharacterCreationService();

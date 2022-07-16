@@ -43,7 +43,7 @@ export default new class AltService implements Alt {
             this.on(eventName, (args: any[]) => {
                 this.off(eventName);
 
-                if (args.length !== requestArgs.length && args.length !== 0 && requestArgs.length !== 0) {
+                if (requestArgs.length !== 0 && requestArgs.length === 0) {
                     return reject(new ServerEventCustomError(args[0]));
                 }
 

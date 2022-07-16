@@ -57,7 +57,7 @@ export default class Prison extends Vue {
 </script>
 
 <style lang='scss' scoped>
-.adminprison {
+.prison {
     position: absolute;
     top: 0;
     width: 100%;
