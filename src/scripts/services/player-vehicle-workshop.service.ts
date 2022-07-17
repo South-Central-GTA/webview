@@ -56,7 +56,7 @@ class PlayerVehicleWorkshopService {
     
     public orderService(type: VehicleModType, value: number = 0) {
         const costs = this.vehiclePrice * 0.05 + this.getPrice(type, value);
-        const prods = costs / this.currentProductPrice * 0.8;
+        const prods = costs / this.currentProductPrice * 0.3;
         
         this.orders.set(type, {
             type: type,
@@ -413,7 +413,7 @@ class PlayerVehicleWorkshopService {
 
     public orderRepairService(): void {
         const costs = (this.vehiclePrice * 0.01) * (this.vehicleDamagePercentage);
-        const prods = costs / this.currentProductPrice * 0.8;
+        const prods = costs / this.currentProductPrice * 0.3;
 
         this.orders.set(VehicleModType.Repair, {
             type: VehicleModType.Repair,
